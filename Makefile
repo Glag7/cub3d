@@ -29,7 +29,7 @@ NOCOL = \033[m
 BOLD = $(shell tput bold)
 NOBOLD = $(shell tput sgr0)
 
-MSG_CLEANING = "$(RED)$(BOLD)cleaning...$(NOBOLD)$(NOCOL)";
+MSG_CLEANING = "$(RED)$(BOLD)cleaning $(NAME)...$(NOBOLD)$(NOCOL)";
 MSG_CLEANED = "$(RED)$(BOLD)cleaning done$(NOBOLD)$(NO_COLOR)";
 MSG_COMPILING = "$(YELLOW)$(BOLD)compiling:$(NOBOLD)$(NOCOLOR) $(^)...";
 MSG_READY = "$(BLUE)$(BOLD)$(NAME) ready$(NOBOLD)$(NOCOLOR)";
