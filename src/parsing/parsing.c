@@ -6,14 +6,13 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 17:39:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:59:43 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "mlx.h"
 #include "map.h"
 #include "utils.h"
 #include "parsing.h"
@@ -109,8 +108,5 @@ int	parse_map(void *mlx, t_map *map, int argc, char **argv)
 		return (1);
 	}
 	close(fd);
-	write(1, buf, size);
-	free(buf);
-	return (0);
-	//return (parse_buf(mlx, map, buf, size));//TODO
+	return (parse_buf(mlx, map, buf, size));
 }

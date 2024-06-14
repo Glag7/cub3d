@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 
 SRC = main.c \
       $(PARSING)parsing.c \
+      $(PARSING)parse_buf.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c
 
@@ -72,7 +73,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 clean :
 	@echo $(MSG_CLEANING)
 	@rm -rf $(OBJ_DIR)
-	@make -C $(LIBDIR) -s
+	@make -C $(LIBDIR) -s clean
 	@echo $(MSG_CLEANED)
 
 fclean : clean

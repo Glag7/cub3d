@@ -1,42 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_buf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 18:20:09 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/14 18:54:02 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//pas d'espaces ou de bords autour des 0 ou du player
-
 #include <stdlib.h>
-#include "mlx.h"
 #include "map.h"
 #include "utils.h"
-#include "parsing.h"
 
-int	main(int argc, char **argv)
+static int	get_textures(void *mlx, t_map *map, char *buf, size_t size)
 {
-	t_map	map;
-	void	*mlx;
+	size_t	i;
 
-	mlx = mlx_init();
-	if (mlx == NULL)
+	i = 0;
+	while (i < size && buf[i] == '\n')
+		i++;
+	if (i < size + 1 && (buf[i] == 'N' && buf[i] == 'O')
+		return (1)
+}
+
+int	parse_buf(void *mlx, t_map *map, char *buf, size_t size)
+{
+	if (get_textures(mlx, map, buf, size))
 	{
-		ft_perror("MLX failure\n");
+		free(buf);
 		return (1);
 	}
-	if (parse_map(mlx, &map, argc, argv))
-	{
-		mlx_destroy_display(mlx);
-		free(mlx);
-		return (1);
-	}
-	//TODO DRAW
-	mlx_destroy_display(mlx);
-	free(mlx);
 	return (0);
 }
