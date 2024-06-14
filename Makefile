@@ -8,7 +8,7 @@ OBJ_DIR = obj/
 HDR_DIR = includes/
 
 COMP = cc
-CFLAGS = -Wall -Wextra -g #-Werror
+CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 
 
 SRC = main.c
@@ -47,7 +47,7 @@ $(LIB) :
 	@make -C $(LIBDIR) -s
 
 $(NAME) : $(LIB) $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ))
-	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -o $(NAME)
+	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)
