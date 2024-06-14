@@ -7,11 +7,16 @@ SRC_DIR = src/
 OBJ_DIR = obj/
 HDR_DIR = includes/
 
+PARSING = parsing/
+UTILS = utils/
+
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 
 
-SRC = main.c
+SRC = main.c \
+      $(PARSING)parsing.c \
+      $(UTILS)ft_perror.c
 
 SRC_BONUS = skibidi
 
@@ -46,8 +51,14 @@ bonus :
 $(LIB) :
 	@make -C $(LIBDIR) -s
 
-$(NAME) : $(LIB) $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJ))
+$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(addprefix $(OBJ_DIR), $(OBJ))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
+
+$(OBJ_DIR)$(PARSING) : $(OBJ_DIR)
+	@ mkdir -p $(OBJ_DIR)$(PARSING)
+
+$(OBJ_DIR)$(UTILS) : $(OBJ_DIR)
+	@ mkdir -p $(OBJ_DIR)$(UTILS)
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)
