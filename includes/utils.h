@@ -13,6 +13,8 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+# include <stdlib.h>
+
 void	ft_perror(const char *s);
 void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n);
 
