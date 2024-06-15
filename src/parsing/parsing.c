@@ -6,15 +6,17 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 16:03:33 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:39:41 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "mlx.h"
 #include "map.h"
 #include "utils.h"
+#include "parsing.h"
 
 static int	check_name(const char *name)
 {
@@ -38,18 +40,59 @@ static int	check_name(const char *name)
 		return (1);
 	}
 	return (0);
-
 }
 
-int	parse_map(void *mlx, t_map *map, int argc, char **argv)
+static inline void	change_size(size_t *size, size_t nread)
 {
-	int	fd;
+	if (*size != BUF_SIZE)
+		*size = *size / 2 + nread;
+	else
+		*size = nread;
+}
 
+static char	*fill_buf(int fd, size_t *size)
+{
+	char	*buf;
+	char	*tmp;
+	size_t	nread;
+
+	buf = malloc(*size);
+	if (buf == NULL)
+		return (NULL);
+	nread = read(fd, buf, *size);
+	while (nread == *size / 2 || (nread == *size && nread == BUF_SIZE))
+	{
+		tmp = malloc(*size * 2);
+		if (tmp == NULL)
+			free(buf);
+		if (tmp == NULL)
+			return (NULL);
+		ft_memcpy(tmp, buf, *size);
+		free(buf);
+		buf = tmp;
+		nread = read(fd, buf + *size, *size);
+		*size *= 2;
+	}
+	change_size(size, nread);
+	return (buf);
+}
+
+static inline int	check_args(int argc)
+{
 	if (argc < 2)
 		ft_perror("No map name given\n");
 	if (argc > 2)
 		ft_perror("Too many arguments\n");
-	if (argc != 2 || check_name(argv[1]))
+	return (argc != 2);
+}
+
+int	parse_map(void *mlx, t_map *map, int argc, char **argv)
+{
+	int		fd;
+	char	*buf;
+	size_t	size;
+
+	if (check_args(argc) || check_name(argv[1]))
 		return (1);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
@@ -57,6 +100,17 @@ int	parse_map(void *mlx, t_map *map, int argc, char **argv)
 		ft_perror("Cannot open map\n");
 		return (1);
 	}
+	size = BUF_SIZE;
+	buf = fill_buf(fd, &size);
+	if (buf == NULL)
+	{
+		ft_perror("Epic malloc fail\n");
+		close(fd);
+		return (1);
+	}
 	close(fd);
+	write(1, buf, size);
+	free(buf);
 	return (0);
+	//return (parse_buf(mlx, map, buf, size));//TODO
 }
