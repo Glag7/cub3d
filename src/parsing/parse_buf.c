@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 16:06:09 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:17:41 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "map.h"
 #include "utils.h"
+#include "parsing.h"
 
 static int	check_textures(t_map *map, int hasfloor, int hasceil)
 {
