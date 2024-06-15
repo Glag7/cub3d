@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 18:22:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:44:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:49:52 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define ERR_DUP_WE	"Duplicate west texture\n"
 # define ERR_DUP_FLOOR	"Duplicate floor color\n"
 # define ERR_DUP_CEIL	"Duplicate ceiling color\n"
+# define ERR_BAD_FLOOR	"Unrecognized floor color\n"
+# define ERR_BAD_CEIL	"Unrecognized ceiling color\n"
 
 //MALLOC
 # define ERR_MALLOC	"Failed memory allocation\n"

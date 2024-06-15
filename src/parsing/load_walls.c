@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:49:26 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 20:01:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	load_no(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_DUP_NO);
 		return (1);
 	}
-	j = *i + 2;
+	*i += 2;
+	while (buf[*i] == ' ')
+		(*i)++;
+	j = *i;
 	while (buf[j] && buf[j] != '\n')
 		j++;
 	c = buf[j];
@@ -48,7 +51,10 @@ int	load_so(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_DUP_SO);
 		return (1);
 	}
-	j = *i + 2;
+	*i += 2;
+	while (buf[*i] == ' ')
+		(*i)++;
+	j = *i;
 	while (buf[j] && buf[j] != '\n')
 		j++;
 	c = buf[j];
@@ -70,7 +76,10 @@ int	load_we(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_DUP_WE);
 		return (1);
 	}
-	j = *i + 2;
+	*i += 2;
+	while (buf[*i] == ' ')
+		(*i)++;
+	j = *i;
 	while (buf[j] && buf[j] != '\n')
 		j++;
 	c = buf[j];
@@ -92,6 +101,9 @@ int	load_ea(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_DUP_EA);
 		return (1);
 	}
+	*i += 2;
+	while (buf[*i] == ' ')
+		(*i)++;
 	j = *i;
 	while (buf[j] && buf[j] != '\n')
 		j++;

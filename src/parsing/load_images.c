@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/15 18:47:38 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:58:46 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	load_img(void *mlx, char *path, t_img *image)// path finit pt par un \n au l
 {
 	t_specs	img_specs;
 
+	printf("'%s'\n", path);
 	img_specs.mlx_img = mlx_xpm_file_to_image(mlx, path, &img_specs.w, &img_specs.h);
 	if (img_specs.mlx_img == NULL)
 	{

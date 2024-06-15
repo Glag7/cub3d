@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 15:34:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:04:02 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:46:34 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	try_load(void *mlx, t_map *map, char *buf, size_t *i_)
 		return (1);
 	else if (buf[i] == 'C' && load_ceil(mlx, map, buf, &i))
 		return (1);
+	*i_ = i;
 	return (0);
 }
