@@ -6,24 +6,22 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 17:46:30 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 17:49:10 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:21:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPECS_H
 # define SPECS_H
 
-#include <stdint.h>
-
 typedef struct s_specs
 {
 	void	*mlx_img;
 	char	*img_bin;
-	int32_t	bpp;
-	int32_t	size_line;
-	bool	endian;
-	int32_t	w;
-	int32_t	h;
+	int	bpp;
+	int	size_line;
+	int	endian;
+	int	w;
+	int	h;
 	double	dim_rect[2];
 }	t_specs;
 

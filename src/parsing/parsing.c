@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 16:15:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:46:04 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "map.h"
+#include "err.h"
 #include "utils.h"
 #include "parsing.h"
 
@@ -28,14 +29,14 @@ static int	check_name(const char *name)
 	if (len < 4 || !(name[len - 4] == '.' && name[len - 3] == 'c'
 			&& name[len - 2] == 'u' && name[len - 1] == 'b'))
 	{
-		ft_perror("Map name needs to end with '.cub'\n");
+		ft_perror(ERR_DOTCUB);
 		return (1);
 	}
 	fd = open(name, O_DIRECTORY);
 	if (fd != -1)
 	{
 		close(fd);
-		ft_perror("Map is a directory\n");
+		ft_perror(ERR_DIR);
 		return (1);
 	}
 	return (0);
@@ -80,9 +81,9 @@ static char	*fill_buf(int fd, size_t *size)
 static inline int	check_args(int argc)
 {
 	if (argc < 2)
-		ft_perror("No map name given\n");
+		ft_perror(ERR_NOMAP);
 	if (argc > 2)
-		ft_perror("Too many arguments\n");
+		ft_perror(ERR_ARGS);
 	return (argc != 2);
 }
 
@@ -97,14 +98,14 @@ int	parse_map(void *mlx, t_map *map, int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		ft_perror("Cannot open map\n");
+		ft_perror(ERR_OPEN);
 		return (1);
 	}
 	size = BUF_SIZE;
 	buf = fill_buf(fd, &size);
 	if (buf == NULL)
 	{
-		ft_perror("Epic malloc fail\n");
+		ft_perror(ERR_MALLOC);
 		close(fd);
 		return (1);
 	}

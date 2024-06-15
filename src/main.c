@@ -6,17 +6,16 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 18:20:09 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:45:33 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//pas d'espaces ou de bords autour des 0 ou du player
 
 #include <stdlib.h>
 #include "mlx.h"
 #include "map.h"
 #include "utils.h"
 #include "parsing.h"
+#include "err.h"
 
 int	main(int argc, char **argv)
 {
@@ -26,7 +25,7 @@ int	main(int argc, char **argv)
 	mlx = mlx_init();
 	if (mlx == NULL)
 	{
-		ft_perror("MLX failure\n");
+		ft_perror(ERR_MLX);
 		return (1);
 	}
 	if (parse_map(mlx, &map, argc, argv))

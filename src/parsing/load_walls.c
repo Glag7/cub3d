@@ -6,18 +6,26 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:02:22 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:49:26 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "map.h"
+#include "err.h"
+#include "utils.h"
+#include "parsing.h"
 
 int	load_no(void *mlx, t_map *map, char *buf, size_t *i)
 {
 	size_t	j;
 	char	c;
 
+	if (map->n.px)
+	{
+		ft_perror(ERR_DUP_NO);
+		return (1);
+	}
 	j = *i + 2;
 	while (buf[j] && buf[j] != '\n')
 		j++;
@@ -35,6 +43,11 @@ int	load_so(void *mlx, t_map *map, char *buf, size_t *i)
 	size_t	j;
 	char	c;
 
+	if (map->s.px)
+	{
+		ft_perror(ERR_DUP_SO);
+		return (1);
+	}
 	j = *i + 2;
 	while (buf[j] && buf[j] != '\n')
 		j++;
@@ -52,6 +65,11 @@ int	load_we(void *mlx, t_map *map, char *buf, size_t *i)
 	size_t	j;
 	char	c;
 
+	if (map->w.px)
+	{
+		ft_perror(ERR_DUP_WE);
+		return (1);
+	}
 	j = *i + 2;
 	while (buf[j] && buf[j] != '\n')
 		j++;
@@ -69,6 +87,11 @@ int	load_ea(void *mlx, t_map *map, char *buf, size_t *i)
 	size_t	j;
 	char	c;
 
+	if (map->e.px)
+	{
+		ft_perror(ERR_DUP_EA);
+		return (1);
+	}
 	j = *i;
 	while (buf[j] && buf[j] != '\n')
 		j++;

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:07:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:40:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,22 @@
 #include "map.h"
 #include "utils.h"
 #include "parsing.h"
+#include "err.h"
 
 static int	check_textures(t_map *map, int hasfloor, int hasceil)
 {
 	if (!map->n.px)
-		ft_perror("Missing north texture\n");
+		ft_perror(ERR_MISS_NO);
 	else if (!map->s.px)
-		ft_perror("Missing south texture\n");
+		ft_perror(ERR_MISS_SO);
 	else if (!map->w.px)
-		ft_perror("Missing west texture\n");
+		ft_perror(ERR_MISS_WE);
 	else if (!map->e.px)
-		ft_perror("Missing east texture\n");
+		ft_perror(ERR_MISS_EA);
 	else if (!hasceil)
-		ft_perror("Missing ceiling color\n");
+		ft_perror(ERR_MISS_CEIL);
 	else if (!hasfloor)
-		ft_perror("Missing floor color\n");
+		ft_perror(ERR_MISS_FLOOR);
 	return (!hasfloor || !hasceil || !map->n.px || !map->s.px
 		|| !map->w.px || !map->e.px);
 }
@@ -49,9 +50,9 @@ static char	*get_textures(void *mlx, t_map *map, char *buf)
 		hasfloor += buf[i] == 'F';
 		hasceil += buf[i] == 'C';
 		if (hasfloor > 1)
-			ft_perror("Duplicate floor color\n");
+			ft_perror(ERR_DUP_FLOOR);
 		if (hasceil > 1)
-			ft_perror("Duplicate ceiling color\n");
+			ft_perror(ERR_DUP_CEIL);
 		if (hasfloor > 1 || hasceil > 1)
 			return (NULL);
 		if (try_load(mlx, map, buf, &i))
