@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/15 18:47:38 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 20:07:24 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,40 @@ static int	init_dimensions(t_specs *img_specs)
 	return (0);
 }
 
-/*
-// gerer endianess et bpp ici
-static uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col, double intensity)
+static uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
 {
 	uint32_t	pixel;
+	uint32_t	mem;
+	size_t		byte_per_px;
+	size_t		bit_per_color;
+	uint8_t		byte;
 
-	;
+	pixel = 0;
+	bit_per_color = img_specs.bpp / 4;
+	byte_per_px = img_specs.bpp / 8;
+	ft_memcpy((void *)&mem,
+		&img_specs.img_bin[((lin * img_specs.size_line)
+			+ (col * byte_per_px))], byte_per_px);
+	mem = mem >> (4 - byte_per_px);
+	byte = 1;
+	while ((byte >> bit_per_color) == 0)
+		byte = (byte << 1) + 1;
+	pixel = ((mem >> (3 * bit_per_color)) & byte) << 24;
+	pixel |= ((mem >> (2 * bit_per_color)) & byte) << 16;
+	pixel |= ((mem >> bit_per_color) & byte) << 8;
+	pixel |= mem & byte;
+	if (img_specs.endian == 1)
+		return ((pixel & 0x000000FF) << 24 | (pixel & 0x0000FF00) << 8
+			| (pixel & 0x00FF0000) >> 8 | (pixel & 0xFF000000) >> 24);
 	return (pixel);
+}
+
+static uint32_t	get_average_lin(t_specs img_specs, double lin, double col)//col = 1, lin > 1
+{
+	while ()
+	{
+		;
+	}
 }
 
 static uint32_t	get_average_col(t_specs img_specs, double lin, double col)//lin = 1, col > 1
@@ -63,14 +89,6 @@ static uint32_t	get_average_col(t_specs img_specs, double lin, double col)//lin 
 	i = col;
 	max = col + ;
 	while (i < max)
-	{
-		;
-	}
-}
-
-static uint32_t	get_average_lin(t_specs img_specs, double lin, double col)//col = 1, lin > 1
-{
-	while ()
 	{
 		;
 	}
@@ -98,9 +116,9 @@ static void	read_image(t_img *image, t_specs img_specs, size_t size)
 		}
 		lin += img_specs.dim_rect[1];
 	}
-}*/
+}
 
-static uint32_t	get_pixel(t_specs img_specs, size_t i)
+/*static uint32_t	get_pixel(t_specs img_specs, size_t i)
 {
 	uint32_t	pixel;
 
@@ -119,7 +137,7 @@ static void	read_image(t_img *image, t_specs img_specs)
 		image->px[i] = get_pixel(img_specs, i);
 		i++;
 	}
-}
+}*/
 
 static int	convert_image(t_img *image, t_specs img_specs)
 {
@@ -133,7 +151,7 @@ static int	convert_image(t_img *image, t_specs img_specs)
 	return (0);
 }
 
-int	load_img(void *mlx, char *path, t_img *image)// path finit pt par un \n au lieu de \0
+int	load_img(void *mlx, char *path, t_img *image)// trim les espaces en partant du dernier caractere
 {
 	t_specs	img_specs;
 
