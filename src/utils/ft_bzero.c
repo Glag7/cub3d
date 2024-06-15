@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 15:57:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 14:54:16 by glaguyon         ###   ########.fr       */
+/*   Created: 2023/10/30 13:32:13 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/15 14:56:03 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include <unistd.h>
+#include <stdint.h>
 
-void	ft_perror(const char *s);
-void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n);
-void	ft_bzero(void *restrict s, size_t n);
+void	ft_bzero(void *restrict s, size_t n)
+{
+	size_t	ptr;
 
-#endif
+	ptr = (size_t) s;
+	if (n >= 8)
+	{
+		while (ptr % 8)
+		{
+			*(uint8_t *)ptr = 0;
+			ptr += 1;
+			n -= 1;
+		}
+	}
+	while (n >= 8)
+	{
+		*(uint64_t *)ptr = 0;
+		ptr += 8;
+		n -= 8;
+	}
+	while (n)
+	{
+		*(uint8_t *)ptr = 0;
+		ptr += 1;
+		n -= 1;
+	}
+}

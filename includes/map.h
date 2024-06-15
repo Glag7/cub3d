@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 18:32:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:51:34 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_img
 {
-	uint32_t	*pix;
+	uint32_t	*px;
 	uint64_t	size;
 }	t_img;
 

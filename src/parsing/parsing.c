@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 17:59:43 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:15:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static char	*fill_buf(int fd, size_t *size)
 	char	*tmp;
 	size_t	nread;
 
-	buf = malloc(*size);
+	buf = malloc(*size + 1);
 	if (buf == NULL)
 		return (NULL);
 	nread = read(fd, buf, *size);
 	while (nread == *size / 2 || (nread == *size && nread == BUF_SIZE))
 	{
-		tmp = malloc(*size * 2);
+		tmp = malloc(*size * 2 + 1);
 		if (tmp == NULL)
 			free(buf);
 		if (tmp == NULL)
@@ -73,6 +73,7 @@ static char	*fill_buf(int fd, size_t *size)
 		*size *= 2;
 	}
 	change_size(size, nread);
+	buf[*size] = 0;
 	return (buf);
 }
 
@@ -108,5 +109,6 @@ int	parse_map(void *mlx, t_map *map, int argc, char **argv)
 		return (1);
 	}
 	close(fd);
+	ft_bzero(map, sizeof(*map));
 	return (parse_buf(mlx, map, buf, size));
 }

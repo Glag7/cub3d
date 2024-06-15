@@ -17,8 +17,10 @@ CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 SRC = main.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \
+      $(PARSING)load.c \
       $(UTILS)ft_perror.c \
-      $(UTILS)ft_memcpy.c
+      $(UTILS)ft_memcpy.c \
+      $(UTILS)ft_bzero.c
 
 SRC_BONUS = skibidi
 
