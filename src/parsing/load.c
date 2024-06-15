@@ -6,12 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 15:34:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 17:16:59 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:35:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
 #include "map.h"
 #include "parsing.h"
 
