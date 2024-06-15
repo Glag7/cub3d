@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 17:17:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:07:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static char	*get_textures(void *mlx, t_map *map, char *buf)
 	i = 0;
 	hasfloor = 0;
 	hasceil = 0;
-	while (buf[i] == '\n')
+	while (buf[i] == '\n' || i == 0)
 	{
-		i++;
+		i += buf[i] == '\n';
 		hasfloor += buf[i] == 'F';
 		hasceil += buf[i] == 'C';
 		if (hasfloor > 1)
