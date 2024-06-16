@@ -29,5 +29,6 @@ int		load_we(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_floor(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_ceil(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_img(void *mlx, char *path, t_img *img);
+void	read_image(t_img *image, t_specs img_specs);
 
 #endif
