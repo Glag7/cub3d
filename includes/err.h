@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 18:22:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 19:49:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:49:50 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@
 # define ERR_DUP_CEIL	"Duplicate ceiling color\n"
 # define ERR_BAD_FLOOR	"Unrecognized floor color\n"
 # define ERR_BAD_CEIL	"Unrecognized ceiling color\n"
+
+//MAP
+# define ERR_BADCHAR	"Map contains unrecognized character\n"
+# define ERR_NOPLAYER	"Map does not contain a player\n"
+# define ERR_MOREPLAYER	"Map contains mor than one player\n"
 
 //MALLOC
 # define ERR_MALLOC	"Failed memory allocation\n"
