@@ -25,6 +25,8 @@ SRC = main.c \
       $(PARSING)load_images.c \
       $(PARSING)get_data.c \
       $(PARSING)read_images.c \
+      $(PARSING)fill_map.c \
+      $(PARSING)check_map.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c

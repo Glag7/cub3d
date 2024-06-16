@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 18:59:37 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 19:35:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_data(char *buf, t_map *map)
 		++map->hei;
 		if (i > map->wid)
 			map->wid = i;
-		buf += i + 1;
+		buf += i + (buf[i] == '\n');
 	}
 	if (map->player.x == -1)
 	{
