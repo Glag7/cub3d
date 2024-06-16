@@ -25,7 +25,7 @@
 # define ERR_NOMAP	"No map name given\n"
 
 //TEXTURES
-# define ERR_BPP	"Too many bits per pixel in an image (max 32 bpp)\n"
+# define ERR_BPP	"Invalid number of bits per pixel\n"
 # define ERR_IMG_SIZE	"Image has a size of 0\n"
 # define ERR_MISS_NO	"Missing north texture\n"
 # define ERR_MISS_SO	"Missing south texture\n"

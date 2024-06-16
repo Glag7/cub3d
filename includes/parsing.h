@@ -6,12 +6,15 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 17:47:25 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 19:11:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+# include "specs.h"
+# include "map.h"
 
 //do not set to < 2
 # define BUF_SIZE 4096
@@ -27,5 +30,6 @@ int		load_floor(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_ceil(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_img(void *mlx, char *path, t_img *img);
 int		get_data(char *buf, t_map *map);
+void	read_image(t_img *image, t_specs img_specs);
 
 #endif
