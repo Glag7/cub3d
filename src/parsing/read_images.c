@@ -6,13 +6,14 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/16 18:52:56 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/16 20:27:40 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <math.h>
 #include "utils.h"
 #include "specs.h"
 #include "map.h"
@@ -56,68 +57,73 @@ static void	add_pixel(uint32_t *sum, uint32_t pixel, double weight)
 	sum[3] += (pixel & 0x000000FF) * weight;
 }
 
-static uint32_t	get_average_lin(t_specs img_specs, double lin, double col)
+static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
+		double offset)
 {
 	uint32_t	sum[4];
 	uint32_t	pixel;
-	double		i;
 	double		max;
 	double		pixel_part;
 
-	ft_bzero(sum, sizeof(uint32_t) * 4);
-	i = lin;
-	max = lin + img_specs.dim_rect[1];
-	while ((max - i) >= 1.0)
+	ft_bzero(sum, 4 * sizeof(uint32_t));
+	max = lin + offset;
+	while ((max - lin) >= 1.0)
 	{
-		pixel_part = (double)((size_t)i + 1) - i;
-		pixel = get_pixel(img_specs, (size_t)i, (size_t)col);
+		pixel_part = floor(lin) + 1.0 - lin;
+		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
 		add_pixel(sum, pixel, pixel_part);
-		i = (double)((size_t)(i + pixel_part));
+		lin = floor(lin + pixel_part);
 	}
-	pixel_part = max - i;
-	pixel = get_pixel(img_specs, (size_t)i, (size_t)col);
+	pixel_part = max - lin;
+	pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
 	add_pixel(sum, pixel, pixel_part);
-	sum[0] = (uint32_t)((double)(sum[0]) / img_specs.dim_rect[1]);
-	sum[1] = (uint32_t)((double)(sum[1]) / img_specs.dim_rect[1]);
-	sum[2] = (uint32_t)((double)(sum[2]) / img_specs.dim_rect[1]);
-	sum[3] = (uint32_t)((double)(sum[3]) / img_specs.dim_rect[1]);
+	sum[0] = (uint32_t)((double)(sum[0]) / offset);
+	sum[1] = (uint32_t)((double)(sum[1]) / offset);
+	sum[2] = (uint32_t)((double)(sum[2]) / offset);
+	sum[3] = (uint32_t)((double)(sum[3]) / offset);
 	return ((sum[3] << 24) | (sum[2] << 16) | (sum[1] << 8) | sum[0]);
 }
 
-static uint32_t	get_average_col(t_specs img_specs, double lin, double col)
+static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
+		double offset)
 {
 	uint32_t	sum[4];
 	uint32_t	pixel;
-	double		i;
 	double		max;
 	double		pixel_part;
 
-	ft_bzero(sum, sizeof(uint32_t) * 4);
-	i = col;
-	max = col + img_specs.dim_rect[0];
-	while ((max - i) >= 1.0)
+	ft_bzero(sum, 4 * sizeof(uint32_t));
+	max = col + offset;
+	while ((max - col) >= 1.0)
 	{
-		pixel_part = (double)((size_t)i + 1) - i;
-		pixel = get_pixel(img_specs, (size_t)lin, (size_t)i);
+		pixel_part = floor(col) + 1.0 - col;
+		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
 		add_pixel(sum, pixel, pixel_part);
-		i = (double)((size_t)(i + pixel_part));
+		col = floor(col + pixel_part);
 	}
-	pixel_part = max - i;
-	pixel = get_pixel(img_specs, (size_t)lin, (size_t)i);
+	pixel_part = max - col;
+	pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
 	add_pixel(sum, pixel, pixel_part);
-	sum[0] = (uint32_t)((double)(sum[0]) / img_specs.dim_rect[0]);
-	sum[1] = (uint32_t)((double)(sum[1]) / img_specs.dim_rect[0]);
-	sum[2] = (uint32_t)((double)(sum[2]) / img_specs.dim_rect[0]);
-	sum[3] = (uint32_t)((double)(sum[3]) / img_specs.dim_rect[0]);
+	sum[0] = (uint32_t)((double)(sum[0]) / offset);
+	sum[1] = (uint32_t)((double)(sum[1]) / offset);
+	sum[2] = (uint32_t)((double)(sum[2]) / offset);
+	sum[3] = (uint32_t)((double)(sum[3]) / offset);
 	return ((sum[3] << 24) | (sum[2] << 16) | (sum[1] << 8) | sum[0]);
 }
 
 void	read_image(t_img *image, t_specs img_specs)
 {
-	size_t	i_image;
-	double	lin;
-	double	col;
+	double		lin;
+	double		col;
+	double		offset;
+	size_t		i_image;
+	uint32_t	(*f)(void *, double, double, double);
 
+	offset = img_specs.dim_rect[img_specs.dim_rect[0] == 1.0];
+	if (img_specs.dim_rect[0] == 1.0)
+		f = get_average_lin;
+	else
+		f = get_average_col;
 	i_image = 0;
 	lin = 0;
 	while (lin + 0.9 < (double)img_specs.h)
@@ -125,10 +131,7 @@ void	read_image(t_img *image, t_specs img_specs)
 		col = 0;
 		while (col + 0.9 < (double)img_specs.w)
 		{
-			if (img_specs.dim_rect[0] == 1)
-				image->px[i_image] = get_average_lin(img_specs, lin, col);
-			else
-				image->px[i_image] = get_average_col(img_specs, lin, col);
+			image->px[i_image] = f(&img_specs, lin, col, offset);
 			col += img_specs.dim_rect[0];
 			i_image++;
 		}
