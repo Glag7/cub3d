@@ -1,40 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 16:48:11 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/16 16:48:58 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include "map.h"
 
-# include <stddef.h>
-# include <stdint.h>
-
-typedef struct s_img
+int	get_data(char *map, size_t *hei, size_t *wid)
 {
-	uint32_t	*px;
-	uint64_t	size;
-}	t_img;
+	int	player;
 
-typedef struct s_map
-{
-	uint8_t		*map;
-	size_t	hei;
-	size_t	wid;
-	t_img		n;
-	t_img		s;
-	t_img		w;
-	t_img		e;
-	uint32_t	floor;
-	uint32_t	ceil;
-}	t_map;
-
-void	free_map(t_map *map);
-
-#endif
+	while (0);
+	return (0);
+}

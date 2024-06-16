@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:46:04 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:46:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ int	parse_map(void *mlx, t_map *map, int argc, char **argv)
 	}
 	close(fd);
 	ft_bzero(map, sizeof(*map));
-	return (parse_buf(mlx, map, buf, size));
+	return (parse_buf(mlx, map, buf));
 }

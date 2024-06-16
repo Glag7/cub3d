@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include <unistd.h>
+#include <stddef.h>
 #include "map.h"
 #include "err.h"
 #include "utils.h"

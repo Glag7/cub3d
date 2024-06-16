@@ -6,11 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 16:27:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:45:33 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include "map.h"
 #include "utils.h"
@@ -63,18 +63,17 @@ static char	*get_textures(void *mlx, t_map *map, char *buf)
 	return (buf + i);
 }
 
-int	parse_buf(void *mlx, t_map *map, char *buf, size_t size)
+int	parse_buf(void *mlx, t_map *map, char *buf)
 {
 	char	*start;
 
 	start = get_textures(mlx, map, buf);
-	if (start == NULL)
+	if (start == NULL || get_data(&map->hei, &map->wid))
 	{
 		free_map(map);
 		free(buf);
 		return (1);
 	}
-	size -= (size_t)buf - (size_t)start;
 	free(buf);
 	return (0);
 }

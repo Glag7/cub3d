@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 17:49:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:45:00 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define BUF_SIZE 4096
 
 int		parse_map(void *mlx, t_map *map, int argc, char **argv);
-int		parse_buf(void *mlx, t_map *map, char *buf, size_t size);
+int		parse_buf(void *mlx, t_map *map, char *buf);
 int		try_load(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_no(void *mlx, t_map *map, char *buf, size_t *i);
 int		load_so(void *mlx, t_map *map, char *buf, size_t *i);

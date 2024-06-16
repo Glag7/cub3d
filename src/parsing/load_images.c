@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
+#include <stddef.h>
 #include <stdbool.h>
 #include "utils.h"
 #include "specs.h"
