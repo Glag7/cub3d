@@ -21,6 +21,7 @@ SRC = main.c \
       $(PARSING)load_walls.c \
       $(PARSING)load_floorceil.c \
       $(PARSING)load_images.c \
+      $(PARSING)read_images.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c

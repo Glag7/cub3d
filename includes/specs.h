@@ -17,11 +17,11 @@ typedef struct s_specs
 {
 	void	*mlx_img;
 	char	*img_bin;
-	int	bpp;
-	int	size_line;
-	int	endian;
-	int	w;
-	int	h;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	int		w;
+	int		h;
 	double	dim_rect[2];
 }	t_specs;
 

@@ -13,6 +13,9 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "specs.h"
+# include "map.h"
+
 //do not set to < 2
 # define BUF_SIZE 4096
 
