@@ -9,12 +9,14 @@ HDR_DIR = includes/
 
 PARSING = parsing/
 UTILS = utils/
+COMMON = common/
 
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 
 
 SRC = main.c \
+      $(COMMON)free_map.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \
       $(PARSING)load.c \
@@ -58,8 +60,11 @@ bonus :
 $(LIB) :
 	@make -C $(LIBDIR) -s
 
-$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(addprefix $(OBJ_DIR), $(OBJ))
+$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
+
+$(OBJ_DIR)$(COMMON) : $(OBJ_DIR)
+	@ mkdir -p $(OBJ_DIR)$(COMMON)
 
 $(OBJ_DIR)$(PARSING) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(PARSING)

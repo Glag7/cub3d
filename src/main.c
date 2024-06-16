@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 18:45:33 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:23:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	//TODO DRAW
+	free_map(&map);
 	mlx_destroy_display(mlx);
 	free(mlx);
 	return (0);

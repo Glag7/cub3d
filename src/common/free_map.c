@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 16:24:10 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/16 16:17:10 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/16 16:25:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include <stdlib.h>
+#include "utils.h"
+#include "map.h"
 
-# include <stdint.h>
-
-typedef struct s_img
+void	free_map(t_map *map)
 {
-	uint32_t	*px;
-	uint64_t	size;
-}	t_img;
-
-typedef struct s_map
-{
-	uint8_t		*map;
-	t_img		n;
-	t_img		s;
-	t_img		w;
-	t_img		e;
-	uint32_t	floor;
-	uint32_t	ceil;
-}	t_map;
-
-void	free_map(t_map *map);
-
-#endif
+	free(map->map);
+	free(map->n.px);
+	free(map->s.px);
+	free(map->w.px);
+	free(map->e.px);
+	ft_bzero(map, sizeof(*map));
+}

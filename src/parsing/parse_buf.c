@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 19:47:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:27:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,11 @@ int	parse_buf(void *mlx, t_map *map, char *buf, size_t size)
 	start = get_textures(mlx, map, buf);
 	if (start == NULL)
 	{
-		free(map->n.px);
-		free(map->s.px);
-		free(map->w.px);
-		free(map->e.px);
+		free_map(map);
 		free(buf);
 		return (1);
 	}
 	size -= (size_t)buf - (size_t)start;
+	free(buf);
 	return (0);
 }
