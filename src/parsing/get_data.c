@@ -31,7 +31,7 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 	}
 	if (*c == 'N')
 		m->player.a = 0.;
-	else if (*c == 'E')
+	else if (*c == 'W')
 		m->player.a = M_PI_2;
 	else if (*c == 'S')
 		m->player.a = M_PI;
