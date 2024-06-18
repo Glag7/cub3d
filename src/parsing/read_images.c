@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/18 16:35:44 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:53:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,18 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	return ((sum[3] << 24) | (sum[2] << 16) | (sum[1] << 8) | sum[0]);
 }
 
+//what the fuck, norminette ?
+typedef double	t_d;
+typedef size_t	t_s;
+
 void	read_image(t_img *image, t_specs img_specs)
 {
-	double		lin;
-	double		col;
-	double		offset;
-	size_t		i_image;
-	uint32_t	*f(void *, double, double, double);
+	t_d	lin;
+	t_d	col;
+	t_d	offset;
+	t_s	i_image;
+	uint32_t
+		(*f)(void *, double, double, double);
 
 	offset = img_specs.dim_rect[img_specs.dim_rect[0] == 1.0];
 	if (img_specs.dim_rect[0] == 1.0)
