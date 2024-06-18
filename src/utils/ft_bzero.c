@@ -6,11 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:32:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 14:56:03 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:03:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stddef.h>
 #include <stdint.h>
 
 void	ft_bzero(void *restrict s, size_t n)

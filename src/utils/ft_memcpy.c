@@ -6,11 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:07:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/14 16:38:43 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:03:12 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stddef.h>
 
 void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n)
 {
