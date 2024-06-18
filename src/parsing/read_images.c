@@ -20,22 +20,22 @@
 #include "mlx.h"
 #include "err.h"
 
-static uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
+static inline uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
 {
 	uint32_t	pixel;
 
 	ft_memcpy(&pixel,
-		&(img_specs.img_bin[(lin * img_specs.size_line) + (col * 3)]),
-		sizeof(uint32_t));
-	return (pixel << 8);
+		&(img_specs.img_bin[(lin * img_specs.size_line)
+			+ (col * sizeof(uint32_t))]), sizeof(uint32_t));
+	return (pixel);
 }
 
-static void	add_pixel(uint32_t *sum, uint32_t pixel, double weight)
+static inline void	add_pixel(uint32_t *sum, uint32_t pixel, double weight)
 {
-	sum[0] += ((pixel & 0xFF000000) >> 24) * weight;
-	sum[1] += ((pixel & 0x00FF0000) >> 16) * weight;
-	sum[2] += ((pixel & 0x0000FF00) >> 8) * weight;
-	sum[3] += (pixel & 0x000000FF) * weight;
+	sum[3] += ((pixel & 0xFF000000) >> 24) * weight;
+	sum[2] += ((pixel & 0x00FF0000) >> 16) * weight;
+	sum[1] += ((pixel & 0x0000FF00) >> 8) * weight;
+	sum[0] += (pixel & 0x000000FF) * weight;
 }
 
 static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
@@ -51,9 +51,6 @@ static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
 	while ((max - lin) >= 1.0)
 	{
 		pixel_part = floor(lin) + 1.0 - lin;
-//		ft_memcpy(&pixel, &(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
-//					* ((t_specs *)img_specs_ptr)->size_line)
-//				+ ((size_t)col * 4)]), sizeof(uint32_t));
 		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
 				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);
@@ -82,9 +79,6 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	while ((max - col) >= 1.0)
 	{
 		pixel_part = floor(col) + 1.0 - col;
-//		ft_memcpy(&pixel, &(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
-//					* ((t_specs *)img_specs_ptr)->size_line)
-//				+ ((size_t)col * 4)]), sizeof(uint32_t));
 		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
 				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);
