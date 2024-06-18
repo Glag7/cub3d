@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/18 16:35:44 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:53:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
 		&img_specs.img_bin[((lin * img_specs.size_line)
 			+ (col * bytes_per_px))], bytes_per_px);
 	mem >>= (4 - bytes_per_px) * 8;
-	byte = 3;
-	while ((byte >> (bits_per_color - 1)) == 0)
+	byte = 0;
+	while (bits_per_color > 0 && (byte >> (bits_per_color - 1)) == 0)
 		byte = (byte << 1) + 1;
 	pixel = 0;
 	pixel |= (mem >> (3 * bits_per_color)) & byte;
@@ -113,13 +113,18 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	return ((sum[3] << 24) | (sum[2] << 16) | (sum[1] << 8) | sum[0]);
 }
 
+//what the fuck, norminette ?
+typedef double	t_d;
+typedef size_t	t_s;
+
 void	read_image(t_img *image, t_specs img_specs)
 {
-	double			lin;
-	double			col;
-	double			offset;
-	size_t			i_image;
-	unsigned int	(*f)(void *, double, double, double);
+	t_d	lin;
+	t_d	col;
+	t_d	offset;
+	t_s	i_image;
+	uint32_t
+		(*f)(void *, double, double, double);
 
 	offset = img_specs.dim_rect[img_specs.dim_rect[0] == 1.0];
 	if (img_specs.dim_rect[0] == 1.0)
@@ -128,10 +133,10 @@ void	read_image(t_img *image, t_specs img_specs)
 		f = get_average_col;
 	i_image = 0;
 	lin = 0;
-	while (lin + 0.9 < (double)img_specs.h)
+	while (lin + 0.5 < (double)img_specs.h)
 	{
 		col = 0;
-		while (col + 0.9 < (double)img_specs.w)
+		while (col + 0.5 < (double)img_specs.w)
 		{
 			image->px[i_image] = f(&img_specs, lin, col, offset);
 			col += img_specs.dim_rect[0];
