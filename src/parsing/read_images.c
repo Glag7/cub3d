@@ -115,11 +115,11 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 
 void	read_image(t_img *image, t_specs img_specs)
 {
-	double		lin;
-	double		col;
-	double		offset;
-	size_t		i_image;
-	uint32_t	*f(void *, double, double, double);
+	double			lin;
+	double			col;
+	double			offset;
+	size_t			i_image;
+	unsigned int	(*f)(void *, double, double, double);
 
 	offset = img_specs.dim_rect[img_specs.dim_rect[0] == 1.0];
 	if (img_specs.dim_rect[0] == 1.0)
