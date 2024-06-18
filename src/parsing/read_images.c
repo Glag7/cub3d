@@ -20,16 +20,6 @@
 #include "mlx.h"
 #include "err.h"
 
-static inline uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
-{
-	uint32_t	pixel;
-
-	ft_memcpy(&pixel,
-		&(img_specs.img_bin[(lin * img_specs.size_line)
-			+ (col * sizeof(uint32_t))]), sizeof(uint32_t));
-	return (pixel);
-}
-
 static inline void	add_pixel(uint32_t *sum, uint32_t pixel, double weight)
 {
 	sum[3] += ((pixel & 0xFF000000) >> 24) * weight;
@@ -51,14 +41,16 @@ static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
 	while ((max - lin) >= 1.0)
 	{
 		pixel_part = floor(lin) + 1.0 - lin;
-		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
-				(size_t)col);
+		pixel = *(uint32_t *)&(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+					* ((t_specs *)img_specs_ptr)->size_line)
+				+ ((size_t)col * sizeof(uint32_t))]);
 		add_pixel(sum, pixel, pixel_part);
 		lin = floor(lin + pixel_part);
 	}
-	pixel_part = max - lin;
-	pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
-	add_pixel(sum, pixel, pixel_part);
+	pixel = *(uint32_t *)&(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+				* ((t_specs *)img_specs_ptr)->size_line)
+			+ ((size_t)col * sizeof(uint32_t))]);
+	add_pixel(sum, pixel, max - lin);
 	sum[0] = (uint32_t)((double)(sum[0]) / offset);
 	sum[1] = (uint32_t)((double)(sum[1]) / offset);
 	sum[2] = (uint32_t)((double)(sum[2]) / offset);
@@ -79,14 +71,16 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	while ((max - col) >= 1.0)
 	{
 		pixel_part = floor(col) + 1.0 - col;
-		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
-				(size_t)col);
+		pixel = *(uint32_t *)&(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+					* ((t_specs *)img_specs_ptr)->size_line)
+				+ ((size_t)col * sizeof(uint32_t))]);
 		add_pixel(sum, pixel, pixel_part);
 		col = floor(col + pixel_part);
 	}
-	pixel_part = max - col;
-	pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
-	add_pixel(sum, pixel, pixel_part);
+	pixel = *(uint32_t *)&(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+				* ((t_specs *)img_specs_ptr)->size_line)
+			+ ((size_t)col * sizeof(uint32_t))]);
+	add_pixel(sum, pixel, max - col);
 	sum[0] = (uint32_t)((double)(sum[0]) / offset);
 	sum[1] = (uint32_t)((double)(sum[1]) / offset);
 	sum[2] = (uint32_t)((double)(sum[2]) / offset);
