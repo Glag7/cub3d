@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/16 20:27:40 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:35:44 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
 	while ((max - lin) >= 1.0)
 	{
 		pixel_part = floor(lin) + 1.0 - lin;
-		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
+		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
+				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);
 		lin = floor(lin + pixel_part);
 	}
@@ -97,7 +98,8 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	while ((max - col) >= 1.0)
 	{
 		pixel_part = floor(col) + 1.0 - col;
-		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin, (size_t)col);
+		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
+				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);
 		col = floor(col + pixel_part);
 	}
@@ -117,7 +119,7 @@ void	read_image(t_img *image, t_specs img_specs)
 	double		col;
 	double		offset;
 	size_t		i_image;
-	uint32_t	(*f)(void *, double, double, double);
+	uint32_t	*f(void *, double, double, double);
 
 	offset = img_specs.dim_rect[img_specs.dim_rect[0] == 1.0];
 	if (img_specs.dim_rect[0] == 1.0)
