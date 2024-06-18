@@ -23,30 +23,11 @@
 static uint32_t	get_pixel(t_specs img_specs, size_t lin, size_t col)
 {
 	uint32_t	pixel;
-	uint32_t	mem;
-	uint8_t		bytes_per_px;
-	uint8_t		bits_per_color;
-	uint8_t		byte;
 
-	bits_per_color = img_specs.bpp / 4;
-	bytes_per_px = img_specs.bpp / 8;
-	mem = 0;
-	ft_memcpy((void *)&mem,
-		&img_specs.img_bin[((lin * img_specs.size_line)
-			+ (col * bytes_per_px))], bytes_per_px);
-	mem >>= (4 - bytes_per_px) * 8;
-	byte = 0;
-	while (bits_per_color > 0 && (byte >> (bits_per_color - 1)) == 0)
-		byte = (byte << 1) + 1;
-	pixel = 0;
-	pixel |= (mem >> (3 * bits_per_color)) & byte;
-	pixel |= ((mem >> (2 * bits_per_color)) & byte) << 8;
-	pixel |= ((mem >> bits_per_color) & byte) << 16;
-	pixel |= (mem & byte) << 24;
-	if (img_specs.endian == 1)
-		return ((pixel & 0x000000FF) << 24 | (pixel & 0x0000FF00) << 8
-			| (pixel & 0x00FF0000) >> 8 | (pixel & 0xFF000000) >> 24);
-	return (pixel);
+	ft_memcpy(&pixel,
+		&(img_specs.img_bin[(lin * img_specs.size_line) + (col * 3)]),
+		sizeof(uint32_t));
+	return (pixel << 8);
 }
 
 static void	add_pixel(uint32_t *sum, uint32_t pixel, double weight)
@@ -70,6 +51,9 @@ static uint32_t	get_average_lin(void *img_specs_ptr, double lin, double col,
 	while ((max - lin) >= 1.0)
 	{
 		pixel_part = floor(lin) + 1.0 - lin;
+//		ft_memcpy(&pixel, &(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+//					* ((t_specs *)img_specs_ptr)->size_line)
+//				+ ((size_t)col * 4)]), sizeof(uint32_t));
 		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
 				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);
@@ -98,6 +82,9 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	while ((max - col) >= 1.0)
 	{
 		pixel_part = floor(col) + 1.0 - col;
+//		ft_memcpy(&pixel, &(((t_specs *)img_specs_ptr)->img_bin[((size_t)lin
+//					* ((t_specs *)img_specs_ptr)->size_line)
+//				+ ((size_t)col * 4)]), sizeof(uint32_t));
 		pixel = get_pixel(*((t_specs *)img_specs_ptr), (size_t)lin,
 				(size_t)col);
 		add_pixel(sum, pixel, pixel_part);

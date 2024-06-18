@@ -22,16 +22,10 @@
 
 static int	init_dimensions(t_specs *img_specs)
 {
-	int32_t	endian;
+	int32_t	null;
 
-	img_specs->img_bin = mlx_get_data_addr(img_specs->mlx_img,
-			&(img_specs->bpp), &(img_specs->size_line), &endian);
-	if (img_specs->bpp > 32 || (img_specs->bpp & 3) != 0)
-	{
-		ft_perror(ERR_BPP);
-		return (1);
-	}
-	img_specs->endian = (bool)endian;
+	img_specs->img_bin = mlx_get_data_addr(img_specs->mlx_img, &null,
+			&(img_specs->size_line), &null);
 	if (img_specs->w > img_specs->h)
 	{
 		img_specs->dim_rect[0] = (double)img_specs->w / (double)img_specs->h;
