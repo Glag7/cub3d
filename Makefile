@@ -10,6 +10,7 @@ HDR_DIR = includes/
 PARSING = parsing/
 UTILS = utils/
 COMMON = common/
+HOOKS = hooks/
 
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
@@ -30,7 +31,8 @@ SRC = main.c \
       $(PARSING)check_map.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c \
-      $(UTILS)ft_bzero.c
+      $(UTILS)ft_bzero.c \
+      $(HOOKS)keys.c
 
 SRC_BONUS = skibidi
 
@@ -65,7 +67,7 @@ bonus :
 $(LIB) :
 	@make -C $(LIBDIR) -s
 
-$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
+$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(HOOKS) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
 
 $(OBJ_DIR)$(COMMON) : $(OBJ_DIR)
@@ -73,6 +75,9 @@ $(OBJ_DIR)$(COMMON) : $(OBJ_DIR)
 
 $(OBJ_DIR)$(PARSING) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(PARSING)
+
+$(OBJ_DIR)$(HOOKS) : $(OBJ_DIR)
+	@ mkdir -p $(OBJ_DIR)$(HOOKS)
 
 $(OBJ_DIR)$(UTILS) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(UTILS)
@@ -84,6 +89,11 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	$(DEL)
 	@echo -n $(MSG_COMPILING)
 	@ $(COMP) $(CFLAGS) -c $^ -o $@ -I $(HDR_DIR)
+
+cleancub :
+	@echo $(MSG_CLEANING)
+	@rm -rf $(OBJ_DIR)
+	@echo $(MSG_CLEANED)
 
 clean :
 	@echo $(MSG_CLEANING)
@@ -97,4 +107,6 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all fclean clean re bonus
+recub : cleancub all
+
+.PHONY: all fclean clean re bonus cleancub recub

@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   img.h                                              :+:      :+:    :+:   */
+/*   hooks.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 13:15:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 15:40:39 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 15:32:51 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/19 15:37:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IMG_H
-# define IMG_H
+#ifndef HOOKS_H
+# define HOOKS_H
 
-# define DEF_WID 1360
-# define DEF_HEI 768
-
-# include <stddef.h>
-# include <stdint.h>
-
-typedef struct s_mlx
-{
-	void		*mlx;
-	void		*win;
-	void		*img;
-	size_t		wid;
-	size_t		hei;
-	uint32_t	*px;
-}	t_mlx;
-
-void	free_mlx(t_mlx *mlx);
-int		init_mlx(t_mlx *mlx);
+int	key_hook(int key, void *data_);
 
 #endif

@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   img.h                                              :+:      :+:    :+:   */
+/*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 13:15:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 15:40:39 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/19 16:51:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IMG_H
-# define IMG_H
+#ifndef DATA_H
+# define DATA_H
 
-# define DEF_WID 1360
-# define DEF_HEI 768
+# include "map.h"
+# include "img.h"
 
-# include <stddef.h>
-# include <stdint.h>
-
-typedef struct s_mlx
+typedef struct s_data
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	size_t		wid;
-	size_t		hei;
-	uint32_t	*px;
-}	t_mlx;
-
-void	free_mlx(t_mlx *mlx);
-int		init_mlx(t_mlx *mlx);
+	t_map	map;
+	t_mlx	mlx;
+}	t_data;
 
 #endif

@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   img.h                                              :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 13:15:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 15:40:39 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 15:19:12 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/19 16:54:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef IMG_H
-# define IMG_H
+#include <X11/Xutil.h>
+#include "mlx.h"
+#include "data.h"
+#include "img.h"
 
-# define DEF_WID 1360
-# define DEF_HEI 768
-
-# include <stddef.h>
-# include <stdint.h>
-
-typedef struct s_mlx
+int	key_hook(int key, void *data_)
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	size_t		wid;
-	size_t		hei;
-	uint32_t	*px;
-}	t_mlx;
+	t_data	*data;
 
-void	free_mlx(t_mlx *mlx);
-int		init_mlx(t_mlx *mlx);
-
-#endif
+	data = data_;
+	printf("%d\n", key);
+	if (key == XK_Escape)
+		mlx_loop_end(data->mlx.mlx);
+	return (0);
+}
