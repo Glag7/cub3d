@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 13:40:19 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:03:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include "utils.h"
 #include "parsing.h"
 #include "err.h"
+
+static void	start_game(t_mlx *mlx, t_map *map)
+{
+	//init hooks
+	//
+}
 
 int	main(int argc, char **argv)
 {
@@ -41,7 +47,7 @@ int	main(int argc, char **argv)
 		ft_perror(ERR_MLX);
 		return (1);
 	}
-	//TODO DRAW
+	start_game(&mlx, &map);
 	free_map(&map);
 	free_mlx(&mlx);
 	return (0);
