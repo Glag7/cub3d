@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   win.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 15:32:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 17:02:04 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/19 17:05:10 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#include <X11/Xutil.h>
+#include "mlx.h"
+#include "data.h"
+#include "img.h"
 
-int	key_hook(int key, void *data_);
-int	win_hook(void *data_);
+int	win_hook(void *data_)
+{
+	t_data	*data;
 
-#endif
+	data = data_;
+	mlx_loop_end(data->mlx.mlx);
+	return (0);
+}

@@ -6,13 +6,13 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 19:55:28 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:38:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include "map.h"
-#include "math.h"
 #include "err.h"
 #include "utils.h"
 
@@ -23,12 +23,6 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 		ft_perror(ERR_MOREPLAYER);
 		return (1);
 	}
-	if (*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E')
-	{
-		*c = '0';
-		m->player.x = x;
-		m->player.y = y;
-	}
 	if (*c == 'N')
 		m->player.a = 0.;
 	else if (*c == 'W')
@@ -37,6 +31,12 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 		m->player.a = M_PI;
 	else if (*c == 'E')
 		m->player.a = -M_PI_2;
+	if (*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E')
+	{
+		*c = '0';
+		m->player.x = x;
+		m->player.y = y;
+	}
 	else if (!(*c == '0' || *c == '1' || *c == ' '))
 	{
 		ft_perror(ERR_BADCHAR);

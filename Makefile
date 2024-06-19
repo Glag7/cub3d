@@ -32,7 +32,8 @@ SRC = main.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c \
-      $(HOOKS)keys.c
+      $(HOOKS)keys.c \
+      $(HOOKS)win.c
 
 SRC_BONUS = skibidi
 
