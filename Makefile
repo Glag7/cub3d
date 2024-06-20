@@ -11,6 +11,7 @@ PARSING = parsing/
 UTILS = utils/
 COMMON = common/
 HOOKS = hooks/
+RENDER = render/
 
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
@@ -33,7 +34,8 @@ SRC = main.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c \
       $(HOOKS)keys.c \
-      $(HOOKS)win.c
+      $(HOOKS)win.c \
+      $(RENDER)raycast.c
 
 SRC_BONUS = skibidi
 
@@ -68,7 +70,7 @@ bonus :
 $(LIB) :
 	@make -C $(LIBDIR) -s
 
-$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(HOOKS) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
+$(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(RENDER) $(OBJ_DIR)$(HOOKS) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
 
 $(OBJ_DIR)$(COMMON) : $(OBJ_DIR)
@@ -82,6 +84,10 @@ $(OBJ_DIR)$(HOOKS) : $(OBJ_DIR)
 
 $(OBJ_DIR)$(UTILS) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(UTILS)
+
+
+$(OBJ_DIR)$(RENDER) : $(OBJ_DIR)
+	@ mkdir -p $(OBJ_DIR)$(RENDER)
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)

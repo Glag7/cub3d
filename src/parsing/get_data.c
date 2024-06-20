@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/19 17:38:06 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:30:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 		return (1);
 	}
 	if (*c == 'N')
-		m->player.a = 0.;
-	else if (*c == 'W')
 		m->player.a = M_PI_2;
-	else if (*c == 'S')
+	else if (*c == 'W')
 		m->player.a = M_PI;
-	else if (*c == 'E')
+	else if (*c == 'S')
 		m->player.a = -M_PI_2;
+	else if (*c == 'E')
+		m->player.a = 0;
 	if (*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E')
 	{
 		*c = '0';

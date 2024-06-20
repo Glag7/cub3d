@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 18:53:26 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:20:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stddef.h>
 # include <stdint.h>
 
+# define DEF_FOV 90.
+
 typedef struct s_img
 {
 	uint32_t	*px;
@@ -24,6 +26,7 @@ typedef struct s_img
 
 typedef struct s_player
 {
+	double	fov;
 	double	x;
 	double	y;
 	double	a;

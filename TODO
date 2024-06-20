@@ -1,0 +1,3 @@
+mouvements fluides
+fog : si trop loin mettre bleu, si mi loin melanger (moyenne ponderee) (maxlen dans img)
+mettre couleur * 2
