@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   paint.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 15:31:10 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/21 15:25:35 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/21 15:30:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#include <stddef.h>
+#include <stdint.h>
 
-int		draw(void *data_);
-void	paint(uint32_t *px_, uint64_t color, size_t len);
+void	paint(uint32_t *px_, uint64_t color, size_t len)
+{
+	uint64_t	*px;
 
-#endif
+	px = (uint64_t *)px_;
+	len >>= 2;
+	while (len)
+	{
+		*px = color;
+		++px;
+		--len;
+	}
+}

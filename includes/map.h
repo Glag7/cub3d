@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/20 16:20:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:22:14 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_map
 	t_img		s;
 	t_img		w;
 	t_img		e;
-	uint32_t	floor;
-	uint32_t	ceil;
+	uint64_t	floor;
+	uint64_t	ceil;
 	t_player	player;
 }	t_map;
 
