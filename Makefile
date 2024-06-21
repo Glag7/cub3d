@@ -36,7 +36,7 @@ SRC = main.c \
       $(HOOKS)keys.c \
       $(HOOKS)win.c \
       $(RENDER)raycast.c \
-      $(PAINT)paint.c
+      $(RENDER)paint.c
 
 SRC_BONUS = skibidi
 
