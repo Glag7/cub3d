@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:15:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 16:57:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:16:26 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,28 @@
 
 # define DEF_WID 1360
 # define DEF_HEI 768
+# define DEF_D 120
+# define DEF_OFFSET 30
 
 # include <stddef.h>
 # include <stdint.h>
+
+typedef struct s_min
+{
+	uint8_t		*mask;
+	unsigned int	d;
+	unsigned int	offset;
+}	t_min;
 
 typedef struct s_mlx
 {
 	void		*mlx;
 	void		*win;
 	void		*img;
-	size_t		wid;
-	size_t		hei;
 	uint32_t	*px;
+	t_min		mini;
+	unsigned int	wid;
+	unsigned int	hei;
 	uint64_t	keys;
 }	t_mlx;
 
