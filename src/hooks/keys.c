@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:19:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/20 15:06:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:01:02 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,27 @@ int	key_hook(int key, void *data_)
 		mlx_loop_end(data->mlx.mlx);
 	else if (key == XK_w)
 	{
-		data->map.player.y -= .05 * cos(data->map.player.a);
-		data->map.player.x -= .05 * sin(data->map.player.a);
+		data->map.player.y += .05 * sin(data->map.player.a);
+		data->map.player.x += .05 * cos(data->map.player.a);
 	}
 	else if (key == XK_s)
-	{
-		data->map.player.y += .05 * cos(data->map.player.a);
-		data->map.player.x += .05 * sin(data->map.player.a);
-	}
-	else if (key == XK_a)
 	{
 		data->map.player.y -= .05 * sin(data->map.player.a);
 		data->map.player.x -= .05 * cos(data->map.player.a);
 	}
+	else if (key == XK_a)
+	{
+		data->map.player.y -= .05 * cos(data->map.player.a);
+		data->map.player.x -= .05 * sin(data->map.player.a);
+	}
 	else if (key == XK_d)
 	{
-		data->map.player.y += .05 * sin(data->map.player.a);
-		data->map.player.x += .05 * cos(data->map.player.a);
+		data->map.player.y += .05 * cos(data->map.player.a);
+		data->map.player.x += .05 * sin(data->map.player.a);
 	}
 	else if (key == XK_Left)
-		data->map.player.a += .1;
+		data->map.player.a -= .05;
 	else if (key == XK_Right)
-		data->map.player.a -= .1;
+		data->map.player.a += .05;
 	return (0);
 }
