@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 18:51:39 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/21 18:59:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
-
-# include <stdint.h>
-# include <stddef.h>
-# include "data.h"
-
-int		draw(void *data_);
-void	paint(uint32_t *px_, uint64_t color, size_t len);//TODO rm
-void	drawv(t_data *data, uint32_t color, unsigned int x, unsigned int hei);
-void	move(t_map *map, uint64_t keys);
-
-#endif
+void	draw_minimap(t_data *data)
+{
+//ajouter un masque minimap dans mlx
+//faire un rond dedans
+//si masque dessiner dans le carre
+}

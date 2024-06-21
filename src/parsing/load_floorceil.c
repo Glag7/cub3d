@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:53:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 15:24:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 18:13:29 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static uint8_t	atocolor(char *buf, int *err, size_t *i_glob)
 	return (color);
 }
 
-static int	atorgb(char *buf, uint64_t *rgb, size_t *i)
+static int	atorgb(char *buf, uint32_t *rgb, size_t *i)
 {
 	int	err;
 
@@ -70,7 +70,7 @@ static int	atorgb(char *buf, uint64_t *rgb, size_t *i)
 
 int	load_floor(void *mlx, t_map *map, char *buf, size_t *i)
 {
-	uint64_t	rgb;
+	uint32_t	rgb;
 
 	(void)mlx;
 	(*i)++;
@@ -79,13 +79,13 @@ int	load_floor(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_BAD_FLOOR);
 		return (1);
 	}
-	map->floor = rgb + (rgb << 32);
+	map->floor = rgb;
 	return (0);
 }
 
 int	load_ceil(void *mlx, t_map *map, char *buf, size_t *i)
 {
-	uint64_t	rgb;
+	uint32_t	rgb;
 
 	(void)mlx;
 	(*i)++;
@@ -94,6 +94,6 @@ int	load_ceil(void *mlx, t_map *map, char *buf, size_t *i)
 		ft_perror(ERR_BAD_CEIL);
 		return (1);
 	}
-	map->ceil = rgb + (rgb << 32);
+	map->ceil = rgb;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 17:58:50 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 18:52:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_point
 #define YSIDE 1
 
 
-static void	trace_ray(t_map *map, t_mlx *mlx, double a, size_t x)
+static void	trace_ray(t_data *data, double a, size_t x)
 {
 	t_point	pos;
 	t_point	vec;
@@ -39,7 +39,7 @@ static void	trace_ray(t_map *map, t_mlx *mlx, double a, size_t x)
 	hit = 0;
 	len = 0.;
 	vec = (t_point){cos(a), -sin(a)};
-	pos = (t_point){map->player.x, map->player.y};
+	pos = (t_point){data->map.player.x, data->map.player.y};
 	if (vec.x < 0)
 		dist.x = (pos.x - floor(pos.x)) / -vec.x;
 	else
@@ -62,14 +62,13 @@ static void	trace_ray(t_map *map, t_mlx *mlx, double a, size_t x)
 			dist.y += fabs(vec.y);
 			side = YSIDE;
 		}
-		len = sqrt(pow(pos.x - map->player.x, 2.) + pow(pos.y - map->player.y, 2));
-		if (map->map[map->wid * (size_t)pos.y + (size_t)pos.x])
+		len = sqrt(pow(pos.x - data->map.player.x, 2.) + pow(pos.y - data->map.player.y, 2));
+		if (data->map.map[data->map.wid * (size_t)pos.y + (size_t)pos.x])
 			hit = 1 ;
 	}
 	if (!hit)	
 		return ;	
 
-	int hei = mlx->hei / len;
 	int color;
 	if (side == XSIDE && vec.x > 0)
 		color = 0x000000FF;
@@ -79,33 +78,24 @@ static void	trace_ray(t_map *map, t_mlx *mlx, double a, size_t x)
 		color = 0x00FF0000;
 	else
 		color = 0x00FFFF00;
-	int start = -hei / 2 + mlx->hei / 2;
-	int	i = 0;
-
-	while (i < hei)
-	{
-		mlx->px[x + (start + i) * DEF_WID] = color;
-		i++;
-	}
+	drawv(data, color, x, (unsigned int)((double)data->mlx.hei / len));
 }
 
-static void	raycast(t_map *map, t_mlx *mlx)
+static void	raycast(t_data *data)
 {
 	double	astep;
 	double	a;
 	size_t	i;
 
 	i = 0;
-	astep = map->player.fov * (double)map->player.lwid / (double)mlx->wid;
-	a = map->player.a - map->player.fov * 0.5;
-	printf("a is %f, starting from %f", map->player.a, a);
-	while (i < mlx->wid)
+	astep = data->map.player.fov * (double)data->map.player.lwid / (double)data->mlx.wid;
+	a = data->map.player.a - data->map.player.fov * 0.5;
+	while (i < data->mlx.wid)
 	{
-		trace_ray(map, mlx, a, i);
-		i += map->player.lwid;
+		trace_ray(data, a, i);
+		i += data->map.player.lwid;
 		a += astep;
 	}
-	printf(", done at %f\r", a);
 }
 
 
@@ -238,9 +228,10 @@ int	draw(void *data_)
 	data = data_;
 	move(&data->map, data->mlx.keys);
 	half = (data->mlx.wid * data->mlx.hei) / 2;
-	paint(data->mlx.px, data->map.ceil, half);
-	paint(data->mlx.px + half, data->map.floor, half);
-	raycast(&data->map, &data->mlx);
+	//paint(data->mlx.px, data->map.ceil, half);
+	//paint(data->mlx.px + half, data->map.floor, half);
+	raycast(data);
+	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);
 }
