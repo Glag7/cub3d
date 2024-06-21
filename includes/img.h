@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:15:51 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 19:16:26 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:52:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define DEF_WID 1360
 # define DEF_HEI 768
-# define DEF_D 120
-# define DEF_OFFSET 30
+# define DEF_D 151
+# define DEF_OFFSET 20
 
 # include <stddef.h>
 # include <stdint.h>

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 16:59:28 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:40:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	ft_bzero(&data, sizeof(data));
 	data.mlx.mlx = mlx_init();
 	if (data.mlx.mlx == NULL)
 	{
