@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 15:22:14 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/21 16:41:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdint.h>
 
 # define DEF_FOV 90.
+# define DEF_LWID 1
 
 typedef struct s_img
 {
@@ -26,10 +27,11 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	double	fov;
-	double	x;
-	double	y;
-	double	a;
+	double		fov;
+	double		x;
+	double		y;
+	double		a;
+	unsigned int	lwid;
 }	t_player;
 
 typedef struct s_map

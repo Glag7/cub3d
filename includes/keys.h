@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 17:09:08 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/21 17:01:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef KEYS_H
+# define KEYS_H
 
-# include <stdint.h>
-# include <stddef.h>
-
-int		draw(void *data_);
-void	paint(uint32_t *px_, uint64_t color, size_t len);
-void	move(t_map *map, uint64_t keys);
+# define KEY_W 1
+# define KEY_S 2
+# define KEY_A 4
+# define KEY_D 8
+# define KEY_LEFT 16
+# define KEY_RIGHT 32
 
 #endif

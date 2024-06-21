@@ -1,3 +1,11 @@
 mouvements fluides
 fog : si trop loin mettre bleu, si mi loin melanger (moyenne ponderee) (maxlen dans img)
 mettre couleur * 2
+
+wid et hei doivent etre pairs
+
+tracer le plafond et le sol en meme temps que les murs
+faire un systeme pour detecter appui et relachement des keys
+arreter d'avancer quand quitter fenetre
+deltatime
+make ram
