@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   manage_settings.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 15:52:26 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 16:45:22 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include "set.h"
+#include <math.h>
 
-# include <stdint.h>
-
-typedef struct s_img
+void	init_settings(t_set *set)
 {
-	uint32_t	*px;
-	uint64_t	size;
-}	t_img;
-
-typedef struct s_map
-{
-	uint8_t			*map;
-	unsigned int	hei;
-	unsigned int	wid;
-	t_img			n;
-	t_img			s;
-	t_img			w;
-	t_img			e;
-	uint32_t		floor;
-	uint32_t		ceil;
-}	t_map;
-
-void	free_map(t_map *map);
-
-#endif
+	set->d = DEF_D;
+	set->r = set->d / 2;
+	set->offset = DEF_OFFSET;
+	set->ncase = DEF_NCASE;
+	set->ncolor = DEF_NCOLOR;
+	set->color = DEF_COLOR;
+	set->pcolor = DEF_PCOLOR;
+	set->fov = DEF_FOV * M_PI / 180.;
+	set->view = DEF_VIEW;
+	set->lwid = DEF_LWID;
+	set->wid = DEF_WID;
+	set->hei = DEF_HEI;
+}

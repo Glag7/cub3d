@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 15:52:26 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/22 15:25:29 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 16:33:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef MINI_H
+# define MINI_H
 
 # include <stdint.h>
 
-typedef struct s_img
+typedef struct s_mini
 {
-	uint32_t	*px;
-	uint64_t	size;
-}	t_img;
+	uint8_t	*m_curr;
+	uint8_t	*m_circle;
+	uint8_t	*m_square;
+	uint8_t	*m_custom;
+}	t_mini;
 
-typedef struct s_map
-{
-	uint8_t			*map;
-	unsigned int	hei;
-	unsigned int	wid;
-	t_img			n;
-	t_img			s;
-	t_img			w;
-	t_img			e;
-	uint32_t		floor;
-	uint32_t		ceil;
-}	t_map;
-
-void	free_map(t_map *map);
+int	init_mini(t_mini *mini, t_set *set);
+void	free_mini(t_mini *mini);
 
 #endif

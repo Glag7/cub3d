@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/20 19:30:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:06:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 	if (*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E')
 	{
 		*c = '0';
-		m->player.x = x;
-		m->player.y = y;
+		m->player.x = x + 0.5;
+		m->player.y = y + 0.5;
 	}
 	else if (!(*c == '0' || *c == '1' || *c == ' '))
 	{
@@ -45,17 +45,17 @@ static inline int	parse_char(char *c, double x, double y, t_map *m)
 	return (0);
 }
 
-int	get_data(char *buf, t_map *map)
+int	get_data(char *buf, t_data *data)
 {
 	size_t	i;
 
-	map->player.x = -1.;
+	data->play.x = -1.;
 	while (*buf)
 	{
 		i = 0;
 		while (buf[i] && buf[i] != '\n')
 		{
-			if (parse_char(buf + i, (double)i, (double)map->hei, map))
+			if (parse_char(buf + i, (double)i, (double)map->hei, data))
 				return (1);
 			i++;
 		}
@@ -64,7 +64,7 @@ int	get_data(char *buf, t_map *map)
 			map->wid = i;
 		buf += i + (buf[i] == '\n');
 	}
-	if (map->player.x == -1)
+	if (data->play.x == -1)
 	{
 		ft_perror(ERR_NOPLAYER);
 		return (1);

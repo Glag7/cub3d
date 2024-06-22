@@ -20,6 +20,8 @@ CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
 SRC = main.c \
       $(COMMON)free_map.c \
       $(COMMON)manage_mlx.c \
+      $(COMMON)manage_mini.c \
+      $(COMMON)manage_settings.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \
       $(PARSING)load.c \

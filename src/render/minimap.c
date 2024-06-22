@@ -6,21 +6,13 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 15:12:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:40:39 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stddef.h>
 #include "data.h"
-
-//TODO
-//rayon
-//couleur
-//n de cases
-//mask yesno
-//nthread
-//threadoffset
 
 #define CASES 5
 #define COLOR 0XFFFFFFCC

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 19:40:19 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:47:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@
 
 static void	start_game(t_data *data)
 {
-	data->mlx.keys = 0;
-	data->map.player.x += 0.5;
-	data->map.player.y += 0.5;
-	data->map.player.fov = DEF_FOV * M_PI / 180.;
-	data->map.player.lwid = DEF_LWID;
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->mlx.win, KeyRelease, KeyReleaseMask, &unkey_hook, data);
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);
@@ -48,20 +43,29 @@ int	main(int argc, char **argv)
 		ft_perror(ERR_MLX);
 		return (1);
 	}
-	if (parse_map(data.mlx.mlx, &data.map, argc, argv))
+	init_settings(&data.set);
+	if (parse_map(data.mlx.mlx, &data, argc, argv))
 	{
 		mlx_destroy_display(data.mlx.mlx);
 		free(data.mlx.mlx);
 		return (1);
 	}
-	if (init_mlx(&data.mlx))
+	if (init_mlx(&data.mlx, data.set.wid, data.set.hei))
 	{
 		free_map(&data.map);
 		ft_perror(ERR_MLX);
 		return (1);
 	}
+	if (init_mini(&data.mini, &data.set))
+	{
+		ft_perror(ERR_MALLOC);
+		free_map(&data.map);
+		free_mlx(&data.mlx);
+		return (1);
+	}
 	start_game(&data);
 	free_map(&data.map);
 	free_mlx(&data.mlx);
+	free_mini(&data.mini);
 	return (0);
 }

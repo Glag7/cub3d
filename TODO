@@ -2,6 +2,8 @@ mouvements fluides
 fog : si trop loin mettre bleu, si mi loin melanger (moyenne ponderee) (maxlen dans img)
 mettre couleur * 2
 
+custom keys
+
 wid et hei doivent etre pairs
 
 tracer le plafond et le sol en meme temps que les murs
@@ -11,6 +13,11 @@ deltatime
 taille de map doit etre impaire
 make ram
 
+resize map : free puis changer taille puis re init
+changer masque map
+
+option pour bouger et resize la map
+option pour faire ton propre masque
 
 map : tab pour le centrer
 nombre de cases visibles changeable
