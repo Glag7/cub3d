@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 19:11:59 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:38:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	init_settings(t_set *set)
 {
-	set->ncase = DEF_NCASE;
+	set->ncase = 100;//DEF_NCASE;
 	set_diameter(set, DEF_D);
 	set->offset = DEF_OFFSET;
 	set->ncolor = DEF_NCOLOR;
