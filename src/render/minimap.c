@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 20:07:02 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 14:47:10 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,29 @@
 #include <stddef.h>
 #include "data.h"
 
-static inline void	draw_line(t_data *data, uint32_t *px)
+//TODO
+//rayon
+//couleur
+//n de cases
+//mask yesno
+//nthread
+//threadoffset
+
+#define CASES 10
+#define COLOR 0XFFFFFFCC
+#define NOCOLOR 0X0
+
+static inline uint32_t	get_color(t_data *data, int i, int j)
 {
-	*(px) = 0xFFFF0000;
-	*(px - data->mlx.wid) = 0xFFFF0000;
-	*(px + data->mlx.wid) = 0xFFFF0000;
-	*(px + 2 * data->mlx.wid) = 0xFFFF0000;
-	*(px - 2 * data->mlx.wid) = 0xFFFF0000;
-	*(px + 3 * data->mlx.wid) = 0xFFFF0000;
-	*(px - 3 * data->mlx.wid) = 0xFFFF0000;
-	*(px + 4 * data->mlx.wid) = 0xFFFF0000;
-	*(px - 4 * data->mlx.wid) = 0xFFFF0000;
-	*(px + 5 * data->mlx.wid) = 0xFFFF0000;
-	*(px - 5 * data->mlx.wid) = 0xFFFF0000;
+	int	index;
+
+	index = (data->map.player.x + data->map.player.y * data->map.wid//case du joueur
+		+ i * CASES / (int)data->mlx.mini.d
+		+ j * CASES / (int)data->mlx.mini.d * (int)data->map.wid);
+	if (data->map.map[index])
+		return (NOCOLOR);
+	else
+		return (COLOR);
 }
 
 void	draw_minimap(t_data *data)
@@ -40,18 +50,12 @@ void	draw_minimap(t_data *data)
 		j = 0;
 		while (j < data->mlx.mini.d)
 		{
-			if (data->mlx.mini.mask[i * data->mlx.mini.d + j])
-				data->mlx.px[(i + data->mlx.mini.offset) * data->mlx.wid + j + data->mlx.mini.offset] = 0xFFFFFFFF;
+			if (data->mlx.mini.mask[j * data->mlx.mini.d + i])
+				data->mlx.px[(j + data->mlx.mini.offset) * data->mlx.wid + i
+					+ data->mlx.mini.offset] = get_color(data, (i - data->mlx.mini.d / 2), j - data->mlx.mini.d / 2);
 			j++;
 		}
 		i++;
 	}
-	draw_line(data, &data->mlx.px[(data->mlx.mini.d / 2 + data->mlx.mini.offset) * data->mlx.wid + data->mlx.mini.d / 2 + data->mlx.mini.offset]);
-	draw_line(data, &data->mlx.px[(data->mlx.mini.d / 2 + data->mlx.mini.offset - 1) * data->mlx.wid + data->mlx.mini.d / 2 + data->mlx.mini.offset + 1]);
-	draw_line(data, &data->mlx.px[(data->mlx.mini.d / 2 + data->mlx.mini.offset - 1) * data->mlx.wid + data->mlx.mini.d / 2 + data->mlx.mini.offset - 1]);
-	draw_line(data, &data->mlx.px[(data->mlx.mini.d / 2 + data->mlx.mini.offset - 2) * data->mlx.wid + data->mlx.mini.d / 2 + data->mlx.mini.offset + 2]);
-	draw_line(data, &data->mlx.px[(data->mlx.mini.d / 2 + data->mlx.mini.offset - 2) * data->mlx.wid + data->mlx.mini.d / 2 + data->mlx.mini.offset - 2]);
+	//carre a l'echelle
 }
-
-//TODO draw arrow
-//TODO j'ai passe des trucs en unsigned enlever les size_t inutiles

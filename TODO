@@ -10,3 +10,18 @@ arreter d'avancer quand quitter fenetre
 deltatime
 taille de map doit etre impaire
 make ram
+
+
+map : tab pour le centrer
+nombre de cases visibles changeable
+rotater pour voir
+faire une scale
+
+//TODO j'ai passe des trucs en unsigned enlever les size_t inutiles
+entrelacement ?
+
+
+
+
+liste des always inline a tester:
+minimap.c : getcolor

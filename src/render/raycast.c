@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/21 18:52:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:09:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,9 @@ int	draw(void *data_)
 	data = data_;
 	move(&data->map, data->mlx.keys);
 	half = (data->mlx.wid * data->mlx.hei) / 2;
-	//paint(data->mlx.px, data->map.ceil, half);
-	//paint(data->mlx.px + half, data->map.floor, half);
-	raycast(data);
+	paint(data->mlx.px, data->map.ceil, half);
+	paint(data->mlx.px + half, data->map.floor, half);
+	//raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);
