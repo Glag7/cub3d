@@ -6,55 +6,55 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 17:08:09 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:51:09 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stdint.h>
 #include <stddef.h>
 #include "data.h"
 
-#define CASES 5
-#define COLOR 0XFFFFFFCC
-#define NOCOLOR 0X0
-
 static inline uint32_t	get_color(t_data *data, int i, int j)
 {
+	float	test;
 	int	index;
 
-	index = (int)((double)data->play.x + ((double)data->play.y * (double)data->map.wid)
-		+ ((double)i * (double)CASES) / (double)data->set.d
-		+ (int)(((double)j * (double)CASES) / (double)data->set.d) * (double)data->map.wid);
+	test = data->play.x + (float)i / ((float)data->set.d / (float)data->set.ncase)
+			+ floor((data->play.y) + (float)j / ((float)data->set.d / (float)data->set.ncase)) * (float)data->map.wid;
+	index = (int)test;
 	if (data->map.map[index])
-		return (NOCOLOR);
+		return (data->set.ncolor);
 	else
-		return (COLOR);
+		return (data->set.color);
 }
 
+//TODO passer le ratio a getcolor
 void	draw_minimap(t_data *data)
 {
-	unsigned int	i;
-	unsigned int	j;
+	unsigned int			i;
+	unsigned int			j;
+	const unsigned int		half = data->set.d / (data->set.ncase * 10);
 
-	i = 0;
+	i = data->set.offthread;
 	while (i < data->set.d)
 	{
-		j = 0;
+		j = data->set.offthread;
 		while (j < data->set.d)
 		{
 			if (data->mini.m_curr[j * data->set.d + i])
-				data->mlx.px[(j + data->set.offset) * data->set.wid + i
-					+ data->set.offset] = get_color(data, (i - data->set.d / 2), j - data->set.d / 2);
-			j++;
+			{
+				if (i >= data->set.r - half && i <= data->set.r + half
+					&& j >= data->set.r - half && j <= data->set.r + half)
+					data->mlx.px[(j + data->set.offset) * data->set.wid + i
+						+ data->set.offset] = data->set.pcolor;
+				else
+					data->mlx.px[(j + data->set.offset) * data->set.wid + i
+						+ data->set.offset] = get_color(data,
+							i - data->set.r, j - data->set.r);
+			}
+			++j;
 		}
-		i++;
+		i += data->set.nthread;
 	}
-	//carre a l'echelle
 }
-
-/*\
-
-		while (j < data->mlx.mini.d)//FIXME dont look twice
-		{//TODO baser sur ncase (faire 1 dixieme de case)
-			if (i >= data->mlx.mini.d * 45 / 100 && i <= data->mlx.mini.d * 55 / 100 &&  j >= data->mlx.mini.d * 45 / 100 && j <= data->mlx.mini.d * 55 / 100 && data->mlx.mini.mask[j * data->mlx.mini.d + i])
-*/

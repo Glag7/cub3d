@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 17:03:01 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:56:38 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	move(t_play *play, uint64_t keys)
 {
 	if (keys & KEY_W)
 	{
-		play->y += .05 * sin(play->a);
-		play->x += .05 * cos(play->a);
+		play->y -= .05 * sin(play->a);
+		play->x -= .05 * cos(play->a);
 	}
 	if (keys & KEY_S)
 	{
-		play->y -= .05 * sin(play->a);
-		play->x -= .05 * cos(play->a);
+		play->y += .05 * sin(play->a);
+		play->x += .05 * cos(play->a);
 	}
 	if (keys & KEY_A)
 	{
@@ -47,7 +47,7 @@ void	move(t_play *play, uint64_t keys)
 	}
 	if (keys & KEY_LEFT)
 		play->a -= .005;
-	if (keys &KEY_RIGHT)
+	if (keys & KEY_RIGHT)
 		play->a += .005;
 	check_angle(&play->a);
 }

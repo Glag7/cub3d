@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:45:22 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:56:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,6 @@ void	init_settings(t_set *set)
 	set->lwid = DEF_LWID;
 	set->wid = DEF_WID;
 	set->hei = DEF_HEI;
+	set->offthread = 0;
+	set->nthread = 1;
 }
