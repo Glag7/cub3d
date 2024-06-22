@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 14:47:10 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:12:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 //nthread
 //threadoffset
 
-#define CASES 50
+#define CASES 5
 #define COLOR 0XFFFFFFCC
 #define NOCOLOR 0X0
 
@@ -59,3 +59,10 @@ void	draw_minimap(t_data *data)
 	}
 	//carre a l'echelle
 }
+
+/*\
+
+		while (j < data->mlx.mini.d)//FIXME dont look twice
+		{//TODO baser sur ncase (faire 1 dixieme de case)
+			if (i >= data->mlx.mini.d * 45 / 100 && i <= data->mlx.mini.d * 55 / 100 &&  j >= data->mlx.mini.d * 45 / 100 && j <= data->mlx.mini.d * 55 / 100 && data->mlx.mini.mask[j * data->mlx.mini.d + i])
+*/
