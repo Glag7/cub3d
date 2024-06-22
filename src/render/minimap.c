@@ -22,7 +22,7 @@
 //nthread
 //threadoffset
 
-#define CASES 10
+#define CASES 50
 #define COLOR 0XFFFFFFCC
 #define NOCOLOR 0X0
 
@@ -30,9 +30,9 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 {
 	int	index;
 
-	index = (data->map.player.x + data->map.player.y * data->map.wid//case du joueur
-		+ i * CASES / (int)data->mlx.mini.d
-		+ j * CASES / (int)data->mlx.mini.d * (int)data->map.wid);
+	index = (int)((double)data->map.player.x + ((double)data->map.player.y * (double)data->map.wid)
+		+ ((double)i * (double)CASES) / (double)data->mlx.mini.d
+		+ (int)(((double)j * (double)CASES) / (double)data->mlx.mini.d) * (double)data->map.wid);
 	if (data->map.map[index])
 		return (NOCOLOR);
 	else
