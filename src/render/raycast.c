@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 13:09:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 17:02:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_point
 #define XSIDE 0
 #define YSIDE 1
 
-
+/*
 static void	trace_ray(t_data *data, double a, size_t x)
 {
 	t_point	pos;
@@ -97,7 +97,7 @@ static void	raycast(t_data *data)
 		a += astep;
 	}
 }
-
+*/
 
 /*
 void	raycast(t_map *map, t_mlx *mlx)
@@ -226,8 +226,8 @@ int	draw(void *data_)
 	size_t	half;
 
 	data = data_;
-	move(&data->map, data->mlx.keys);
-	half = (data->mlx.wid * data->mlx.hei) / 2;
+	move(&data->play, data->keys);
+	half = (data->set.wid * data->set.hei) / 2;
 	paint(data->mlx.px, data->map.ceil, half);
 	paint(data->mlx.px + half, data->map.floor, half);
 	//raycast(data);

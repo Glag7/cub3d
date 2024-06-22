@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:17:52 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:46:12 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 17:11:23 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	fill_custom(uint8_t *mask, unsigned int d, unsigned int r)
 {
 	unsigned int	i;
 	unsigned int	j;
-	int			x;
-	int			y;
+	int				x;
+	int				y;
 
 	i = 0;
 	while (i < d)
@@ -33,7 +33,7 @@ static void	fill_custom(uint8_t *mask, unsigned int d, unsigned int r)
 			x = i - r;
 			y = j - r;
 			if ((unsigned int)sqrt((float)(x * x + y * y)) > r
-				&& (i + j) % 2)
+				|| (i + j) % 2)
 				mask[i + j * d] = 0;
 			else
 				mask[i + j * d] = 1;
@@ -47,8 +47,8 @@ static void	fill_circle(uint8_t *mask, unsigned int d, unsigned int r)
 {
 	unsigned int	i;
 	unsigned int	j;
-	int			x;
-	int			y;
+	int				x;
+	int				y;
 
 	i = 0;
 	while (i < d)
@@ -92,8 +92,10 @@ int	init_mini(t_mini *mini, t_set *set)
 	mini->m_circle = malloc(set->d * set->d);
 	mini->m_square = malloc(set->d * set->d);
 	mini->m_custom = malloc(set->d * set->d);
-	mini->m_curr = mini->m_custom;//
-	if (mini->m_circle == NULL || mini->m_square == NULL || mini->m_custom == NULL)
+	mini->m_curr = mini->m_circle;
+	if (mini->m_circle == NULL
+		|| mini->m_square == NULL
+		|| mini->m_custom == NULL)
 	{
 		free(mini->m_circle);
 		free(mini->m_square);

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 15:40:39 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 17:08:09 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 {
 	int	index;
 
-	index = (int)((double)data->map.player.x + ((double)data->map.player.y * (double)data->map.wid)
-		+ ((double)i * (double)CASES) / (double)data->mlx.mini.d
-		+ (int)(((double)j * (double)CASES) / (double)data->mlx.mini.d) * (double)data->map.wid);
+	index = (int)((double)data->play.x + ((double)data->play.y * (double)data->map.wid)
+		+ ((double)i * (double)CASES) / (double)data->set.d
+		+ (int)(((double)j * (double)CASES) / (double)data->set.d) * (double)data->map.wid);
 	if (data->map.map[index])
 		return (NOCOLOR);
 	else
@@ -37,14 +37,14 @@ void	draw_minimap(t_data *data)
 	unsigned int	j;
 
 	i = 0;
-	while (i < data->mlx.mini.d)
+	while (i < data->set.d)
 	{
 		j = 0;
-		while (j < data->mlx.mini.d)
+		while (j < data->set.d)
 		{
-			if (data->mlx.mini.mask[j * data->mlx.mini.d + i])
-				data->mlx.px[(j + data->mlx.mini.offset) * data->mlx.wid + i
-					+ data->mlx.mini.offset] = get_color(data, (i - data->mlx.mini.d / 2), j - data->mlx.mini.d / 2);
+			if (data->mini.m_curr[j * data->set.d + i])
+				data->mlx.px[(j + data->set.offset) * data->set.wid + i
+					+ data->set.offset] = get_color(data, (i - data->set.d / 2), j - data->set.d / 2);
 			j++;
 		}
 		i++;

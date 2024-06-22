@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:25:29 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:33:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:50:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_mini
 	uint8_t	*m_custom;
 }	t_mini;
 
-int	init_mini(t_mini *mini, t_set *set);
+int		init_mini(t_mini *mini, t_set *set);
 void	free_mini(t_mini *mini);
 
 #endif

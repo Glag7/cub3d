@@ -6,36 +6,37 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:06:51 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 16:58:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include <stddef.h>
 #include "map.h"
+#include "data.h"
 #include "err.h"
 #include "utils.h"
 
-static inline int	parse_char(char *c, double x, double y, t_map *m)
+static inline int	parse_char(char *c, double x, double y, t_data *d)
 {
-	if ((*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E') && m->player.x != -1)
+	if ((*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E') && d->play.x != -1)
 	{
 		ft_perror(ERR_MOREPLAYER);
 		return (1);
 	}
 	if (*c == 'N')
-		m->player.a = M_PI_2;
+		d->play.a = M_PI_2;
 	else if (*c == 'W')
-		m->player.a = M_PI;
+		d->play.a = M_PI;
 	else if (*c == 'S')
-		m->player.a = -M_PI_2;
+		d->play.a = -M_PI_2;
 	else if (*c == 'E')
-		m->player.a = 0;
+		d->play.a = 0;
 	if (*c == 'N' || *c == 'S' || *c == 'W' || *c == 'E')
 	{
 		*c = '0';
-		m->player.x = x + 0.5;
-		m->player.y = y + 0.5;
+		d->play.x = x + 0.5;
+		d->play.y = y + 0.5;
 	}
 	else if (!(*c == '0' || *c == '1' || *c == ' '))
 	{
@@ -55,13 +56,13 @@ int	get_data(char *buf, t_data *data)
 		i = 0;
 		while (buf[i] && buf[i] != '\n')
 		{
-			if (parse_char(buf + i, (double)i, (double)map->hei, data))
+			if (parse_char(buf + i, (double)i, (double)data->map.hei, data))
 				return (1);
 			i++;
 		}
-		++map->hei;
-		if (i > map->wid)
-			map->wid = i;
+		++(data->map.hei);
+		if (i > data->map.wid)
+			data->map.wid = i;
 		buf += i + (buf[i] == '\n');
 	}
 	if (data->play.x == -1)
