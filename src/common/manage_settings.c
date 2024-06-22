@@ -6,19 +6,19 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 18:56:54 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/22 19:11:59 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "set.h"
+#include "mini.h"
 #include <math.h>
 
 void	init_settings(t_set *set)
 {
-	set->d = DEF_D;
-	set->r = set->d / 2;
-	set->offset = DEF_OFFSET;
 	set->ncase = DEF_NCASE;
+	set_diameter(set, DEF_D);
+	set->offset = DEF_OFFSET;
 	set->ncolor = DEF_NCOLOR;
 	set->color = DEF_COLOR;
 	set->pcolor = DEF_PCOLOR;

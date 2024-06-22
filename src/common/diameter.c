@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mini.h                                             :+:      :+:    :+:   */
+/*   diameter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:25:29 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 19:10:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/22 19:04:15 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 19:16:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINI_H
-# define MINI_H
+#include "mini.h"
+#include "set.h"
 
-# include <stdint.h>
-# include "set.h"
-
-typedef struct s_mini
+void	set_diameter(t_set *set, unsigned int d)
 {
-	uint8_t	*m_curr;
-	uint8_t	*m_circle;
-	uint8_t	*m_square;
-	uint8_t	*m_custom;
-}	t_mini;
-
-int		init_mini(t_mini *mini, t_set *set);
-void	set_diameter(t_set *set, unsigned int d);
-void	free_mini(t_mini *mini);
-
-#endif
+	set->d = d;
+	set->r = d / 2;
+	set->pstart = set->r - set->d / (set->ncase * 10);
+	set->pend = set->r + set->d / (set->ncase * 10);
+	set->ratio = (double)set->d / (double)set->ncase;
+}

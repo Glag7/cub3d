@@ -22,6 +22,7 @@ SRC = main.c \
       $(COMMON)manage_mlx.c \
       $(COMMON)manage_mini.c \
       $(COMMON)manage_settings.c \
+      $(COMMON)diameter.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \
       $(PARSING)load.c \
