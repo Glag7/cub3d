@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:13:08 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:26:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define DEF_FOV 90.
 # define DEF_VIEW 10.
 
-# define DEF_LWID 1
 # define DEF_WID 1360
 # define DEF_HEI 768
 
@@ -46,12 +45,10 @@ typedef struct s_set
 	double			fov;
 	double			view;
 
-	unsigned int	lwid;
 	unsigned int	nthread;
 	unsigned int	offthread;
 	unsigned int	wid;
 	unsigned int	hei;
-	uint32_t		__padding2;
 }	t_set;
 
 void	init_settings(t_set *set);

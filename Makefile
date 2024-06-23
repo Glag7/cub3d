@@ -41,8 +41,7 @@ SRC = main.c \
       $(RENDER)raycast.c \
       $(RENDER)move.c \
       $(RENDER)drawv.c \
-      $(RENDER)minimap.c \
-      $(RENDER)paint.c
+      $(RENDER)minimap.c
 
 SRC_BONUS = skibidi
 

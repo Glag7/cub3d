@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 17:04:03 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:26:28 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdint.h>
 #include "data.h"
 
-//TODO widl
 void	drawv(t_data *data, uint32_t color, unsigned int x, unsigned int hei)
 {
 	unsigned int	i;
