@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:20:28 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:43:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 #include "play.h"
 #include "keys.h"
 
-static inline void	check_angle(double *a)
+static inline void	check_angle(t_play *play)
 {
-	if (*a > M_PI)
-		*a -= 2. * M_PI;
-	else if (*a < -M_PI)
-		*a += 2. * M_PI;
+	if (play->a > M_PI)
+		play->a -= 2. * M_PI;
+	else if (play->a < -M_PI)
+		play->a += 2. * M_PI;
+	play->sina = sin(play->a);
+	play->cosa = cos(play->a);
 }
 
 void	move(t_play *play, uint64_t keys)
@@ -49,5 +51,5 @@ void	move(t_play *play, uint64_t keys)
 		play->a += .005;
 	if (keys & KEY_RIGHT)
 		play->a -= .005;
-	check_angle(&play->a);
+	check_angle(play);
 }

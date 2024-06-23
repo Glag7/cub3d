@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:49:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:41:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 static void	start_game(t_data *data)
 {
+	data->play.sina = sin(data->play.a);
+	data->play.cosa = cos(data->play.a);
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->mlx.win, KeyRelease, KeyReleaseMask, &unkey_hook, data);
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);

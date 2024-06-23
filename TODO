@@ -27,6 +27,7 @@ faire une scale
 //TODO j'ai passe des trucs en unsigned enlever les size_t inutiles
 entrelacement ?
 
+opti sincos ?
 
 relire parsing
 

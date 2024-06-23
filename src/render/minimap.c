@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:18:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:44:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 	float	x;
 	float	y;
 
-	x = -cos(data->play.a) * (float)j + sin(data->play.a) * (float)i;
-	y = cos(data->play.a) * (float)i + sin(data->play.a) * (float)j;
+	x = -data->play.cosa * (float)j + data->play.sina * (float)i;
+	y = data->play.cosa * (float)i + data->play.sina * (float)j;
 	if (data->map.map[(int)(data->play.x + (float)x / (data->set.ratio)
 			+ floor((data->play.y) + (float)y / (data->set.ratio))
 			* (float)data->map.wid)])
