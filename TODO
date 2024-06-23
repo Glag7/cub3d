@@ -33,5 +33,7 @@ opti sincos ?
 
 relire parsing
 
+
 liste des always inline a tester:
 minimap.c : getcolor
+drawv.c lwid

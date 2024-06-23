@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 16:30:09 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:33:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_point
 	double	y;
 }	t_point;
 
-#define MAXLEN 2.
+#define MAXLEN 20.
 #define XSIDE 0
 #define YSIDE 1
 
@@ -39,35 +39,47 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	len = 0.;
 	vec = (t_point){cos(a), -sin(a)};
 	pos = (t_point){data->play.x, data->play.y};
-	if (vec.x < 0)
+	if (vec.x < 0.)//dist.x = cb de fois vc.x pour y aller
 		dist.x = (pos.x - floor(pos.x)) / -vec.x;
 	else
 		dist.x = (1.0 - pos.x + floor(pos.x)) / vec.x;
-	if (vec.y < 0)
+	if (vec.y < 0.)
 		dist.y = (pos.y - floor(pos.y)) / -vec.y;
 	else
 		dist.y = (1.0 - pos.y + floor(pos.y)) / vec.y;
 	while (!hit && len < MAXLEN)
 	{
-		if (dist.x < dist.y)
+		if (dist.x > 0. && dist.x < dist.y)
 		{
-			pos.x += vec.x;
-			dist.x += fabs(vec.x);
+			pos.y += vec.y * dist.x;
+			pos.x += vec.x * dist.x;
+			dist.x = 1. / fabs(vec.x);
+			if (vec.y < 0.)
+				dist.y = (pos.y - floor(pos.y)) / -vec.y;
+			else
+				dist.y = (1.0 - pos.y + floor(pos.y)) / vec.y;
 			side = XSIDE;
 		}
 		else
 		{
-			pos.y += vec.y;
-			dist.y += fabs(vec.y);
+			pos.x += vec.x * dist.y;
+			pos.y += vec.y * dist.y;
+			dist.y = 1. / fabs(vec.y);
+			if (vec.x < 0.)
+				dist.x = (pos.x - floor(pos.x)) / -vec.x;
+			else
+				dist.x = (1.0 - pos.x + floor(pos.x)) / vec.x;
 			side = YSIDE;
 		}
 		len = sqrt(pow(pos.x - data->play.x, 2.) + pow(pos.y - data->play.y, 2));
-		if (data->map.map[data->map.wid * (size_t)pos.y + (size_t)pos.x])
+		if (len < MAXLEN && data->map.map[data->map.wid * (size_t)pos.y + (size_t)pos.x])
 			hit = 1 ;
+
 	}
 	if (!hit)	
 		len = INFINITY;	
 
+	//
 	int color;
 	if (side == XSIDE && vec.x > 0)
 		color = 0x000000FF;
@@ -99,12 +111,12 @@ static void	raycast(t_data *data)
 
 
 /*
-void	raycast(t_map *map, t_mlx *mlx)
+void	raycast(t_data *data)
 {
-	double dirX = cos(map->player.a), dirY = sin(map->player.a);
+	double dirX = cos(data->play.a), dirY = sin(data->play.a);
 	double planeX = 0, planeY = 0.66;
-	double posX = map->player.x;
-	double posY = map->player.y;
+	double posX = data->play.x;
+	double posY = data->play.y;
 	int w = DEF_WID;
 	int h = DEF_HEI;
 	for(int x = 0; x < w; x++)
@@ -181,7 +193,7 @@ void	raycast(t_map *map, t_mlx *mlx)
           side = 1;
         }
         //Check if ray has hit a wall
-        if(map->map[mapX + map->wid * mapY] > 0) hit = 1;
+        if(data->map.map[mapX + data->map.wid * mapY] > 0) hit = 1;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -211,12 +223,12 @@ void	raycast(t_map *map, t_mlx *mlx)
                 color = 0x00FFFF00;
 	while (drawStart < drawEnd)
 	{
-		mlx->px[x + drawStart * w] = color;
+		data->mlx.px[x + drawStart * w] = color;
 		drawStart++;
 	}
     }
-}*/
-
+}
+*/
 
 
 int	draw(void *data_)
