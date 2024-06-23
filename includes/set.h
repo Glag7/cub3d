@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 19:16:02 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:13:08 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ typedef struct s_set
 {
 	unsigned int	d;
 	unsigned int	r;
-	unsigned int	offset;
+	unsigned int	xoffset;
+	unsigned int	yoffset;
 	unsigned int	ncase;
 	unsigned int	pstart;
 	unsigned int	pend;
 	uint32_t		color;
 	uint32_t		ncolor;
 	uint32_t		pcolor;
-	uint32_t		__padding;
 	double			ratio;
 
 	double			fov;
