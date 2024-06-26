@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/26 17:32:36 by glag             ###   ########.fr       */
+/*   Updated: 2024/06/26 17:35:42 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	trace_ray(t_data *data, double a, size_t x)
 			hit = 1 ;
 
 	}
+	//TODO get endpoint pos + len * step
+	//textures
 	if (!hit)	
 		len = INFINITY;	
 
