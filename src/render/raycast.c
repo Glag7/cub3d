@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 17:33:06 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:32:36 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,57 +22,72 @@ typedef struct s_point
 	double	y;
 }	t_point;
 
+typedef struct s_ipoint
+{
+	unsigned int	x;
+	unsigned int	y;
+}	t_ipoint;
+
 #define MAXLEN 20.
 #define XSIDE 0
 #define YSIDE 1
 
 static void	trace_ray(t_data *data, double a, size_t x)
 {
-	t_point	pos;
-	t_point	vec;
-	t_point	dist;
-	int		hit;
-	int		side;
-	double	len;
+	t_point	pos;//pos du rayon au debut
+	t_point	vec;//direction
+	t_point	step;//longueur de la diagonale quand on avance sur x ou y
+	t_point	dist;//longueur du rayon en x et y
+	t_ipoint	ipos;//pos dans la map
+	t_ipoint	istep;//ou aller dans la map
+	int		hit;//hit
+	int		side;//EW/NS
+	double	len;//len
 
+	pos = (t_point){data->play.x, data->play.y};
+	ipos = (t_ipoint){pos.x, pos.y};
+	vec = (t_point){cos(a), -sin(a)};
+	step = (t_point){sqrt(1. + (vec.y * vec.y) / (vec.x * vec.x)), sqrt(1. + (vec.x * vec.x) / (vec.y * vec.y))};
+
+	if (vec.x < 0.)
+	{
+		istep.x = -1;
+		dist.x = (pos.x - floor(pos.x)) * step.x;//quelle longueur le rayon aura au premier x
+	}
+	else
+	{
+		istep.x = 1;
+		dist.x = (1.0 - pos.x + floor(pos.x)) * step.x;
+	}
+	if (vec.y < 0.)
+	{
+		istep.y = -1;
+		dist.y = (pos.y - floor(pos.y)) * step.y;
+	}
+	else
+	{
+		istep.y = 1;
+		dist.y = (1.0 - pos.y + floor(pos.y)) * step.y;
+	}
 	hit = 0;
 	len = 0.;
-	vec = (t_point){cos(a), -sin(a)};
-	pos = (t_point){data->play.x, data->play.y};
-	if (vec.x < 0.)//dist.x = cb de fois vc.x pour y aller
-		dist.x = (pos.x - floor(pos.x)) / -vec.x;
-	else
-		dist.x = (1.0 - pos.x + floor(pos.x)) / vec.x;
-	if (vec.y < 0.)
-		dist.y = (pos.y - floor(pos.y)) / -vec.y;
-	else
-		dist.y = (1.0 - pos.y + floor(pos.y)) / vec.y;
-	while (!hit && len < MAXLEN)
+	while (!hit && len < data->set.view)
 	{
-		if (dist.x > 0. && dist.x < dist.y)
+		if (dist.x < dist.y)
 		{
-			pos.y += vec.y * dist.x;
-			pos.x += vec.x * dist.x;
-			dist.x = 1. / fabs(vec.x);
-			if (vec.y < 0.)
-				dist.y = (pos.y - floor(pos.y)) / -vec.y;
-			else
-				dist.y = (1.0 - pos.y + floor(pos.y)) / vec.y;
+			ipos.x += istep.x;
+			len = dist.x;
+			dist.x += step.x;
 			side = XSIDE;
 		}
 		else
 		{
-			pos.x += vec.x * dist.y;
-			pos.y += vec.y * dist.y;
-			dist.y = 1. / fabs(vec.y);
-			if (vec.x < 0.)
-				dist.x = (pos.x - floor(pos.x)) / -vec.x;
-			else
-				dist.x = (1.0 - pos.x + floor(pos.x)) / vec.x;
+			ipos.y += istep.y;
+			len = dist.y;
+			dist.y += step.y;
 			side = YSIDE;
 		}
-		len = sqrt(pow(pos.x - data->play.x, 2.) + pow(pos.y - data->play.y, 2));
-		if (len < MAXLEN && data->map.map[data->map.wid * (size_t)pos.y + (size_t)pos.x])
+		if (data->map.map[data->map.wid * ipos.y + ipos.x])
 			hit = 1 ;
 
 	}
