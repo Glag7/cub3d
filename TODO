@@ -33,6 +33,11 @@ opti sincos ?
 
 relire parsing
 
+protection minimap
+masque map full
+
+pour drawv envoyer le contenu de la case + la distance + le cote + l'offset
+
 
 liste des always inline a tester:
 minimap.c : getcolor
