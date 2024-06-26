@@ -38,6 +38,7 @@ masque map full
 
 pour drawv envoyer le contenu de la case + la distance + le cote + l'offset
 
+ramener le joueur et le rayon dans la map si isl sortent
 
 liste des always inline a tester:
 minimap.c : getcolor
