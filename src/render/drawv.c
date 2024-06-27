@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 17:15:32 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/27 18:30:34 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "data.h"
 #include "map.h"
 
-void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, unsigned int hei)
+void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double hei)
 {
 	float			inc;
 	float			index;
@@ -23,16 +23,15 @@ void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, unsigne
 	unsigned int	start;
 	unsigned int	end;
 
-	inc = 1. / (float) hei * (float)img.size;
+	index = 0.;
+	inc = 1. / hei * (double)img.size;
 	if (hei > data->set.hei)
 	{
-		index = (float)(hei - data->set.hei) * 0.5;
+		index = (hei - (double)data->set.hei) * inc * .5;
 		hei = data->set.hei;
 	}
-	else
-		index = 0.
-	start = (data->set.hei - hei) / 2;
-	end = (data->set.hei + hei) / 2;
+	start = (data->set.hei - (unsigned int)hei) / 2;
+	end = (data->set.hei + (unsigned int)hei) / 2;
 	i = 0;
 	while (i < start)
 	{

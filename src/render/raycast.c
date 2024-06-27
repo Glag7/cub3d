@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 17:20:53 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/27 18:24:10 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static void	trace_ray(t_data *data, double a, size_t x)
 		img = data->map.n;
 		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
 	}
-	drawv(data, img, x, offset, (unsigned int)((double)data->set.hei / len));
+	drawv(data, img, x, offset, ((double)data->set.hei / len));
 }
 
 static void	raycast(t_data *data)
