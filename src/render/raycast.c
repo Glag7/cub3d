@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 17:12:00 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:20:53 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	else if (side == XSIDE)
 	{
 		img = data->map.w;
-		offset = (unsigned int)((pos.y - floor(pos.y)) * (float)img.size);
+		offset = (unsigned int)((1. - (pos.y - floor(pos.y)))* (float)img.size);
 	}
 	else if (vec.y > 0)
 	{
 		img = data->map.s;
-		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
+		offset = (unsigned int)((1. - (pos.x - floor(pos.x))) * (float)img.size);
 	}
 	else
 	{

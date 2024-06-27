@@ -45,5 +45,4 @@ minimap.c : getcolor
 drawv.c lwid
 
 si on est dans un mur on voit pas le mur
-
-DELTATIME
+augmenter offset quand plus grand que ecran
