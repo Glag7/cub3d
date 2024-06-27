@@ -43,3 +43,7 @@ ramener le joueur et le rayon dans la map si isl sortent
 liste des always inline a tester:
 minimap.c : getcolor
 drawv.c lwid
+
+si on est dans un mur on voit pas le mur
+
+DELTATIME

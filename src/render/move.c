@@ -6,50 +6,59 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 16:02:06 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:26:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <math.h>
+#include "data.h"
 #include "play.h"
 #include "keys.h"
 
-static inline void	check_angle(t_play *play)
+static inline void	check_pos(t_data *data)
 {
-	if (play->a > M_PI)
-		play->a -= 2. * M_PI;
-	else if (play->a < -M_PI)
-		play->a += 2. * M_PI;
-	play->sina = sin(play->a);
-	play->cosa = cos(play->a);
+	if (data->play.x >= (double)data->map.wid)
+		data->play.x -= (double)data->map.wid;
+	else if (data->play.x < 0.)
+		data->play.x += (double)data->map.wid;
+	if (data->play.y >= (double)data->map.hei)
+		data->play.x -= (double)data->map.hei;
+	else if (data->play.y < 0.)
+		data->play.y += (double)data->map.hei;
+	if (data->play.a > M_PI)
+		data->play.a -= 2. * M_PI;
+	else if (data->play.a < -M_PI)
+		data->play.a += 2. * M_PI;
+	data->play.sina = sin(data->play.a);
+	data->play.cosa = cos(data->play.a);
 }
 
-void	move(t_play *play, uint64_t keys)
+void	move(t_data *data, float delta, uint64_t keys)
 {
 	if (keys & KEY_W)
 	{
-		play->y -= .005 * sin(play->a);
-		play->x += .005 * cos(play->a);
+		data->play.y -= 1. * sin(data->play.a) * delta;
+		data->play.x += 1. * cos(data->play.a) * delta;
 	}
 	if (keys & KEY_S)
 	{
-		play->y += .005 * sin(play->a);
-		play->x -= .005 * cos(play->a);
+		data->play.y += 1. * sin(data->play.a) * delta;
+		data->play.x -= 1. * cos(data->play.a) * delta;
 	}
 	if (keys & KEY_A)
 	{
-		play->y -= .005 * cos(play->a);
-		play->x -= .005 * sin(play->a);
+		data->play.y -= 1. * cos(data->play.a) * delta;
+		data->play.x -= 1. * sin(data->play.a) * delta;
 	}
 	if (keys & KEY_D)
 	{
-		play->y += .005 * cos(play->a);
-		play->x += .005 * sin(play->a);
+		data->play.y += 1. * cos(data->play.a) * delta;
+		data->play.x += 1. * sin(data->play.a) * delta;
 	}
 	if (keys & KEY_LEFT)
-		play->a += .005;
+		data->play.a += 1. * delta;
 	if (keys & KEY_RIGHT)
-		play->a -= .005;
-	check_angle(play);
+		data->play.a -= 1. * delta;
+	check_pos(data);
 }

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 15:08:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:14:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 	long long	y;
 
 	x = (long long)floor(data->play.x + (-data->play.cosa
-			* (float)j + data->play.sina * (float)i) / data->set.ratio);
+			* (double)j + data->play.sina * (double)i) / data->set.ratio);
 	y = (long long)floor(data->play.y + (data->play.cosa
-			* (float)i + data->play.sina * (float)j) / data->set.ratio);
+			* (double)i + data->play.sina * (double)j) / data->set.ratio);
 	if (x < 0LL)
 		x = ((long long)data->map.wid * -x + x) % (long long)data->map.wid;
 	else if (x >= data->map.wid)
