@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 15:26:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:32:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline void	check_pos(t_data *data)
 	else if (data->play.x < 0.)
 		data->play.x += (double)data->map.wid;
 	if (data->play.y >= (double)data->map.hei)
-		data->play.x -= (double)data->map.hei;
+		data->play.y -= (double)data->map.hei;
 	else if (data->play.y < 0.)
 		data->play.y += (double)data->map.hei;
 	if (data->play.a > M_PI)
