@@ -6,15 +6,16 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 16:26:28 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:05:12 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdint.h>
 #include "data.h"
+#include "map.h"
 
-void	drawv(t_data *data, uint32_t color, unsigned int x, unsigned int hei)
+void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, unsigned int hei)
 {
 	unsigned int	i;
 	unsigned int	start;
@@ -30,9 +31,13 @@ void	drawv(t_data *data, uint32_t color, unsigned int x, unsigned int hei)
 		data->mlx.px[x + i * data->set.wid] = data->map.ceil;
 		i++;
 	}
+	float	inc = 1. / (float) hei * (float)img.size;
+	float	index = 0.;
 	while (i < end)
 	{
-		data->mlx.px[x + i * data->set.wid] = color;
+
+		data->mlx.px[x + i * data->set.wid] = img.px[offset + (int)(index) * img.size];
+		index += inc;
 		i++;
 	}
 	while (i < data->set.hei)

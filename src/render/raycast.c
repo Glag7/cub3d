@@ -6,13 +6,14 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 16:14:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:12:00 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "data.h"
 #include "render.h"
+#include "map.h"
 #include "mlx.h"
 #include "utils.h"
 
@@ -99,22 +100,35 @@ static void	trace_ray(t_data *data, double a, size_t x)
 			hit = 1 ;
 
 	}
+	pos.x += len * vec.x;//y ?
+	pos.y += len * vec.y;
 	//TODO get endpoint pos + len * step
 	//textures
-	if (!hit)	
-		len = INFINITY;	
-
-	//
-	int color;
+	t_img		img;
+	unsigned int	offset;
+	if (!hit)
+		len = INFINITY;
 	if (side == XSIDE && vec.x > 0)
-		color = 0x000000FF;
+	{
+		img = data->map.e;
+		offset = (unsigned int)((pos.y - floor(pos.y)) * (float)img.size);
+	}
 	else if (side == XSIDE)
-		color = 0x0000FF00;
+	{
+		img = data->map.w;
+		offset = (unsigned int)((pos.y - floor(pos.y)) * (float)img.size);
+	}
 	else if (vec.y > 0)
-		color = 0x00FF0000;
+	{
+		img = data->map.s;
+		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
+	}
 	else
-		color = 0x00FFFF00;
-	drawv(data, color, x, (unsigned int)((double)data->set.hei / len));
+	{
+		img = data->map.n;
+		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
+	}
+	drawv(data, img, x, offset, (unsigned int)((double)data->set.hei / len));
 }
 
 static void	raycast(t_data *data)
