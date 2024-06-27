@@ -23,10 +23,14 @@ void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, unsigne
 	unsigned int	start;
 	unsigned int	end;
 
-	index = 0.;
 	inc = 1. / (float) hei * (float)img.size;
 	if (hei > data->set.hei)
+	{
+		index = (float)(hei - data->set.hei) * 0.5;
 		hei = data->set.hei;
+	}
+	else
+		index = 0.
 	start = (data->set.hei - hei) / 2;
 	end = (data->set.hei + hei) / 2;
 	i = 0;
