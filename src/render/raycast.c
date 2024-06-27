@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 15:33:13 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:35:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_point
 
 typedef struct s_ipoint
 {
-	unsigned int	x;
-	unsigned int	y;
+	long long	x;
+	long long	y;
 }	t_ipoint;
 
 #define MAXLEN 20.
@@ -73,14 +73,6 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	len = 0.;
 	while (!hit && len < data->set.view)
 	{
-		if (ipos.x < 0)
-			ipos.x += data->map.wid;
-		else if (ipos.x >= data->map.wid)
-			ipos.x -= data->map.wid;
-		if (ipos.y < 0)
-			ipos.y += data->map.hei;
-		else if (ipos.y >= data->map.hei)
-			ipos.y -= data->map.hei;
 		if (dist.x < dist.y)
 		{
 			ipos.x += istep.x;
@@ -95,6 +87,14 @@ static void	trace_ray(t_data *data, double a, size_t x)
 			dist.y += step.y;
 			side = YSIDE;
 		}
+		if (ipos.x < 0)
+			ipos.x += data->map.wid;
+		else if (ipos.x >= data->map.wid)
+			ipos.x -= data->map.wid;
+		if (ipos.y < 0)
+			ipos.y += data->map.hei;
+		else if (ipos.y >= data->map.hei)
+			ipos.y -= data->map.hei;
 		if (data->map.map[data->map.wid * ipos.y + ipos.x])
 			hit = 1 ;
 
@@ -147,7 +147,7 @@ int	draw(void *data_)
 	gettimeofday(&curr, 0);
 	delta = curr.tv_sec - old.tv_sec + (curr.tv_usec - old.tv_usec) * 1.e-6;
 	move(data, delta, data->keys);
-	//raycast(data);
+	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	old = curr;

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 15:28:16 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:36:26 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_settings(t_set *set)
 	set->color = DEF_COLOR;
 	set->pcolor = DEF_PCOLOR;
 	set->fov = DEF_FOV * M_PI / 180.;
-	set->view = DEF_VIEW;
+	set->view = 2000.;//DEF_VIEW;
 	set->wid = DEF_WID;
 	set->hei = DEF_HEI;
 	set->offthread = 0;
