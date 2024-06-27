@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 15:35:07 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:14:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ static void	raycast(t_data *data)
 
 int	draw(void *data_)
 {
+	static int	fps = 0;
 	static struct timeval	old = {0, 0};
 	struct timeval		curr;
 	float			delta;
@@ -150,6 +151,12 @@ int	draw(void *data_)
 	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+	if (old.tv_sec < curr.tv_sec)
+	{
+		printf("fps: %d\n", fps);
+		fps = 0;
+	}
+	++fps;
 	old = curr;
 	return (0);
 }
