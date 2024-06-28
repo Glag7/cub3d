@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:45:43 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:56:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,22 +113,22 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	if (side == XSIDE && vec.x > 0)
 	{
 		img = data->map.e;
-		offset = (unsigned int)((pos.y - floor(pos.y)) * (float)img.size);
+		offset = (unsigned int)((pos.y - floor(pos.y)) * (double)img.size);
 	}
 	else if (side == XSIDE)
 	{
 		img = data->map.w;
-		offset = (unsigned int)((1. - (pos.y - floor(pos.y)))* (float)img.size);
+		offset = (unsigned int)((1. - (pos.y - floor(pos.y)))* (double)img.size);
 	}
 	else if (vec.y > 0)
 	{
 		img = data->map.s;
-		offset = (unsigned int)((1. - (pos.x - floor(pos.x))) * (float)img.size);
+		offset = (unsigned int)((1. - (pos.x - floor(pos.x))) * (double)img.size);
 	}
 	else
 	{
 		img = data->map.n;
-		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
+		offset = (unsigned int)((pos.x - floor(pos.x)) * (double)img.size);
 	}
 	//si pas de hit mettre du bleu brouillard ?
 	drawv(data, img, x, offset, ((double)data->set.hei / len));
@@ -158,7 +158,7 @@ int	draw(void *data_)
 	static int	fps = 0;
 	static struct timeval	old = {0, 0};
 	struct timeval		curr;
-	float			delta;
+	double			delta;
 	t_data	*data;
 
 	data = data_;

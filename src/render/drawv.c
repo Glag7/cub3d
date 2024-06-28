@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 18:30:34 by glag             ###   ########.fr       */
+/*   Updated: 2024/06/28 18:53:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double hei)
 {
-	float			inc;
-	float			index;
+	double			inc;
+	double			index;
 	unsigned int	i;
 	unsigned int	start;
 	unsigned int	end;

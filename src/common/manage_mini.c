@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:17:52 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 17:11:23 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:51:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	fill_custom(uint8_t *mask, unsigned int d, unsigned int r)
 		{
 			x = i - r;
 			y = j - r;
-			if ((unsigned int)sqrt((float)(x * x + y * y)) > r
+			if ((unsigned int)sqrt((double)(x * x + y * y)) > r
 				|| (i + j) % 2)
 				mask[i + j * d] = 0;
 			else
@@ -58,7 +58,7 @@ static void	fill_circle(uint8_t *mask, unsigned int d, unsigned int r)
 		{
 			x = i - r;
 			y = j - r;
-			if ((unsigned int)sqrt((float)(x * x + y * y)) > r)
+			if ((unsigned int)sqrt((double)(x * x + y * y)) > r)
 				mask[i + j * d] = 0;
 			else
 				mask[i + j * d] = 1;

@@ -7,46 +7,23 @@ custom keys
 lwid 2 ?
 
 wid et hei doivent etre pairs
-
-tracer le plafond et le sol en meme temps que les murs
-faire un systeme pour detecter appui et relachement des keys
 arreter d'avancer quand quitter fenetre
-deltatime
 taille de map doit etre impaire
-make ram
 
 resize map : free puis changer taille puis re init
 changer masque map
-
 option pour bouger et resize la map
 option pour faire ton propre masque
 
 map : tab pour le centrer
-nombre de cases visibles changeable
-rotater pour voir
-faire une scale
 
-//TODO j'ai passe des trucs en unsigned enlever les size_t inutiles
 entrelacement ?
 
-opti sincos ?
-
-relire parsing
-
-protection minimap
 masque map full
-
-pour drawv envoyer le contenu de la case + la distance + le cote + l'offset
-
 fastcos
-
-ramener le joueur et le rayon dans la map si isl sortent
 
 liste des always inline a tester:
 minimap.c : getcolor
 drawv.c lwid
 
-si on est dans un mur on voit pas le mur
-augmenter offset quand plus grand que ecran
-
-FLOAT EN DOUBLE !
+TODO: drawv + raycast (et render.h)
