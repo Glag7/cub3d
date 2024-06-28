@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/16 19:45:56 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/06/28 18:08:31 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
 
 static int	init_dimensions(t_specs *img_specs)
 {
-	int32_t	null;
+	int	null;
 
 	img_specs->img_bin = mlx_get_data_addr(img_specs->mlx_img, &null,
 			&(img_specs->size_line), &null);
 	if (img_specs->w > img_specs->h)
 	{
 		img_specs->dim_rect[0] = (double)img_specs->w / (double)img_specs->h;
-		img_specs->dim_rect[1] = 1;
+		img_specs->dim_rect[1] = 1.;
 	}
 	else
 	{
-		img_specs->dim_rect[0] = 1;
+		img_specs->dim_rect[0] = 1.;
 		img_specs->dim_rect[1] = (double)img_specs->h / (double)img_specs->w;
 	}
 	return (0);
@@ -82,7 +82,7 @@ int	load_img(void *mlx, char *path, t_img *image)
 		ft_perror(ERR_MLX_XPM);
 		return (1);
 	}
-	if (img_specs.w == 0 || img_specs.h == 0)
+	if (img_specs.w <= 0 || img_specs.h <= 0)
 	{
 		mlx_destroy_image(mlx, img_specs.mlx_img);
 		ft_perror(ERR_IMG_SIZE);
