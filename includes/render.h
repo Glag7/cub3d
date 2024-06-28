@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:52:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:05:43 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include "data.h"
 # include "map.h"
 
-int		draw(void *data_);
+int		loop(void *data_);
+void	raycast(t_data *data);
 void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double hei);
 void	draw_minimap(t_data *data);
 void	move(t_data *data, double delta, uint64_t keys);

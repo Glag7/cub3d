@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:56:54 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:24:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ typedef struct s_ipoint
 
 #define XSIDE 0
 #define YSIDE 1
-
-#define CENTER .95
-#define SIDE 1.05
 
 static void	trace_ray(t_data *data, double a, size_t x)
 {
@@ -102,10 +99,11 @@ static void	trace_ray(t_data *data, double a, size_t x)
 			hit = 1 ;
 
 	}
-	pos.x += len * vec.x;//y ?
+	pos.x += len * vec.x;
 	pos.y += len * vec.y;
-	//len /= 1. - sin((double)x * M_PI / (double)data->set.wid) * 0.15;//a peu pres pareil
-	//len /= 4. * (SIDE - CENTER) / ((double)data->set.wid * (double)data->set.wid) * ((double)x - (double)data->set.wid / 2.) * ((double)x - (double)data->set.wid / 2.) + CENTER;
+	//MIEUX: trouver comment projeter l'arc a la ligne
+	//len /= 1. - sin((double)x * M_PI / (double)data->set.wid) * 0.15;
+	len *= fabs(cos(a - data->play.a));
 	t_img		img;
 	unsigned int	offset;
 	if (!hit)
@@ -131,10 +129,11 @@ static void	trace_ray(t_data *data, double a, size_t x)
 		offset = (unsigned int)((pos.x - floor(pos.x)) * (double)img.size);
 	}
 	//si pas de hit mettre du bleu brouillard ?
+	//len = que le x pas l'hypothenuse
 	drawv(data, img, x, offset, ((double)data->set.hei / len));
 }
 
-static void	raycast(t_data *data)
+void	raycast(t_data *data)
 {
 	double	astep;
 	double	a;
@@ -149,31 +148,4 @@ static void	raycast(t_data *data)
 		i += data->set.nthread;
 		a -= astep;
 	}
-}
-
-#include <sys/time.h>
-
-int	draw(void *data_)
-{
-	static int	fps = 0;
-	static struct timeval	old = {0, 0};
-	struct timeval		curr;
-	double			delta;
-	t_data	*data;
-
-	data = data_;
-	gettimeofday(&curr, 0);
-	delta = curr.tv_sec - old.tv_sec + (curr.tv_usec - old.tv_usec) * 1.e-6;
-	move(data, delta, data->keys);
-	raycast(data);
-	draw_minimap(data);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-	if (old.tv_sec < curr.tv_sec)
-	{
-		//printf("fps: %d\n", fps);
-		fps = 0;
-	}
-	++fps;
-	old = curr;
-	return (0);
 }

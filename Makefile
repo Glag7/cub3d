@@ -38,6 +38,7 @@ SRC = main.c \
       $(UTILS)ft_bzero.c \
       $(HOOKS)keys.c \
       $(HOOKS)win.c \
+      $(RENDER)loop.c \
       $(RENDER)raycast.c \
       $(RENDER)move.c \
       $(RENDER)drawv.c \
