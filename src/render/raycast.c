@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 01:59:53 by glag             ###   ########.fr       */
+/*   Updated: 2024/06/28 02:07:37 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	}
 	pos.x += len * vec.x;//y ?
 	pos.y += len * vec.y;
-	len /= 4. * (SIDE - CENTER) / ((double)data->set.wid * (double)data->set.wid) * ((double)x - (double)data->set.wid / 2.) * ((double)x - (double)data->set.wid / 2.) + CENTER;
+	len /= 1. - sin((double)x * M_PI / (double)data->set.wid) * 0.1;//a peu pres pareil
+	//len /= 4. * (SIDE - CENTER) / ((double)data->set.wid * (double)data->set.wid) * ((double)x - (double)data->set.wid / 2.) * ((double)x - (double)data->set.wid / 2.) + CENTER;
 	t_img		img;
 	unsigned int	offset;
 	if (!hit)
