@@ -6,13 +6,14 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 15:04:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:04:39 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:54:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <stddef.h>
 # include "specs.h"
 # include "data.h"
 # include "map.h"
@@ -21,14 +22,14 @@
 # define BUF_SIZE 4096
 
 int		parse_map(void *mlx, t_data *data, int argc, char **argv);
-int		parse_buf(void *mlx, t_data *data, char *buf);
-int		try_load(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_no(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_so(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_ea(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_we(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_floor(void *mlx, t_map *map, char *buf, size_t *i);
-int		load_ceil(void *mlx, t_map *map, char *buf, size_t *i);
+int		parse_buf(void *mlx, t_data *data, char *buf, size_t size);
+int		try_load(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_no(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_so(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_ea(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_we(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_floor(void *mlx, t_map *map, char *buf, unsigned int *i);
+int		load_ceil(void *mlx, t_map *map, char *buf, unsigned int *i);
 int		load_img(void *mlx, char *path, t_img *img);
 int		get_data(char *buf, t_data *data);
 void	read_image(t_img *image, t_specs img_specs);
