@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/18 16:53:25 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:45:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <math.h>
+#include "epic_norminette_fail.h"
 #include "utils.h"
 #include "specs.h"
 #include "map.h"
@@ -87,10 +88,6 @@ static uint32_t	get_average_col(void *img_specs_ptr, double lin, double col,
 	sum[3] = (uint32_t)((double)(sum[3]) / offset);
 	return ((sum[3] << 24) | (sum[2] << 16) | (sum[1] << 8) | sum[0]);
 }
-
-//what the fuck, norminette ?
-typedef double	t_d;
-typedef size_t	t_s;
 
 void	read_image(t_img *image, t_specs img_specs)
 {

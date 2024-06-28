@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 02:07:37 by glag             ###   ########.fr       */
+/*   Updated: 2024/06/28 16:43:18 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	trace_ray(t_data *data, double a, size_t x)
 			ipos.y += data->map.hei;
 		else if (ipos.y >= data->map.hei)
 			ipos.y -= data->map.hei;
-		if (data->map.map[data->map.wid * ipos.y + ipos.x])
+		if (len < data->set.view && data->map.map[data->map.wid * ipos.y + ipos.x])
 			hit = 1 ;
 
 	}
@@ -130,6 +130,7 @@ static void	trace_ray(t_data *data, double a, size_t x)
 		img = data->map.n;
 		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
 	}
+	//si pas de hit mettre du bleu brouillard ?
 	drawv(data, img, x, offset, ((double)data->set.hei / len));
 }
 

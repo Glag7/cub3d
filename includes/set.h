@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 16:26:13 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 16:40:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 # define DEF_D 151
 # define DEF_OFFSET 20
-# define DEF_NCASE 5
+# define DEF_NCASE 6
 # define DEF_COLOR 0x00FFFFDD
 # define DEF_NCOLOR 0x00111111
 # define DEF_PCOLOR 0x00EE1111
 
 # define DEF_FOV 90.
-# define DEF_VIEW 10.
+# define DEF_VIEW 250.
 
 # define DEF_WID 1360
 # define DEF_HEI 768
