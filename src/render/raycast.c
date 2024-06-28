@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/27 18:24:10 by glag             ###   ########.fr       */
+/*   Updated: 2024/06/28 01:59:53 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ typedef struct s_ipoint
 	long long	y;
 }	t_ipoint;
 
-#define MAXLEN 20.
 #define XSIDE 0
 #define YSIDE 1
+
+#define CENTER .95
+#define SIDE 1.05
 
 static void	trace_ray(t_data *data, double a, size_t x)
 {
@@ -102,8 +104,7 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	}
 	pos.x += len * vec.x;//y ?
 	pos.y += len * vec.y;
-	//TODO get endpoint pos + len * step
-	//textures
+	len /= 4. * (SIDE - CENTER) / ((double)data->set.wid * (double)data->set.wid) * ((double)x - (double)data->set.wid / 2.) * ((double)x - (double)data->set.wid / 2.) + CENTER;
 	t_img		img;
 	unsigned int	offset;
 	if (!hit)
