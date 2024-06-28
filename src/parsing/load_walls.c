@@ -6,20 +6,19 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 20:01:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:59:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "map.h"
 #include "err.h"
 #include "utils.h"
 #include "parsing.h"
 
-int	load_no(void *mlx, t_map *map, char *buf, size_t *i)
+int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
-	size_t	j;
-	char	c;
+	unsigned int	j;
+	char			c;
 
 	if (map->n.px)
 	{
@@ -41,10 +40,10 @@ int	load_no(void *mlx, t_map *map, char *buf, size_t *i)
 	return (0);
 }
 
-int	load_so(void *mlx, t_map *map, char *buf, size_t *i)
+int	load_so(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
-	size_t	j;
-	char	c;
+	unsigned int	j;
+	char			c;
 
 	if (map->s.px)
 	{
@@ -66,10 +65,10 @@ int	load_so(void *mlx, t_map *map, char *buf, size_t *i)
 	return (0);
 }
 
-int	load_we(void *mlx, t_map *map, char *buf, size_t *i)
+int	load_we(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
-	size_t	j;
-	char	c;
+	unsigned int	j;
+	char			c;
 
 	if (map->w.px)
 	{
@@ -91,10 +90,10 @@ int	load_we(void *mlx, t_map *map, char *buf, size_t *i)
 	return (0);
 }
 
-int	load_ea(void *mlx, t_map *map, char *buf, size_t *i)
+int	load_ea(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
-	size_t	j;
-	char	c;
+	unsigned int	j;
+	char			c;
 
 	if (map->e.px)
 	{

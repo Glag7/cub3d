@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:58:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:34:37 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_data(char *buf, t_data *data)
 		{
 			if (parse_char(buf + i, (double)i, (double)data->map.hei, data))
 				return (1);
-			i++;
+			++i;
 		}
 		++(data->map.hei);
 		if (i > data->map.wid)

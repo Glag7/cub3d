@@ -6,18 +6,17 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/16 20:25:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:49:36 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "map.h"
 #include "err.h"
 #include "utils.h"
 
-static inline int	check_zero(t_map *map, size_t x, size_t y)
+static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = map->wid * y + x;
 	return (map->map[i] == '0'
@@ -29,8 +28,8 @@ static inline int	check_zero(t_map *map, size_t x, size_t y)
 
 static void	replace_chars(t_map *map)
 {
-	size_t	size;
-	size_t	i;
+	unsigned int	size;
+	unsigned int	i;
 
 	size = map->wid * map->hei;
 	i = 0;
@@ -46,8 +45,8 @@ static void	replace_chars(t_map *map)
 
 int	check_map(t_map *map)
 {
-	size_t	x;
-	size_t	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = 0;
 	while (y < map->hei)

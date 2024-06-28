@@ -6,17 +6,16 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 15:34:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/15 19:46:34 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 17:56:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "map.h"
 #include "parsing.h"
 
-int	try_load(void *mlx, t_map *map, char *buf, size_t *i_)
+int	try_load(void *mlx, t_map *map, char *buf, unsigned int *i_)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = *i_;
 	if (buf[i] == 'N' && buf[i + 1] == 'O' && load_no(mlx, map, buf, &i))

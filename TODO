@@ -48,3 +48,5 @@ drawv.c lwid
 
 si on est dans un mur on voit pas le mur
 augmenter offset quand plus grand que ecran
+
+FLOAT EN DOUBLE !

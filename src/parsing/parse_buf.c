@@ -6,10 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:55:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:01:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "map.h"
@@ -37,9 +38,9 @@ static int	check_textures(t_map *map, int hasfloor, int hasceil)
 
 static char	*get_textures(void *mlx, t_map *map, char *buf)
 {
-	size_t	i;
-	int		hasfloor;
-	int		hasceil;
+	unsigned int	i;
+	int				hasfloor;
+	int				hasceil;
 
 	i = 0;
 	hasfloor = 0;
@@ -63,11 +64,15 @@ static char	*get_textures(void *mlx, t_map *map, char *buf)
 	return (buf + i);
 }
 
-int	parse_buf(void *mlx, t_data *data, char *buf)
+int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 {
 	char	*start;
 
-	start = get_textures(mlx, &data->map, buf);
+	start = NULL;
+	if (size > UINT_MAX)
+		ft_perror(ERR_TOOLARGE);
+	else
+		start = get_textures(mlx, &data->map, buf);
 	if (start == NULL || get_data(start, data))
 	{
 		free_map(&data->map);
