@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 19:24:54 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:58:46 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,121 +16,95 @@
 #include "map.h"
 #include "mlx.h"
 #include "utils.h"
-
-typedef struct s_point
-{
-	double	x;
-	double	y;
-}	t_point;
-
-typedef struct s_ipoint
-{
-	long long	x;
-	long long	y;
-}	t_ipoint;
-
-#define XSIDE 0
-#define YSIDE 1
+#include "point.h"
+#include "ray.h"
 
 static void	trace_ray(t_data *data, double a, size_t x)
 {
-	t_point	pos;//pos du rayon au debut
-	t_point	vec;//direction
-	t_point	step;//longueur de la diagonale quand on avance sur x ou y
-	t_point	dist;//longueur du rayon en x et y
-	t_ipoint	ipos;//pos dans la map
-	t_ipoint	istep;//ou aller dans la map
-	int		hit;//hit
-	int		side;//EW/NS
-	double	len;//len
+	t_ray	ray;
 
-	pos = (t_point){data->play.x, data->play.y};
-	ipos = (t_ipoint){pos.x, pos.y};
-	vec = (t_point){cos(a), -sin(a)};
-	step = (t_point){sqrt(1. + (vec.y * vec.y) / (vec.x * vec.x)), sqrt(1. + (vec.x * vec.x) / (vec.y * vec.y))};
-
-	if (vec.x < 0.)
+	ray.pos = (t_point){data->play.x, data->play.y};
+	ray.ipos = (t_ipoint){ray.pos.x, ray.pos.y};
+	ray.vec = (t_point){cos(a), -sin(a)};
+	ray.step = (t_point){sqrt(1. + (ray.vec.y * ray.vec.y) / (ray.vec.x * ray.vec.x)), sqrt(1. + (ray.vec.x * ray.vec.x) / (ray.vec.y * ray.vec.y))};
+	if (ray.vec.x < 0.)
 	{
-		istep.x = -1;
-		dist.x = (pos.x - floor(pos.x)) * step.x;//quelle longueur le rayon aura au premier x
+		ray.istep.x = -1;
+		ray.dist.x = (ray.pos.x - floor(ray.pos.x)) * ray.step.x;
 	}
 	else
 	{
-		istep.x = 1;
-		dist.x = (1.0 - pos.x + floor(pos.x)) * step.x;
+		ray.istep.x = 1;
+		ray.dist.x = (1.0 - ray.pos.x + floor(ray.pos.x)) * ray.step.x;
 	}
-	if (vec.y < 0.)
+	if (ray.vec.y < 0.)
 	{
-		istep.y = -1;
-		dist.y = (pos.y - floor(pos.y)) * step.y;
+		ray.istep.y = -1;
+		ray.dist.y = (ray.pos.y - floor(ray.pos.y)) * ray.step.y;
 	}
 	else
 	{
-		istep.y = 1;
-		dist.y = (1.0 - pos.y + floor(pos.y)) * step.y;
+		ray.istep.y = 1;
+		ray.dist.y = (1.0 - ray.pos.y + floor(ray.pos.y)) * ray.step.y;
 	}
-	hit = 0;
-	len = 0.;
-	while (!hit && len < data->set.view)
+	ray.hit = 0;
+	ray.len = 0.;
+	while (!ray.hit && ray.len < data->set.view)
 	{
-		if (dist.x < dist.y)
+		if (ray.dist.x < ray.dist.y)
 		{
-			ipos.x += istep.x;
-			len = dist.x;
-			dist.x += step.x;
-			side = XSIDE;
+			ray.ipos.x += ray.istep.x;
+			ray.len = ray.dist.x;
+			ray.dist.x += ray.step.x;
+			ray.side = XSIDE;
 		}
 		else
 		{
-			ipos.y += istep.y;
-			len = dist.y;
-			dist.y += step.y;
-			side = YSIDE;
+			ray.ipos.y += ray.istep.y;
+			ray.len = ray.dist.y;
+			ray.dist.y += ray.step.y;
+			ray.side = YSIDE;
 		}
-		if (ipos.x < 0)
-			ipos.x += data->map.wid;
-		else if (ipos.x >= data->map.wid)
-			ipos.x -= data->map.wid;
-		if (ipos.y < 0)
-			ipos.y += data->map.hei;
-		else if (ipos.y >= data->map.hei)
-			ipos.y -= data->map.hei;
-		if (len < data->set.view && data->map.map[data->map.wid * ipos.y + ipos.x])
-			hit = 1 ;
+		if (ray.ipos.x < 0)
+			ray.ipos.x += data->map.wid;
+		else if (ray.ipos.x >= data->map.wid)
+			ray.ipos.x -= data->map.wid;
+		if (ray.ipos.y < 0)
+			ray.ipos.y += data->map.hei;
+		else if (ray.ipos.y >= data->map.hei)
+			ray.ipos.y -= data->map.hei;
+		if (ray.len < data->set.view && data->map.map[data->map.wid * ray.ipos.y + ray.ipos.x])
+			ray.hit = 1 ;
 
 	}
-	pos.x += len * vec.x;
-	pos.y += len * vec.y;
-	//MIEUX: trouver comment projeter l'arc a la ligne
-	//len /= 1. - sin((double)x * M_PI / (double)data->set.wid) * 0.15;
-	len *= fabs(cos(a - data->play.a));
+	ray.pos.x += ray.len * ray.vec.x;
+	ray.pos.y += ray.len * ray.vec.y;
+	ray.len *= fabs(cos(a - data->play.a));
 	t_img		img;
 	unsigned int	offset;
-	if (!hit)
-		len = INFINITY;
-	if (side == XSIDE && vec.x > 0)
+	if (!ray.hit)
+		ray.len = INFINITY;
+	if (ray.side == XSIDE && ray.vec.x > 0)
 	{
 		img = data->map.e;
-		offset = (unsigned int)((pos.y - floor(pos.y)) * (double)img.size);
+		offset = (unsigned int)((ray.pos.y - floor(ray.pos.y)) * (double)img.size);
 	}
-	else if (side == XSIDE)
+	else if (ray.side == XSIDE)
 	{
 		img = data->map.w;
-		offset = (unsigned int)((1. - (pos.y - floor(pos.y)))* (double)img.size);
+		offset = (unsigned int)((1. - (ray.pos.y - floor(ray.pos.y)))* (double)img.size);
 	}
-	else if (vec.y > 0)
+	else if (ray.vec.y > 0)
 	{
 		img = data->map.s;
-		offset = (unsigned int)((1. - (pos.x - floor(pos.x))) * (double)img.size);
+		offset = (unsigned int)((1. - (ray.pos.x - floor(ray.pos.x))) * (double)img.size);
 	}
 	else
 	{
 		img = data->map.n;
-		offset = (unsigned int)((pos.x - floor(pos.x)) * (double)img.size);
+		offset = (unsigned int)((ray.pos.x - floor(ray.pos.x)) * (double)img.size);
 	}
-	//si pas de hit mettre du bleu brouillard ?
-	//len = que le x pas l'hypothenuse
-	drawv(data, img, x, offset, ((double)data->set.hei / len));
+	drawv(data, img, x, offset, ((double)data->set.hei / ray.len));
 }
 
 void	raycast(t_data *data)

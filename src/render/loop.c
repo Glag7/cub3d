@@ -6,10 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 19:06:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:21:22 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <sys/time.h>
 #include "render.h"
 #include "mlx.h"
@@ -17,11 +18,11 @@
 
 int	loop(void *data_)
 {
-	static int	fps = 0;
+	static int				fps = 0;
 	static struct timeval	old = {0, 0};
-	struct timeval		curr;
-	double			delta;
-	t_data	*data;
+	struct timeval			curr;
+	double					delta;
+	t_data					*data;
 
 	data = data_;
 	gettimeofday(&curr, 0);
@@ -32,7 +33,7 @@ int	loop(void *data_)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (old.tv_sec < curr.tv_sec)
 	{
-		//printf("fps: %d\n", fps);
+		printf("fps: %d\n", fps);
 		fps = 0;
 	}
 	++fps;

@@ -27,3 +27,6 @@ minimap.c : getcolor
 drawv.c lwid
 
 TODO: drawv + raycast (et render.h)
+
+espacer les rayons
+fog
