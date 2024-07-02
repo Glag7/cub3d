@@ -28,5 +28,5 @@ drawv.c lwid
 
 TODO: drawv + raycast (et render.h)
 
+fisheye
 espacer les rayons
-fog

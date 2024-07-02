@@ -6,16 +6,18 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:53:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:59:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include "data.h"
 #include "map.h"
+#include "ray.h"
 
-void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double hei)
+static void	drawv_internal(t_data *data, t_img img, unsigned int x, double hei)
 {
 	double			inc;
 	double			index;
@@ -40,8 +42,7 @@ void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double 
 	}
 	while (i < end)
 	{
-
-		data->mlx.px[x + i * data->set.wid] = img.px[offset + (int)(index) * img.size];
+		data->mlx.px[x + i * data->set.wid] = img.px[(int)index * img.size];
 		index += inc;
 		i++;
 	}
@@ -50,4 +51,33 @@ void	drawv(t_data *data, t_img img, unsigned int x, unsigned int offset, double 
 		data->mlx.px[x + i * data->set.wid] = data->map.floor;
 		i++;
 	}
+}
+
+void	drawv(t_data *data, t_ray *ray, size_t x)//si !hit appeler avec image a null
+{
+	t_img			img;
+
+	if (ray->side == XSIDE && ray->vec.x > 0)
+	{
+		img = data->map.e;
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.size);
+	}
+	else if (ray->side == XSIDE)
+	{
+		img = data->map.w;
+		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
+				* (double)img.size);
+	}
+	else if (ray->vec.y > 0)
+	{
+		img = data->map.s;
+		img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
+				* (double)img.size);
+	}
+	else
+	{
+		img = data->map.n;
+		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.size);
+	}
+	drawv_internal(data, img, x, ((double)data->set.hei / ray->len));
 }
