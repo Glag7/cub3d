@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   win.c                                              :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:48:56 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/07/02 14:47:00 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/07/02 14:49:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "data.h"
-#include "img.h"
+#ifndef RAY_H
+# define RAY_H
 
-int	win_hook(void *data_)
+# include "point.h"
+
+# define XSIDE 0
+# define YSIDE 1
+
+typedef struct s_ray
 {
-	t_data	*data;
+	t_point		pos;
+	t_point		vec;
+	t_point		step;
+	t_point		dist;
+	t_ipoint	ipos;
+	t_ipoint	istep;
+	int			hit;
+	int			side;
+	double		len;
+}	t_ray;
 
-	data = data_;
-	mlx_loop_end(data->mlx.mlx);
-	return (0);
-}
+#endif

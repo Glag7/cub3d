@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:19:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 16:58:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:41:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	key_hook(int key, void *data_)
 		data->keys |= KEY_LEFT;
 	else if (key == XK_Right)
 		data->keys |= KEY_RIGHT;
+	else if (key == XK_Shift_L)
+		data->keys |= KEY_SHIFT;
 	return (0);
 }
 
@@ -56,5 +58,7 @@ int	unkey_hook(int key, void *data_)
 		data->keys &= ~KEY_LEFT;
 	else if (key == XK_Right)
 		data->keys &= ~KEY_RIGHT;
+	else if (key == XK_Shift_L)
+		data->keys &= ~KEY_SHIFT;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:45:43 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:58:03 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,125 +16,88 @@
 #include "map.h"
 #include "mlx.h"
 #include "utils.h"
+#include "point.h"
+#include "ray.h"
 
-typedef struct s_point
+static void	init_ray(t_ray *ray)
 {
-	double	x;
-	double	y;
-}	t_point;
-
-typedef struct s_ipoint
-{
-	long long	x;
-	long long	y;
-}	t_ipoint;
-
-#define XSIDE 0
-#define YSIDE 1
-
-#define CENTER .95
-#define SIDE 1.05
-
-static void	trace_ray(t_data *data, double a, size_t x)
-{
-	t_point	pos;//pos du rayon au debut
-	t_point	vec;//direction
-	t_point	step;//longueur de la diagonale quand on avance sur x ou y
-	t_point	dist;//longueur du rayon en x et y
-	t_ipoint	ipos;//pos dans la map
-	t_ipoint	istep;//ou aller dans la map
-	int		hit;//hit
-	int		side;//EW/NS
-	double	len;//len
-
-	pos = (t_point){data->play.x, data->play.y};
-	ipos = (t_ipoint){pos.x, pos.y};
-	vec = (t_point){cos(a), -sin(a)};
-	step = (t_point){sqrt(1. + (vec.y * vec.y) / (vec.x * vec.x)), sqrt(1. + (vec.x * vec.x) / (vec.y * vec.y))};
-
-	if (vec.x < 0.)
+	ray->step = (t_point){sqrt(1. + (ray->vec.y * ray->vec.y)
+			/ (ray->vec.x * ray->vec.x)), sqrt(1. + (ray->vec.x
+				* ray->vec.x) / (ray->vec.y * ray->vec.y))};
+	if (ray->vec.x < 0.)
 	{
-		istep.x = -1;
-		dist.x = (pos.x - floor(pos.x)) * step.x;//quelle longueur le rayon aura au premier x
+		ray->istep.x = -1;
+		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
 	}
 	else
 	{
-		istep.x = 1;
-		dist.x = (1.0 - pos.x + floor(pos.x)) * step.x;
+		ray->istep.x = 1;
+		ray->dist.x = (1.0 - ray->pos.x + floor(ray->pos.x)) * ray->step.x;
 	}
-	if (vec.y < 0.)
+	if (ray->vec.y < 0.)
 	{
-		istep.y = -1;
-		dist.y = (pos.y - floor(pos.y)) * step.y;
+		ray->istep.y = -1;
+		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
 	}
 	else
 	{
-		istep.y = 1;
-		dist.y = (1.0 - pos.y + floor(pos.y)) * step.y;
+		ray->istep.y = 1;
+		ray->dist.y = (1.0 - ray->pos.y + floor(ray->pos.y)) * ray->step.y;
 	}
-	hit = 0;
-	len = 0.;
-	while (!hit && len < data->set.view)
+	ray->hit = 0;
+	ray->len = 0.;
+}
+
+static inline void __attribute__((always_inline))
+	cast_ray(t_ray *ray, t_data *data)
+{
+	while (!ray->hit && ray->len < data->set.view)
 	{
-		if (dist.x < dist.y)
+		ray->side = !(ray->dist.x < ray->dist.y);
+		if (ray->side == XSIDE)
 		{
-			ipos.x += istep.x;
-			len = dist.x;
-			dist.x += step.x;
-			side = XSIDE;
+			ray->ipos.x += ray->istep.x;
+			ray->len = ray->dist.x;
+			ray->dist.x += ray->step.x;
 		}
 		else
 		{
-			ipos.y += istep.y;
-			len = dist.y;
-			dist.y += step.y;
-			side = YSIDE;
+			ray->ipos.y += ray->istep.y;
+			ray->len = ray->dist.y;
+			ray->dist.y += ray->step.y;
 		}
-		if (ipos.x < 0)
-			ipos.x += data->map.wid;
-		else if (ipos.x >= data->map.wid)
-			ipos.x -= data->map.wid;
-		if (ipos.y < 0)
-			ipos.y += data->map.hei;
-		else if (ipos.y >= data->map.hei)
-			ipos.y -= data->map.hei;
-		if (len < data->set.view && data->map.map[data->map.wid * ipos.y + ipos.x])
-			hit = 1 ;
-
+		if (ray->ipos.x < 0)
+			ray->ipos.x += data->map.wid;
+		else if (ray->ipos.x >= data->map.wid)
+			ray->ipos.x -= data->map.wid;
+		if (ray->ipos.y < 0)
+			ray->ipos.y += data->map.hei;
+		else if (ray->ipos.y >= data->map.hei)
+			ray->ipos.y -= data->map.hei;
+		ray->hit = (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x]);
 	}
-	pos.x += len * vec.x;//y ?
-	pos.y += len * vec.y;
-	//len /= 1. - sin((double)x * M_PI / (double)data->set.wid) * 0.15;//a peu pres pareil
-	//len /= 4. * (SIDE - CENTER) / ((double)data->set.wid * (double)data->set.wid) * ((double)x - (double)data->set.wid / 2.) * ((double)x - (double)data->set.wid / 2.) + CENTER;
-	t_img		img;
-	unsigned int	offset;
-	if (!hit)
-		len = INFINITY;
-	if (side == XSIDE && vec.x > 0)
-	{
-		img = data->map.e;
-		offset = (unsigned int)((pos.y - floor(pos.y)) * (float)img.size);
-	}
-	else if (side == XSIDE)
-	{
-		img = data->map.w;
-		offset = (unsigned int)((1. - (pos.y - floor(pos.y)))* (float)img.size);
-	}
-	else if (vec.y > 0)
-	{
-		img = data->map.s;
-		offset = (unsigned int)((1. - (pos.x - floor(pos.x))) * (float)img.size);
-	}
-	else
-	{
-		img = data->map.n;
-		offset = (unsigned int)((pos.x - floor(pos.x)) * (float)img.size);
-	}
-	//si pas de hit mettre du bleu brouillard ?
-	drawv(data, img, x, offset, ((double)data->set.hei / len));
 }
 
-static void	raycast(t_data *data)
+static void	trace_ray(t_data *data, double a, size_t x)
+{
+	t_ray	ray;
+
+	ray.pos = (t_point){data->play.x, data->play.y};
+	ray.ipos = (t_ipoint){ray.pos.x, ray.pos.y};
+	ray.vec = (t_point){cos(a), -sin(a)};
+	init_ray(&ray);
+	cast_ray(&ray, data);
+	ray.pos.x += ray.len * ray.vec.x;
+	ray.pos.y += ray.len * ray.vec.y;
+	if (ray.len > data->set.view)
+	{
+		ray.len = INFINITY;
+		ray.hit = 0;
+	}
+	drawv(data, &ray, x);
+}
+
+void	raycast(t_data *data)
 {
 	double	astep;
 	double	a;
@@ -149,31 +112,4 @@ static void	raycast(t_data *data)
 		i += data->set.nthread;
 		a -= astep;
 	}
-}
-
-#include <sys/time.h>
-
-int	draw(void *data_)
-{
-	static int	fps = 0;
-	static struct timeval	old = {0, 0};
-	struct timeval		curr;
-	float			delta;
-	t_data	*data;
-
-	data = data_;
-	gettimeofday(&curr, 0);
-	delta = curr.tv_sec - old.tv_sec + (curr.tv_usec - old.tv_usec) * 1.e-6;
-	move(data, delta, data->keys);
-	raycast(data);
-	draw_minimap(data);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-	if (old.tv_sec < curr.tv_sec)
-	{
-		//printf("fps: %d\n", fps);
-		fps = 0;
-	}
-	++fps;
-	old = curr;
-	return (0);
 }

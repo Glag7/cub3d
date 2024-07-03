@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   win.c                                              :+:      :+:    :+:   */
+/*   point.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:48:56 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/07/02 14:23:24 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/07/02 14:24:02 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-#include "data.h"
-#include "img.h"
+#ifndef POINT_H
+# define POINT_H
 
-int	win_hook(void *data_)
+typedef struct s_point
 {
-	t_data	*data;
+	double	x;
+	double	y;
+}	t_point;
 
-	data = data_;
-	mlx_loop_end(data->mlx.mlx);
-	return (0);
-}
+typedef struct s_ipoint
+{
+	long long	x;
+	long long	y;
+}	t_ipoint;
+
+#endif
