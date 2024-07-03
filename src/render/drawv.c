@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/02 18:59:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:08:07 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,28 @@ static void	drawv_internal(t_data *data, t_img img, unsigned int x, double hei)
 	unsigned int	start;
 	unsigned int	end;
 
-	index = 0.;
 	inc = 1. / hei * (double)img.size;
+	index = 0.;
 	if (hei > data->set.hei)
 	{
 		index = (hei - (double)data->set.hei) * inc * .5;
-		hei = data->set.hei;
+		hei = (double)data->set.hei;
 	}
 	start = (data->set.hei - (unsigned int)hei) / 2;
 	end = (data->set.hei + (unsigned int)hei) / 2;
 	i = 0;
 	while (i < start)
-	{
-		data->mlx.px[x + i * data->set.wid] = data->map.ceil;
-		i++;
-	}
+		data->mlx.px[x + i++ *data->set.wid] = data->map.ceil;
 	while (i < end)
 	{
-		data->mlx.px[x + i * data->set.wid] = img.px[(int)index * img.size];
+		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)index * img.size];
 		index += inc;
-		i++;
 	}
 	while (i < data->set.hei)
-	{
-		data->mlx.px[x + i * data->set.wid] = data->map.floor;
-		i++;
-	}
+		data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
 }
 
-void	drawv(t_data *data, t_ray *ray, size_t x)//si !hit appeler avec image a null
+void	drawv(t_data *data, t_ray *ray, size_t x)
 {
 	t_img			img;
 

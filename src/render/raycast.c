@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/02 18:07:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:58:03 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	ray.pos.y += ray.len * ray.vec.y;
 	if (ray.len > data->set.view)
 	{
-		ray.len = data->set.view;
+		ray.len = INFINITY;
 		ray.hit = 0;
 	}
 	drawv(data, &ray, x);
