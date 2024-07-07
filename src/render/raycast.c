@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/03 15:58:03 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/07 23:08:55 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ static inline void __attribute__((always_inline))
 	}
 }
 
-static void	trace_ray(t_data *data, double a, size_t x)
+static void	trace_ray(t_data *data, double px, double py, size_t x)
 {
 	t_ray	ray;
 
 	ray.pos = (t_point){data->play.x, data->play.y};
 	ray.ipos = (t_ipoint){ray.pos.x, ray.pos.y};
-	ray.vec = (t_point){cos(a), -sin(a)};
+	ray.vec = (t_point){px, -py};
 	init_ray(&ray);
 	cast_ray(&ray, data);
 	ray.pos.x += ray.len * ray.vec.x;
@@ -97,19 +97,27 @@ static void	trace_ray(t_data *data, double a, size_t x)
 	drawv(data, &ray, x);
 }
 
+//todo: fov + planewid + realfov;
+//multithread !!
 void	raycast(t_data *data)
 {
-	double	astep;
-	double	a;
+	t_point	start;
+	t_point	end;
+	t_point	inc;
 	size_t	i;
 
 	i = data->set.offthread;
-	astep = data->set.fov * (double)data->set.nthread / (double)data->set.wid;
-	a = data->play.a + data->set.fov * 0.5;
+	start.x = data->play.x + data->play.cosa * tan(data->play.a * .5);
+	start.y = data->play.y + data->play.sina * tan(data->play.a * .5);
+	end.x = data->play.x + data->play.cosa * tan(data->play.a * .5);
+	end.y = data->play.y + data->play.sina * tan(data->play.a * .5);
+	inc.x = (end.x - start.x) / (double)data->set.wid * (double)data->set.nthread;
+	inc.y = (end.y - start.y) / (double)data->set.wid * (double)data->set.nthread;
 	while (i < data->set.wid)
 	{
-		trace_ray(data, a, i);
+		trace_ray(data, start.x - data->play.x, start.y - data->play.y, i);
 		i += data->set.nthread;
-		a -= astep;
+		start.x += inc.x;
+		start.y += inc.y;
 	}
 }
