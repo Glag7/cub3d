@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/07 23:08:55 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/07 23:43:16 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ void	raycast(t_data *data)
 	t_point	end;
 	t_point	inc;
 	size_t	i;
-
+//utiliser normqle
 	i = data->set.offthread;
-	start.x = data->play.x + data->play.cosa * tan(data->play.a * .5);
-	start.y = data->play.y + data->play.sina * tan(data->play.a * .5);
-	end.x = data->play.x + data->play.cosa * tan(data->play.a * .5);
-	end.y = data->play.y + data->play.sina * tan(data->play.a * .5);
+	start.x = data->play.x + data->play.cosa - data->play.sina;
+	start.y = data->play.y + data->play.sina + data->play.cosa;
+	end.x = data->play.x + data->play.cosa + data->play.sina;
+	end.y = data->play.y + data->play.sina - data->play.cosa;
 	inc.x = (end.x - start.x) / (double)data->set.wid * (double)data->set.nthread;
 	inc.y = (end.y - start.y) / (double)data->set.wid * (double)data->set.nthread;
 	while (i < data->set.wid)
