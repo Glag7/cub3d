@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/03 16:08:07 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/13 17:42:09 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	drawv_internal(t_data *data, t_img img, unsigned int x, double hei)
 
 	inc = 1. / hei * (double)img.size;
 	index = 0.;
-	if (hei > data->set.hei)
+	if (hei > (double)data->set.hei)
 	{
 		index = (hei - (double)data->set.hei) * inc * .5;
 		hei = (double)data->set.hei;
