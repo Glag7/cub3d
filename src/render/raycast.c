@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/13 16:50:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:27:50 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,6 @@ void	raycast(t_data *data)
 	curr = (t_point){start.x + inc.x * (double)data->set.offthread,
 		start.y + inc.y * (double)data->set.offthread};
 	i = data->set.offthread;
-	//printf("play %f,%f\tstart %f,%f\tend %f,%f\n", data->play.x, data->play.y, start.x, start.y, end.x, end.y);
-	//printf("inc %f,%f\n", inc.x, inc.y);
-	//printf("curr %f,%f\n", curr.x, curr.y);
 	while (i < data->set.wid)
 	{
 		double	invlen;
@@ -127,7 +124,6 @@ void	raycast(t_data *data)
 		invlen = 1. / sqrt(vec.x * vec.x + vec.y * vec.y);
 		vec.x *= invlen;
 		vec.y *= invlen;
-		//printf("vec %f,%f\n", vec.x, vec.y);
 		trace_ray(data, vec.x, vec.y, i);
 		i += data->set.nthread;
 		curr.x += inc.x * (double)data->set.nthread;
