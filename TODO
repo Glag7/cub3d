@@ -1,6 +1,8 @@
+ennemis
+les portes sont des ennemis
+portails
+
 mouvements fluides
-fog : si trop loin mettre bleu, si mi loin melanger (moyenne ponderee) (maxlen dans img)
-mettre couleur * 2
 
 custom keys
 
@@ -34,4 +36,5 @@ fisheye
 espacer les rayons
 
 faire un tableau de toutes les inverse sqrt
-fov : fov, fakefov, tanfov
+et tous les cos dangles a appliquer
+malloc la struct

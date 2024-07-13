@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:27:50 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:51:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,39 +94,46 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 		ray.len = INFINITY;
 		ray.hit = 0;
 	}
+	ray.len *= cos(atan2(-ray.vec.y, ray.vec.x) - data->play.a);
 	drawv(data, &ray, x);
+}
+
+static inline __attribute__((always_inline)) t_point
+	getvec(t_data *data, t_point curr)
+{
+	t_point	vec;
+	double	invlen;
+
+	vec = (t_point){curr.x - data->play.x, curr.y - data->play.y};
+	invlen = 1. / sqrt(vec.x * vec.x + vec.y * vec.y);
+	vec.x *= invlen;
+	vec.y *= invlen;
+	return (vec);
 }
 
 void	raycast(t_data *data)
 {
 	size_t	i;
-	double	tanfov;
-	t_point	start;
+	t_point	cur;
 	t_point	end;
-	t_point inc;
-	t_point curr;
-	t_point vec;
+	t_point	inc;
+	t_point	vec;
 
-	tanfov = tan(data->set.fov * .5);
-	start = (t_point){data->play.x + data->play.cosa - tanfov * data->play.sina,
-		data->play.y + data->play.sina + tanfov * data->play.cosa};
-	end = (t_point){data->play.x + data->play.cosa + tanfov * data->play.sina,
-		data->play.y + data->play.sina - tanfov * data->play.cosa};
-	inc = (t_point){(end.x - start.x) / (double)data->set.wid,
-		(end.y - start.y) / (double)data->set.wid};
-	curr = (t_point){start.x + inc.x * (double)data->set.offthread,
-		start.y + inc.y * (double)data->set.offthread};
+	cur.x = data->play.x + data->play.cosa - data->set.tanfov * data->play.sina;
+	cur.y = data->play.y + data->play.sina + data->set.tanfov * data->play.cosa;
+	end.x = data->play.x + data->play.cosa + data->set.tanfov * data->play.sina;
+	end.y = data->play.y + data->play.sina - data->set.tanfov * data->play.cosa;
+	inc = (t_point){(end.x - cur.x) / (double)data->set.wid,
+		(end.y - cur.y) / (double)data->set.wid};
+	cur = (t_point){cur.x + inc.x * (double)data->set.offthread,
+		cur.y + inc.y * (double)data->set.offthread};
 	i = data->set.offthread;
 	while (i < data->set.wid)
 	{
-		double	invlen;
-		vec = (t_point){curr.x - data->play.x, curr.y - data->play.y};
-		invlen = 1. / sqrt(vec.x * vec.x + vec.y * vec.y);
-		vec.x *= invlen;
-		vec.y *= invlen;
+		vec = getvec(data, cur);
 		trace_ray(data, vec.x, vec.y, i);
 		i += data->set.nthread;
-		curr.x += inc.x * (double)data->set.nthread;
-		curr.y += inc.y * (double)data->set.nthread;
+		cur.x += inc.x * (double)data->set.nthread;
+		cur.y += inc.y * (double)data->set.nthread;
 	}
 }

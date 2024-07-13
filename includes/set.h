@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 16:40:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:36:29 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ typedef struct s_set
 	uint32_t		pcolor;
 	double			ratio;
 
+	double			fov_deg;
 	double			fov;
+	double			tanfov;
 	double			view;
 
 	unsigned int	nthread;
@@ -52,5 +54,6 @@ typedef struct s_set
 }	t_set;
 
 void	init_settings(t_set *set);
+int		setfov(t_set *set, double fov_deg);
 
 #endif

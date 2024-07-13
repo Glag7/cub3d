@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:27:46 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:42:09 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 		img = data->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.size);
 	}
-	ray->len *= cos(atan2(-ray->vec.y, ray->vec.x) - data->play.a);
 	drawv_internal(data, img, x, ((double)data->set.hei / ray->len));
 }
