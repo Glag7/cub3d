@@ -6,12 +6,12 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 17:42:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:08:16 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <sys/time.h>
+#include <time.h>
 #include "render.h"
 #include "mlx.h"
 #include "data.h"
@@ -19,14 +19,14 @@
 int	loop(void *data_)
 {
 	static int				fps = 0;
-	static struct timeval	old = {0, 0};
-	struct timeval			curr;
+	static struct timespec	old = {0, 0};
+	struct timespec			curr;
 	double					delta;
 	t_data					*data;
 
 	data = data_;
-	gettimeofday(&curr, 0);
-	delta = curr.tv_sec - old.tv_sec + (curr.tv_usec - old.tv_usec) * 1.e-6;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &curr);
+	delta = curr.tv_sec - old.tv_sec + (curr.tv_nsec - old.tv_nsec) * 1.e-9;
 	move(data, delta, data->keys);
 	raycast(data);
 	draw_minimap(data);
