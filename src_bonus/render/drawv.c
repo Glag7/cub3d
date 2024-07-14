@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 18:57:29 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:30:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,27 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 {
 	double			inc;
 	double			index;
-	unsigned int	i;
-	unsigned int	start;
-	unsigned int	end;
+	int	i;
+	int	start;
+	int	end;
 
 	inc = 1. / hei * (double)img.size;
 	index = 0.;
+	start = (data->set.hei - (unsigned int)hei) / 2 + data->play.az * 1000.;
+	end = (data->set.hei + (unsigned int)hei) / 2 + data->play.az * 1000.;
 	if (hei > (double)data->set.hei)
 	{
 		index = (hei - (double)data->set.hei) * inc * .5;
 		hei = (double)data->set.hei;
 	}
-	start = (data->set.hei - (unsigned int)hei) / 2;
-	end = (data->set.hei + (unsigned int)hei) / 2;
+	if (start < 0)
+		start = 0;
+	if (start >= data->set.hei)
+		start = data->set.hei - 1;
+	if (end < 0)
+		end = 0;
+	if (end >= data->set.hei)
+		end = data->set.hei - 1;
 	i = 0;
 	while (i < start)
 		data->mlx.px[x + i++ *data->set.wid] = data->map.ceil;

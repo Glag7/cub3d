@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 17:43:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:09:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ void	move(t_data *data, double delta, uint64_t keys)
 	if (keys & KEY_RIGHT)
 		data->play.a -= 1. * delta;
 	if (keys & KEY_UP)
-		data->set.fov += 1. * delta;
+		data->play.az += 1. * delta;
 	if (keys & KEY_DOWN)
-		data->set.fov -= 1. * delta;
+		data->play.az -= 1. * delta;
 	setfov(&data->set, data->set.fov * 180. / M_PI);
-	printf("%f\n", data->set.fov_deg);
 	check_pos(data);
 }
