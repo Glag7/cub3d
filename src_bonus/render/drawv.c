@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 18:03:00 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:05:58 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 		img = data->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.size);
 	}
-	drawv_internal(data, img, x, ((double)data->set.hei / (data->set.tanfov * ray->len)));//FIXME
-}
+	drawv_internal(data, img, x, ((double)data->set.hei / ray->len));
+}//FIXME: use len in cubes

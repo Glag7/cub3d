@@ -5,6 +5,8 @@ HDR = includes/
 
 SRC_DIR = src/
 OBJ_DIR = obj/
+SRC_BONUS_DIR = src_bonus/
+OBJ_BONUS_DIR = obj_bonus/
 HDR_DIR = includes/
 
 PARSING = parsing/
@@ -44,7 +46,32 @@ SRC = main.c \
       $(RENDER)drawv.c \
       $(RENDER)minimap.c
 
-SRC_BONUS = skibidi
+SRC_BONUS = main.c \
+      $(COMMON)free_map.c \
+      $(COMMON)manage_mlx.c \
+      $(COMMON)manage_mini.c \
+      $(COMMON)manage_settings.c \
+      $(COMMON)diameter.c \
+      $(PARSING)parsing.c \
+      $(PARSING)parse_buf.c \
+      $(PARSING)load.c \
+      $(PARSING)load_walls.c \
+      $(PARSING)load_floorceil.c \
+      $(PARSING)load_images.c \
+      $(PARSING)get_data.c \
+      $(PARSING)read_images.c \
+      $(PARSING)fill_map.c \
+      $(PARSING)check_map.c \
+      $(UTILS)ft_perror.c \
+      $(UTILS)ft_memcpy.c \
+      $(UTILS)ft_bzero.c \
+      $(HOOKS)keys.c \
+      $(HOOKS)win.c \
+      $(RENDER)loop.c \
+      $(RENDER)raycast.c \
+      $(RENDER)move.c \
+      $(RENDER)drawv.c \
+      $(RENDER)minimap.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -70,7 +97,8 @@ all : $(LIB) $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
 
-bonus :
+bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
+	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
 
@@ -79,6 +107,7 @@ $(LIB) :
 
 $(NAME) : $(LIB) $(OBJ_DIR) $(OBJ_DIR)$(RENDER) $(OBJ_DIR)$(HOOKS) $(OBJ_DIR)$(PARSING) $(OBJ_DIR)$(UTILS) $(OBJ_DIR)$(COMMON) $(addprefix $(OBJ_DIR), $(OBJ))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_DIR), $(OBJ)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
+
 
 $(OBJ_DIR)$(COMMON) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(COMMON)
@@ -92,14 +121,37 @@ $(OBJ_DIR)$(HOOKS) : $(OBJ_DIR)
 $(OBJ_DIR)$(UTILS) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(UTILS)
 
-
 $(OBJ_DIR)$(RENDER) : $(OBJ_DIR)
 	@ mkdir -p $(OBJ_DIR)$(RENDER)
+
+$(OBJ_BONUS_DIR)$(COMMON) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(COMMON)
+
+$(OBJ_BONUS_DIR)$(PARSING) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(PARSING)
+
+$(OBJ_BONUS_DIR)$(HOOKS) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(HOOKS)
+
+$(OBJ_BONUS_DIR)$(UTILS) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(UTILS)
+
+$(OBJ_BONUS_DIR)$(RENDER) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(RENDER)
+
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)
 
+$(OBJ_BONUS_DIR) :
+	@ mkdir -p $(OBJ_BONUS_DIR)
+
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	$(DEL)
+	@echo -n $(MSG_COMPILING)
+	@ $(COMP) $(CFLAGS) -c $^ -o $@ -I $(HDR_DIR)
+
+$(OBJ_BONUS_DIR)%.o : $(SRC_BONUS_DIR)%.c
 	$(DEL)
 	@echo -n $(MSG_COMPILING)
 	@ $(COMP) $(CFLAGS) -c $^ -o $@ -I $(HDR_DIR)
@@ -123,4 +175,6 @@ re : fclean all
 
 recub : cleancub all
 
-.PHONY: all fclean clean re bonus cleancub recub
+recubonus : cleancub bonus
+
+.PHONY: all fclean clean re bonus cleancub recub recubonus

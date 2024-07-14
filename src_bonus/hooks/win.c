@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   win.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 16:48:54 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/28 18:48:56 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "mlx.h"
+#include "data.h"
+#include "img.h"
 
-# define KEY_W 1
-# define KEY_S 2
-# define KEY_A 4
-# define KEY_D 8
-# define KEY_LEFT 16
-# define KEY_RIGHT 32
-# define KEY_UP 64
-# define KEY_DOWN 128
-# define KEY_SHIFT 256
+int	win_hook(void *data_)
+{
+	t_data	*data;
 
-#endif
+	data = data_;
+	mlx_loop_end(data->mlx.mlx);
+	return (0);
+}

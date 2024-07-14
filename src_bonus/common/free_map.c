@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   free_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 16:48:54 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/16 16:17:10 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/16 16:25:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include <stdlib.h>
+#include "utils.h"
+#include "map.h"
 
-# define KEY_W 1
-# define KEY_S 2
-# define KEY_A 4
-# define KEY_D 8
-# define KEY_LEFT 16
-# define KEY_RIGHT 32
-# define KEY_UP 64
-# define KEY_DOWN 128
-# define KEY_SHIFT 256
-
-#endif
+void	free_map(t_map *map)
+{
+	free(map->map);
+	free(map->n.px);
+	free(map->s.px);
+	free(map->w.px);
+	free(map->e.px);
+	ft_bzero(map, sizeof(*map));
+}

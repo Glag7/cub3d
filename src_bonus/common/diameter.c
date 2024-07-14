@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   diameter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 16:48:54 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/22 19:04:15 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 19:16:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include "mini.h"
+#include "set.h"
 
-# define KEY_W 1
-# define KEY_S 2
-# define KEY_A 4
-# define KEY_D 8
-# define KEY_LEFT 16
-# define KEY_RIGHT 32
-# define KEY_UP 64
-# define KEY_DOWN 128
-# define KEY_SHIFT 256
-
-#endif
+void	set_diameter(t_set *set, unsigned int d)
+{
+	set->d = d;
+	set->r = d / 2;
+	set->pstart = set->r - set->d / (set->ncase * 10);
+	set->pend = set->r + set->d / (set->ncase * 10);
+	set->ratio = (double)set->d / (double)set->ncase;
+}
