@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 16:48:54 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/16 19:26:47 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/28 17:52:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include <stddef.h>
+#include "map.h"
 
-# define KEY_W 1
-# define KEY_S 2
-# define KEY_A 4
-# define KEY_D 8
-# define KEY_LEFT 16
-# define KEY_RIGHT 32
-# define KEY_UP 64
-# define KEY_DOWN 128
-# define KEY_SHIFT 256
+void	fill_map(t_map *map, char *buf)
+{
+	unsigned int	i;
+	unsigned int	len;
 
-#endif
+	i = 0;
+	while (*buf)
+	{
+		len = 0;
+		while (buf[len] && buf[len] != '\n')
+		{
+			map->map[i + len] = buf[len];
+			++len;
+		}
+		buf += len + (buf[len] == '\n');
+		while (len < map->wid)
+			map->map[i + len++] = ' ';
+		i += len;
+	}
+}
