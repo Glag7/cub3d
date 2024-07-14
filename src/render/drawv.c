@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 18:03:00 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:59:03 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "map.h"
 #include "ray.h"
 
-static void	drawv_internal(t_data *data, t_img img, unsigned int x, double hei)
+static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 {
 	double			inc;
 	double			index;
@@ -46,31 +46,31 @@ static void	drawv_internal(t_data *data, t_img img, unsigned int x, double hei)
 		data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
 }
 
-void	drawv(t_data *data, t_ray *ray, size_t x)
+void	drawv(t_data *dt, t_ray *ray, size_t x)
 {
 	t_img			img;
 
 	if (ray->side == XSIDE && ray->vec.x > 0)
 	{
-		img = data->map.e;
+		img = dt->map.e;
 		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.size);
 	}
 	else if (ray->side == XSIDE)
 	{
-		img = data->map.w;
+		img = dt->map.w;
 		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
 				* (double)img.size);
 	}
 	else if (ray->vec.y > 0)
 	{
-		img = data->map.s;
+		img = dt->map.s;
 		img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
 				* (double)img.size);
 	}
 	else
 	{
-		img = data->map.n;
+		img = dt->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.size);
 	}
-	drawv_internal(data, img, x, ((double)data->set.hei / (data->set.tanfov * ray->len)));//FIXME
+	drawv2(dt, img, x, (double)dt->set.wid / (dt->set.tanfov * 2. * ray->len));
 }

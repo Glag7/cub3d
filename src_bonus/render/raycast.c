@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:51:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/14 18:20:52 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ void	raycast(t_data *data)
 	cur.y = data->play.y + data->play.sina + data->set.tanfov * data->play.cosa;
 	end.x = data->play.x + data->play.cosa + data->set.tanfov * data->play.sina;
 	end.y = data->play.y + data->play.sina - data->set.tanfov * data->play.cosa;
-	inc = (t_point){(end.x - cur.x) / (double)data->set.wid,
-		(end.y - cur.y) / (double)data->set.wid};
+	inc = (t_point){(end.x - cur.x) / (double)(data->set.wid - 1),
+		(end.y - cur.y) / (double)(data->set.wid - 1)};
 	cur = (t_point){cur.x + inc.x * (double)data->set.offthread,
 		cur.y + inc.y * (double)data->set.offthread};
 	i = data->set.offthread;
