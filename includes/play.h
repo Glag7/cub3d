@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 16:59:03 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:28:45 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct s_play
 {
 	double	x;
 	double	y;
+	double	z;
 	double	a;
 	double	az;
 	double	cosa;

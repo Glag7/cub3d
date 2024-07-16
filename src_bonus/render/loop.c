@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 19:08:16 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:21:36 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	loop(void *data_)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (old.tv_sec < curr.tv_sec)
 	{
-		printf("fps: %d\n", fps);
+		printf("fps: %d\nangle %f\nfov %f\n---\n",
+			fps, data->play.az, data->set.fov_deg);
 		fps = 0;
 	}
 	++fps;
