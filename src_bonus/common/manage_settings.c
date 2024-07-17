@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/16 17:24:39 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/17 12:58:50 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_settings(t_set *set)
 	set->pcolor = DEF_PCOLOR;
 	setfov(set, DEF_FOV);
 	set->view = DEF_VIEW;
+	set->sensi = DEF_SENSI;
 	set->offthread = 0;
 	set->nthread = 1;
 }
