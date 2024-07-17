@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/16 18:32:22 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/17 12:38:08 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double t
 	int	azoffset;
 	int	zoffset;
 
-	zoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.z / M_PI * 4. * test;//pas sur
-	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.;//pas sur
+	zoffset = hei * data->play.z;
+	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.;
 	inc = 1. / hei * (double)img.size;
 	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset;
 	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset;
 	index = 0.;
-	//printf("%d %d\n", start, end);
 	if (start < 0.)
 	{
 		index = (double)-start * inc;
@@ -43,7 +42,6 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double t
 		start = data->set.hei - 1;
 	if (end >= (int)data->set.hei)
 		end = data->set.hei - 1;
-	//printf("%d %d\n", start, end);
 	i = 0;
 	while (i < start)
 		data->mlx.px[x + i++ *data->set.wid] = data->map.ceil;
