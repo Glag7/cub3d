@@ -6,20 +6,50 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 17:54:31 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/22 20:36:45 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
 #include "render.h"
 #include "mlx.h"
 #include "data.h"
+
+//colors
+# define RED 0xFFFF0000
+# define ORE 0xFFFF3300
+# define ORA 0xFFFF7700
+# define YEL 0xFFFFFF00
+# define YGR 0xFF77FF00
+# define LGR 0xFF11FF00
+# define GRE 0xFF00FF00
+static void	drawfps(t_mlx *mlx, int fps)//move colors to header
+{
+	static char	num[16] = "fps:    ";
+	static int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
+	int		i;
+
+	i = 0;
+	if (fps > 99)
+		num[i++] = (fps / 100) % 10 + '0';
+	if (fps > 9)
+		num[i++] = (fps / 10) % 10 + '0';
+	num[i++] = fps % 10 + '0';
+	num[i++] = ' ';
+	*(unsigned long long *)(num + i) = 0X00737066ULL;//fps\0
+	if (fps > 90)
+		fps = 90;
+	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
+}
+
 
 //TODO deplqcer cqm puis joueur
 int	loop(void *data_)
 {
 	static int				fps = 0;
+	static int				oldfps = 0;
 	static struct timespec	old = {0, 0};
 	struct timespec			curr;
 	double					delta;
@@ -37,8 +67,10 @@ int	loop(void *data_)
 	{
 		printf("fps: %d\nangle %f\nfov %f\nz %f\n---\n",
 			fps, data->play.az, data->set.fov_deg, data->play.z);
+		oldfps = fps;
 		fps = 0;
 	}
+	drawfps(&data->mlx, oldfps);
 	++fps;
 	//printf("angle:%f\n", data->play.az * 180. / 3.14);
 	old = curr;

@@ -69,5 +69,7 @@ son
 menu
 remap controles
 
+position compteur
+
 test render distance
 test texture nord llignes sus
