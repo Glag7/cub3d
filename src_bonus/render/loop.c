@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 12:23:36 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/17 17:54:31 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "mlx.h"
 #include "data.h"
 
+//TODO deplqcer cqm puis joueur
 int	loop(void *data_)
 {
 	static int				fps = 0;
@@ -27,6 +28,7 @@ int	loop(void *data_)
 	data = data_;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &curr);
 	delta = curr.tv_sec - old.tv_sec + (curr.tv_nsec - old.tv_nsec) * 1.e-9;
+	move_angle(data, delta);
 	move(data, delta, data->keys);
 	raycast(data);
 	draw_minimap(data);

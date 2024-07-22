@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 12:37:47 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/17 18:56:51 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 
 static void	start_game(t_data *data)
 {
+	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
+	mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2,
+		data->set.hei / 2);
+	data->oldmouse.x = data->set.wid / 2;
+	data->oldmouse.y = data->set.hei / 2;
+
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
