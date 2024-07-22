@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.h                                             :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/22 15:25:29 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 19:10:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAY_H
-# define PLAY_H
+#ifndef MINI_H
+# define MINI_H
 
-typedef struct s_play
+# include <stdint.h>
+# include "set.h"
+
+typedef struct s_mini
 {
-	double	x;
-	double	y;
-	double	a;
-	double	cosa;
-	double	sina;
-	double	speed;
-}	t_play;
+	uint8_t	*m_curr;
+	uint8_t	*m_circle;
+	uint8_t	*m_square;
+	uint8_t	*m_custom;
+}	t_mini;
+
+int		init_mini(t_mini *mini, t_set *set);
+void	set_diameter(t_set *set, unsigned int d);
+void	free_mini(t_mini *mini);
 
 #endif

@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.h                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/14 15:57:19 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/28 18:41:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAY_H
-# define PLAY_H
+#ifndef UTILS_H
+# define UTILS_H
 
-typedef struct s_play
-{
-	double	x;
-	double	y;
-	double	a;
-	double	cosa;
-	double	sina;
-	double	speed;
-}	t_play;
+# include <stddef.h>
+
+void	ft_perror(const char *s);
+void	*ft_memcpy(void *restrict dest, const void *restrict src, size_t n);
+void	ft_bzero(void *restrict s, size_t n);
 
 #endif

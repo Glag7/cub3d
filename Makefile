@@ -8,6 +8,7 @@ OBJ_DIR = obj/
 SRC_BONUS_DIR = src_bonus/
 OBJ_BONUS_DIR = obj_bonus/
 HDR_DIR = includes/
+HDR_BONUS_DIR = includes_bonus/
 
 PARSING = parsing/
 UTILS = utils/
@@ -16,7 +17,7 @@ HOOKS = hooks/
 RENDER = render/
 
 COMP = cc
-CFLAGS = -Wall -Wextra -I $(LIBDIR) -I $(HDR_DIR) -g #-Werror
+CFLAGS = -Wall -Wextra -I $(LIBDIR) -g #-Werror
 
 
 SRC = main.c \
@@ -99,7 +100,7 @@ all : $(LIB) $(NAME)
 	@echo $(MSG_READY)
 
 bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
-	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_DIR) -I $(LIBDIR) -o $(NAME)
+	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_BONUS_DIR) -I $(LIBDIR) -o $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
 
@@ -155,7 +156,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 $(OBJ_BONUS_DIR)%.o : $(SRC_BONUS_DIR)%.c
 	$(DEL)
 	@echo -n $(MSG_COMPILING)
-	@ $(COMP) $(CFLAGS) -c $^ -o $@ -I $(HDR_DIR)
+	@$(COMP) $(CFLAGS) -c $^ -o $@ -I $(HDR_BONUS_DIR)
 
 cleancub :
 	@echo $(MSG_CLEANING)
