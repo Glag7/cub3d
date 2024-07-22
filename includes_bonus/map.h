@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.h                                             :+:      :+:    :+:   */
+/*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/06/22 15:52:26 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAY_H
-# define PLAY_H
+#ifndef MAP_H
+# define MAP_H
 
-typedef struct s_play
+# include <stdint.h>
+
+typedef struct s_img
 {
-	double	x;
-	double	y;
-	double	a;
-	double	cosa;
-	double	sina;
-	double	speed;
-}	t_play;
+	uint32_t	*px;
+	uint64_t	size;
+}	t_img;
+
+typedef struct s_map
+{
+	uint8_t			*map;
+	unsigned int	hei;
+	unsigned int	wid;
+	t_img			n;
+	t_img			s;
+	t_img			w;
+	t_img			e;
+	uint32_t		floor;
+	uint32_t		ceil;
+}	t_map;
+
+void	free_map(t_map *map);
 
 #endif

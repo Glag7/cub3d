@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.h                                             :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/07/02 14:47:00 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/07/02 14:49:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAY_H
-# define PLAY_H
+#ifndef RAY_H
+# define RAY_H
 
-typedef struct s_play
+# include "point.h"
+
+# define XSIDE 0
+# define YSIDE 1
+
+typedef struct s_ray
 {
-	double	x;
-	double	y;
-	double	a;
-	double	cosa;
-	double	sina;
-	double	speed;
-}	t_play;
+	t_point		pos;
+	t_point		vec;
+	t_point		step;
+	t_point		dist;
+	t_ipoint	ipos;
+	t_ipoint	istep;
+	int			hit;
+	int			side;
+	double		len;
+}	t_ray;
 
 #endif

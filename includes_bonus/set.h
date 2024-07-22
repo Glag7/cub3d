@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/13 17:36:29 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:02:20 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 # define DEF_FOV 90.
 # define DEF_VIEW 250.
+
+# define DEF_SENSI .4
 
 # define DEF_WID 1360
 # define DEF_HEI 768
@@ -46,6 +48,8 @@ typedef struct s_set
 	double			fov;
 	double			tanfov;
 	double			view;
+
+	double			sensi;
 
 	unsigned int	nthread;
 	unsigned int	offthread;

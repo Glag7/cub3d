@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play.h                                             :+:      :+:    :+:   */
+/*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/23 15:38:49 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/07/17 13:01:34 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLAY_H
-# define PLAY_H
+#ifndef DATA_H
+# define DATA_H
 
-typedef struct s_play
+# include <stdint.h>
+# include "map.h"
+# include "img.h"
+# include "play.h"
+# include "set.h"
+# include "mini.h"
+# include "point.h"
+
+typedef struct s_data
 {
-	double	x;
-	double	y;
-	double	a;
-	double	cosa;
-	double	sina;
-	double	speed;
-}	t_play;
+	t_mini		mini;
+	t_map		map;
+	t_play		play;
+	t_mlx		mlx;
+	t_set		set;
+	uint64_t	keys;
+	t_ipoint	oldmouse;
+}	t_data;
 
 #endif
