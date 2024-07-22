@@ -18,11 +18,13 @@ int		mlx_mouse_hide(t_xvar *xvar, t_win_list *win)
 	XDefineCursor(xvar->display, win->window, cursor);
 	XFreePixmap(xvar->display, blank);
 	XFreeCursor(xvar->display, cursor);
+	XGrabPointer(xvar->display, win->window, True, ButtonPressMask | ButtonReleaseMask | PointerMotionMask, GrabModeAsync, GrabModeAsync, win->window, None, CurrentTime);
 }
 
 int		mlx_mouse_show(t_xvar *xvar, t_win_list *win)
 {
 	XUndefineCursor(xvar->display, win->window);
+	XUngrabPointer(xvar->display, CurrentTime);
 }
 
 /*

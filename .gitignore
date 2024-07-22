@@ -4,4 +4,5 @@ obj
 *.a
 *.cub
 *.py
+*.swp
 minilibx/test/mlx-test

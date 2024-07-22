@@ -2,9 +2,27 @@ ennemis
 les portes sont des ennemis
 portails
 
+fps
+
+curseur custom avec mini
+
+detecter quand la souris entre dans la fenetre
+
+dossier includes bonus
+
+attention heqders
+tout faire dans la render distance
+partir de la fin et tout dessiner
+ou partir du debut et garder la ou on s'est arrete c plus opti
+
+tester render distqnce
+
 mouvements fluides
 
 custom keys
+
+limiter distqnce max si manque de fps
+check un peu a droite et a gauche pour le deplacement
 
 lwid 2 ?
 
@@ -38,5 +56,17 @@ espacer les rayons
 faire un tableau de toutes les inverse sqrt
 et tous les cos dangles a appliquer
 malloc la struct
+
+
+souris
+opti cos atan +invlen
+revamp controles
+ennemis + portes (entites)
+flingues
+projectiles
+multithreading
+son
+menu
+remap controles
 
 test render distance

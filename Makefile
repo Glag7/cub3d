@@ -70,6 +70,7 @@ SRC_BONUS = main.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
       $(RENDER)move.c \
+      $(RENDER)mouse.c \
       $(RENDER)drawv.c \
       $(RENDER)minimap.c
 
@@ -159,11 +160,13 @@ $(OBJ_BONUS_DIR)%.o : $(SRC_BONUS_DIR)%.c
 cleancub :
 	@echo $(MSG_CLEANING)
 	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_BONUS_DIR)
 	@echo $(MSG_CLEANED)
 
 clean :
 	@echo $(MSG_CLEANING)
 	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_BONUS_DIR)
 	@make -C $(LIBDIR) -s clean
 	@echo $(MSG_CLEANED)
 
