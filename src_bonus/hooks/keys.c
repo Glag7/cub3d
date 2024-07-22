@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 15:19:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 12:18:36 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/22 20:48:13 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	key_hook(int key, void *data_)
 	else if (key == XK_Down)
 		data->keys |= KEY_DOWN;
 	else if (key == XK_Shift_L)
+	{
+		setfov(&data->set, data->set.fov_deg + 10.);
 		data->keys |= KEY_SHIFT;
+	}
 	else if (key == XK_p)//rm
 		setfov(&data->set, data->set.fov_deg + 1.);
 	else if (key == XK_m)
@@ -75,6 +78,9 @@ int	unkey_hook(int key, void *data_)
 	else if (key == XK_Down)
 		data->keys &= ~KEY_DOWN;
 	else if (key == XK_Shift_L)
+	{
 		data->keys &= ~KEY_SHIFT;
+		setfov(&data->set, data->set.fov_deg - 10.);
+	}
 	return (0);
 }
