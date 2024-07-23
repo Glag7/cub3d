@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/22 20:36:45 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/23 21:06:35 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	num[i++] = fps % 10 + '0';
 	num[i++] = ' ';
 	*(unsigned long long *)(num + i) = 0X00737066ULL;//fps\0
-	if (fps > 90)
-		fps = 90;
+	if (fps > 80)
+		fps = 80;
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 12:38:08 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/23 21:04:41 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double t
 		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)index * img.size];
 		index += inc;
 	}
-	while (i < (int)data->set.hei)
-		data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
+	//while (i < (int)data->set.hei)
+	//	data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
 }
 
 void	drawv(t_data *data, t_ray *ray, size_t x)
