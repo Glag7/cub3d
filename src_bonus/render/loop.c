@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/23 21:06:35 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/25 14:46:14 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "render.h"
 #include "mlx.h"
 #include "data.h"
+
+#include <math.h>
 
 //colors
 # define RED 0xFFFF0000
@@ -44,6 +46,28 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
+static void	draw_floor(t_data *data)
+{
+	int	y = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);
+	int	start = y;
+
+	//si y < 0 ajouter un offset qq part
+	if (y < 0)
+		y = 0;
+	while (y < (int)data->set.hei)
+	{
+		int x = 0;
+		while (x < data->set.wid)
+		{
+			data->mlx.px[x + y * data->set.wid] =
+				data->tmp.px[(int)((double)x / (double)data->set.wid * (double)data->tmp.size) +
+			data->tmp.size * (int)((double)(y - start) / ((double)data->set.hei - (double)start) * (double)data->tmp.size)];
+			++x;
+		}
+		++y;
+	}
+}
+
 
 //TODO deplqcer cqm puis joueur
 int	loop(void *data_)
@@ -60,6 +84,7 @@ int	loop(void *data_)
 	delta = curr.tv_sec - old.tv_sec + (curr.tv_nsec - old.tv_nsec) * 1.e-9;
 	move_angle(data, delta);
 	move(data, delta, data->keys);
+	draw_floor(data);
 	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);

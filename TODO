@@ -1,8 +1,4 @@
-ennemis
-les portes sont des ennemis
 portails
-
-fps
 
 curseur custom avec mini
 
@@ -10,12 +6,7 @@ detecter quand la souris entre dans la fenetre
 
 dossier includes bonus
 
-attention heqders
 tout faire dans la render distance
-partir de la fin et tout dessiner
-ou partir du debut et garder la ou on s'est arrete c plus opti
-
-tester render distqnce
 
 mouvements fluides
 
@@ -23,8 +14,6 @@ custom keys
 
 limiter distqnce max si manque de fps
 check un peu a droite et a gauche pour le deplacement
-
-lwid 2 ?
 
 wid et hei doivent etre pairs
 arreter d'avancer quand quitter fenetre
@@ -39,19 +28,7 @@ keymap
 
 map : tab pour le centrer
 
-entrelacement ?
-
 masque map full
-fastcos
-
-liste des always inline a tester:
-minimap.c : getcolor
-drawv.c lwid
-
-TODO: drawv + raycast (et render.h)
-
-fisheye
-espacer les rayons
 
 faire un tableau de toutes les inverse sqrt
 et tous les cos dangles a appliquer
