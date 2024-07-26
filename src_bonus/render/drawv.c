@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/25 14:06:07 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/26 21:03:56 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double t
 	{
 		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)index * img.size];
 		index += inc;
-	}
+	}//1 trop loin FIXME valgrind
 	//while (i < (int)data->set.hei)
 	//	data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
 }
