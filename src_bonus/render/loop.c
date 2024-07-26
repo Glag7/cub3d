@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/26 23:04:12 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/26 23:39:26 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,19 @@ static void	draw_floor(t_data *data)
 		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
 			(end.y - start.y) / (double)(data->set.wid - 1)};
 		inc.x *= dist;
-		inc.y *= dist;
+		inc.y *= -dist;
 		cur.x = data->play.x + dist * start.x;
-		cur.y = data->play.y + dist * start.y;
+		cur.y = data->play.y - dist * start.y;
 		for (int x = 0; x < data->set.wid; ++x)
 		{
-			t_point	tex;
+			t_ipoint	tex;
 
-			tex.x = (double)data->tmp.size * (cur.x - floor(cur.x));
-			tex.y = (double)data->tmp.size * (cur.y - floor(cur.y));
+			tex.x = floor((double)data->tmp.size * (cur.x - floor(cur.x)));
+			tex.y = floor((double)data->tmp.size * (cur.y - floor(cur.y)));
 			cur.x += inc.x;
 			cur.y += inc.y;
-		//printf("yes %f %f\n", tex.y, tex.x);
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp.px[(int)floor(tex.x) + (int)(floor(tex.y) * (double)data->tmp.size)];
+				data->tmp.px[tex.x + tex.y * data->tmp.size];
 		}
 		++y;
 	}
