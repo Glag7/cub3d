@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/26 18:42:13 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/26 20:33:07 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,18 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
+void	epix_norm(t_point *v)
+{
+	double l = sqrt(v->x * v->x + v->y * v->y);
+	v->x /= l;
+	v->y /= l;
+}
 //fusionner a raycast
 static void	draw_floor(t_data *data)
 {
 	int	y;
 	int	ystart = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
-	double	camheipx = (int)(data->play.z + .5) * data->set.hei;
+	double	camheipx = data->play.z + .5 * (double)data->set.hei;
 
 	t_point	start;//ystart
 	t_point	end;//end point
@@ -62,6 +68,8 @@ static void	draw_floor(t_data *data)
 	start.y = data->play.sina + data->set.tanfov * data->play.cosa;
 	end.x = data->play.cosa + data->set.tanfov * data->play.sina;
 	end.y = data->play.sina - data->set.tanfov * data->play.cosa;
+	epix_norm(&start);
+	epix_norm(&end);//?
 	//si y < 0 ajouter un offset qq part ?
 	if (ystart < 0)
 		ystart = 0;
@@ -76,20 +84,21 @@ static void	draw_floor(t_data *data)
 		dist = camheipx / (double)(y - ystart);
 		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
 			(end.y - start.y) / (double)(data->set.wid - 1)};
+		//printf("yes %f\n", inc.y);
 		inc.x *= dist;
 		inc.y *= dist;
-		cur.x = data->play.x + dist * inc.x;
-		cur.y = data->play.y + dist * inc.y;
+		cur.x = data->play.x + dist * start.x;
+		cur.y = data->play.y + dist * start.y;
 		for (int x = 0; x < data->set.wid; ++x)
 		{
 			t_point	tex;
 
-			tex.x = data->tmp.size * (cur.x - floor(cur.x));
-			tex.y = data->tmp.size * (cur.y - floor(cur.y));
-			cur.x += inc.x;
+			tex.x = (double)data->tmp.size * (cur.x - floor(cur.x));
+			tex.y = (double)data->tmp.size * (cur.y - floor(cur.y));
+			cur.x += inc.x;//?
 			cur.y += inc.y;
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp.px[(int)floor(tex.x) + (int)(floor(tex.y) * data->tmp.size)];
+				data->tmp.px[(int)floor(tex.x) + (int)(floor(tex.y) * (double)data->tmp.size)];
 		}
 		++y;
 	}
