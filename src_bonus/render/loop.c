@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/25 14:46:14 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/26 18:42:13 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "mlx.h"
 #include "data.h"
 
+#include "point.h"
 #include <math.h>
 
 //colors
@@ -46,23 +47,49 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
+//fusionner a raycast
 static void	draw_floor(t_data *data)
 {
-	int	y = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);
-	int	start = y;
+	int	y;
+	int	ystart = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
+	double	camheipx = (int)(data->play.z + .5) * data->set.hei;
 
-	//si y < 0 ajouter un offset qq part
-	if (y < 0)
-		y = 0;
+	t_point	start;//ystart
+	t_point	end;//end point
+	t_point	inc;
+
+	start.x = data->play.cosa - data->set.tanfov * data->play.sina;
+	start.y = data->play.sina + data->set.tanfov * data->play.cosa;
+	end.x = data->play.cosa + data->set.tanfov * data->play.sina;
+	end.y = data->play.sina - data->set.tanfov * data->play.cosa;
+	//si y < 0 ajouter un offset qq part ?
+	if (ystart < 0)
+		ystart = 0;
+	y = ystart;
+
+	t_point	cur;
+
 	while (y < (int)data->set.hei)
 	{
-		int x = 0;
-		while (x < data->set.wid)
+		double	dist;
+
+		dist = camheipx / (double)(y - ystart);
+		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
+			(end.y - start.y) / (double)(data->set.wid - 1)};
+		inc.x *= dist;
+		inc.y *= dist;
+		cur.x = data->play.x + dist * inc.x;
+		cur.y = data->play.y + dist * inc.y;
+		for (int x = 0; x < data->set.wid; ++x)
 		{
+			t_point	tex;
+
+			tex.x = data->tmp.size * (cur.x - floor(cur.x));
+			tex.y = data->tmp.size * (cur.y - floor(cur.y));
+			cur.x += inc.x;
+			cur.y += inc.y;
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp.px[(int)((double)x / (double)data->set.wid * (double)data->tmp.size) +
-			data->tmp.size * (int)((double)(y - start) / ((double)data->set.hei - (double)start) * (double)data->tmp.size)];
-			++x;
+				data->tmp.px[(int)floor(tex.x) + (int)(floor(tex.y) * data->tmp.size)];
 		}
 		++y;
 	}
@@ -70,6 +97,7 @@ static void	draw_floor(t_data *data)
 
 
 //TODO deplqcer cqm puis joueur
+//dessiner plafond et sol en meme temps ? ou alors skybox
 int	loop(void *data_)
 {
 	static int				fps = 0;

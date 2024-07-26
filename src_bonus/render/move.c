@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/22 20:59:06 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/25 20:39:19 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ static inline void	check_pos(t_data *data)
 		data->play.az -= 2. * M_PI;
 	else if (data->play.az < -M_PI)
 		data->play.az += 2. * M_PI;
+	if (data->play.z > .5)
+		data->play.z = .5;
+	else if (data->play.z < -.5)
+		data->play.z = -.5;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
 }

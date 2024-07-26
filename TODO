@@ -1,3 +1,5 @@
+"opti"
+
 portails
 
 curseur custom avec mini
@@ -47,6 +49,8 @@ menu
 remap controles
 
 position compteur
+
+joueur gros (offset collisions)
 
 skybox
 sol
