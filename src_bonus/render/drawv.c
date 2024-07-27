@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/26 21:03:56 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/27 20:52:26 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double t
 	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.;
 	inc = 1. / hei * (double)img.size;
 	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset;
-	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset;
+	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset + 1.; // :)
 	index = 0.;
 	if (start < 0.)
 	{
