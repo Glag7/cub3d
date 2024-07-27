@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/27 20:50:27 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/27 23:37:30 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,43 @@ static void	draw_floor(t_data *data)
 		++y;
 	}
 }
-//TODO tester avec differente resolution
 
-//TODO deplqcer cqm puis joueur
+static void	draw_sky(t_data *data)
+{
+	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
+	
+	int	x, y;
+
+	yend++;
+	if (yend >= (int)data->set.hei)
+		yend = data->set.hei - 1;
+	y = 0;
+	while (y < yend)
+	{
+		x = 0;
+		while (x < data->set.wid)
+		{
+			double xpx, ypx;
+
+			xpx = ((double)x * (data->set.fov) / (2 * M_PI))
+			* (double)data->tmp2.size / (double)data->set.wid
+			- data->play.a / (M_PI * 2) * (double)data->tmp2.size
+			+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
+			- (double)data->tmp2.size * .5;
+			if (xpx < 0)
+				xpx += data->tmp2.size;
+
+			ypx = (double)y * (double)data->tmp2.size / (double)data->set.hei;
+			data->mlx.px[x + y * data->set.wid] =
+				data->tmp2.px[(int)floor(xpx) % data->tmp2.size
+			+ (int)floor(ypx) * (int)data->tmp2.size];
+			++x;
+		}
+		++y;
+	}
+}
+	
+	//TODO deplqcer cqm puis joueur
 //dessiner plafond et sol en meme temps ? ou alors skybox
 int	loop(void *data_)
 {
@@ -114,6 +148,7 @@ int	loop(void *data_)
 	move_angle(data, delta);
 	move(data, delta, data->keys);
 	draw_floor(data);
+	draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
