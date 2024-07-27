@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/27 20:49:23 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/27 20:50:27 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	draw_floor(t_data *data)
 {
 	int	y;
 	int	ystart = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
-	double	camheipx = (data->play.z + .5) * (double)data->set.hei;
+	double	camheipx = (data->play.z + .5) * (double)data->set.wid / (data->set.tanfov * 2.);
 
 	t_point	start;//ystart
 	t_point	end;//end point
@@ -74,7 +74,7 @@ static void	draw_floor(t_data *data)
 		double	dist;
 
 		//ratio wid hei ?
-		dist = camheipx / (double)(y - ystart) / data->set.tanfov;
+		dist = camheipx / (double)(y - ystart);
 		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
 			(end.y - start.y) / (double)(data->set.wid - 1)};
 		inc.x *= dist;
