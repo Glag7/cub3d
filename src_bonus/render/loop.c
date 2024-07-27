@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/27 15:41:11 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/27 20:49:23 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
+//(double)data->set.wid / (data->set.tanfov * 2.) constqnte = wid cub a 1
 static void	draw_floor(t_data *data)
 {
 	int	y;
@@ -73,7 +74,7 @@ static void	draw_floor(t_data *data)
 		double	dist;
 
 		//ratio wid hei ?
-		dist = camheipx / (double)(y - ystart);
+		dist = camheipx / (double)(y - ystart) / data->set.tanfov;
 		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
 			(end.y - start.y) / (double)(data->set.wid - 1)};
 		inc.x *= dist;
@@ -94,7 +95,6 @@ static void	draw_floor(t_data *data)
 		++y;
 	}
 }
-//FIXME marche que quand fov = 83
 //TODO tester avec differente resolution
 
 //TODO deplqcer cqm puis joueur
