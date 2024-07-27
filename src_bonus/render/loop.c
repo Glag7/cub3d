@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/26 23:39:26 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/27 15:41:11 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,6 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
-void	epix_norm(t_point *v)//nn
-{
-	double l = sqrt(v->x * v->x + v->y * v->y);
-	v->x /= l;
-	v->y /= l;
-}
-//fusionner a raycast?
 static void	draw_floor(t_data *data)
 {
 	int	y;
@@ -66,11 +59,9 @@ static void	draw_floor(t_data *data)
 
 	//bords du plan
 	start.x = data->play.cosa - data->set.tanfov * data->play.sina;
-	start.y = data->play.sina + data->set.tanfov * data->play.cosa;
+	start.y = data->play.sina + data->set.tanfov * data->play.cosa;//sus;
 	end.x = data->play.cosa + data->set.tanfov * data->play.sina;
 	end.y = data->play.sina - data->set.tanfov * data->play.cosa;
-	//epix_norm(&start);
-	//epix_norm(&end);//?
 	y = ystart;
 	if (y < 0)
 		y = 0;
@@ -81,6 +72,7 @@ static void	draw_floor(t_data *data)
 	{
 		double	dist;
 
+		//ratio wid hei ?
 		dist = camheipx / (double)(y - ystart);
 		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
 			(end.y - start.y) / (double)(data->set.wid - 1)};
@@ -102,7 +94,6 @@ static void	draw_floor(t_data *data)
 		++y;
 	}
 }
-//FIXME a l'envers + fov + window
 //FIXME marche que quand fov = 83
 //TODO tester avec differente resolution
 
