@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/27 23:37:30 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/28 13:19:08 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,14 @@ static void	draw_sky(t_data *data)
 			if (xpx < 0)
 				xpx += data->tmp2.size;
 
-			ypx = (double)y * (double)data->tmp2.size / (double)data->set.hei;
+			ypx = ((double)y * (data->set.fov) / (M_PI))
+			* (double)data->tmp2.size / (double)data->set.wid
+			- data->play.az / (M_PI * 2) * (double)data->tmp2.size
+			+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
+			- (double)data->tmp2.size * .5;
+			if (ypx < 0)
+				ypx += data->tmp2.size;
+			//ypx = (double)y * (double)data->tmp2.size / (double)data->set.hei;
 			data->mlx.px[x + y * data->set.wid] =
 				data->tmp2.px[(int)floor(xpx) % data->tmp2.size
 			+ (int)floor(ypx) * (int)data->tmp2.size];

@@ -5,4 +5,6 @@ obj
 *.cub
 *.py
 *.swp
+gmon.out
+data
 minilibx/test/mlx-test
