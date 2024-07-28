@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/28 20:57:17 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/28 23:52:35 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,35 @@ static void	draw_sky(t_data *data)
 	{
 		x = 0;
 		while (x < data->set.wid)
-		{
+		{//TODO increment plutot que mult
+		 //TODO utiliser les angles precalcules a al place de x / fov
+			static double skibidi = .5 / M_PI;
+			static double skibidi2 = 1. / M_PI;
 			double xpx, ypx;
 
-			xpx = ((double)x * (data->set.fov) / (2 * M_PI))
-			* (double)data->tmp2.size / (double)data->set.wid
-			- data->play.a / (M_PI * 2) * (double)data->tmp2.size
-			+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
-			- (double)data->tmp2.size * .5;
+			xpx = ((((double)x / (double)data->set.wid - .5)
+				* data->set.fov
+			- data->play.a) * skibidi
+			- .25)
+			* (double)data->tmp2.size;
 			if (xpx < 0)
 				xpx += data->tmp2.size;
 
-			ypx = ((double)y * (data->set.fov) / (M_PI))
-			* (double)data->tmp2.size / (double)data->set.wid
-			- data->play.az / (M_PI * 2) * (double)data->tmp2.size
-			+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
-			- (double)data->tmp2.size * .5;
+			ypx = ((((double)y / (double)data->set.wid - .5)
+				* data->set.fov
+			- data->play.az) * skibidi2
+			- .25)
+			* (double)data->tmp2.size;
+	//		ypx = ((double)y * (data->set.fov) / (M_PI))
+	//		* (double)data->tmp2.size / (double)data->set.wid
+	//		- data->play.az / (M_PI * 2) * (double)data->tmp2.size
+	//		+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
+	//		- (double)data->tmp2.size * .5;
 			if (ypx < 0)
 				ypx += data->tmp2.size;
 			//ypx = (double)y * (double)data->tmp2.size / (double)data->set.hei;
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp2.px[(int)floor(xpx) % data->tmp2.size
+				data->tmp2.px[(int)floor(xpx)
 			+ (int)floor(ypx) * (int)data->tmp2.size];
 			++x;
 		}
@@ -157,7 +165,7 @@ int	loop(void *data_)
 	move_angle(data, delta);
 	move(data, delta, data->keys);
 	draw_floor(data);
-	//draw_sky(data);
+	draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);

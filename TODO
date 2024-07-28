@@ -52,6 +52,8 @@ position compteur
 
 joueur gros (offset collisions)
 
+opti minimap
+
 skybox
 sol
 
@@ -62,3 +64,5 @@ graph temps
 ligne casse couille en bas de l'ecran
 parsing + refactor sol
 textures taille fixe
+
+TOUT PASSER EN &
