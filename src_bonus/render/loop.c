@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/28 13:19:08 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/28 20:57:17 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,25 @@ static void	draw_floor(t_data *data)
 		y = 0;
 
 	t_point	cur;
-
+	t_point	baseinc;
+	baseinc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
+			(end.y - start.y) / (double)(data->set.wid - 1)};
 	while (y < (int)data->set.hei)
 	{
 		double	dist;
 
-		//ratio wid hei ?
 		dist = camheipx / (double)(y - ystart);
-		inc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
-			(end.y - start.y) / (double)(data->set.wid - 1)};
-		inc.x *= dist;
-		inc.y *= -dist;
-		cur.x = data->play.x + dist * start.x;
-		cur.y = data->play.y - dist * start.y;
+		inc = baseinc;
+		inc.x *= dist * (double)data->tmp.size;
+		inc.y *= -dist * (double)data->tmp.size;
+		cur.x = (data->play.x + dist * start.x) * (double)data->tmp.size;
+		cur.y = (data->play.y - dist * start.y) * (double)data->tmp.size;
 		for (int x = 0; x < data->set.wid; ++x)
 		{
 			t_ipoint	tex;
 
-			tex.x = floor((double)data->tmp.size * (cur.x - floor(cur.x)));
-			tex.y = floor((double)data->tmp.size * (cur.y - floor(cur.y)));
+			tex.x = (int)cur.x % data->tmp.size;
+			tex.y = (int)cur.y % data->tmp.size;
 			cur.x += inc.x;
 			cur.y += inc.y;
 			data->mlx.px[x + y * data->set.wid] =
@@ -95,6 +95,8 @@ static void	draw_floor(t_data *data)
 		++y;
 	}
 }
+//TODO: tout resize a 256 pour pouvoir faire un & au lieu d'un %
+
 
 static void	draw_sky(t_data *data)
 {
@@ -155,7 +157,7 @@ int	loop(void *data_)
 	move_angle(data, delta);
 	move(data, delta, data->keys);
 	draw_floor(data);
-	draw_sky(data);
+	//draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
