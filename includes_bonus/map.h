@@ -14,11 +14,13 @@
 # define MAP_H
 
 # include <stdint.h>
+# include <stddef.h>
 
 typedef struct s_img
 {
 	uint32_t	*px;
-	uint64_t	size;
+	size_t		w;
+	size_t		h;
 }	t_img;
 
 typedef struct s_map

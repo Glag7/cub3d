@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 16:27:13 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:53:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,20 @@ static void	draw_floor(t_data *data)
 
 		dist = camheipx / (double)(y - ystart);
 		inc = baseinc;
-		inc.x *= dist * (double)data->tmp.size;
-		inc.y *= -dist * (double)data->tmp.size;
-		cur.x = (data->play.x + dist * start.x) * (double)data->tmp.size;
-		cur.y = (data->play.y - dist * start.y) * (double)data->tmp.size;
+		inc.x *= dist * (double)data->tmp.w;
+		inc.y *= -dist * (double)data->tmp.w;
+		cur.x = (data->play.x + dist * start.x) * (double)data->tmp.w;
+		cur.y = (data->play.y - dist * start.y) * (double)data->tmp.w;
 		for (int x = 0; x < data->set.wid; ++x)
 		{
 			t_ipoint	tex;
 			
-			tex.x = (int)cur.x % data->tmp.size;
-			tex.y = (int)cur.y % data->tmp.size;
+			tex.x = (int)cur.x % data->tmp.w;
+			tex.y = (int)cur.y % data->tmp.w;
 			cur.x += inc.x;
 			cur.y += inc.y;
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp.px[tex.x + tex.y * data->tmp.size];
+				data->tmp.px[tex.x + tex.y * data->tmp.w];
 		}
 		++y;
 	}
@@ -129,9 +129,9 @@ static void	draw_sky(t_data *data)
 		//ypx = (foo(data, y)
 		//* skibidi2//repassen prctage
 		//+ .0)//offset pour voir le bas
-		ypx = foo(data,y) * (double)data->tmp2.size;
+		ypx = foo(data,y) * (double)data->tmp2.w;
 		if (ypx < 0)
-			ypx += data->tmp2.size;
+			ypx += data->tmp2.w;
 		x = 0;
 		while (x < data->set.wid)
 		{//TODO increment plutot que mult
@@ -143,15 +143,15 @@ static void	draw_sky(t_data *data)
 				* data->set.fov
 			- data->play.a) * skibidi
 			- .25)
-			* (double)data->tmp2.size;
+			* (double)data->tmp2.w;
 			if (xpx < 0)
-				xpx += data->tmp2.size;
+				xpx += data->tmp2.w;
 //faire des skibidi underflow avec des unsigned pour le &
 //TODO faire en sorte que resize la window agrandisse la skybox juste (pas en voir plus)
 			
 			data->mlx.px[x + y * data->set.wid] =
 				data->tmp2.px[(int)floor(xpx)
-			+ (int)floor(ypx) % data->tmp2.size * (int)data->tmp2.size];
+			+ (int)floor(ypx) % data->tmp2.w * (int)data->tmp2.w];
 			++x;
 		}
 		++y;

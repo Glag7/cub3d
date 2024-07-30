@@ -30,9 +30,9 @@ int		load_ea(void *mlx, t_map *map, char *buf, unsigned int *i);
 int		load_we(void *mlx, t_map *map, char *buf, unsigned int *i);
 int		load_floor(void *mlx, t_map *map, char *buf, unsigned int *i);
 int		load_ceil(void *mlx, t_map *map, char *buf, unsigned int *i);
-int		load_img(void *mlx, char *path, t_img *img);
+int		load_img(void *mlx, char *path, t_img *image, t_dim dim);
 int		get_data(char *buf, t_data *data);
-void	read_image(t_img *image, t_specs img_specs);
+void	resize_image(t_img *image, t_specs specs);
 void	fill_map(t_map *map, char *buf);
 int		check_map(t_map *map);
 
