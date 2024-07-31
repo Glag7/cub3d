@@ -65,4 +65,9 @@ ligne casse couille en bas de l'ecran
 parsing + refactor sol
 textures taille fixe
 
+jonction du sol qui deconne en oob
+
+sensi en fonction du fov
+
+relire data->set.wid - 1 ou pas
 TOUT PASSER EN &

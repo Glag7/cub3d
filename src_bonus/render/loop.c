@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/28 23:52:35 by glag             ###   ########.fr       */
+/*   Updated: 2024/07/31 00:06:10 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	draw_floor(t_data *data)
 		for (int x = 0; x < data->set.wid; ++x)
 		{
 			t_ipoint	tex;
-
+			
 			tex.x = (int)cur.x % data->tmp.size;
 			tex.y = (int)cur.y % data->tmp.size;
 			cur.x += inc.x;
@@ -94,9 +94,15 @@ static void	draw_floor(t_data *data)
 		}
 		++y;
 	}
-}
+}//probleme passage negatif a verifier apres opti et underflow
 //TODO: tout resize a 256 pour pouvoir faire un & au lieu d'un %
 
+
+double foo(t_data *data, int y)
+{
+	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
+	return (double)y/(double)(yend);//probablement un truc a faire avec yend
+}//calculer yend a l'angle max, yend a l'angle 0, en deduire la fonction
 
 static void	draw_sky(t_data *data)
 {
@@ -104,19 +110,29 @@ static void	draw_sky(t_data *data)
 	
 	int	x, y;
 
-	yend++;
+
+	printf("%f %f %f %f\n", foo(data, 0) * 180/3.14, foo(data, data->set.hei / 2) * 180 / 3.14, foo(data, yend) * 180 / 3.14, foo(data, data->set.hei)*180/3.14);
+	yend++;//?
 	if (yend >= (int)data->set.hei)
 		yend = data->set.hei - 1;
 	y = 0;
 	while (y < yend)
 	{
+		double ypx;
+		double skibidi2 = 1. / (M_PI);
+		//disons que + = vers le haut
+		//ypx = (foo(data, y)
+		//* skibidi2//repassen prctage
+		//+ .0)//offset pour voir le bas
+		ypx = foo(data,y) * (double)data->tmp2.size;
+		if (ypx < 0)
+			ypx += data->tmp2.size;
 		x = 0;
 		while (x < data->set.wid)
 		{//TODO increment plutot que mult
 		 //TODO utiliser les angles precalcules a al place de x / fov
-			static double skibidi = .5 / M_PI;
-			static double skibidi2 = 1. / M_PI;
-			double xpx, ypx;
+			double skibidi = .5 / M_PI;
+			double xpx;
 
 			xpx = ((((double)x / (double)data->set.wid - .5)
 				* data->set.fov
@@ -125,23 +141,12 @@ static void	draw_sky(t_data *data)
 			* (double)data->tmp2.size;
 			if (xpx < 0)
 				xpx += data->tmp2.size;
-
-			ypx = ((((double)y / (double)data->set.wid - .5)
-				* data->set.fov
-			- data->play.az) * skibidi2
-			- .25)
-			* (double)data->tmp2.size;
-	//		ypx = ((double)y * (data->set.fov) / (M_PI))
-	//		* (double)data->tmp2.size / (double)data->set.wid
-	//		- data->play.az / (M_PI * 2) * (double)data->tmp2.size
-	//		+ (data->set.fov) / (4 * M_PI) * (double)data->tmp2.size
-	//		- (double)data->tmp2.size * .5;
-			if (ypx < 0)
-				ypx += data->tmp2.size;
-			//ypx = (double)y * (double)data->tmp2.size / (double)data->set.hei;
+//faire des skibidi underflow avec des unsigned pour le &
+//TODO faire en sorte que resize la window agrandisse la skybox juste (pas en voir plus)
+			
 			data->mlx.px[x + y * data->set.wid] =
 				data->tmp2.px[(int)floor(xpx)
-			+ (int)floor(ypx) * (int)data->tmp2.size];
+			+ (int)floor(ypx) % data->tmp2.size * (int)data->tmp2.size];
 			++x;
 		}
 		++y;
