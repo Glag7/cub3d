@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/30 19:02:36 by glag             ###   ########.fr       */
+/*   Updated: 2024/08/01 20:30:22 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 
 static void	start_game(t_data *data)
 {
-	char	tmp[] = "./assets/temoin_simple.xpm\0";
+	char	tmp[] = "./assets/ycontre.xpm\0";
 	load_img(data->mlx.mlx, tmp, &data->tmp);//
-	char	tmp2[] = "./assets/temoin_simple.xpm\0";
+	char	tmp2[] = "./assets/edbernar.xpm\0";
 	load_img(data->mlx.mlx, tmp2, &data->tmp2);//
 
 	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);

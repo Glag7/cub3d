@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/31 00:06:10 by glag             ###   ########.fr       */
+/*   Updated: 2024/08/01 20:43:18 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,12 @@ static void	draw_floor(t_data *data)
 
 double foo(t_data *data, int y)
 {
+	double la_constante_la = .25;//a choisir avec angle max
 	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
-	return (double)y/(double)(yend);//probablement un truc a faire avec yend
+
+	yend -= (int)data->set.hei/2;
+	double mewhen = (((double)data->set.hei) / (double)data->set.hei) * la_constante_la * data->set.fov;
+	return ((2. * (double)y - (double)yend * 2.) / (double)data->set.hei) * la_constante_la * data->set.fov - mewhen;
 }//calculer yend a l'angle max, yend a l'angle 0, en deduire la fonction
 
 static void	draw_sky(t_data *data)
@@ -111,7 +115,6 @@ static void	draw_sky(t_data *data)
 	int	x, y;
 
 
-	printf("%f %f %f %f\n", foo(data, 0) * 180/3.14, foo(data, data->set.hei / 2) * 180 / 3.14, foo(data, yend) * 180 / 3.14, foo(data, data->set.hei)*180/3.14);
 	yend++;//?
 	if (yend >= (int)data->set.hei)
 		yend = data->set.hei - 1;
