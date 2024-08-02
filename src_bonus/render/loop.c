@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:58:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:56:18 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,16 @@
 #include "render.h"
 #include "mlx.h"
 #include "data.h"
+#include "fps.h"
 
 #include "point.h"
 #include <math.h>
 
-//colors
-# define RED 0xFFFF0000
-# define ORE 0xFFFF3300
-# define ORA 0xFFFF7700
-# define YEL 0xFFFFFF00
-# define YGR 0xFF77FF00
-# define LGR 0xFF11FF00
-# define GRE 0xFF00FF00
-static void	drawfps(t_mlx *mlx, int fps)//move colors to header
+static void	drawfps(t_mlx *mlx, int fps)
 {
-	static char	num[16] = "fps:    ";
+	static char			num[16] = "fps:    ";
 	static const int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
-	int		i;
+	int					i;
 
 	i = 0;
 	if (fps > 999)
@@ -43,7 +36,7 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 		num[i++] = (fps / 10) % 10 + '0';
 	num[i++] = fps % 10 + '0';
 	num[i++] = ' ';
-	*(unsigned long long *)(num + i) = 0X00737066ULL;//fps\0
+	*(unsigned long long *)(num + i) = FPS;
 	if (fps > 80)
 		fps = 80;
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
@@ -102,7 +95,7 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 			
 			data->mlx.px[x + y * data->set.wid] =
 				data->tmp2.px[(int)floor(xpx)
-			+ (int)floor(ypx) % data->tmp2.w * (int)data->tmp2.w];
+			+ ((int)floor(ypx) & (data->tmp2.w - 1)) * (int)data->tmp2.w];
 			++x;
 		}
 		++y;

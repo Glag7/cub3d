@@ -6,47 +6,49 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:07:39 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 18:25:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:47:14 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "data.h"
 #include "point.h"
+#include "floor.h"
 
-void	draw_floor(t_data *data)
+static inline __attribute__((always_inline)) void
+	assign_pos_y_from_data_horizon_and_check_it_is_not_negative(
+	t_data *dat, t_floor *f)
 {
-	const double	camheipx = (data->play.z + .5) * data->set.planwid;
-	const t_point	baseinc = (t_point){(data->set.invplanwid * data->play.sina),
-			-(data->set.invplanwid * data->play.cosa)};
-	
-	t_ipoint	pos; 
-	t_point	start;
-	t_point	inc;
-	double	dist;
+	f->pos.y = dat->horizon - 1;
+	if (f->pos.y < -1)
+		f->pos.y = -1;
+}
 
-	start.x = data->play.cosa - data->set.tanfov * data->play.sina;
-	start.y = data->play.sina + data->set.tanfov * data->play.cosa;
-	pos.y = data->horizon - 1;
-	if (pos.y < -1)
-		pos.y = -1;
+void	draw_floor(t_data *dat)
+{
+	const double	camheipx = (dat->play.z + .5) * dat->set.planwid;
+	const t_point	baseinc = (t_point){(dat->set.invplanwid
+			* dat->play.sina), -(dat->set.invplanwid * dat->play.cosa)};
+	const t_point	start = (t_point){dat->play.cosa - dat->set.tanfov
+		* dat->play.sina, dat->play.sina + dat->set.tanfov * dat->play.cosa};
+	t_floor			f;
 
-	t_point	cur;
-	while (++pos.y < (int)data->set.hei)
+	assign_pos_y_from_data_horizon_and_check_it_is_not_negative(dat, &f);
+	while (++f.pos.y < (int)dat->set.hei)
 	{
-		dist = camheipx / (double)(pos.y - data->horizon);
-		inc.x = baseinc.x * dist * (double)data->tmp.w;
-		inc.y = baseinc.y * -dist * (double)data->tmp.h;
-		cur.x = (data->play.x + dist * start.x) * (double)data->tmp.w;
-		cur.y = (data->play.y - dist * start.y) * (double)data->tmp.h;
-		pos.x = -1;
-		while (++pos.x < (int)data->set.wid)
+		f.dist = camheipx / (double)(f.pos.y - dat->horizon);
+		f.inc.x = baseinc.x * f.dist * (double)dat->tmp.w;
+		f.inc.y = baseinc.y * -f.dist * (double)dat->tmp.h;
+		f.cur.x = (dat->play.x + f.dist * start.x) * (double)dat->tmp.w;
+		f.cur.y = (dat->play.y - f.dist * start.y) * (double)dat->tmp.h;
+		f.pos.x = -1;
+		while (++f.pos.x < (int)dat->set.wid)
 		{
-			cur.x += inc.x;
-			cur.y += inc.y;
-			data->mlx.px[pos.x + pos.y * data->set.wid] =
-				data->tmp.px[((int)cur.x & (data->tmp.w - 1))
-				+ ((int)cur.y & (data->tmp.h - 1)) * data->tmp.w];
+			f.cur.x += f.inc.x;
+			f.cur.y += f.inc.y;
+			dat->mlx.px[f.pos.x + f.pos.y * dat->set.wid]
+				= dat->tmp.px[((int)f.cur.x & (dat->tmp.w - 1))
+				+ ((int)f.cur.y & (dat->tmp.h - 1)) * dat->tmp.w];
 		}
 	}
 }
