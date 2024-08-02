@@ -70,6 +70,7 @@ SRC_BONUS = main.c \
       $(HOOKS)win.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
+      $(RENDER)floor.c \
       $(RENDER)move.c \
       $(RENDER)mouse.c \
       $(RENDER)drawv.c \

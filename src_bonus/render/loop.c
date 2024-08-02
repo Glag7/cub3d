@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 16:53:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:10:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,55 +49,6 @@ static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
 }
 
-//(double)data->set.wid / (data->set.tanfov * 2.) constqnte = wid cub a 1
-static void	draw_floor(t_data *data)
-{
-	int	y;
-	int	ystart = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
-	double	camheipx = (data->play.z + .5) * (double)data->set.wid / (data->set.tanfov * 2.);
-
-	t_point	start;//ystart
-	t_point	end;//end point
-	t_point	inc;
-
-	//bords du plan
-	start.x = data->play.cosa - data->set.tanfov * data->play.sina;
-	start.y = data->play.sina + data->set.tanfov * data->play.cosa;//sus;
-	end.x = data->play.cosa + data->set.tanfov * data->play.sina;
-	end.y = data->play.sina - data->set.tanfov * data->play.cosa;
-	y = ystart;
-	if (y < 0)
-		y = 0;
-
-	t_point	cur;
-	t_point	baseinc;
-	baseinc = (t_point){(end.x - start.x) / (double)(data->set.wid - 1),
-			(end.y - start.y) / (double)(data->set.wid - 1)};
-	while (y < (int)data->set.hei)
-	{
-		double	dist;
-
-		dist = camheipx / (double)(y - ystart);
-		inc = baseinc;
-		inc.x *= dist * (double)data->tmp.w;
-		inc.y *= -dist * (double)data->tmp.w;
-		cur.x = (data->play.x + dist * start.x) * (double)data->tmp.w;
-		cur.y = (data->play.y - dist * start.y) * (double)data->tmp.w;
-		for (int x = 0; x < data->set.wid; ++x)
-		{
-			t_ipoint	tex;
-			
-			tex.x = (int)cur.x % data->tmp.w;
-			tex.y = (int)cur.y % data->tmp.w;
-			cur.x += inc.x;
-			cur.y += inc.y;
-			data->mlx.px[x + y * data->set.wid] =
-				data->tmp.px[tex.x + tex.y * data->tmp.w];
-		}
-		++y;
-	}
-}//probleme passage negatif a verifier apres opti et underflow
-//TODO: tout resize a 256 pour pouvoir faire un & au lieu d'un %
 
 
 double foo(t_data *data, int y)

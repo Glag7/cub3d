@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 16:54:26 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:12:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define DEF_SENSI .4
 
 typedef struct s_set
-{
+{//FIXME alignment
 	unsigned int	d;
 	unsigned int	r;
 	unsigned int	xoffset;
@@ -47,7 +47,8 @@ typedef struct s_set
 	double			fov_deg;
 	double			fov;
 	double			tanfov;
-	double			view;
+	double			view;//?
+	double			planwid;
 
 	double		sensi;//caca
 	unsigned int	nthread;
