@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 16:49:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:38:17 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 	t_img		tmp;
 	t_img		tmp2;
 	t_ipoint	oldmouse;
+	int		horizon;
 }	t_data;
 
 #endif

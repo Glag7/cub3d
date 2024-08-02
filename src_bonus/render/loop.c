@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:10:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:58:17 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ double foo(t_data *data, int y)
 	return ((2. * (double)y - (double)yend * 2.) / (double)data->set.hei) * la_constante_la * data->set.fov - mewhen;
 }//calculer yend a l'angle max, yend a l'angle 0, en deduire la fonction
 
-static void	draw_sky(t_data *data)
+static void	draw_sky(t_data *data)//le faire dans drawv
 {
 	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
 	
@@ -72,7 +72,7 @@ static void	draw_sky(t_data *data)
 	if (yend >= (int)data->set.hei)
 		yend = data->set.hei - 1;
 	y = 0;
-	while (y < yend)
+	while (y <= yend)//?
 	{
 		double ypx;
 		double skibidi2 = 1. / (M_PI);
@@ -125,6 +125,7 @@ int	loop(void *data_)
 	delta = curr.tv_sec - old.tv_sec + (curr.tv_nsec - old.tv_nsec) * 1.e-9;
 	move_angle(data, delta);
 	move(data, delta, data->keys);
+	data->horizon = data->set.hei / 2 + (int)(data->set.planwid * data->play.az / M_PI * 4.);
 	draw_floor(data);
 	draw_sky(data);
 	raycast(data);

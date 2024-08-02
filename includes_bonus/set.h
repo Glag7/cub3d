@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:12:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:19:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_set
 	double			tanfov;
 	double			view;//?
 	double			planwid;
+	double			invplanwid;
 
 	double		sensi;//caca
 	unsigned int	nthread;

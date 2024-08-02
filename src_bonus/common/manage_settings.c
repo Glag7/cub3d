@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:15:04 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:20:29 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int	setfov(t_set *set, double fov_deg)
 	set->fov = fov_deg * M_PI / 180.;
 	set->tanfov = tan(set->fov * .5);
 	set->planwid = (double)set->wid / (set->tanfov * 2.);
+	set->invplanwid = 1. / set->planwid;
 	return (0);
 }
