@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 18:56:18 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:58:33 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 		//* skibidi2//repassen prctage
 		//+ .0)//offset pour voir le bas
 		ypx = foo(data,y) * (double)data->tmp2.w;
-		if (ypx < 0)
-			ypx += data->tmp2.w;
 		x = 0;
 		while (x < data->set.wid)
 		{//TODO increment plutot que mult
@@ -88,14 +86,12 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 			- data->play.a) * skibidi
 			- .25)
 			* (double)data->tmp2.w;
-			if (xpx < 0)
-				xpx += data->tmp2.w;
 //faire des skibidi underflow avec des unsigned pour le &
 //TODO faire en sorte que resize la window agrandisse la skybox juste (pas en voir plus)
 			
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp2.px[(int)floor(xpx)
-			+ ((int)floor(ypx) & (data->tmp2.w - 1)) * (int)data->tmp2.w];
+				data->tmp2.px[((int)floor(xpx) & (data->tmp2.w - 1))
+			+ ((int)floor(ypx) & (data->tmp2.h - 1)) * (int)data->tmp2.w];
 			++x;
 		}
 		++y;
@@ -103,7 +99,6 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 }
 	
 	//TODO deplqcer cqm puis joueur
-//dessiner plafond et sol en meme temps ? ou alors skybox
 int	loop(void *data_)
 {
 	static int				fps = 0;
