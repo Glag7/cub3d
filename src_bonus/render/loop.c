@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/01 20:43:18 by glag             ###   ########.fr       */
+/*   Updated: 2024/08/02 16:27:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@
 static void	drawfps(t_mlx *mlx, int fps)//move colors to header
 {
 	static char	num[16] = "fps:    ";
-	static int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
+	static const int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
 	int		i;
 
 	i = 0;
+	if (fps > 999)
+		num[i++] = (fps / 1000) % 10 + '0';
 	if (fps > 99)
 		num[i++] = (fps / 100) % 10 + '0';
 	if (fps > 9)
@@ -100,7 +102,7 @@ static void	draw_floor(t_data *data)
 
 double foo(t_data *data, int y)
 {
-	double la_constante_la = .25;//a choisir avec angle max
+	double la_constante_la = .1;//a choisir avec angle max
 	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
 
 	yend -= (int)data->set.hei/2;
