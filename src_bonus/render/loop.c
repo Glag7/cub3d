@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 18:58:33 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:41:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,10 @@ int	loop(void *data_)
 	draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
+	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2] = 0x00FF0000;
+	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + 1] = 0x00FF0000;
+	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + data->set.wid] = 0x00FF0000;
+	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + data->set.wid + 1] = 0x00FF0000;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (old.tv_sec < curr.tv_sec)
 	{
