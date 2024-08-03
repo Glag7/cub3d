@@ -75,6 +75,8 @@ TOUT PASSER EN &
 segfault si on avance des le debut (limiter la distance max a parcourir)
 DANS LE MANDA AUSSI
 
+3 fov : normal, sprint, zoom
+
 opti raycast
 mettre le ciel dedans
 fix ciel

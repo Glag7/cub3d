@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:59:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:59:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include "parsing.h"
 
-# define SIZE	1024
+# define SIZE	64//TODO move this
 
 int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
