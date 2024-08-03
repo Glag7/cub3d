@@ -74,3 +74,7 @@ TOUT PASSER EN &
 
 segfault si on avance des le debut (limiter la distance max a parcourir)
 DANS LE MANDA AUSSI
+
+opti raycast
+mettre le ciel dedans
+fix ciel

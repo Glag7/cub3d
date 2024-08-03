@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/03 16:41:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:55:29 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,15 @@
 #include "point.h"
 #include <math.h>
 
-static void	drawfps(t_mlx *mlx, int fps)
-{
-	static char			num[16] = "fps:    ";
-	static const int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
-	int					i;
-
-	i = 0;
-	if (fps > 999)
-		num[i++] = (fps / 1000) % 10 + '0';
-	if (fps > 99)
-		num[i++] = (fps / 100) % 10 + '0';
-	if (fps > 9)
-		num[i++] = (fps / 10) % 10 + '0';
-	num[i++] = fps % 10 + '0';
-	num[i++] = ' ';
-	*(unsigned long long *)(num + i) = FPS;
-	if (fps > 80)
-		fps = 80;
-	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
-}
-
-
-
 double foo(t_data *data, int y)
 {
 	double la_constante_la = .1;//a choisir avec angle max
 	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
 
 	yend -= (int)data->set.hei/2;
-	double mewhen = (((double)data->set.hei) / (double)data->set.hei) * la_constante_la * data->set.fov;
+	double mewhen = la_constante_la * data->set.fov;
 	return ((2. * (double)y - (double)yend * 2.) / (double)data->set.hei) * la_constante_la * data->set.fov - mewhen;
-}//calculer yend a l'angle max, yend a l'angle 0, en deduire la fonction
+}
 
 static void	draw_sky(t_data *data)//le faire dans drawv
 {
@@ -62,13 +39,12 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 
 
 	yend++;//?
-	if (yend >= (int)data->set.hei)
-		yend = data->set.hei - 1;
+	if (yend > (int)data->set.hei)
+		yend = data->set.hei;
 	y = 0;
-	while (y <= yend)//?
+	while (y < yend)
 	{
 		double ypx;
-		double skibidi2 = 1. / (M_PI);
 		//disons que + = vers le haut
 		//ypx = (foo(data, y)
 		//* skibidi2//repassen prctage
@@ -97,8 +73,30 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 		++y;
 	}
 }
+
+static void	drawfps(t_mlx *mlx, int fps)
+{
+	static char			num[16] = "fps:    ";
+	static const int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
+	int					i;
+
+	i = 0;
+	if (fps > 999)
+		num[i++] = (fps / 1000) % 10 + '0';
+	if (fps > 99)
+		num[i++] = (fps / 100) % 10 + '0';
+	if (fps > 9)
+		num[i++] = (fps / 10) % 10 + '0';
+	num[i++] = fps % 10 + '0';
+	num[i++] = ' ';
+	*(unsigned long long *)(num + i) = FPS;
+	if (fps > 80)
+		fps = 80;
+	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
+}
 	
-	//TODO deplqcer cqm puis joueur
+//TODO deplacer cam puis jouer
+//clarfier la pipeline
 int	loop(void *data_)
 {
 	static int				fps = 0;
@@ -118,7 +116,7 @@ int	loop(void *data_)
 	draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
-	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2] = 0x00FF0000;
+	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2] = 0x00FF0000;//bad crosshair
 	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + 1] = 0x00FF0000;
 	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + data->set.wid] = 0x00FF0000;
 	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2 + data->set.wid + 1] = 0x00FF0000;
