@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:04:36 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:16:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 		yend = data->set.hei;
 	
 	x = 0;
-	xpx = ((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) * (double)data->tmp2.w;
+	xpx = (((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) + 1.) * (double)data->tmp2.w;
 	xinc = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->tmp2.w;
 	yinc = (double)(1.) * yend_cur
 	* (double)data->tmp2.h;
 	while (x < data->set.wid)
 	{
 		y = 0;
-		ypx = (double)(-data->horizon) * yend_cur
+		ypx = ((double)(-data->horizon) * yend_cur + 1.)
 		* (double)data->tmp2.h;
 		while (y < yend)
 		{
+			printf("%f\n", xpx);
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp2.px[((int)floor(xpx) & (data->tmp2.w - 1))
-			+ ((int)floor(ypx) & (data->tmp2.h - 1)) * (int)data->tmp2.w];
+				data->tmp2.px[((int)xpx & (data->tmp2.w - 1))
+			+ ((int)ypx & (data->tmp2.h - 1)) * (int)data->tmp2.w];
 			++y;
 			ypx += yinc;
 		}
