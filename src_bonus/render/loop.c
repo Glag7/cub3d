@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 12:03:13 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:04:36 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,36 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 	
 	double yend_cur = 1. / ((double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.));
 	int	x, y;
+	double ypx;
+	double xpx;
+
+	double xinc;
+	double yinc;
 
 
 	if (yend > (int)data->set.hei)
 		yend = data->set.hei;
-	y = 0;
-	while (y < yend)
+	
+	x = 0;
+	xpx = ((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) * (double)data->tmp2.w;
+	xinc = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->tmp2.w;
+	yinc = (double)(1.) * yend_cur
+	* (double)data->tmp2.h;
+	while (x < data->set.wid)
 	{
-			double skibidi = .5 / M_PI;
-		double ypx;
-		ypx = (double)(y - data->horizon) * yend_cur
-			* (double)data->tmp2.h;
-		if (ypx < -(double)data->tmp2.h)
-			ypx =0 ;
-		x = 0;
-		while (x < data->set.wid)
-		{//TODO increment plutot que mult
-		 //TODO utiliser les angles precalcules a al place de x / fov
-			double xpx;
-
-			xpx = ((((double)x / (double)data->set.wid - .5)
-				* data->set.fov
-			- data->play.a) * skibidi
-			- .25)
-			* (double)data->tmp2.w;
-			
+		y = 0;
+		ypx = (double)(-data->horizon) * yend_cur
+		* (double)data->tmp2.h;
+		while (y < yend)
+		{
 			data->mlx.px[x + y * data->set.wid] =
-				data->tmp2.px[((int)floor(xpx) % data->tmp2.w)
-			+ ((int)floor(ypx) % data->tmp2.h ) * (int)data->tmp2.w];
-			++x;
+				data->tmp2.px[((int)floor(xpx) & (data->tmp2.w - 1))
+			+ ((int)floor(ypx) & (data->tmp2.h - 1)) * (int)data->tmp2.w];
+			++y;
+			ypx += yinc;
 		}
-		++y;
+		++x;
+		xpx += xinc;
 	}
 }
 
