@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:49:22 by ttrave            #+#    #+#             */
-/*   Updated: 2024/07/30 20:41:35 by ttrqve           ###   ########.fr       */
+/*   Updated: 2024/08/06 19:12:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ inline static uint32_t	average_pixel(double *sum, double surface)
 
 inline static void	add_pixel(double *sum, uint32_t pixel, double weight)
 {
-	sum[0] += (double)((pixel & 0xFF000000) >> 24) * weight;
-	sum[1] += (double)((pixel & 0x00FF0000) >> 16) * weight;
-	sum[2] += (double)((pixel & 0x0000FF00) >> 8) * weight;
-	sum[3] += (double)(pixel & 0x000000FF) * weight;
+	sum[0] += (double)((pixel & 0xFF000000) >> 24) *weight;
+	sum[1] += (double)((pixel & 0x00FF0000) >> 16) *weight;
+	sum[2] += (double)((pixel & 0x0000FF00) >> 8) *weight;
+	sum[3] += (double)(pixel & 0x000000FF) *weight;
 }
 
 static uint32_t	get_resized_pixel(t_specs specs, double x, double y)
@@ -75,7 +75,8 @@ void	resize_image(t_img *image, t_specs specs)
 		x_src = 0.;
 		while (x_dst < specs.dim_dst.w)
 		{
-			image->px[y_dst * image->w + x_dst] = get_resized_pixel(specs, x_src, y_src);
+			image->px[y_dst * image->w + x_dst]
+				= get_resized_pixel(specs, x_src, y_src);
 			x_dst++;
 			x_src += specs.mapping.x;
 		}

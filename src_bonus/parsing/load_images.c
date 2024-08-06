@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/06 17:24:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:03:22 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static int	get_mlx_img(void *mlx, char *path, t_specs *specs)
 {
 	size_t	i;
 	char	c;
-	int	w;
-	int	h;
+	int		w;
+	int		h;
 
 	i = 0;
 	while (path[i] != '\0')
@@ -60,10 +60,12 @@ static int	init_specs(void *mlx, char *path, t_specs *specs, t_dim dim)
 		ft_perror(ERR_IMG_SIZE);
 		return (1);
 	}
-	specs->img_src = (uint32_t *)mlx_get_data_addr(specs->img_mlx, &null, &size_line, &null);
+	specs->img_src = (uint32_t *)mlx_get_data_addr(
+			specs->img_mlx, &null, &size_line, &null);
 	specs->size_line = (size_t)size_line / sizeof(uint32_t);
 	specs->dim_dst = dim;
-	specs->mapping = (t_point){.x = (double)specs->dim_src.w / (double)specs->dim_dst.w,
+	specs->mapping = (t_point){.x = (double)specs->dim_src.w
+		/ (double)specs->dim_dst.w,
 		.y = (double)specs->dim_src.h / (double)specs->dim_dst.h};
 	return (0);
 }

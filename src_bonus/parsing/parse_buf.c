@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 15:51:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:06:14 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		ft_perror(ERR_TOOLARGE);
 	else
 		start = get_textures(data, mlx, &data->map, buf);
-	if (start == NULL || get_data(start, data))//a check
+	if (start == NULL || get_data(start, data))
 	{
 		free_map(&data->map);
 		free(buf);
@@ -77,7 +77,7 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		free(buf);
 		return (1);
 	}
-	fill_map(&data->map, start);//doors+ennemies
+	fill_map(&data->map, start);
 	free(buf);
 	return (check_map(&data->map));
 }

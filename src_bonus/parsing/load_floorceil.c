@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:53:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 18:25:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:59:08 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "err.h"
 #include "utils.h"
 #include "parsing.h"
+
+#define FLOOR 0
+#define CEIL 1
 
 static uint32_t	atocolor(char *buf, int *err, unsigned int *i_glob)
 {
@@ -67,72 +70,37 @@ static int	atorgb(char *buf, uint32_t *rgb, unsigned int *i)
 	return (0);
 }
 
-int	load_floor(void *mlx, t_data *data, char *buf, unsigned int *i)
+static int	load_floorceil_img(t_data *data,
+	char *buf, unsigned int *i, int floorceil)
 {
-	uint32_t		rgb;
 	unsigned int	j;
 	char			c;
+	size_t			size;
+	t_img			*img;
 
-	if (data->map.f.px)
-		ft_perror(ERR_DUP_FLOOR);
-	if (data->map.f.px)
-		return (1);
-	(*i)++;
-	while (buf[(*i)] == ' ')
-		(*i)++;
 	j = *i;
-	while (buf[j] && buf[j] != '\n' && buf[j] != '/')
-		j++;
-	if (buf[j] == '/')
-	{
-		j = *i;
-		while (buf[j] && buf[j] != '\n')
-			j++;
-		c = buf[j];
-		buf[j] = 0;
-		if (load_img(mlx, buf + *i, &data->map.f,
-				(t_dim){data->set.texsiz, data->set.texsiz}))
-			return (1);
-		buf[j] = c;
-		*i = j;
-		return (0);
-	}
-	if (atorgb(buf, &rgb, i))
-	{
-		ft_perror(ERR_BAD_CEIL);
-		return (1);
-	}
-	data->map.f.px = malloc(sizeof(uint32_t));
-	if (data->map.f.px == NULL)
-	{
-		ft_perror(ERR_MALLOC);
-		return (1);
-	}
-	data->map.f.px[0] = rgb;
-	data->map.f.w = 1;
-	data->map.f.h = 1;
-	return (0);
-}
-
-int	load_floorceil_img(void *mlx, char *buf, t_img *img,
-		size_t size, unsigned int *i)
-{
-	unsigned int	j;
-	char			c;
-
-	j = 0;
 	while (buf[j] && buf[j] != '\n')
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf, img, (t_dim){size, size}))
+	if (floorceil == CEIL)
+	{
+		size = data->set.skysiz;
+		img = &data->map.c;
+	}
+	else
+	{
+		size = data->set.texsiz;
+		img = &data->map.f;
+	}
+	if (load_img(data->mlx.mlx, buf + *i, img, (t_dim){size, size}))
 		return (1);
 	buf[j] = c;
-	*i += j;
+	*i = j;
 	return (0);
 }
 
-int	load_ceil(void *mlx, t_data *data, char *buf, unsigned int *i)
+int	load_ceil(t_data *data, char *buf, unsigned int *i)
 {
 	uint32_t		rgb;
 	unsigned int	j;
@@ -147,7 +115,7 @@ int	load_ceil(void *mlx, t_data *data, char *buf, unsigned int *i)
 	while (buf[j] && buf[j] != '\n' && buf[j] != '/')
 		j++;
 	if (buf[j] == '/')
-		return (load_floorceil_img(mlx, buf + *i, &data->map.c, data->set.skysiz, i));
+		return (load_floorceil_img(data, buf, i, CEIL));
 	if (atorgb(buf, &rgb, i))
 	{
 		ft_perror(ERR_BAD_CEIL);
@@ -159,4 +127,33 @@ int	load_ceil(void *mlx, t_data *data, char *buf, unsigned int *i)
 	else
 		data->map.c.px[0] = rgb;
 	return (data->map.c.px == NULL);
+}
+
+int	load_floor(t_data *data, char *buf, unsigned int *i)
+{
+	uint32_t		rgb;
+	unsigned int	j;
+
+	if (data->map.f.px)
+		ft_perror(ERR_DUP_FLOOR);
+	if (data->map.f.px)
+		return (1);
+	while (buf[*i + 1] == ' ')
+		(*i)++;
+	j = ++(*i);
+	while (buf[j] && buf[j] != '\n' && buf[j] != '/')
+		j++;
+	if (buf[j] == '/')
+		return (load_floorceil_img(data, buf, i, FLOOR));
+	if (atorgb(buf, &rgb, i))
+	{
+		ft_perror(ERR_BAD_CEIL);
+		return (1);
+	}
+	data->map.f = (t_img){malloc(sizeof(uint32_t)), 1, 1};
+	if (data->map.f.px == NULL)
+		ft_perror(ERR_MALLOC);
+	else
+		data->map.f.px[0] = rgb;
+	return (data->map.f.px == NULL);
 }

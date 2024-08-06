@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 15:34:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 15:56:18 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:35:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	try_load(void *mlx, t_data *data, char *buf, unsigned int *i_)
 		return (1);
 	else if (buf[i] == 'E' && buf[i + 1] == 'A' && load_ea(mlx, data, buf, &i))
 		return (1);
-	else if (buf[i] == 'F' && load_floor(mlx, data, buf, &i))
+	else if (buf[i] == 'F' && load_floor(data, buf, &i))
 		return (1);
-	else if (buf[i] == 'C' && load_ceil(mlx, data, buf, &i))
+	else if (buf[i] == 'C' && load_ceil(data, buf, &i))
 		return (1);
 	else if (buf[i] == 'D' && load_door(mlx, data, buf, &i))
 		return (1);
