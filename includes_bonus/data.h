@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:38:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:30:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_data
 	t_set		set;
 	uint64_t	keys;
 	t_ipoint	oldmouse;
-	t_img		tmp;
-	t_img		tmp2;
 
 	int		horizon;
 	t_point		px;

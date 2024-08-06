@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/07/30 18:34:51 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/08/06 17:24:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ static int	get_mlx_img(void *mlx, char *path, t_specs *specs)
 	if (path[i] != ' ' && path[i] != '\0')
 		i++;
 	c = path[i];
-	path[i] = '\0';
+	if (c != '\0')
+		path[i] = '\0';
 	specs->img_mlx = mlx_xpm_file_to_image(mlx, path, &w, &h);
-	path[i] = c;
+	if (c != '\0')
+		path[i] = c;
 	if (specs->img_mlx == NULL)
 	{
 		ft_perror(ERR_MLX_XPM);

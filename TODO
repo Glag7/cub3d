@@ -5,10 +5,7 @@ portails
 curseur custom avec mini
 
 detecter quand la souris entre dans la fenetre
-
-dossier includes bonus
-
-tout faire dans la render distance
+save
 
 mouvements fluides
 
@@ -49,6 +46,10 @@ son
 menu
 remap controles
 
+console
+
+trouver des textures
+
 position compteur
 
 joueur gros (offset collisions)
@@ -68,16 +69,31 @@ textures taille fixe
 
 jonction du sol qui deconne en oob
 
+ENNEMI
+derriere ?
+2 frames marcher
+2 frames alerte
+2 frames piou
+2 frames mort
 sensi en fonction du fov
 
 relire data->set.wid - 1 ou pas
 TOUT PASSER EN &
 
+fichier binaire settings
+export du fichier
+check des bonnes valeurs
+
 segfault si on avance des le debut (limiter la distance max a parcourir)
 DANS LE MANDA AUSSI
 
-3 fov : normal, sprint, zoom
+lacher la souris si on quitte la fenetre
 
 opti puis multithreading
 opti raycast
 mettre le ciel dedans
+
+textures defaut portes
+SOL
+CIEL
+PORTE

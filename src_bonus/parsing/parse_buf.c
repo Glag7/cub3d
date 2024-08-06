@@ -6,19 +6,20 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:01:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:51:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "data.h"
 #include "map.h"
 #include "utils.h"
 #include "parsing.h"
 #include "err.h"
 
-static int	check_textures(t_map *map, int hasfloor, int hasceil)
+static int	check_textures(void *mlx, t_map *map, t_data *data)
 {
 	if (!map->n.px)
 		ft_perror(ERR_MISS_NO);
@@ -28,38 +29,27 @@ static int	check_textures(t_map *map, int hasfloor, int hasceil)
 		ft_perror(ERR_MISS_WE);
 	else if (!map->e.px)
 		ft_perror(ERR_MISS_EA);
-	else if (!hasceil)
+	else if (!map->c.px)
 		ft_perror(ERR_MISS_CEIL);
-	else if (!hasfloor)
+	else if (!map->f.px)
 		ft_perror(ERR_MISS_FLOOR);
-	return (!hasfloor || !hasceil || !map->n.px || !map->s.px
-		|| !map->w.px || !map->e.px);
+	return (!map->f.px || !map->c.px || !map->n.px || !map->s.px
+		|| !map->w.px || !map->e.px
+		|| (!map->d.px && load_door(mlx, data, NULL, NULL)));
 }
 
-static char	*get_textures(void *mlx, t_map *map, char *buf)
+static char	*get_textures(t_data *data, void *mlx, t_map *map, char *buf)
 {
 	unsigned int	i;
-	int				hasfloor;
-	int				hasceil;
 
 	i = 0;
-	hasfloor = 0;
-	hasceil = 0;
 	while (buf[i] == '\n' || (i == 0 && buf[i]))
 	{
 		i += buf[i] == '\n';
-		hasfloor += buf[i] == 'F';
-		hasceil += buf[i] == 'C';
-		if (hasfloor > 1)
-			ft_perror(ERR_DUP_FLOOR);
-		if (hasceil > 1)
-			ft_perror(ERR_DUP_CEIL);
-		if (hasfloor > 1 || hasceil > 1)
-			return (NULL);
-		if (try_load(mlx, map, buf, &i))
+		if (try_load(mlx, data, buf, &i))
 			return (NULL);
 	}
-	if (check_textures(map, hasfloor, hasceil))
+	if (check_textures(mlx, map, data))
 		return (NULL);
 	return (buf + i);
 }
@@ -72,8 +62,8 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 	if (size > UINT_MAX)
 		ft_perror(ERR_TOOLARGE);
 	else
-		start = get_textures(mlx, &data->map, buf);
-	if (start == NULL || get_data(start, data))
+		start = get_textures(data, mlx, &data->map, buf);
+	if (start == NULL || get_data(start, data))//a check
 	{
 		free_map(&data->map);
 		free(buf);
@@ -87,7 +77,7 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		free(buf);
 		return (1);
 	}
-	fill_map(&data->map, start);
+	fill_map(&data->map, start);//doors+ennemies
 	free(buf);
 	return (check_map(&data->map));
 }

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 12:48:34 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:17:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include "render.h"
 
 static void	start_game(t_data *data)
-{
+{//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
 	char	tmp[] = "./assets/ycontre.xpm\0";
 	load_img(data->mlx.mlx, tmp, &data->tmp, ((t_dim){64, 64}));//
 	char	tmp2[] = "./assets/edbernar.xpm\0";
@@ -71,30 +71,6 @@ static int	init_data(t_data *data, int argc, char **argv)
 	return (0);
 }
 
-/*
-<<<<<<< HEAD
-=======
-static int	init_menu(t_data *data)
-{
-	t_img		img;
-	char	path[24] = "assets/main_menu.xpm";
-
-	data->menu.active_popup = MAIN;
-	data->menu.button_state = 0;
-	load_img(data->mlx.mlx, path, &img, (t_dim){.w = data->set.wid, .h = data->set.hei});
-	data->menu.bg_img = img.px;
-	if (data->menu.bg_img == NULL)
-	{
-		ft_perror("img menu tout pete\n");
-		free_map(&data->map);
-		free_mlx(&data->mlx);
-		free_mini(&data->mini);
-		return (1);
-	}
-	return (0);
-}
-
->>>>>>> 06b878c (refactored load_img, added t_dim)*/
 int	main(int argc, char **argv)
 {
 	t_data	data;

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 18:22:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:15:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:15:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@
 # define ERR_DUP_SO	"Duplicate south texture\n"
 # define ERR_DUP_EA	"Duplicate east texture\n"
 # define ERR_DUP_WE	"Duplicate west texture\n"
-# define ERR_DUP_FLOOR	"Duplicate floor color\n"
-# define ERR_DUP_CEIL	"Duplicate ceiling color\n"
+# define ERR_DUP_FLOOR	"Duplicate floor texture\n"
+# define ERR_DUP_CEIL	"Duplicate ceiling texture\n"
+# define ERR_DUP_DOOR	"Duplicate door texture\n"
 # define ERR_BAD_FLOOR	"Unrecognized floor color\n"
 # define ERR_BAD_CEIL	"Unrecognized ceiling color\n"
 

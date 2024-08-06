@@ -17,7 +17,7 @@ HOOKS = hooks/
 RENDER = render/
 
 COMP = cc
-CFLAGS = -Wall -Wextra -I $(LIBDIR) -pg #-Werror
+CFLAGS = -Wall -Wextra -I $(LIBDIR) -g#p #-Werror
 
 
 SRC = main.c \
@@ -58,6 +58,7 @@ SRC_BONUS = main.c \
       $(PARSING)load.c \
       $(PARSING)load_walls.c \
       $(PARSING)load_floorceil.c \
+      $(PARSING)load_door.c \
       $(PARSING)load_images.c \
       $(PARSING)get_data.c \
       $(PARSING)resize_images.c \

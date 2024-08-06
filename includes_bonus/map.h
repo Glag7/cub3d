@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/22 15:52:26 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:38:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ typedef struct s_map
 	t_img			s;
 	t_img			w;
 	t_img			e;
-	uint32_t		floor;
-	uint32_t		ceil;
+	t_img			f;
+	t_img			c;
+	t_img			d;
 }	t_map;
 
 void	free_map(t_map *map);

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 17:46:30 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:03:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:57:56 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_specifications
 	size_t		size_line;
 	t_dim		dim_src;
 	t_dim		dim_dst;
-	t_point		mapping;// how many pixels from the source image makes 1 pixel in the new image, in both x and y
+	t_point		mapping;
 }	t_specs;
 
 #endif
