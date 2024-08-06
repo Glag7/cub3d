@@ -6,12 +6,13 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 16:14:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:49:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <math.h>
+#include "set.h"
 #include "data.h"
 #include "play.h"
 #include "point.h"
@@ -31,10 +32,10 @@ static inline void	check_pos(t_data *data)
 		data->play.a -= 2. * M_PI;
 	else if (data->play.a < -M_PI)
 		data->play.a += 2. * M_PI;
-	if (data->play.az > M_PI * .5)
-		data->play.az = M_PI * .5;
-	else if (data->play.az < -M_PI)
-		data->play.az = -M_PI;
+	if (data->play.az > MAX_ANGLE)
+		data->play.az = MAX_ANGLE;
+	else if (data->play.az < MIN_ANGLE)
+		data->play.az = MIN_ANGLE;
 	if (data->play.z > .5)
 		data->play.z = .5;
 	else if (data->play.z < -.5)

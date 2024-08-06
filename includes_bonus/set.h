@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 18:19:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:48:59 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SET_H
 
 # include <stdint.h>
+# include <math.h>
 
 # define DEF_D 151
 # define DEF_OFFSET 20
@@ -29,6 +30,9 @@
 # define DEF_HEI 768
 
 # define DEF_SENSI .4
+
+# define MAX_ANGLE M_PI_2
+# define MIN_ANGLE -M_PI
 
 typedef struct s_set
 {//FIXME alignment
