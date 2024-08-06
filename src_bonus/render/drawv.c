@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/03 19:04:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/03 19:09:18 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "map.h"
 #include "ray.h"
 
-static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
+static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double test)
 {
 	double			inc;
 	double			index;
@@ -49,8 +49,10 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 	{
 		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)index * img.w];
 		index += inc;
-	}
-}
+	}//1 trop loin FIXME valgrind//normalement fix
+	//while (i < (int)data->set.hei)
+	//	data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
+}//FIXME barre en bas
 
 void	drawv(t_data *data, t_ray *ray, size_t x)
 {
@@ -78,5 +80,5 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 		img = data->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
 	}
-	drawv2(data, img, x, data->set.planwid / ray->len);
-}
+	drawv2(data, img, x, (double)data->set.wid / (data->set.tanfov * 2. * ray->len), 1. / ray->len);
+}//TODO:(double)data->set.wid / (data->set.tanfov * 2.) constqnte = wid cub a 1
