@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/03 19:06:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 11:43:38 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,38 @@
 
 #include "point.h"
 #include <math.h>
+
+double foo(t_data *data, int y)
+{
+	/*int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
+
+	yend -= (int)data->set.hei/2;
+	
+	
+	double mid = (((double)data->set.hei - (double)yend * 2.) / (double)data->set.hei);
+	double res = ((2. * (double)y - (double)yend * 2.) / (double)data->set.hei);
+	if (y == 0)
+		printf("%f\n", mid);
+	return  mid + (res - mid) * data->set.fov;*/
+
+/*	
+	static double max_az = M_PI * .5 + 150. * M_PI / 180. * .5;//max fov / 2
+	return (-data->play.az / max_az //milieu
+		+ ((double)y /(double)data->set.hei - .5) //pourcentage fov
+		* data->set.fov / max_az);*/
+
+	static double max_az = M_PI * .5;
+	static double max_fov = 150. * M_PI / 180.;
+	static double min_fov = 10. * M_PI / 180.;
+	double yend_max = (double)data->set.hei / 2. + ((double)data->set.wid / (tan(max_fov * .5) * 2.) * max_az / M_PI * 4.);
+	double yend_min = (double)data->set.hei / 2. + ((double)data->set.wid / (tan(min_fov * .5) * 2.) * max_az / M_PI * 4.);
+	double yend_cur = (double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * max_az / M_PI * 4.);
+	double yend = (double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);
+
+	//printf("%d %f\n", yend, yend_max);
+	//printf("%f %f\n", max_fov, max_az);//il faut soustraire la diff avec le fov max
+	return ((y - yend) / yend_cur);
+}
 
 static void	draw_sky(t_data *data)//le faire dans drawv
 {
@@ -36,10 +68,7 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 	{
 			double skibidi = .5 / M_PI;
 		double ypx;
-			ypx = ((((double)y / (double)data->set.hei - .5)
-				* data->set.fov * (double)data->set.hei/(double)data->set.wid
-			- data->play.az) * skibidi * 2.
-			- .25)//FOV MAX 159; si < 0 mettre du noir
+		ypx = foo(data, y)
 			* (double)data->tmp2.h;
 		if (ypx < -(double)data->tmp2.h)
 			ypx =0 ;
