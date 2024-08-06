@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:53:12 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 17:14:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:04:42 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ static int	atorgb(char *buf, uint32_t *rgb, unsigned int *i)
 
 int	load_floor(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
-	uint32_t	rgb;
+	uint32_t		rgb;
 	unsigned int	j;
 	char			c;
 
 	if (data->map.f.px)
-	{
 		ft_perror(ERR_DUP_FLOOR);
+	if (data->map.f.px)
 		return (1);
-	}
 	(*i)++;
-	while (buf[*i] == ' ')
+	while (buf[(*i)] == ' ')
 		(*i)++;
 	j = *i;
 	while (buf[j] && buf[j] != '\n' && buf[j] != '/')
@@ -117,7 +116,7 @@ int	load_floor(void *mlx, t_data *data, char *buf, unsigned int *i)
 
 int	load_ceil(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
-	uint32_t	rgb;
+	uint32_t		rgb;
 	unsigned int	j;
 	char			c;
 
@@ -140,7 +139,7 @@ int	load_ceil(void *mlx, t_data *data, char *buf, unsigned int *i)
 		c = buf[j];
 		buf[j] = 0;
 		if (load_img(mlx, buf + *i, &data->map.c,
-				(t_dim){data->set.texsiz, data->set.texsiz}))
+				(t_dim){data->set.skysiz, data->set.skysiz}))
 			return (1);
 		buf[j] = c;
 		*i = j;

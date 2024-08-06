@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 14:38:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:57:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define MIN_ANGLE -M_PI
 
 # define DEF_TEXSIZ 1024
+# define DEF_SKYSIZ 2048
 
 typedef struct s_set
 {//FIXME alignment
@@ -51,6 +52,7 @@ typedef struct s_set
 	double			ratio;
 
 	unsigned int		texsiz;
+	unsigned int		skysiz;
 
 	double			fov_deg;
 	double			fov;

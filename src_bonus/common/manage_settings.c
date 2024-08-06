@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 14:38:02 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:57:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_settings(t_set *set)
 	set->nthread = 1;
 
 	set->texsiz = DEF_TEXSIZ;
+	set->skysiz = DEF_SKYSIZ;
 }
 
 //wid and hei must be set
