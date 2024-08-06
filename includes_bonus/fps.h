@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   fps.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:08:44 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/08/02 18:53:36 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/08/02 18:55:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef FPS_H
+# define FPS_H
 
-# include <stdint.h>
-# include <stddef.h>
-# include "data.h"
-# include "map.h"
-# include "ray.h"
+//colors
+# define RED 0xFFFF0000
+# define ORE 0xFFFF3300
+# define ORA 0xFFFF7700
+# define YEL 0xFFFFFF00
+# define YGR 0xFF77FF00
+# define LGR 0xFF11FF00
+# define GRE 0xFF00FF00
 
-int		loop(void *data_);
-void	draw_floor(t_data *data);
-void	raycast(t_data *data);
-void	drawv(t_data *data, t_ray *ray, size_t x);
-void	draw_minimap(t_data *data);
-void	move(t_data *data, double delta, uint64_t keys);
+# define FPS 0X00737066ULL
 
 #endif

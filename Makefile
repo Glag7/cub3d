@@ -60,7 +60,7 @@ SRC_BONUS = main.c \
       $(PARSING)load_floorceil.c \
       $(PARSING)load_images.c \
       $(PARSING)get_data.c \
-      $(PARSING)read_images.c \
+      $(PARSING)resize_images.c \
       $(PARSING)fill_map.c \
       $(PARSING)check_map.c \
       $(UTILS)ft_perror.c \
@@ -70,6 +70,7 @@ SRC_BONUS = main.c \
       $(HOOKS)win.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
+      $(RENDER)floor.c \
       $(RENDER)move.c \
       $(RENDER)mouse.c \
       $(RENDER)drawv.c \

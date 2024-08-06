@@ -36,6 +36,7 @@ faire un tableau de toutes les inverse sqrt
 et tous les cos dangles a appliquer
 malloc la struct
 
+minimap segfault
 
 souris
 opti cos atan +invlen
@@ -71,3 +72,12 @@ sensi en fonction du fov
 
 relire data->set.wid - 1 ou pas
 TOUT PASSER EN &
+
+segfault si on avance des le debut (limiter la distance max a parcourir)
+DANS LE MANDA AUSSI
+
+3 fov : normal, sprint, zoom
+
+opti puis multithreading
+opti raycast
+mettre le ciel dedans

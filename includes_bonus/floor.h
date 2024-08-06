@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   floor.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 17:08:44 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/08/02 18:46:23 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/08/02 18:47:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef FLOOR_H
+# define FLOOR_H
 
-# include <stdint.h>
-# include <stddef.h>
-# include "data.h"
-# include "map.h"
-# include "ray.h"
+# include "point.h"
 
-int		loop(void *data_);
-void	draw_floor(t_data *data);
-void	raycast(t_data *data);
-void	drawv(t_data *data, t_ray *ray, size_t x);
-void	draw_minimap(t_data *data);
-void	move(t_data *data, double delta, uint64_t keys);
+typedef struct s_floor
+{
+	t_ipoint	pos;
+	t_point		inc;
+	t_point		cur;
+	double		dist;
+}	t_floor;
 
 #endif

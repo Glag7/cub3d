@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/14 18:20:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:43:28 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ void	raycast(t_data *data)
 		i += data->set.nthread;
 		cur.x += inc.x * (double)data->set.nthread;
 		cur.y += inc.y * (double)data->set.nthread;
+	data->px.x += data->pxinc.x;
 	}
 }

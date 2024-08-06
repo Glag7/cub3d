@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:59:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:59:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "err.h"
 #include "utils.h"
 #include "parsing.h"
+
+# define SIZE	64//TODO move this
 
 int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
 {
@@ -33,7 +35,7 @@ int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->n))
+	if (load_img(mlx, buf + *i, &map->n, (t_dim){.w = SIZE, .h = SIZE}))
 		return (1);
 	buf[j] = c;
 	*i = j;
@@ -58,7 +60,7 @@ int	load_so(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->s))
+	if (load_img(mlx, buf + *i, &map->s, (t_dim){.w = SIZE, .h = SIZE}))
 		return (1);
 	buf[j] = c;
 	*i = j;
@@ -83,7 +85,7 @@ int	load_we(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->w))
+	if (load_img(mlx, buf + *i, &map->w, (t_dim){.w = SIZE, .h = SIZE}))
 		return (1);
 	buf[j] = c;
 	*i = j;
@@ -108,7 +110,7 @@ int	load_ea(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->e))
+	if (load_img(mlx, buf + *i, &map->e, (t_dim){.w = SIZE, .h = SIZE}))
 		return (1);
 	buf[j] = c;
 	*i = j;
