@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:16:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:46:38 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,49 +17,6 @@
 #include "mlx.h"
 #include "data.h"
 #include "fps.h"
-
-#include "point.h"
-#include <math.h>
-
-static void	draw_sky(t_data *data)//le faire dans drawv
-{
-	int	yend = data->horizon + 1;
-	
-	double yend_cur = 1. / ((double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.));
-	int	x, y;
-	double ypx;
-	double xpx;
-
-	double xinc;
-	double yinc;
-
-
-	if (yend > (int)data->set.hei)
-		yend = data->set.hei;
-	
-	x = 0;
-	xpx = (((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) + 1.) * (double)data->tmp2.w;
-	xinc = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->tmp2.w;
-	yinc = (double)(1.) * yend_cur
-	* (double)data->tmp2.h;
-	while (x < data->set.wid)
-	{
-		y = 0;
-		ypx = ((double)(-data->horizon) * yend_cur + 1.)
-		* (double)data->tmp2.h;
-		while (y < yend)
-		{
-			printf("%f\n", xpx);
-			data->mlx.px[x + y * data->set.wid] =
-				data->tmp2.px[((int)xpx & (data->tmp2.w - 1))
-			+ ((int)ypx & (data->tmp2.h - 1)) * (int)data->tmp2.w];
-			++y;
-			ypx += yinc;
-		}
-		++x;
-		xpx += xinc;
-	}
-}
 
 static void	drawfps(t_mlx *mlx, int fps)
 {
@@ -98,9 +55,17 @@ int	loop(void *data_)
 	delta = curr.tv_sec - old.tv_sec + (curr.tv_nsec - old.tv_nsec) * 1.e-9;
 	move_angle(data, delta);
 	move(data, delta, data->keys);
+	
 	data->horizon = data->set.hei / 2 + (int)(data->set.planwid * data->play.az / M_PI * 4.);
+	int	yend = data->horizon + 1;
+	if (yend > (int)data->set.hei)
+		yend = data->set.hei;
+	double yend_cur = 1. / ((double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.));
+	data->px.x = (((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) + 1.) * (double)data->tmp2.w;
+	data->px.y = ((double)(-data->horizon) * yend_cur + 1.) * (double)data->tmp2.h;
+	data->pxinc.x = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->tmp2.w;
+	data->pxinc.y = (double)(1.) * yend_cur * (double)data->tmp2.h;
 	draw_floor(data);
-	draw_sky(data);
 	raycast(data);
 	draw_minimap(data);
 	data->mlx.px[data->set.wid * (data->set.hei + 1) / 2] = 0x00FF0000;//bad crosshair
