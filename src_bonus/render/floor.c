@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:07:39 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/02 18:47:14 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:34:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void	draw_floor(t_data *dat)
 	while (++f.pos.y < (int)dat->set.hei)
 	{
 		f.dist = camheipx / (double)(f.pos.y - dat->horizon);
-		f.inc.x = baseinc.x * f.dist * (double)dat->tmp.w;
-		f.inc.y = baseinc.y * -f.dist * (double)dat->tmp.h;
-		f.cur.x = (dat->play.x + f.dist * start.x) * (double)dat->tmp.w;
-		f.cur.y = (dat->play.y - f.dist * start.y) * (double)dat->tmp.h;
+		f.inc.x = baseinc.x * f.dist * (double)dat->map.f.w;
+		f.inc.y = baseinc.y * -f.dist * (double)dat->map.f.h;
+		f.cur.x = (dat->play.x + f.dist * start.x) * (double)dat->map.f.w;
+		f.cur.y = (dat->play.y - f.dist * start.y) * (double)dat->map.f.h;
 		f.pos.x = -1;
 		while (++f.pos.x < (int)dat->set.wid)
 		{
 			f.cur.x += f.inc.x;
 			f.cur.y += f.inc.y;
 			dat->mlx.px[f.pos.x + f.pos.y * dat->set.wid]
-				= dat->tmp.px[((int)f.cur.x & (dat->tmp.w - 1))
-				+ ((int)f.cur.y & (dat->tmp.h - 1)) * dat->tmp.w];
+				= dat->map.f.px[((int)f.cur.x & (dat->map.f.w - 1))
+				+ ((int)f.cur.y & (dat->map.f.h - 1)) * dat->map.f.w];
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:47:33 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:34:39 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 	while (i < start)
 	{
 		data->mlx.px[x + i++ *data->set.wid] =
-			data->tmp2.px[((int)data->px.x & (data->tmp2.w - 1))
-		+ ((int)ypx & (data->tmp2.h - 1)) * (int)data->tmp2.w];
+			data->map.c.px[((int)data->px.x & (data->map.c.w - 1))
+		+ ((int)ypx & (data->map.c.h - 1)) * (int)data->map.c.w];
 		ypx += data->pxinc.y;
 	}
 	while (i < end)

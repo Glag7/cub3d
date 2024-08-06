@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 15:17:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:31:26 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@
 
 static void	start_game(t_data *data)
 {//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
-	char	tmp[] = "./assets/ycontre.xpm\0";
-	load_img(data->mlx.mlx, tmp, &data->tmp, ((t_dim){64, 64}));//
-	char	tmp2[] = "./assets/edbernar.xpm\0";
-	load_img(data->mlx.mlx, tmp2, &data->tmp2 , ((t_dim){256, 128}));//
 
 	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 	mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2,

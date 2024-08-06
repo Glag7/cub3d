@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:46:38 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:33:37 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	loop(void *data_)
 	if (yend > (int)data->set.hei)
 		yend = data->set.hei;
 	double yend_cur = 1. / ((double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.));
-	data->px.x = (((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) + 1.) * (double)data->tmp2.w;
-	data->px.y = ((double)(-data->horizon) * yend_cur + 1.) * (double)data->tmp2.h;
-	data->pxinc.x = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->tmp2.w;
-	data->pxinc.y = (double)(1.) * yend_cur * (double)data->tmp2.h;
+	data->px.x = (((-.5 * data->set.fov - data->play.a) * (.5 / M_PI) - .25) + 1.) * (double)data->map.c.w;
+	data->px.y = ((double)(-data->horizon) * yend_cur + 1.) * (double)data->map.c.h;
+	data->pxinc.x = (((1. / (double)data->set.wid) * data->set.fov) * (.5 / M_PI)) * (double)data->map.c.w;
+	data->pxinc.y = (double)(1.) * yend_cur * (double)data->map.c.h;
 	draw_floor(data);
 	raycast(data);
 	draw_minimap(data);
