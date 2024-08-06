@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 11:56:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:03:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,14 @@
 #include "point.h"
 #include <math.h>
 
-double foo(t_data *data, int y)
-{
-	double yend_cur = (double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.);
-	double yend = 	  (double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);
-
-	return ((y - data->horizon) / yend_cur);
-}
-
 static void	draw_sky(t_data *data)//le faire dans drawv
 {
-	int	yend = data->set.hei / 2 + (int)((double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.);//horizon
+	int	yend = data->horizon + 1;
 	
+	double yend_cur = 1. / ((double)data->set.hei / 2. + ((double)data->set.wid / (data->set.tanfov * 2.) * MAX_ANGLE / M_PI * 4.));
 	int	x, y;
 
 
-	yend++;//?
 	if (yend > (int)data->set.hei)
 		yend = data->set.hei;
 	y = 0;
@@ -44,7 +36,7 @@ static void	draw_sky(t_data *data)//le faire dans drawv
 	{
 			double skibidi = .5 / M_PI;
 		double ypx;
-		ypx = foo(data, y)
+		ypx = (double)(y - data->horizon) * yend_cur
 			* (double)data->tmp2.h;
 		if (ypx < -(double)data->tmp2.h)
 			ypx =0 ;
