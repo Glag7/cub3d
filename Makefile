@@ -17,7 +17,7 @@ HOOKS = hooks/
 RENDER = render/
 
 COMP = cc
-CFLAGS = -Wall -Wextra -I $(LIBDIR) -pg #-Werror
+CFLAGS = -Wall -Wextra -I $(LIBDIR) -g #-Werror
 
 
 SRC = main.c \
