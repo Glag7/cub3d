@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:33:24 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/07 16:10:07 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:53:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	check_data(t_bmp_hdr *hdr, t_bmp_info *info)
 	return (0);
 }
 
-static int	get_headers(char *path, t_bmp_hdr *hdr, t_bmp_info *info, int *fd_ptr)
+static int	get_headers(char *path,
+	t_bmp_hdr *hdr, t_bmp_info *info, int *fd_ptr)
 {
 	int	fd;
 
@@ -64,28 +65,27 @@ static int	get_headers(char *path, t_bmp_hdr *hdr, t_bmp_info *info, int *fd_ptr
 	return (0);
 }
 
-static void	format_image(t_specs *specs)//, t_bmp_info *info)
+static void	format_image(t_specs *specs)
 {
-//	size_t	size_line;
-	size_t	lin;
-	size_t	col;
+	size_t		lin;
+	size_t		col;
 	uint32_t	pixel;
 
-//	size_line = info->width * info->bpp;
-//	if (size_line % 4 != 0)
-//		size_line += 4 - ((info->width * info->bpp) % 4);
-	lin = specs->dim_src.h;
-	while (lin > 0)
+	lin = specs->dim_src.h - 1;
+	while (lin >= specs->dim_src.h / 2)
 	{
-		lin--;
 		col = 0;
 		while (col < specs->dim_src.w)
 		{
 			pixel = specs->img_src[lin * specs->dim_src.w + col];
-			specs->img_src[lin * specs->dim_src.w + col] = specs->img_src[(specs->dim_src.h - lin - 1) * specs->dim_src.w + col];
-			specs->img_src[(specs->dim_src.h - lin - 1) * specs->dim_src.w + col] = pixel;
-			col++;
+			specs->img_src[lin * specs->dim_src.w + col]
+				= specs->img_src[(specs->dim_src.h - lin - 1)
+				* specs->dim_src.w + col];
+			specs->img_src[(specs->dim_src.h - lin - 1)
+				* specs->dim_src.w + col] = pixel;
+			++col;
 		}
+		--lin;
 	}
 }
 
@@ -107,13 +107,14 @@ static int	read_image(int fd, t_specs *specs, t_bmp_hdr *hdr)
 		return (1);
 	}
 	free(null);
-	if (read(fd, specs->img_src, specs->dim_src.h * specs->dim_src.w * sizeof(uint32_t))
-		!= specs->dim_src.h * specs->dim_src.w * sizeof(uint32_t))
+	if (read(fd, specs->img_src, specs->dim_src.h * specs->dim_src.w
+			* sizeof(uint32_t)) != (long)(specs->dim_src.h
+		* specs->dim_src.w * sizeof(uint32_t)))
 	{
 		ft_perror(ERR_READ);
 		return (1);
 	}
-	//format_image(specs);
+	format_image(specs);
 	return (0);
 }
 
@@ -121,12 +122,12 @@ int	get_bmp_img(char *path, t_specs *specs)
 {
 	t_bmp_hdr	hdr;
 	t_bmp_info	info;
-	int		fd;
+	int			fd;
 
 	specs->img_mlx = NULL;
 	if (get_headers(path, &hdr, &info, &fd) == 1)
 		return (1);
-	specs->dim_src = (t_dim){.w = (size_t)info.width, .h = (size_t)info.height};//?
+	specs->dim_src = (t_dim){.w = (size_t)info.width, .h = (size_t)info.height};
 	specs->size_line = info.width;
 	specs->img_src = malloc(info.width * info.height * sizeof(uint32_t));
 	if (specs->img_src == NULL)
