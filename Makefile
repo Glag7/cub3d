@@ -60,6 +60,7 @@ SRC_BONUS = main.c \
       $(PARSING)load_floorceil.c \
       $(PARSING)load_door.c \
       $(PARSING)load_images.c \
+      $(PARSING)load_bmp.c \
       $(PARSING)get_data.c \
       $(PARSING)resize_images.c \
       $(PARSING)fill_map.c \
