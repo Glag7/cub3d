@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:33:24 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/07 14:54:44 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:10:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static int	check_data(t_bmp_hdr *hdr, t_bmp_info *info)
 {
-	if (((hdr->file_type >> 8) & 255) != 'M' || (hdr->file_type & 255) != 'B')// bizarre l'ordre
+	if (hdr->file_type != 0x4D42)
 	{
 		ft_perror(ERR_FORMAT);
 		return (1);
@@ -33,11 +33,6 @@ static int	check_data(t_bmp_hdr *hdr, t_bmp_info *info)
 	if (info->bpp != 32)
 	{
 		ft_perror(ERR_BPP);
-		return (1);
-	}
-	if (0 && info->compression != 0)
-	{
-		ft_perror(ERR_COMPRESS);
 		return (1);
 	}
 	return (0);
@@ -53,7 +48,8 @@ static int	get_headers(char *path, t_bmp_hdr *hdr, t_bmp_info *info, int *fd_ptr
 		ft_perror(ERR_OPEN);
 		return (1);
 	}
-	if (read(fd, hdr, sizeof(t_bmp_hdr)) != sizeof(t_bmp_hdr) || read(fd, info, sizeof(t_bmp_info)) != sizeof(t_bmp_info))
+	if (read(fd, hdr, sizeof(t_bmp_hdr)) != sizeof(t_bmp_hdr)
+		|| read(fd, info, sizeof(t_bmp_info)) != sizeof(t_bmp_info))
 	{
 		close(fd);
 		ft_perror(ERR_READ);
@@ -64,7 +60,6 @@ static int	get_headers(char *path, t_bmp_hdr *hdr, t_bmp_info *info, int *fd_ptr
 		close(fd);
 		return (1);
 	}
-	info->bpp /= 8;
 	*fd_ptr = fd;
 	return (0);
 }
@@ -94,7 +89,7 @@ static void	format_image(t_specs *specs)//, t_bmp_info *info)
 	}
 }
 
-static int	read_image(int fd, t_specs *specs, t_bmp_hdr *hdr)//, t_bmp_info *info)
+static int	read_image(int fd, t_specs *specs, t_bmp_hdr *hdr)
 {
 	void	*null;
 
@@ -104,19 +99,21 @@ static int	read_image(int fd, t_specs *specs, t_bmp_hdr *hdr)//, t_bmp_info *inf
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	if (read(fd, null, hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info)) == -1)
+	if (read(fd, null, hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info))
+		!= hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info))
 	{
 		free(null);
 		ft_perror(ERR_READ);
 		return (1);
 	}
 	free(null);
-	if (read(fd, specs->img_src, specs->dim_src.h * specs->size_line) == -1)
+	if (read(fd, specs->img_src, specs->dim_src.h * specs->dim_src.w * sizeof(uint32_t))
+		!= specs->dim_src.h * specs->dim_src.w * sizeof(uint32_t))
 	{
-		ft_perror(ERR_MALLOC);
+		ft_perror(ERR_READ);
 		return (1);
 	}
-	format_image(specs);//, info);
+	//format_image(specs);
 	return (0);
 }
 
@@ -129,8 +126,8 @@ int	get_bmp_img(char *path, t_specs *specs)
 	specs->img_mlx = NULL;
 	if (get_headers(path, &hdr, &info, &fd) == 1)
 		return (1);
-	specs->dim_src = (t_dim){.w = (size_t)info.width, .h = (size_t)info.height};
-	specs->size_line = info.width * sizeof(uint32_t);
+	specs->dim_src = (t_dim){.w = (size_t)info.width, .h = (size_t)info.height};//?
+	specs->size_line = info.width;
 	specs->img_src = malloc(info.width * info.height * sizeof(uint32_t));
 	if (specs->img_src == NULL)
 	{
@@ -138,7 +135,7 @@ int	get_bmp_img(char *path, t_specs *specs)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	if (read_image(fd, specs, &hdr) == 1)//, &info) == 1)
+	if (read_image(fd, specs, &hdr) == 1)
 	{
 		free(specs->img_src);
 		close(fd);
@@ -146,58 +143,4 @@ int	get_bmp_img(char *path, t_specs *specs)
 	}
 	close(fd);
 	return (0);
-}
-
-
-int *read_bmp(const char *file_path, size_t *yes) {
-    FILE *file = fopen(file_path, "rb");
-    if (!file) {
-        perror("Erreur lors de l'ouverture du fichier");
-        return 0;
-    }
-
-    BITMAPFILEHEADER fileHeader;
-    fread(&fileHeader, sizeof(BITMAPFILEHEADER), 1, file);
-
-    if (fileHeader.bfType != 0x4D42) {
-        fprintf(stderr, "Ce n'est pas un fichier BMP valide.\n");
-        fclose(file);
-        return 0;
-    }
-
-    BITMAPINFOHEADER infoHeader;
-    fread(&infoHeader, sizeof(BITMAPINFOHEADER), 1, file);
-
-    if (infoHeader.biBitCount != 32) {
-        fprintf(stderr, "Ce fichier BMP n'est pas en 32 bits.\n");
-        fclose(file);
-        return 0;
-    }
-
-    *yes =  infoHeader.biWidth;
-    printf("Largeur: %d pixels\n", infoHeader.biWidth);
-    printf("Hauteur: %d pixels\n", infoHeader.biHeight);
-
-    // Allocation de mémoire pour les pixels
-    uint32_t *pixels = (uint32_t *)malloc(infoHeader.biWidth * infoHeader.biHeight * sizeof(uint32_t));
-    if (!pixels) {
-        fprintf(stderr, "Erreur d'allocation de mémoire.\n");
-        fclose(file);
-        return 0;
-    }
-
-    fseek(file, fileHeader.bfOffBits, SEEK_SET);
-    fread(pixels, sizeof(uint32_t), infoHeader.biWidth * infoHeader.biHeight, file);
-
-    // Affichage de la valeur RGBA du premier pixel
-    uint32_t firstPixel = pixels[0];
-    uint8_t r = (firstPixel >> 16) & 0xFF;
-    uint8_t g = (firstPixel >> 8) & 0xFF;
-    uint8_t b = firstPixel & 0xFF;
-    uint8_t a = (firstPixel >> 24) & 0xFF;
-
-    printf("Premier pixel - R: %d, G: %d, B: %d, A: %d\n", r, g, b, a);
-
-    return (pixels);
-    fclose(file);
 }
