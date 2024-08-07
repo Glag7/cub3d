@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 18:22:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 17:15:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:24:34 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 
 //TEXTURES
 # define ERR_IMG_SIZE	"Image has a size of 0\n"
+# define ERR_FORMAT	"Image is in wrong format (not BMP)\n"
+# define ERR_BPP	"Image has wrong bits per pixel value\n"
+# define ERR_IMG_EXT	"Image file has an unsupported extension\n"
+# define ERR_READ	"Failed to read file\n"
 # define ERR_MISS_NO	"Missing north texture\n"
 # define ERR_MISS_SO	"Missing south texture\n"
 # define ERR_MISS_WE	"Missing west texture\n"
