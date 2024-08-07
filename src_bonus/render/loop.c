@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 17:33:37 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:34:52 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	loop(void *data_)
 {
 	static int				fps = 0;
 	static int				oldfps = 0;
+	static double				avgfps = 0.;
+	static int				n = 0;;
 	static struct timespec	old = {0, 0};
 	struct timespec			curr;
 	double					delta;
@@ -75,8 +77,10 @@ int	loop(void *data_)
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (old.tv_sec < curr.tv_sec)
 	{
-		printf("fps: %d\nangle %f\nfov %f\nz %f\n---\n",
-			fps, data->play.az, data->set.fov_deg, data->play.z);
+		avgfps = (avgfps * n + fps) / (n + 1);
+		++n;
+		printf("fps: %d\navg: %f\nangle %f\nfov %f\nz %f\n---\n",
+			fps, avgfps, data->play.az, data->set.fov_deg, data->play.z);
 		oldfps = fps;
 		fps = 0;
 	}
