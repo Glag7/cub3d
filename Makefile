@@ -15,6 +15,7 @@ UTILS = utils/
 COMMON = common/
 HOOKS = hooks/
 RENDER = render/
+MOVE = move/
 
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -pg #-Werror
@@ -72,10 +73,10 @@ SRC_BONUS = main.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
       $(RENDER)floor.c \
-      $(RENDER)move.c \
-      $(RENDER)mouse.c \
       $(RENDER)drawv.c \
-      $(RENDER)minimap.c
+      $(RENDER)minimap.c \
+      $(MOVE)move.c \
+      $(MOVE)move_angle.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -101,7 +102,7 @@ all : $(LIB) $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
 
-bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
+bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(MOVE) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_BONUS_DIR) -I $(LIBDIR) -o $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
@@ -143,6 +144,8 @@ $(OBJ_BONUS_DIR)$(UTILS) : $(OBJ_BONUS_DIR)
 $(OBJ_BONUS_DIR)$(RENDER) : $(OBJ_BONUS_DIR)
 	@ mkdir -p $(OBJ_BONUS_DIR)$(RENDER)
 
+$(OBJ_BONUS_DIR)$(MOVE) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(MOVE)
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)

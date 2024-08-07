@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 11:49:19 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:47:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,5 @@ void	move(t_data *data, double delta, uint64_t keys)
 	if (keys & KEY_SHIFT)
 		speed = 5.;
 	move_pos(data, delta, speed, keys);
-	if (keys & KEY_LEFT)
-		data->play.a += 1. * delta;
-	if (keys & KEY_RIGHT)
-		data->play.a -= 1. * delta;
-	if (keys & KEY_UP)
-		data->play.az += 1. * delta;
-	if (keys & KEY_DOWN)
-		data->play.az -= 1. * delta;
 	check_pos(data);
 }
