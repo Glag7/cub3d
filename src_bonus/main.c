@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 12:28:12 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:27:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,37 @@
 #include "render.h"
 
 static void	start_game(t_data *data)
-{//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
-
-	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
-	mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2,
-		data->set.hei / 2);
-	data->oldmouse.x = data->set.wid / 2;
-	data->oldmouse.y = data->set.hei / 2;
-
+{
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->mlx.win, KeyRelease, KeyReleaseMask, &unkey_hook, data);
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);
+	mlx_hook(data->mlx.win, FocusOut, FocusChangeMask, &out_hook, data);
+	mlx_hook(data->mlx.win, FocusIn, FocusChangeMask, &in_hook, data);
 	mlx_loop_hook(data->mlx.mlx, &loop, data);
 	mlx_loop(data->mlx.mlx);
+}
+
+static int	init_data2(t_data *data)
+{
+	if (init_mlx(&data->mlx, data->set.wid, data->set.hei))
+	{
+		free_map(&data->map);
+		free_settings(&data->set);
+		ft_perror(ERR_MLX);
+		return (1);
+	}
+	if (init_mini(&data->mini, &data->set))
+	{
+		ft_perror(ERR_MALLOC);
+		free_map(&data->map);
+		free_mlx(&data->mlx);
+		free_settings(&data->set);
+		return (1);
+	}
+	return (0);
 }
 
 static int	init_data(t_data *data, int argc, char **argv)
@@ -54,25 +69,10 @@ static int	init_data(t_data *data, int argc, char **argv)
 	{
 		mlx_destroy_display(data->mlx.mlx);
 		free(data->mlx.mlx);
-		//settings
+		free_settings(&data->set);
 		return (1);
 	}
-	if (init_mlx(&data->mlx, data->set.wid, data->set.hei))
-	{
-		free_map(&data->map);
-		ft_perror(ERR_MLX);
-		//settings
-		return (1);
-	}
-	if (init_mini(&data->mini, &data->set))
-	{
-		ft_perror(ERR_MALLOC);
-		free_map(&data->map);
-		free_mlx(&data->mlx);
-		//settings
-		return (1);
-	}
-	return (0);
+	return (init_data2(data));
 }
 
 int	main(int argc, char **argv)
@@ -92,6 +92,6 @@ int	main(int argc, char **argv)
 	free_map(&data.map);
 	free_mlx(&data.mlx);
 	free_mini(&data.mini);
-	//settings
+	free_settings(&data.set);
 	return (0);
 }

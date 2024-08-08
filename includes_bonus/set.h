@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 16:48:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:01:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define DEF_SKYSIZ 2048
 
 typedef struct s_set
-{//FIXME alignment
+{
 	unsigned int	d;
 	unsigned int	r;
 	unsigned int	xoffset;
@@ -51,22 +51,22 @@ typedef struct s_set
 	uint32_t		pcolor;
 	double			ratio;
 
-	unsigned int		texsiz;
-	unsigned int		skysiz;
+	unsigned int	texsiz;
+	unsigned int	skysiz;
 
 	double			fov_deg;
 	double			fov;
 	double			tanfov;
-	double			view;//?
+	double			view;
 	double			planwid;
 	double			invplanwid;
 
-	double		sensi;//caca
+	double			sensi;
 	unsigned int	wid;
 	unsigned int	hei;
-	double		invwid;
-	double		*invlen;
-	double		*coslen;
+	double			invwid;
+	double			*invlen;
+	double			*coslen;
 }	t_set;
 
 int		init_settings(t_set *set);

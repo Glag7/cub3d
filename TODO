@@ -74,6 +74,8 @@ sensi en fonction du fov
 relire data->set.wid - 1 ou pas
 TOUT PASSER EN &
 
+{//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
+
 fichier binaire settings
 export du fichier
 check des bonnes valeurs

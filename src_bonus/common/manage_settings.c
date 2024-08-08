@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 16:48:42 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:29:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	init_settings(t_set *set)
 	set->sensi = DEF_SENSI;
 	set->texsiz = DEF_TEXSIZ;
 	set->skysiz = DEF_SKYSIZ;
-	
 	return (setfov(set, DEF_FOV));
 }
 
