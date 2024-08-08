@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 11:48:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:42:18 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,6 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	drawv(data, &ray, x);
 }
 
-static inline __attribute__((always_inline)) t_point
-	getvec(t_data *data, t_point curr)
-{
-	t_point	vec;
-	double	invlen;
-
-	vec = (t_point){curr.x - data->play.x, curr.y - data->play.y};
-	invlen = 1. / sqrt(vec.x * vec.x + vec.y * vec.y);
-	vec.x *= invlen;
-	vec.y *= invlen;
-	return (vec);
-}
-
 void	raycast(t_data *data)
 {
 	size_t	i;
@@ -130,9 +117,10 @@ void	raycast(t_data *data)
 	i = 0;
 	while (i < data->set.wid)
 	{
-		vec = getvec(data, cur);
+		vec = (t_point){(cur.x - data->play.x) * data->set.invlen[i],
+			(cur.y - data->play.y) * data->set.invlen[i]};
 		trace_ray(data, vec.x, vec.y, i);
-		++i;;
+		++i;
 		cur.x += inc.x;
 		cur.y += inc.y;
 	data->px.x += data->pxinc.x;//
