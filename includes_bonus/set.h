@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 17:57:30 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:47:31 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define DEF_PCOLOR 0x00EE1111
 
 # define DEF_FOV 90.
-# define DEF_VIEW 250.
+# define DEF_VIEW 1000.
 
 # define DEF_WID 1360
 # define DEF_HEI 768
@@ -62,13 +62,12 @@ typedef struct s_set
 	double			invplanwid;
 
 	double		sensi;//caca
-	unsigned int	nthread;
-	unsigned int	offthread;
 	unsigned int	wid;
 	unsigned int	hei;
+	double		invwid;
 }	t_set;
 
-void	init_settings(t_set *set);
+int		init_settings(t_set *set);
 int		setfov(t_set *set, double fov_deg);
 
 #endif

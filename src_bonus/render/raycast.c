@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 13:43:28 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:48:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,18 @@ void	raycast(t_data *data)
 	cur.y = data->play.y + data->play.sina + data->set.tanfov * data->play.cosa;
 	end.x = data->play.x + data->play.cosa + data->set.tanfov * data->play.sina;
 	end.y = data->play.y + data->play.sina - data->set.tanfov * data->play.cosa;
-	inc = (t_point){(end.x - cur.x) / (double)(data->set.wid - 1),
-		(end.y - cur.y) / (double)(data->set.wid - 1)};
-	cur = (t_point){cur.x + inc.x * (double)data->set.offthread,
-		cur.y + inc.y * (double)data->set.offthread};
-	i = data->set.offthread;
+	inc = (t_point){(end.x - cur.x) * data->set.invwid,
+		(end.y - cur.y) * data->set.invwid};
+	cur = (t_point){cur.x + inc.x,
+		cur.y + inc.y};
+	i = 0;
 	while (i < data->set.wid)
 	{
 		vec = getvec(data, cur);
 		trace_ray(data, vec.x, vec.y, i);
-		i += data->set.nthread;
-		cur.x += inc.x * (double)data->set.nthread;
-		cur.y += inc.y * (double)data->set.nthread;
-	data->px.x += data->pxinc.x;
+		++i;;
+		cur.x += inc.x;
+		cur.y += inc.y;
+	data->px.x += data->pxinc.x;//
 	}
 }

@@ -58,18 +58,10 @@ joueur gros (offset collisions)
 
 opti minimap
 
-skybox
-sol
 
 test render distance
 test texture nord llignes sus
 graph temps
-
-ligne casse couille en bas de l'ecran
-parsing + refactor sol
-textures taille fixe
-
-jonction du sol qui deconne en oob
 
 ENNEMI
 derriere ?
@@ -92,8 +84,3 @@ DANS LE MANDA AUSSI
 lacher la souris si on quitte la fenetre
 
 opti puis multithreading
-opti raycast
-mettre le ciel dedans
-
-
-reparer pre parsing

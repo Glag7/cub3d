@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 18:55:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:45:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	draw_minimap(t_data *data)
 	unsigned int			i;
 	unsigned int			j;
 
-	i = data->set.offthread;
+	i = 0;
 	while (i < data->set.d)
 	{
 		j = 0;
@@ -61,6 +61,6 @@ void	draw_minimap(t_data *data)
 			}
 			++j;
 		}
-		i += data->set.nthread;
+		++i;
 	}
 }
