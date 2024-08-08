@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 13:22:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:48:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ typedef struct s_set
 	unsigned int	hei;
 	double		invwid;
 	double		*invlen;
+	double		*coslen;
 }	t_set;
 
 int		init_settings(t_set *set);
 int		setfov(t_set *set, double fov_deg);
+void	free_settings(t_set *set);
 
 #endif

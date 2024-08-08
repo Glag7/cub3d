@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/07 11:45:56 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:30:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 	int	azoffset;
 	int	zoffset;
 
-	zoffset = hei * data->play.z;
-	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.;
+	zoffset = 0;
+	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4. + hei * data->play.z;
 	inc = 1. / hei * (double)img.w;
-	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset + 1.;
-	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset + 1.;
+	//XXX could use some rounding
+	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset + 2.;//??
+	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset + 2.;
 	index = 0.;
 	if (start < 0.)
 	{

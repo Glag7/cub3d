@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 13:42:18 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:40:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 		ray.len = INFINITY;
 		ray.hit = 0;
 	}
-	ray.len *= cos(atan2(-ray.vec.y, ray.vec.x) - data->play.a);
+	ray.len *= data->set.coslen[x];
 	drawv(data, &ray, x);
 }
 
@@ -112,8 +112,6 @@ void	raycast(t_data *data)
 	end.y = data->play.y + data->play.sina - data->set.tanfov * data->play.cosa;
 	inc = (t_point){(end.x - cur.x) * data->set.invwid,
 		(end.y - cur.y) * data->set.invwid};
-	cur = (t_point){cur.x + inc.x,
-		cur.y + inc.y};
 	i = 0;
 	while (i < data->set.wid)
 	{
