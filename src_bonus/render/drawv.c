@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 15:30:54 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:14:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,28 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 {
 	double			inc;
 	double			index;
-	double ypx = data->px.y;
+	double 			ypx;
 	int	i;
 	int	start;
 	int	end;
-	int	azoffset;
-	int	zoffset;
+	double	zoffset;
 
-	zoffset = 0;
-	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4. + hei * data->play.z;
+	zoffset = data->set.planwid * data->play.az / M_PI * 4. + hei * data->play.z;
 	inc = 1. / hei * (double)img.w;
-	//XXX could use some rounding
-	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset + 2.;//??
-	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset + 2.;
+	start = (int)ceil(((double)data->set.hei - hei) * .5 + zoffset + 1.);//?
+	end = (int)ceil(((double)data->set.hei + hei) * .5 + zoffset + 1.);
 	index = 0.;
+	ypx = data->px.y;
 	if (start < 0.)
 	{
 		index = (double)-start * inc;
 		start = 0.;
 	}
 	else if (start >= (int)data->set.hei)
-		start = data->set.hei;//nuh huh
-	i = 0;
+		start = data->set.hei;
 	if (end >= (int)data->set.hei)
 		end = data->set.hei;
+	i = 0;
 	while (i < start)
 	{
 		data->mlx.px[x + i++ *data->set.wid] =
