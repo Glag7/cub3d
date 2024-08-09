@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 17:26:39 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 18:12:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,7 @@ static void	trace_entities(t_data *data, t_ray *ray, size_t x)
 	drawv(data, ray, x);
 	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
 	init_ray(ray);
-	cast_ray2(ray, data, len);
-	ray->pos.x += ray->len * ray->vec.x;
-	ray->pos.y += ray->len * ray->vec.y;
-	ray->len = (len - ray->len) * data->set.coslen[x];
-	drawv3(data, ray, x);
+	draw_sprites(ray, data, len, x);
 }
 
 static void	trace_ray(t_data *data, double px, double py, size_t x)
