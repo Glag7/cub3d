@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 13:19:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 14:22:38 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	start_game(t_data *data)
 	data->map.entities[0].type = DOOR;
 	data->map.entities[0].wid = 1.;
 	data->map.entities[0].hei = 1.;
+	load_img(data->mlx.mlx, "./assets/yavine2.bmp", &data->tmp, (t_dim){128, 128});
 
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);

@@ -75,6 +75,7 @@ SRC_BONUS = main.c \
       $(RENDER)raycast.c \
       $(RENDER)floor.c \
       $(RENDER)drawv.c \
+      $(RENDER)draw_entity.c \
       $(RENDER)minimap.c \
       $(MOVE)move.c \
       $(MOVE)move_angle.c
