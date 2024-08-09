@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 13:43:01 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:41:46 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,24 @@ static inline void __attribute__((always_inline))
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-		ray->hit = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
-	}//opti: mettre &= et check les ennemis que si y a un truc
+		ray->hit |= data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
+	}
+}
+
+static void	trace_entities(t_data *data, t_ray *ray, size_t x)
+{
+	if (ray->len > data->set.view)//nuhuh
+		ray->len = INFINITY;
+	double len = ray->len;
+	ray->len *= data->set.coslen[x];
+	drawv(data, ray, x);
+	//
+	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
+	init_ray(ray);
+	ray->len = len;
+	cast_ray2(ray, data, len);
+	ray->len *= data->set.coslen[x];
+	drawv3(data, ray, x);
 }
 
 static void	trace_ray(t_data *data, double px, double py, size_t x)
@@ -89,21 +105,15 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	cast_ray(&ray, data);
 	ray.pos.x += ray.len * ray.vec.x;
 	ray.pos.y += ray.len * ray.vec.y;
-	if (ray.len > data->set.view)//nuhuh
+	if (ray.hit & ENTITY)
+		trace_entities(data, &ray, x);
+	else
 	{
-		ray.len = INFINITY;
-		ray.hit = 0;
+		if (ray.len > data->set.view)
+			ray.len = INFINITY;
+		ray.len *= data->set.coslen[x];
+		drawv(data, &ray, x);
 	}
-	double len = ray.len;
-	ray.len *= data->set.coslen[x];
-	drawv(data, &ray, x);
-	//
-	ray.vec = (t_point){-px, py};
-	init_ray(&ray);
-	ray.len = len;
-	cast_ray2(&ray, data, len);
-	ray.len *= data->set.coslen[x];
-	drawv3(data, &ray, x);
 }
 
 void	raycast(t_data *data)
