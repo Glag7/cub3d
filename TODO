@@ -80,9 +80,12 @@ fichier binaire settings
 export du fichier
 check des bonnes valeurs
 
-segfault si on avance des le debut (limiter la distance max a parcourir)
-DANS LE MANDA AUSSI
-
-lacher la souris si on quitte la fenetre
-
 opti puis multithreading
+
+
+
+parsing ennemis
+malloc nentities + more
+tout free a la fin
+slot reserve pour les bombas ?
+

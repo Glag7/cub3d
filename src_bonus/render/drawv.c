@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 11:36:56 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:19:02 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static inline void __attribute__((always_inline))
 	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
 		+ hei * data->play.z;
 
-	ddata->start = ((double)data->set.hei - hei) * .5 + zoffset + 1.;
-	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 1.;
+	ddata->start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
+	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
 	ddata->index = 0.;
 	ddata->ypx = data->px.y;
 	if (ddata->start < 0.)
@@ -86,5 +86,5 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 		img = data->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
 	}
-	drawv2(data, img, x, (data->set.planwid / ray->len) + 2.);
+	drawv2(data, img, x, (data->set.planwid / ray->len));
 }

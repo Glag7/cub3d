@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 17:27:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:19:57 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,20 @@
 #include "data.h"
 #include "render.h"
 
+#include "entity.h"
+
 static void	start_game(t_data *data)
-{
+{//XXX mat=ybe remove entmap
+	data->map.entmap = malloc(data->map.hei * data->map.wid * sizeof(*data->map.entmap));
+	data->map.entities = malloc(2 * sizeof(*data->map.entities));
+	data->map.entmap[0] = data->map.entities + 0;
+	data->map.entities[0].x = 3.5;
+	data->map.entities[0].y = 2.5;
+	data->map.map[3 + 2 * data->map.wid] = ENTITY;
+	data->map.entities[0].type = DOOR;
+	data->map.entities[0].wid = 1.;
+	data->map.entities[0].hei = 1.;
+
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 18:01:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 11:58:01 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	init_ray(t_ray *ray)
 static inline void __attribute__((always_inline))
 	cast_ray(t_ray *ray, t_data *data)
 {
-	while (!ray->hit && ray->len < data->set.view)
+	while (!(ray->hit & CUBE) && ray->len < data->set.view)
 	{
 		ray->side = !(ray->dist.x < ray->dist.y);
 		if (ray->side == XSIDE)
@@ -74,7 +74,7 @@ static inline void __attribute__((always_inline))
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-		ray->hit = (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x]);
+		ray->hit = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
 	}
 }
 

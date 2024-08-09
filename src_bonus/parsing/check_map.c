@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:37:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ static void	replace_chars(t_map *map)
 	i = 0;
 	while (i < size)
 	{
-		if (map->map[i] == ' ')
-			map->map[i] = 0;
+		if (map->map[i] == '1')
+			map->map[i] = CUBE;
+		else if (map->map[i] == 'X')//? + portes + les mettres dns les ennemis
+			map->map[i] = ENTITY;
 		else
-			map->map[i] -= '0';
+			map->map[i] = 0;
 		i++;
 	}
 }

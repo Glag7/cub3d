@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 15:38:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:43:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <stdint.h>
 # include <stddef.h>
+# include "entity.h"
+
+# define CUBE 1
+# define ENTITY 2
 
 typedef struct s_img
 {
@@ -26,6 +30,8 @@ typedef struct s_img
 typedef struct s_map
 {
 	uint8_t			*map;
+	t_ent			**entmap;
+	t_ent			*entities;
 	unsigned int	hei;
 	unsigned int	wid;
 	t_img			n;
@@ -35,6 +41,7 @@ typedef struct s_map
 	t_img			f;
 	t_img			c;
 	t_img			d;
+	unsigned int	nentities;
 }	t_map;
 
 void	free_map(t_map *map);
