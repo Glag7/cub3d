@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 15:16:03 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:26:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,22 @@
 #include "point.h"
 #include "ray.h"
 
+//XXX
 void cast_ray2(t_ray *ray, t_data *data, double len)
 {
-	while (!(ray->hit & ENTITY) && ray->len > 0.)
+	while (!(ray->hit & ENTITY) && ray->len < data->set.view)
 	{
 		ray->side = !(ray->dist.x < ray->dist.y);
 		if (ray->side == XSIDE)
 		{
 			ray->ipos.x += ray->istep.x;
-			ray->len = len - ray->dist.x;
+			ray->len = ray->dist.x;
 			ray->dist.x += ray->step.x;
 		}
 		else
 		{
 			ray->ipos.y += ray->istep.y;
-			ray->len = len - ray->dist.y;
+			ray->len = ray->dist.y;
 			ray->dist.y += ray->step.y;
 		}
 		if (ray->ipos.x < 0)
@@ -44,8 +45,8 @@ void cast_ray2(t_ray *ray, t_data *data, double len)
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-		ray->hit = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
-	}//opti: mettre &= et check les ennemis que si y a un truc
+		ray->hit |= data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
+	}
 }
 
 #include <math.h>
@@ -97,7 +98,7 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 {
 	t_img			img;
 
-	if (ray->side == XSIDE && ray->vec.x > 0)
+	if (ray->side == XSIDE && ray->vec.x <= 0)
 	{
 		img = data->tmp;
 		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
@@ -108,7 +109,7 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
 				* (double)img.w);
 	}
-	else if (ray->vec.y > 0)
+	else if (ray->vec.y <= 0)
 	{
 		img = data->tmp;
 		img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
@@ -119,5 +120,5 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 		img = data->tmp;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
 	}
-	drawv2(data, img, x, (data->set.planwid / ray->len));
+	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
