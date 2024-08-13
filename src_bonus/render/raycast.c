@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 16:46:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:38:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	ray.ipos = (t_ipoint){ray.pos.x, ray.pos.y};
 	ray.vec = (t_point){px, -py};
 	init_ray(&ray);
+	ray.hit = data->map.map[(int)data->play.x + (int)data->play.y * data->map.wid] & GLASS;//yes
 	cast_ray(&ray, data);
 	ray.pos.x += ray.len * ray.vec.x;
 	ray.pos.y += ray.len * ray.vec.y;

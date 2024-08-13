@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 17:09:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:32:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 	i = ddata.start;
 	while (i < ddata.end)
 	{
-		if (img.px[(int)ddata.index * img.w]& 0XFF000000)
+		if (img.px[(int)ddata.index * img.w]& 0XF0000000)//
 			data->mlx.px[x + i *data->set.wid] = img.px[(int)ddata.index * img.w];
 		++i;
 		ddata.index += inc;
@@ -64,14 +64,12 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 	{
 		img = data->tmp;
 		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
-		return ;
 	}
 	else if (ray->side == XSIDE)
 	{
 		img = data->tmp;
 		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
 				* (double)img.w);
-		return ;
 	}
 	else if (ray->vec.y <= 0)
 	{
@@ -84,7 +82,6 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 	{
 		img = data->tmp;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
-		return ;
 	}
 	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
@@ -102,7 +99,7 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
 	printf("---------------------\nx = %d\npos = %d, %d\n", x, ray->ipos.x, ray->ipos.y);
-	while (ray->len < data->set.view)
+	while (ray->len < (len + 1.))
 	{
 		ray->side = !(ray->dist.x < ray->dist.y);
 		if (ray->side == XSIDE)
@@ -142,13 +139,13 @@ void	draw_glass(t_data *data, t_ray *ray, size_t x)
 {
 	const double	len = ray->len;
 
-	t_ray	og3 = *ray;
-	t_ray *og = &og3;
 	if (ray->len > data->set.view)
 		ray->len = INFINITY;
 	else
 		ray->len *= data->set.coslen[x];
 	drawv(data, ray, x);
+	ray->pos.x += 1.e-6 * (double)ray->istep.x;//FIXME still weird if angle is perfect
+	ray->pos.y += 1.e-6 * (double)ray->istep.y;
 	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
 
 	ray->istep = (t_ipoint){-ray->istep.x, -ray->istep.y};
