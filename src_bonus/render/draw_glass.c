@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 17:32:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:04:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 
 	if (ray->side == XSIDE && ray->vec.x <= 0)
 	{
+		printf("how\n");
 		img = data->tmp;
 		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
 	}
@@ -98,7 +99,6 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 //les coordonnees sont aramenees je crois
 void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
-	printf("---------------------\nx = %d\npos = %d, %d\n", x, ray->ipos.x, ray->ipos.y);
 	while (ray->len < (len + 1.))
 	{
 		ray->side = !(ray->dist.x < ray->dist.y);
@@ -122,13 +122,29 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
+			//test intersection y
+			//XXX < 0 tout ca tout ca
 		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & GLASS)
 		{
-			printf("pos = %d, %d\n", ray->ipos.x, ray->ipos.y);
 			ray->pos.x += ray->len * ray->vec.x;//non copier
 			ray->pos.y += ray->len * ray->vec.y;
-			ray->len = (len - ray->len) * data->set.coslen[x];
-			drawv3(data, ray, x);
+			t_point ogpos = ray->pos;
+			
+			if (ray->side == YSIDE)
+			{
+				ray->pos.y += .5 * (double)ray->istep.y;
+				ray->pos.x += .5 * ray->vec.x / ray->vec.y;//inutile ?
+			}
+			else
+			{
+				ray->pos.y = .5 * (double)ray->istep.y + floor(ray->pos.y);
+				ray->pos.x += (ray->pos.y - ogpos.y) * ray->vec.x / ray->vec.y;//inutile
+			}
+			ray->side = YSIDE;
+				double increase = sqrt((ray->pos.x - ogpos.x) * (ray->pos.x - ogpos.x) +(ray->pos.y - ogpos.y) * (ray->pos.y - ogpos.y));
+				ray->len = (len - increase - ray->len) * data->set.coslen[x];
+			if ((int)floor(ogpos.x) == (int)floor(ray->pos.x))
+				drawv3(data, ray, x);
 			break ;//nn
 		}
 	}
@@ -149,8 +165,6 @@ void	draw_glass(t_data *data, t_ray *ray, size_t x)
 	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
 
 	ray->istep = (t_ipoint){-ray->istep.x, -ray->istep.y};
-	printf("%f\n", ray->dist.x);
-	printf("%f\n", ray->dist.y);
 		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
 		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
 	if (ray->vec.x < 0.)
