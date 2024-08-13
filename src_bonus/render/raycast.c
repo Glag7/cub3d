@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 18:12:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:46:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "point.h"
 #include "ray.h"
 
-static void	init_ray(t_ray *ray)
+void	init_ray(t_ray *ray)
 {
 	ray->step = (t_point){sqrt(1. + (ray->vec.y * ray->vec.y)
 			/ (ray->vec.x * ray->vec.x)), sqrt(1. + (ray->vec.x
@@ -78,20 +78,6 @@ static inline void __attribute__((always_inline))
 	}
 }
 
-static void	trace_entities(t_data *data, t_ray *ray, size_t x)
-{
-	const double	len = ray->len;
-
-	if (ray->len > data->set.view)
-		ray->len = INFINITY;
-	else
-		ray->len *= data->set.coslen[x];
-	drawv(data, ray, x);
-	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
-	init_ray(ray);
-	draw_sprites(ray, data, len, x);
-}
-
 static void	trace_ray(t_data *data, double px, double py, size_t x)
 {
 	t_ray	ray;
@@ -103,8 +89,8 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	cast_ray(&ray, data);
 	ray.pos.x += ray.len * ray.vec.x;
 	ray.pos.y += ray.len * ray.vec.y;
-	if (ray.hit & ENTITY)
-		trace_entities(data, &ray, x);
+	if (ray.hit & GLASS)
+		draw_glass(data, &ray, x);
 	else
 	{
 		if (ray.len > data->set.view)

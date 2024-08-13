@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 17:43:16 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:33:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
 			|| map->map[i - map->wid] == ' '));
 }
 
-static void	replace_chars(t_map *map)
+static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES ET VERRES (et clotures?)
 {
 	unsigned int	size;
 	unsigned int	i;
@@ -37,8 +37,8 @@ static void	replace_chars(t_map *map)
 	{
 		if (map->map[i] == '1')
 			map->map[i] = CUBE;//porte: horizontal ou vertical
-		else if (map->map[i] == 'X')//? + portes + les mettres dns les ennemis
-			map->map[i] = ENTITY;
+		else if (map->map[i] == 'G')//? + portes + les mettres dns les ennemis
+			map->map[i] = GLASS;
 		else
 			map->map[i] = 0;
 		i++;

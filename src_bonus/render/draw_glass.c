@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_entity.c                                      :+:      :+:    :+:   */
+/*   draw_glass.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 18:12:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:09:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 #include "point.h"
 #include "ray.h"
 
-//XXX
+//XXX changer nom
+//les coordonnees sont aramenees je crois
 void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
+	printf("---------------------\nx = %d\npos = %d, %d\n", x, ray->ipos.x, ray->ipos.y);
 	while (ray->len < data->set.view)
 	{
 		ray->side = !(ray->dist.x < ray->dist.y);
@@ -123,13 +125,54 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & ENTITY)
+		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & GLASS)
 		{
+			printf("pos = %d, %d\n", ray->ipos.x, ray->ipos.y);
 			ray->pos.x += ray->len * ray->vec.x;//non copier
 			ray->pos.y += ray->len * ray->vec.y;
 			ray->len = (len - ray->len) * data->set.coslen[x];
 			drawv3(data, ray, x);
+			break ;//nn
 		}
 	}
 }
 
+//XXX change name
+void	draw_glass(t_data *data, t_ray *ray, size_t x)
+{
+	const double	len = ray->len;
+
+	t_ray	og3 = *ray;
+	t_ray *og = &og3;
+	if (ray->len > data->set.view)
+		ray->len = INFINITY;
+	else
+		ray->len *= data->set.coslen[x];
+	drawv(data, ray, x);
+	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
+
+	ray->istep = (t_ipoint){-ray->istep.x, -ray->istep.y};
+	printf("%f\n", ray->dist.x);
+	printf("%f\n", ray->dist.y);
+		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
+		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
+	if (ray->vec.x < 0.)
+	{
+		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
+	}
+	else
+	{
+		ray->dist.x = (1.0 - ray->pos.x + floor(ray->pos.x)) * ray->step.x;
+	}
+	if (ray->vec.y < 0.)
+	{
+		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
+	}
+	else
+	{
+		ray->dist.y = (1.0 - ray->pos.y + floor(ray->pos.y)) * ray->step.y;
+	}
+	ray->hit = 0;
+	ray->len = 0.;
+	draw_sprites(ray, data, len, x);
+}
