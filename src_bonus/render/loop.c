@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 18:01:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:59:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ static void	manage_game(t_data *data, double delta)
 		draw_floor(data);
 		raycast(data);
 		draw_minimap(data);
+		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid / 2] = 0xFFFF0000;
+		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid / 2 + 1] = 0xFFFF0000;
+		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid + data->set.wid / 2] = 0xFFFF0000;
+		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid + data->set.wid / 2 + 1] = 0xFFFF0000;
 	}
 }
 
