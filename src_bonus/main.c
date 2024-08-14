@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 18:03:14 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/14 18:26:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 #include "render.h"
 
 static void	start_game(t_data *data)
-{//XXX mat=ybe remove entmap
-	data->map.map[3 + 2 * data->map.wid] = GLASS;
+{
+	data->map.map[0 + 0 * data->map.wid] = GLASS;
 	load_img(data->mlx.mlx, "./assets/yavine2.bmp", &data->tmp, (t_dim){1024, 1024});
 
 	data->play.az = 0.;

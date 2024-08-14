@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/14 17:07:22 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:45:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline void __attribute__((always_inline))
 	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
 		+ hei * data->play.z;
 
-	ddata->start = ((double)data->set.hei - hei * .25) * .5 + zoffset + 2.5;
+	ddata->start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
 	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
 	ddata->index = 0.;
 	ddata->ypx = data->px.y;
@@ -140,41 +140,43 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 			//XXX < 0 tout ca tout ca
 		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & GLASS)
 		{
-			ray->pos.x += ray->len * ray->vec.x;//non copier
-			ray->pos.y += ray->len * ray->vec.y;
-			t_point ogpos = ray->pos;
+			t_ray ray3 = *ray;
+			t_ray *ray2 = &ray3;
+			ray2->pos.x += ray2->len * ray2->vec.x;//non copier
+			ray2->pos.y += ray2->len * ray2->vec.y;
+			t_point ogpos = ray2->pos;
 			
-			if (ray->side == YSIDE)
+			if (ray2->side == YSIDE)
 			{
-				ray->pos.y += .5 * (double)ray->istep.y;
-				ray->pos.x += .5 * ray->vec.x / ray->vec.y * (double)ray->istep.y;//inutile ?
+				ray2->pos.y += .5 * (double)ray2->istep.y;
+				ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
 			}
-			else if (ray->pos.y - floor(ray->pos.y) > .5)
-			{
-
-				break ;
-			}
+		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
+		//	{
+                //
+		//		break ;
+		//	}
 			else
 			{
-				ray->pos.y = .5 * (double)ray->istep.y + floor(ray->pos.y);
-				ray->pos.x += (ray->pos.y - ogpos.y) * (ray->vec.x / ray->vec.y);//inutile
+				ray2->pos.y = .5 + floor(ray2->pos.y);
+				ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
 			}
-				double increase = sqrt((ray->pos.x - ogpos.x) * (ray->pos.x - ogpos.x) +(ray->pos.y - ogpos.y) * (ray->pos.y - ogpos.y));
-				ray->len = (len - increase - ray->len) * data->set.coslen[x];
-			if ( (int)floor(ogpos.x + 1.e-4 * (double)ray->istep.x) == (int)floor(ray->pos.x))
+				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
+				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
+			if ( (int)floor(ogpos.x + 1.e-4 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
 			{
-				//printf("%f %f\n", ray->pos.x, ray->pos.y);
-				drawv3(data, ray, x);
+				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+				drawv3(data, ray2, x);
 			}
 				if (x == data->set.wid / 2)
 				{
-			printf("%f %f\n", ray->pos.x, ray->pos.y);
-				printf("%f\n", ray->pos.y - floor(ray->pos.y));
+			printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+				printf("%f\n", ray2->pos.y - floor(ray2->pos.y));
 				}
-			break ;//nn
+		//	break ;//nn
 		}
 	}
-}
+}//XXX precision
 
 //XXX change name
 void	draw_glass(t_data *data, t_ray *ray, size_t x)
