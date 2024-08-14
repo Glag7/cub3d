@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 11:45:25 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:15:16 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "data.h"
+#include "map.h"
 
 static inline uint32_t	get_color(t_data *data, int i, int j)
 {
+	double		xx;
+	double		yy;
 	long long	x;
 	long long	y;
 
-	x = (long long)floor(data->play.x + (-data->play.cosa
+	xx = (data->play.x + (-data->play.cosa
 				* (double)j + data->play.sina * (double)i) / data->set.ratio);
-	y = (long long)floor(data->play.y + (data->play.cosa
+	yy = (data->play.y + (data->play.cosa
 				* (double)i + data->play.sina * (double)j) / data->set.ratio);
+	x = (long long)floor(xx);
+	y = (long long)floor(yy);
 	if (x < 0LL)
 		x = ((long long)data->map.wid * -x + x) % (long long)data->map.wid;
 	else if (x >= data->map.wid)
@@ -32,6 +37,13 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 		y = ((long long)data->map.hei * -y + y) % (long long)data->map.hei;
 	else if (y >= data->map.hei)
 		y %= (long long)data->map.hei;
+	if (data->map.map[(long long)(x + y * data->map.wid)] & GLASS)
+	{
+		if (!(data->tmp.px[(int)((xx - (double)x) * (double)data->tmp.w)
+				+ (int)floor((yy - (double)y) * (double)data->tmp.w) * data->tmp.w] & 0XF0000000))
+		return (data->set.color);
+			return (data->set.ncolor);
+	}
 	if (data->map.map[(long long)(x + y * data->map.wid)])
 		return (data->set.ncolor);
 	return (data->set.color);
