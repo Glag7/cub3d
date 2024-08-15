@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:48 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 16:40:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:43:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		loop(void *data_);
 void	draw_floor(t_data *data);
 void	raycast(t_data *data);
 void	drawv(t_data *data, t_ray *ray, size_t x);
-void	trace_entities(t_data *data, t_ray *ray, size_t x);
+void	draw_flat(t_data *data, t_ray *ray, size_t x);
 void	draw_minimap(t_data *data);
 
 #endif

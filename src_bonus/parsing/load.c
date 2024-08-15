@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 15:34:19 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 18:24:09 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:42:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	try_load(void *mlx, t_data *data, char *buf, unsigned int *i_)
 		return (1);
 	else if (buf[i] == 'G' && buf[i + 1] == 'L' && load_glass(mlx, data, buf, &i))
 		return (1);
-	else if (buf[i] == 'T' && buf[i + 1] == 'B' && load_half(mlx, data, buf, &i))
+	else if (buf[i] == 'T' && buf[i + 1] == 'B'
+		&& load_topbottom(mlx, data, buf, &i))
 		return (1);
 	*i_ = i;
 	return (0);

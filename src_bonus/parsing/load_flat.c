@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:03:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 18:22:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:40:52 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int	load_topbottom(void *mlx, t_data *data, char *buf, unsigned int *i)
 	char			c;
 
 	if (data->map.h.px)
-		ft_perror(ERR_DUP_TOPBOTTOM);
+		ft_perror(ERR_DUP_HALF);
 	if (data->map.h.px)
 		return (1);
 	if (!i)
-		return (load_img(mlx, TEX_DOOR, &data->map.h,
+		return (load_img(mlx, TEX_TOPBOTTOM, &data->map.h,
 				(t_dim){data->set.texsiz, data->set.texsiz / 2}));
 	*i += 2;
 	while (buf[*i] == ' ')

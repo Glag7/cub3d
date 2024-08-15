@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 19:06:14 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 19:30:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static int	check_textures(void *mlx, t_map *map, t_data *data)
 		ft_perror(ERR_MISS_FLOOR);
 	return (!map->f.px || !map->c.px || !map->n.px || !map->s.px
 		|| !map->w.px || !map->e.px
-		|| (!map->d.px && load_door(mlx, data, NULL, NULL)));
+		|| (!map->d.px && load_door(mlx, data, NULL, NULL))
+		|| (!map->h.px && load_topbottom(mlx, data, NULL, NULL))
+		|| (!map->g.px && load_glass(mlx, data, NULL, NULL)));
 }
 
 static char	*get_textures(t_data *data, void *mlx, t_map *map, char *buf)
@@ -69,7 +71,7 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		free(buf);
 		return (1);
 	}
-	data->map.map = malloc(data->map.hei * data->map.wid);
+	data->map.map = malloc(data->map.hei * data->map.wid * sizeof(*data->map.map));
 	if (data->map.map == NULL)
 	{
 		ft_perror(ERR_MALLOC);
