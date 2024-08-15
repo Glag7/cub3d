@@ -95,3 +95,10 @@ test edge case verre a cote d'un mur
 console
 
 TODO utiliser value pour choisir si barriere haut ou bas
+TODO value est en millieme de bloc
+
+enlever data->tmp
+faire draw flat bien
+fix YSIDE
+ajouter parsing verre what if  seul cote
+

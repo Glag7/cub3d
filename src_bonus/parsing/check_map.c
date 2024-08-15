@@ -6,13 +6,14 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/13 16:33:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:11:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "err.h"
 #include "utils.h"
+#include "point.h"
 
 static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
 {
@@ -30,18 +31,39 @@ static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES 
 {
 	unsigned int	size;
 	unsigned int	i;
+	t_ipoint	pos;
 
 	size = map->wid * map->hei;
 	i = 0;
 	while (i < size)
 	{
 		if (map->map[i] == '1')
-			map->map[i] = CUBE;//porte: horizontal ou vertical
-		else if (map->map[i] == 'G')//? + portes + les mettres dns les ennemis
-			map->map[i] = GLASS;
-		else
+			map->map[i] = CUBE;
+		else if (map->map[i] == ' ')
 			map->map[i] = 0;
-		i++;
+		//ennemis
+		++i;
+	}
+	i = 0;
+	pos = (t_ipoint){0, 0};
+	while (i < size)
+	{
+		if (map->map[i] == 'G')
+		{//use i + what if just 1
+			if (map->map[(x + 1) % data->map.wid + y * data->map.wid]
+				&& ((x > 0 && map->map[x - 1 + y * data->map.wid])
+					|| (data->map.map[(y + 1) % data->map.hei * data->map.wid])))
+				map->map[i] = XGLASS;
+			else
+				map->map[i] = YGLASS;
+		}
+		++i
+		++pos.x;
+		if (pos.x == data->map.wid)
+		{
+			pos.x -= data->map.wid;
+			++pos.y;
+		}
 	}
 }
 
