@@ -59,7 +59,7 @@ SRC_BONUS = main.c \
       $(PARSING)load.c \
       $(PARSING)load_walls.c \
       $(PARSING)load_floorceil.c \
-      $(PARSING)load_door.c \
+      $(PARSING)load_flat.c \
       $(PARSING)load_images.c \
       $(PARSING)load_bmp.c \
       $(PARSING)get_data.c \
@@ -75,7 +75,7 @@ SRC_BONUS = main.c \
       $(RENDER)raycast.c \
       $(RENDER)floor.c \
       $(RENDER)drawv.c \
-      $(RENDER)draw_glass.c \
+      $(RENDER)draw_flat.c \
       $(RENDER)minimap.c \
       $(MOVE)move.c \
       $(MOVE)move_angle.c
