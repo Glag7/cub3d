@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/09 17:42:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:44:08 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 static inline int	valid_char(char c)
 {
-	return (c == '0' || c == '1' || c == ' ' || c == 'X'
-		|| c == 'H' || c == 'V');
+	return (c == '0' || c == '1' || c == ' ' || c == 'X'//?
+		|| c == 'G' || c == 'D' || c == 'T' || c == 'B');
 }
 
 static inline int	parse_char(char *c, double x, double y, t_data *d)

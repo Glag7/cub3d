@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/14 18:45:37 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:58:11 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define VALUE		0b11111111111111111111111111100000
 # define VALUEOFF	5
 
-# define XSIDE		0b00000000000000000000000000010000
-# define XSIDE		0b00000000000000000000000000000000
+//# define XSIDE		0b00000000000000000000000000010000
+//# define YSIDE		0b00000000000000000000000000000000
 
 # define GLASS		0b00000000000000000000000000000100
 # define XGLASS		0b00000000000000000000000000010100
@@ -60,6 +60,8 @@ typedef struct s_map
 	t_img			f;
 	t_img			c;
 	t_img			d;
+	t_img			g;
+	t_img			h;
 }	t_map;
 
 void	free_map(t_map *map);
