@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 18:42:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:45:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
 	while (ray->len < (len + 1.))
 	{
-		ray->side = !(ray->dist.x < ray->dist.y);
+		ray->side = !(ray->dist.x < ray->dist.y) * YSIDE;
 		if (ray->side == XSIDE)
 		{
 			ray->ipos.x += ray->istep.x;

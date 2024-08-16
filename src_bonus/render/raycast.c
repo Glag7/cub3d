@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 19:21:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:46:41 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static inline void __attribute__((always_inline))
 {
 	while (!(ray->hit & CUBE) && ray->len < data->set.view)
 	{
-		ray->side = !(ray->dist.x < ray->dist.y);
+		ray->side = !(ray->dist.x < ray->dist.y) * YSIDE;
 		if (ray->side == XSIDE)
 		{
 			ray->ipos.x += ray->istep.x;
