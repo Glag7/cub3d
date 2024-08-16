@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 20:11:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:37:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
 		&& (!x || !y || x == map->wid - 1 || y == map->hei - 1
 			|| map->map[i + 1] == ' ' || map->map[i - 1] == ' '
 			|| map->map[i + map->wid] == ' '
-			|| map->map[i - map->wid] == ' '));
+			|| map->map[i - map->wid] == ' '));//+ ennemies
 }
 
 static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES ET VERRES (et clotures?)
@@ -39,12 +39,12 @@ static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES 
 	{
 		if (map->map[i] == '1')
 			map->map[i] = CUBE;
-		else if (map->map[i] == ' ')
+		else if (map->map[i] == ' ' || map->map[i] == '0')
 			map->map[i] = 0;
 		//ennemis
 		++i;
 	}
-	i = 0;
+	/*i = 0;
 	pos = (t_ipoint){0, 0};
 	while (i < size)
 	{
@@ -64,7 +64,7 @@ static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES 
 			pos.x -= data->map.wid;
 			++pos.y;
 		}
-	}
+	}*/
 }
 
 int	check_map(t_map *map)
