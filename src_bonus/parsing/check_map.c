@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/16 17:37:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:52:22 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES 
 			map->map[i] = CUBE;
 		else if (map->map[i] == ' ' || map->map[i] == '0')
 			map->map[i] = 0;
-		//ennemis
 		++i;
 	}
 	/*i = 0;
@@ -68,10 +67,11 @@ static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES 
 }
 
 int	check_map(t_map *map)
-{//TODO PORTES ET ENNEMIS
+{
 	unsigned int	x;
 	unsigned int	y;
 
+	//TODO put entities in sprites array
 	y = 0;
 	while (y < map->hei)
 	{
