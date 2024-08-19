@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/16 17:52:22 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:29:54 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,26 @@
 #include "utils.h"
 #include "point.h"
 
-static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
+//TODO test 0 en haut a gauche avec manda
+//TODO map infinie style laby
+static inline int	check_zero(t_map *map, int x, int y)
 {
-	unsigned int	i;
+/*	unsigned int	i;
 
 	i = map->wid * y + x;
 	return (map->map[i] == '0'
 		&& (!x || !y || x == map->wid - 1 || y == map->hei - 1
 			|| map->map[i + 1] == ' ' || map->map[i - 1] == ' '
 			|| map->map[i + map->wid] == ' '
-			|| map->map[i - map->wid] == ' '));//+ ennemies
+			|| map->map[i - map->wid] == ' '));*/
+	return (map->map[map->wid * y + x] == '0'
+		&& (map->map[map->wid * y + (x + 1) % map->wid] == ' '
+			|| map->map[map->wid * y + x - 1 + map->wid * !x] == ' '
+			|| map->map[map->wid * ((y + 1) % map->hei) + x] == ' '
+			|| map->map[map->wid * (y - 1 + map->hei * !y) + x] == ' '));
 }
 
-static void	replace_chars(t_map *map)//TODO FAIRE G ET D POUR PLACER LES PORTES ET VERRES (et clotures?)
+static void	replace_chars(t_map *map)//GDTP
 {
 	unsigned int	size;
 	unsigned int	i;
@@ -72,6 +79,7 @@ int	check_map(t_map *map)
 	unsigned int	y;
 
 	//TODO put entities in sprites array
+	//replace with 0
 	y = 0;
 	while (y < map->hei)
 	{

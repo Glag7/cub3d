@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/14 18:27:50 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/19 14:08:15 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 int	init_settings(t_set *set)
 {
-	set->wid = DEF_WID;
+	set->wid = DEF_WID * .5;
 	set->invwid = 1. / (double)(set->wid - 1);
-	set->hei = DEF_HEI;
+	set->hei = DEF_HEI * .5;
 	set->ncase = DEF_NCASE;
 	set_diameter(set, DEF_D);
 	set->xoffset = DEF_OFFSET;
