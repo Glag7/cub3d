@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:33:24 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/15 19:01:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:58:04 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	read_image(int fd, t_specs *specs, t_bmp_hdr *hdr)
 		return (1);
 	}
 	if (read(fd, null, hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info))
-		!= hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info))
+		!= (ssize_t)(hdr->img_offset - sizeof(t_bmp_hdr) - sizeof(t_bmp_info)))
 	{
 		free(null);
 		ft_perror(ERR_READ);
