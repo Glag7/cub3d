@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/16 17:40:33 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:51:58 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define SPEC		0b00000000000000000000000000001100
 //side to render spec
 # define SIDE		0b00000000000000000000000000010000
-//special value
+//special value (height in x/1000)
 # define VALUE		0b11111111111111111111111111100000
 # define VALUEOFF	5
 

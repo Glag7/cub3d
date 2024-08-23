@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/19 14:29:54 by glag             ###   ########.fr       */
+/*   Updated: 2024/08/23 17:01:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,8 @@
 #include "utils.h"
 #include "point.h"
 
-//TODO test 0 en haut a gauche avec manda
-//TODO map infinie style laby
 static inline int	check_zero(t_map *map, int x, int y)
 {
-/*	unsigned int	i;
-
-	i = map->wid * y + x;
-	return (map->map[i] == '0'
-		&& (!x || !y || x == map->wid - 1 || y == map->hei - 1
-			|| map->map[i + 1] == ' ' || map->map[i - 1] == ' '
-			|| map->map[i + map->wid] == ' '
-			|| map->map[i - map->wid] == ' '));*/
 	return (map->map[map->wid * y + x] == '0'
 		&& (map->map[map->wid * y + (x + 1) % map->wid] == ' '
 			|| map->map[map->wid * y + x - 1 + map->wid * !x] == ' '
@@ -34,7 +24,46 @@ static inline int	check_zero(t_map *map, int x, int y)
 			|| map->map[map->wid * (y - 1 + map->hei * !y) + x] == ' '));
 }
 
-static void	replace_chars(t_map *map)//GDTP
+//XXX check si case pas vide pour lien
+static inline int	checky(t_map *map, int x, int y)
+{
+	const int	xwalls = !!map->map[map->wid * y + (x + 1) % map->wid]
+			+ !!map->map[map->wid * y + x - 1 + map->wid * !x];
+	const int	ywalls = !!map->map[map->wid * ((y + 1) % map->hei) + x]
+			+ !!map->map[map->wid * (y - 1 + map->hei * !y) + x];
+
+	if (ywalls >= xwalls)
+		return (YSIDE);
+	return (XSIDE);
+}
+
+static void	replace_flat(t_map *map)
+{
+	unsigned int	x;
+	unsigned int	y;
+
+	y = 0;
+	while (y < map->hei)
+	{
+		x = 0;
+		while (x < map->wid)
+		{
+			if (map->map[map->wid * y + x] == 'G')
+				map->map[map->wid * y + x] = GLASS | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'D')
+				map->map[map->wid * y + x] = DOOR | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'T')
+				map->map[map->wid * y + x] = FENCE
+					| 500 << VALUEOFF | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'B')
+				map->map[map->wid * y + x] = FENCE | checky(map, x, y);
+			++x;
+		}
+		++y;
+	}
+}
+
+static void	replace_chars(t_map *map)
 {
 	unsigned int	size;
 	unsigned int	i;
@@ -50,27 +79,7 @@ static void	replace_chars(t_map *map)//GDTP
 			map->map[i] = 0;
 		++i;
 	}
-	/*i = 0;
-	pos = (t_ipoint){0, 0};
-	while (i < size)
-	{
-		if (map->map[i] == 'G')
-		{//use i + what if just 1
-			if (map->map[(x + 1) % data->map.wid + y * data->map.wid]
-				&& ((x > 0 && map->map[x - 1 + y * data->map.wid])
-					|| (data->map.map[(y + 1) % data->map.hei * data->map.wid])))
-				map->map[i] = XGLASS;
-			else
-				map->map[i] = YGLASS;
-		}
-		++i
-		++pos.x;
-		if (pos.x == data->map.wid)
-		{
-			pos.x -= data->map.wid;
-			++pos.y;
-		}
-	}*/
+	replace_flat(map);
 }
 
 int	check_map(t_map *map)
@@ -78,8 +87,7 @@ int	check_map(t_map *map)
 	unsigned int	x;
 	unsigned int	y;
 
-	//TODO put entities in sprites array
-	//replace with 0
+	//TODO put entities in sprites array, replace with '0'
 	y = 0;
 	while (y < map->hei)
 	{
