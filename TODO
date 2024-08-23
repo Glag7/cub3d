@@ -91,14 +91,9 @@ malloc nentities + more
 tout free a la fin
 slot reserve pour les bombas ?
 
-refactor nouveau systeme binaire
-
-test edge case verre a cote d'un mur
 console
 
 TODO utiliser value pour choisir si barriere haut ou bas
-TODO value est en millieme de bloc
 
 enlever data->tmp
 faire draw flat bien
-ajouter parsing verre what if  seul cote

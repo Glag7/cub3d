@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 19:09:01 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:06:12 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 static void	start_game(t_data *data)
 {
-	data->map.map[0 + 0 * data->map.wid] = GLASS;
 	load_img(data->mlx.mlx, "./assets/yavine2.bmp", &data->tmp, (t_dim){1024, 1024});
 
 	data->play.az = 0.;

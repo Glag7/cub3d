@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/16 17:45:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:32:05 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,50 @@ void	drawv3(t_data *data, t_ray *ray, size_t x)
 	}
 	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
+void	drawv4(t_data *data, t_ray *ray, size_t x)
+{
+	t_img			img;
+
+	/*if (ray->side == XSIDE && ray->vec.x <= 0.)
+	{
+		printf("how\n");
+		img = data->tmp;
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+	}
+	else if (ray->side == XSIDE)
+	{
+		printf("how\n");
+		img = data->tmp;
+		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
+				* (double)img.w);
+	}*/
+
+	if (ray->side == XSIDE && ray->vec.x <= 0.)
+	{
+		img = data->tmp;
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+	}
+	//else if (ray->side == XSIDE)
+	//{
+	//	img = data->tmp;
+	//	img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
+	//			* (double)img.w);
+	//}
+	else if (ray->vec.y <= 0.)
+	{
+		img = data->tmp;
+		//img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
+		//		* (double)img.w);
+		
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+	}
+	else
+	{
+		img = data->tmp;
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+	}
+	drawv2(data, img, x,( data->set.planwid / ray->len));
+}
 #include <math.h>
 #include "data.h"
 #include "render.h"
@@ -138,42 +182,68 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 			ray->ipos.y -= data->map.hei;
 			//test intersection y
 			//XXX < 0 tout ca tout ca
-		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & GLASS)
+		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SPEC)
 		{
 			t_ray ray3 = *ray;
 			t_ray *ray2 = &ray3;
 			ray2->pos.x += ray2->len * ray2->vec.x;//non copier
 			ray2->pos.y += ray2->len * ray2->vec.y;
 			t_point ogpos = ray2->pos;
-			
-			if (ray2->side == YSIDE)
+		
+			if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & YSIDE)
 			{
-				ray2->pos.y += .5 * (double)ray2->istep.y;
-				ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
+				if (ray2->side == YSIDE)
+				{
+					ray2->pos.x = .5 + floor(ray2->pos.x);
+					ray2->pos.y += (ray2->pos.x - ogpos.x) * (ray2->vec.y / ray2->vec.x);//inutile
+					//ray2->pos.x += .5 * (double)ray2->istep.x;
+					//ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
+				}
+			//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
+			//	{
+			//
+			//		break ;
+			//	}
+				else
+				{
+					ray2->pos.x += .5 * (double)ray2->istep.x;
+					ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
+					//ray2->pos.y = .5 + floor(ray2->pos.y);
+					//ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
+				}
+					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
+					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
+				if ( (int)floor(ogpos.y + 1.e-4 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
+				{
+					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+					drawv4(data, ray2, x);
+				}
 			}
-		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-		//	{
-                //
-		//		break ;
-		//	}
 			else
 			{
-				ray2->pos.y = .5 + floor(ray2->pos.y);
-				ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
-			}
-				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
-				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-			if ( (int)floor(ogpos.x + 1.e-4 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
-			{
-				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
-				drawv3(data, ray2, x);
-			}
-				if (x == data->set.wid / 2)
+				if (ray2->side == YSIDE)
 				{
-			printf("%f %f\n", ray2->pos.x, ray2->pos.y);
-				printf("%f\n", ray2->pos.y - floor(ray2->pos.y));
+					ray2->pos.y += .5 * (double)ray2->istep.y;
+					ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
 				}
-		//	break ;//nn
+			//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
+			//	{
+			//
+			//		break ;
+			//	}
+				else
+				{
+					ray2->pos.y = .5 + floor(ray2->pos.y);
+					ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
+				}
+					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
+					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
+				if ( (int)floor(ogpos.x + 1.e-4 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
+				{
+					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+					drawv3(data, ray2, x);
+				}
+			}
 		}
 	}
 }//XXX precision
