@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:53:05 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/14 18:24:12 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:45:12 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static inline uint32_t	get_color(t_data *data, int i, int j)
 		y = ((long long)data->map.hei * -y + y) % (long long)data->map.hei;
 	else if (y >= data->map.hei)
 		y %= (long long)data->map.hei;
-	if (data->map.map[(long long)(x + y * data->map.wid)] & GLASS)
+	if (data->map.map[(long long)(x + y * data->map.wid)] & SPEC)
 	{
 		if (xx > 0. && yy > 0. && xx < (double)(data->map.wid) && yy < (double)data->map.hei && !(data->tmp.px[(int)((xx - (double)x) * (double)data->tmp.w)
 				+ (int)floor((yy - (double)y) * (double)data->tmp.w) * data->tmp.w] & 0XF0000000))

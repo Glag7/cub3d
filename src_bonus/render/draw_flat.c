@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/23 17:32:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:53:58 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "data.h"
 #include "map.h"
 #include "ray.h"
+#include "render.h"
 
 static inline void __attribute__((always_inline))
 	init_ddata(t_data *data, t_draw *ddata, double hei, double inc)
@@ -42,7 +43,7 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 {
 	t_draw			ddata;
 	int				i;
-	const double	inc = 1. / hei * (double)img.w;
+	const double	inc = (1.) / hei * (double)img.w;
 
 	init_ddata(data, &ddata, hei, inc);
 	i = ddata.start;
@@ -144,17 +145,7 @@ void	drawv4(t_data *data, t_ray *ray, size_t x)
 	}
 	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
-#include <math.h>
-#include "data.h"
-#include "render.h"
-#include "map.h"
-#include "mlx.h"
-#include "utils.h"
-#include "point.h"
-#include "ray.h"
 
-//XXX changer nom
-//les coordonnees sont aramenees je crois
 void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
 	while (ray->len < (len + 1.))
@@ -213,7 +204,7 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 				}
 					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
 					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-				if ( (int)floor(ogpos.y + 1.e-4 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
+				if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
 				{
 					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
 					drawv4(data, ray2, x);
@@ -238,7 +229,7 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 				}
 					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
 					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-				if ( (int)floor(ogpos.x + 1.e-4 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
+				if ( (int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
 				{
 					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
 					drawv3(data, ray2, x);
@@ -248,7 +239,6 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 	}
 }//XXX precision
 
-//XXX change name
 void	draw_flat(t_data *data, t_ray *ray, size_t x)
 {
 	const double	len = ray->len;
@@ -258,29 +248,20 @@ void	draw_flat(t_data *data, t_ray *ray, size_t x)
 	else
 		ray->len *= data->set.coslen[x];
 	drawv(data, ray, x);
-	ray->pos.x += 1.e-6 * (double)ray->istep.x;//FIXME still weird if angle is perfect
+	ray->pos.x += 1.e-6 * (double)ray->istep.x;
 	ray->pos.y += 1.e-6 * (double)ray->istep.y;
 	ray->vec = (t_point){-ray->vec.x, -ray->vec.y};
-
 	ray->istep = (t_ipoint){-ray->istep.x, -ray->istep.y};
-		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
-		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
+	ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
+	ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
 	if (ray->vec.x < 0.)
-	{
 		ray->dist.x = (ray->pos.x - floor(ray->pos.x)) * ray->step.x;
-	}
 	else
-	{
 		ray->dist.x = (1.0 - ray->pos.x + floor(ray->pos.x)) * ray->step.x;
-	}
 	if (ray->vec.y < 0.)
-	{
 		ray->dist.y = (ray->pos.y - floor(ray->pos.y)) * ray->step.y;
-	}
 	else
-	{
 		ray->dist.y = (1.0 - ray->pos.y + floor(ray->pos.y)) * ray->step.y;
-	}
 	ray->hit = 0;
 	ray->len = 0.;
 	draw_sprites(ray, data, len, x);

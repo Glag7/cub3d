@@ -95,5 +95,7 @@ console
 
 TODO utiliser value pour choisir si barriere haut ou bas
 
+faire ouverture portes (commencer les interactions)
+	faire le raycast de longueur x qui peut casser ect
 enlever data->tmp
 faire draw flat bien
