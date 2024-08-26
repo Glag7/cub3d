@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/23 17:53:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:51:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,23 +146,93 @@ void	drawv4(t_data *data, t_ray *ray, size_t x)
 	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
 
-void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
+static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
+{
+		t_ray ray3 = *ray;
+		t_ray *ray2 = &ray3;
+		ray2->pos.x += ray2->len * ray2->vec.x;//non copier
+		ray2->pos.y += ray2->len * ray2->vec.y;
+		t_point ogpos = ray2->pos;
+	
+		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & YSIDE)
+		{
+			if (ray2->side == YSIDE)
+			{
+				ray2->pos.x = .5 + floor(ray2->pos.x);
+				ray2->pos.y += (ray2->pos.x - ogpos.x) * (ray2->vec.y / ray2->vec.x);//inutile
+				//ray2->pos.x += .5 * (double)ray2->istep.x;
+				//ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
+			}
+		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
+		//	{
+		//
+		//		break ;
+		//	}
+			else
+			{
+				ray2->pos.x += .5 * (double)ray2->istep.x;
+				ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
+				//ray2->pos.y = .5 + floor(ray2->pos.y);
+				//ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
+			}
+				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
+				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
+			if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
+			{
+				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+				drawv4(data, ray2, x);
+			}
+		}
+		else
+		{
+			if (ray2->side == YSIDE)
+			{
+				ray2->pos.y += .5 * (double)ray2->istep.y;
+				ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
+			}
+		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
+		//	{
+		//
+		//		break ;
+		//	}
+			else
+			{
+				ray2->pos.y = .5 + floor(ray2->pos.y);
+				ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
+			}
+				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
+				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
+			if ( (int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
+			{
+				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
+				drawv3(data, ray2, x);
+			}
+		}
+}
+
+static inline __attribute__((always_inline)) void
+	update_ray(t_ray *ray)
+{
+	if (ray->side == XSIDE)
+	{
+		ray->ipos.x += ray->istep.x;
+		ray->len = ray->dist.x;
+		ray->dist.x += ray->step.x;
+	}
+	else
+	{
+		ray->ipos.y += ray->istep.y;
+		ray->len = ray->dist.y;
+		ray->dist.y += ray->step.y;
+	}
+}
+
+static void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 {
 	while (ray->len < (len + 1.))
 	{
 		ray->side = !(ray->dist.x < ray->dist.y) * YSIDE;
-		if (ray->side == XSIDE)
-		{
-			ray->ipos.x += ray->istep.x;
-			ray->len = ray->dist.x;
-			ray->dist.x += ray->step.x;
-		}
-		else
-		{
-			ray->ipos.y += ray->istep.y;
-			ray->len = ray->dist.y;
-			ray->dist.y += ray->step.y;
-		}
+		update_ray(ray);
 		if (ray->ipos.x < 0)
 			ray->ipos.x += data->map.wid;
 		else if (ray->ipos.x >= data->map.wid)
@@ -171,73 +241,10 @@ void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-			//test intersection y
-			//XXX < 0 tout ca tout ca
 		if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SPEC)
-		{
-			t_ray ray3 = *ray;
-			t_ray *ray2 = &ray3;
-			ray2->pos.x += ray2->len * ray2->vec.x;//non copier
-			ray2->pos.y += ray2->len * ray2->vec.y;
-			t_point ogpos = ray2->pos;
-		
-			if (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & YSIDE)
-			{
-				if (ray2->side == YSIDE)
-				{
-					ray2->pos.x = .5 + floor(ray2->pos.x);
-					ray2->pos.y += (ray2->pos.x - ogpos.x) * (ray2->vec.y / ray2->vec.x);//inutile
-					//ray2->pos.x += .5 * (double)ray2->istep.x;
-					//ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
-				}
-			//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-			//	{
-			//
-			//		break ;
-			//	}
-				else
-				{
-					ray2->pos.x += .5 * (double)ray2->istep.x;
-					ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
-					//ray2->pos.y = .5 + floor(ray2->pos.y);
-					//ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
-				}
-					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
-					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-				if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
-				{
-					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
-					drawv4(data, ray2, x);
-				}
-			}
-			else
-			{
-				if (ray2->side == YSIDE)
-				{
-					ray2->pos.y += .5 * (double)ray2->istep.y;
-					ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
-				}
-			//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-			//	{
-			//
-			//		break ;
-			//	}
-				else
-				{
-					ray2->pos.y = .5 + floor(ray2->pos.y);
-					ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
-				}
-					double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
-					ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-				if ( (int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
-				{
-					//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
-					drawv3(data, ray2, x);
-				}
-			}
-		}
+			find_sprite(ray, data, len, x);
 	}
-}//XXX precision
+}
 
 void	draw_flat(t_data *data, t_ray *ray, size_t x)
 {
