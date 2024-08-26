@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 17:53:46 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:12:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,57 +148,56 @@ void	drawv4(t_data *data, t_ray *ray, size_t x)
 
 static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 {
-	const int	mapside = (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SIDE);
-	t_point		pos;
-	t_point		vec;
-	t_ipoint	istep;
+	t_ray	fray;
+	t_point ogpos;
 
-	t_ray ray3 = *ray;
-	t_ray *ray2 = &ray3;
-	ray2->pos.x += ray2->len * ray2->vec.x;//non copier
-	ray2->pos.y += ray2->len * ray2->vec.y;
-	t_point ogpos = ray2->pos;
-
-	if (mapside == YSIDE)
+	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SIDE;
+	if (fray.side == YSIDE)
 	{
-		pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
+		fray.pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
 			ray->pos.y + ray->len * ray->vec.y};
-		pos = ray2->pos;
-		vec = ray->vec;
-		istep = ray->istep;
+		fray.vec = ray->vec;
+		fray.istep = ray->istep;
 	}
 	else
-	{//ogpos
-		pos = (t_point){ray->pos.y + ray->len * ray->vec.y,
+	{
+		fray.pos = (t_point){ray->pos.y + ray->len * ray->vec.y,
 			ray->pos.x + ray->len * ray->vec.x};
-		vec = (t_point){ray->vec.y, ray->vec.x};
-		istep = (t_ipoint){ray->istep.y, ray->istep.x};
+		fray.vec = (t_point){ray->vec.y, ray->vec.x};
+		fray.istep = (t_ipoint){ray->istep.y, ray->istep.x};
 	}
-	if (mapside ^ ray->side)
+	ogpos = fray.pos;
+	if (fray.side ^ ray->side)
 	{
-		pos.x += .5 * (double)istep.x;
-		pos.y += .5 * vec.y / vec.x * (double)istep.x;//inutile ?
+		fray.pos.x += .5 * (double)fray.istep.x;
+		fray.pos.y += .5 * fray.vec.y / fray.vec.x * (double)fray.istep.x;//inutile ?
 	}
 	else
-	{
-		double yes = pos.x;
-		pos.x = .5 + floor(pos.x);
-		pos.y += (pos.x - yes) * (vec.y / vec.x);//inutile
+	{//-parentheses
+		fray.pos.x = .5 + floor(fray.pos.x);
+		fray.pos.y += (fray.pos.x - ogpos.x) * (fray.vec.y / fray.vec.x);//inutile
 	}
 
-	if (mapside == YSIDE)
-		ray2->pos = pos;	
-	else
-		ray2->pos = (t_point){pos.y, pos.x};
-	double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
-	ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
-	if (mapside == YSIDE)
-	{
-		 if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
-			drawv4(data, ray2, x);
+	double increase = sqrt((fray.pos.x - ogpos.x) * (fray.pos.x - ogpos.x) +(fray.pos.y - ogpos.y) * (fray.pos.y - ogpos.y));
+	fray.len = (len - increase - ray->len) * data->set.coslen[x];
+	if (fray.side == YSIDE)
+	{//use fray
+		 if ( (int)floor(ogpos.y + 1.e-6 * (double)ray->istep.y) == (int)floor(fray.pos.y))
+			drawv4(data, &fray, x);
 	}
-	else if ((int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
-			drawv3(data, ray2, x);
+	else 	{
+		//monki flip
+		t_point	tmp;
+		t_ipoint	itmp;
+		tmp = (t_point){fray.pos.y, fray.pos.x};
+		fray.pos = tmp;
+		tmp = (t_point){fray.vec.y, fray.vec.x};
+		fray.vec = tmp;
+		itmp = (t_ipoint){fray.istep.y, fray.istep.x};
+		fray.istep = itmp;
+		if ((int)floor(ogpos.y + 1.e-6 * (double)ray->istep.x) == (int)floor(fray.pos.x))
+			drawv3(data, &fray, x);
+	}
 }
 
 static inline __attribute__((always_inline)) void
