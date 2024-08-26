@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 17:42:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:53:46 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,64 +161,30 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 
 	if (mapside == YSIDE)
 	{
+		pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
+			ray->pos.y + ray->len * ray->vec.y};
 		pos = ray2->pos;
 		vec = ray->vec;
 		istep = ray->istep;
 	}
 	else
 	{//ogpos
-		pos = (t_point){ray2->pos.y, ray2->pos.x};
-		vec = (t_point){ray2->vec.y, ray2->vec.x};
-		istep = (t_ipoint){ray2->istep.y, ray2->istep.x};
+		pos = (t_point){ray->pos.y + ray->len * ray->vec.y,
+			ray->pos.x + ray->len * ray->vec.x};
+		vec = (t_point){ray->vec.y, ray->vec.x};
+		istep = (t_ipoint){ray->istep.y, ray->istep.x};
 	}
 	if (mapside ^ ray->side)
 	{
 		pos.x += .5 * (double)istep.x;
 		pos.y += .5 * vec.y / vec.x * (double)istep.x;//inutile ?
 	}
-//	else if (pos.y - floor(pos.y) > .5)
-//		break ;
 	else
 	{
 		double yes = pos.x;
 		pos.x = .5 + floor(pos.x);
 		pos.y += (pos.x - yes) * (vec.y / vec.x);//inutile
 	}
-	
-	/*if (mapside == YSIDE)
-	{
-
-
-		if (ray2->side == YSIDE)
-		{
-			ray2->pos.x = .5 + floor(ray2->pos.x);
-			ray2->pos.y += (ray2->pos.x - ogpos.x) * (ray2->vec.y / ray2->vec.x);//inutile
-		}
-	//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-	//		break ;
-		else
-		{
-			ray2->pos.x += .5 * (double)ray2->istep.x;
-			ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
-		}
-	}
-	else
-	{
-		
-		if (ray2->side == YSIDE)
-		{
-			ray2->pos.y += .5 * (double)ray2->istep.y;
-			ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
-		}
-	//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-	//		break ;
-		else
-		{
-			ray2->pos.y = .5 + floor(ray2->pos.y);
-			ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
-		}
-	}*/
-	
 
 	if (mapside == YSIDE)
 		ray2->pos = pos;	
