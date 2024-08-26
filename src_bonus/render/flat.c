@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 19:29:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:03:49 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,17 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
 	}
 }
 
-//FIXME LES COOS ENTIERES SONT BAISEES, rapport avec le cos
-void	drawv3(t_data *data, t_ray *ray, size_t x)
-{
-	t_img			img;
-
-	if (ray->side == XSIDE)
-	{
-		img = data->tmp;
-		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
-	}
-	drawv2(data, img, x,( data->set.planwid / ray->len));
-}
 void	drawv4(t_data *data, t_ray *ray, size_t x)
 {
 	t_img			img;
 
-	if (ray->side == YSIDE)//yes
-	{
-		img = data->tmp;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
-	}
+	if ((ray->side & SPEC) == DOOR)
+		img = data->map.d;
+	else if ((ray->side & SPEC) == GLASS)
+		img = data->map.g;
 	else
-	{
-		img = data->tmp;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
-	}
+		img = data->map.h;
+	img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
 	drawv2(data, img, x,( data->set.planwid / ray->len));
 }
 
@@ -91,7 +76,7 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 	t_point ogpos;
 	double	increase;
 
-	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SIDE;
+	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SIDE;//huh
 	if (fray.side == YSIDE)
 	{
 		fray.pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
@@ -117,26 +102,9 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 	}
 	increase = sqrt((fray.pos.x - ogpos.x) * (fray.pos.x - ogpos.x) +(fray.pos.y - ogpos.y) * (fray.pos.y - ogpos.y));
 	fray.len = (len - increase - ray->len) * data->set.coslen[x];
-	
-	if (1 || fray.side == YSIDE)
-	{//use fray
-		 
-		if ( (int)floor(ogpos.y + 1.e-6 * (double)ray->istep.y) == (int)floor(fray.pos.y))
-			drawv4(data, &fray, x);
-	}
-	else 	{
-		//monki flip
-		t_point	tmp;
-		t_ipoint	itmp;
-		tmp = (t_point){fray.pos.y, fray.pos.x};
-		fray.pos = tmp;
-		tmp = (t_point){fray.vec.y, fray.vec.x};
-		fray.vec = tmp;
-		itmp = (t_ipoint){fray.istep.y, fray.istep.x};
-		fray.istep = itmp;// use x OR y
-		if ((int)floor(ogpos.y + 1.e-6 * (double)ray->istep.x) == (int)floor(fray.pos.x))
-			drawv3(data, &fray, x);
-	}
+	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
+	if ( (int)floor(ogpos.y + 1.e-6 * (double)fray.istep.y) == (int)floor(fray.pos.y))
+		drawv4(data, &fray, x);
 }
 
 static inline __attribute__((always_inline)) void

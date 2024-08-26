@@ -93,6 +93,8 @@ slot reserve pour les bombas ?
 
 console
 
+minimap 10% de la case trait
+
 TODO utiliser value pour choisir si barriere haut ou bas
 
 dessiner les entites avant les flat
@@ -116,3 +118,4 @@ portes s'ouvrent vers le cote
 tout dessiner apres
 faire draw flat biein
 draw_flat.c !!
+tout dessiner apres, liste
