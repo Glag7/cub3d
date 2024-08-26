@@ -73,6 +73,7 @@ SRC_BONUS = main.c \
       $(HOOKS)win.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
+      $(RENDER)flat.c \
       $(RENDER)floor.c \
       $(RENDER)drawv.c \
       $(RENDER)draw_flat.c \

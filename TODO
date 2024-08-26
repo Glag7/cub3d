@@ -95,8 +95,24 @@ console
 
 TODO utiliser value pour choisir si barriere haut ou bas
 
+dessiner les entites avant les flat
+comment pas dessiner par dessus ?
+tableau 2 avec toutes les len...
+faire une ligne pout toutes les len des blocs
+puis un tableau pour les entites
+puis pas dessiner les flat si la longueur est moindre
+mais du coup si on fait ca on peut tirer le rayon dans le bon sens ->refactor
+ou pas d'entites
+MIEUX
+tout foutre dans une liste, flats et entites, puis les dessiner a la fin
+oui c mieux
+garder le debut et la fin sur l'ecran, le debut sur l'image, et l'incrementation dans les 2 cas
+malloc de taille (view + nentite + 1)
+
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
 enlever data->tmp
-faire draw flat biein
 portes s'ouvrent vers le cote
+tout dessiner apres
+faire draw flat biein
+draw_flat.c !!

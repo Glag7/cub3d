@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 17:35:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:25:10 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 static void	start_game(t_data *data)
 {
-	load_img(data->mlx.mlx, "./assets/yavine2.bmp", &data->tmp, (t_dim){1024, 1024});
+	load_img(data->mlx.mlx, "./assets/core/door.bmp", &data->tmp, (t_dim){1024, 1024});
 
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
