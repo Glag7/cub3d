@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 17:20:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:42:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 		istep = ray->istep;
 	}
 	else
-	{
+	{//ogpos
 		pos = (t_point){ray2->pos.y, ray2->pos.x};
 		vec = (t_point){ray2->vec.y, ray2->vec.x};
 		istep = (t_ipoint){ray2->istep.y, ray2->istep.x};
@@ -180,8 +180,9 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 //		break ;
 	else
 	{
+		double yes = pos.x;
 		pos.x = .5 + floor(pos.x);
-		pos.y += (pos.x - ogpos.x) * (vec.y / vec.x);//inutile
+		pos.y += (pos.x - yes) * (vec.y / vec.x);//inutile
 	}
 	
 	/*if (mapside == YSIDE)
@@ -230,7 +231,7 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 		 if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
 			drawv4(data, ray2, x);
 	}
-	else if ( (int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
+	else if ((int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
 			drawv3(data, ray2, x);
 }
 
