@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/26 16:51:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:56:07 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,28 +160,18 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 			{
 				ray2->pos.x = .5 + floor(ray2->pos.x);
 				ray2->pos.y += (ray2->pos.x - ogpos.x) * (ray2->vec.y / ray2->vec.x);//inutile
-				//ray2->pos.x += .5 * (double)ray2->istep.x;
-				//ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
 			}
 		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-		//	{
-		//
 		//		break ;
-		//	}
 			else
 			{
 				ray2->pos.x += .5 * (double)ray2->istep.x;
 				ray2->pos.y += .5 * ray2->vec.y / ray2->vec.x * (double)ray2->istep.x;//inutile ?
-				//ray2->pos.y = .5 + floor(ray2->pos.y);
-				//ray2->pos.x += (ray2->pos.y - ogpos.y) * (ray2->vec.x / ray2->vec.y);//inutile
 			}
 				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
 				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
 			if ( (int)floor(ogpos.y + 1.e-6 * (double)ray2->istep.y) == (int)floor(ray2->pos.y))
-			{
-				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
 				drawv4(data, ray2, x);
-			}
 		}
 		else
 		{
@@ -191,10 +181,7 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 				ray2->pos.x += .5 * ray2->vec.x / ray2->vec.y * (double)ray2->istep.y;//inutile ?
 			}
 		//	else if (ray2->pos.y - floor(ray2->pos.y) > .5)
-		//	{
-		//
 		//		break ;
-		//	}
 			else
 			{
 				ray2->pos.y = .5 + floor(ray2->pos.y);
@@ -203,10 +190,7 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 				double increase = sqrt((ray2->pos.x - ogpos.x) * (ray2->pos.x - ogpos.x) +(ray2->pos.y - ogpos.y) * (ray2->pos.y - ogpos.y));
 				ray2->len = (len - increase - ray2->len) * data->set.coslen[x];
 			if ( (int)floor(ogpos.x + 1.e-6 * (double)ray2->istep.x) == (int)floor(ray2->pos.x))
-			{
-				//printf("%f %f\n", ray2->pos.x, ray2->pos.y);
 				drawv3(data, ray2, x);
-			}
 		}
 }
 
