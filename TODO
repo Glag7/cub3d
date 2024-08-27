@@ -112,6 +112,7 @@ garder le debut et la fin sur l'ecran, le debut sur l'image, et l'incrementation
 malloc de taille (view + nentite + 1)
 faire un tableau avec le type de toutes les colonnes ? sus
 ou alors intersection
+XXX au moment de dessiner si ligne du milieu fonction speciale qui stocke quel type de pixel est le milieu
 
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
