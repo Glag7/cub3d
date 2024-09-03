@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 16:50:18 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:00:46 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static inline void __attribute__((always_inline))
 	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
 	ddata->index = 0.;
 	ddata->ypx = data->px.y;
-	if (ddata->start < 0.)
+	if (ddata->start < 0)
 	{
 		ddata->index = (double)-ddata->start * inc;
-		ddata->start = 0.;
+		ddata->start = 0;
 	}
 	else if (ddata->start >= (int)data->set.hei)
 		ddata->start = data->set.hei;

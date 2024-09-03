@@ -122,8 +122,4 @@ XXX au moment de dessiner si ligne du milieu fonction speciale qui stocke quel t
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
 enlever data->tmp
-portes s'ouvrent vers le cote
-tout dessiner apres
-faire draw flat biein
-draw_flat.c !!
-changer les hauteurs ?
+portes s'ouvrent vers le cote ?
