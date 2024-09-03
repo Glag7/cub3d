@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 16:59:16 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:13:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, uint32_t
 		+ hei * data->play.z
 		- ((mdata & SPEC) == FENCE) * hei * ((double)((mdata & VALUE) >> VALUEOFF) / 500. - .5);
 
-	printf("%f\n", zoffset);
 	ddata.start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
 	ddata.end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
 	ddata.index = 0.;
@@ -58,7 +57,9 @@ static void	drawv4(t_data *data, t_ray *ray, size_t x)
 	if ((ray->side & SPEC) == DOOR)
 	{
 		img = data->map.d;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);//value
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y) + (double)((ray->side & VALUE) >> VALUEOFF) / 500.) * (double)img.w);//value
+		if ((ray->pos.y - floor(ray->pos.y) + (double)((ray->side & VALUE) >> VALUEOFF) / 500.) > 1.0)
+			return ;
 	}
 	else if ((ray->side & SPEC) == GLASS)
 	{
