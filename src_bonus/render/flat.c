@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:27:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:41:57 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ static void	draw_sprites(t_ray *ray, t_data *data, double len, size_t x)
 	}
 }
 
-void	draw_flat(t_data *data, t_ray *ray, size_t x)
+void	raycast_flat(t_data *data, t_ray *ray, size_t x)
 {
 	const double	len = ray->len;
 

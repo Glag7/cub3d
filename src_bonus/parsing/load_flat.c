@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:03:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/15 18:40:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:45:05 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	load_topbottom(void *mlx, t_data *data, char *buf, unsigned int *i)
 	c = buf[j];
 	buf[j] = 0;
 	if (load_img(mlx, buf + *i, &data->map.h,
-			(t_dim){data->set.texsiz, data->set.texsiz}))
+			(t_dim){data->set.texsiz, data->set.texsiz / 2}))
 		return (1);
 	buf[j] = c;
 	*i = j;

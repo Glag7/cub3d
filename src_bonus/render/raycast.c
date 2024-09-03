@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/16 17:46:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:42:28 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	ray.pos.x += ray.len * ray.vec.x;
 	ray.pos.y += ray.len * ray.vec.y;
 	if (ray.hit & SPEC)
-		draw_flat(data, &ray, x);
+		raycast_flat(data, &ray, x);
 	else
 	{
 		if (ray.len > data->set.view)
