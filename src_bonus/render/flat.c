@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:41:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:09:52 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,85 +18,36 @@
 #include "ray.h"
 #include "render.h"
 
-static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, uint32_t mdata)
+static inline __attribute__((always_inline)) void
+	init_fray(t_data *data, t_ray *fray, t_ray *ray)
 {
-	t_draw			ddata;
-	int				i;
-	const double	inc = (1.) / hei * (double)img.h;
-	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
-		+ hei * data->play.z
-		- ((mdata & SPEC) == FENCE) * hei * ((double)((mdata & VALUE) >> VALUEOFF) / VALUEONE - .5);
-
-	ddata.start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
-	ddata.end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
-	ddata.index = 0.;
-	ddata.ypx = data->px.y;
-	if (ddata.start < 0.)
+	fray->side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
+	if ((fray->side & SIDE) == YSIDE)
 	{
-		ddata.index = (double)-ddata.start * inc;
-		ddata.start = 0.;
-	}
-	else if (ddata.start >= (int)data->set.hei)
-		ddata.start = data->set.hei;
-	if (ddata.end >= (int)data->set.hei)
-		ddata.end = data->set.hei;
-	i = ddata.start;
-	while (i < ddata.end)
-	{
-		if (img.px[(int)ddata.index * img.w]& 0XF0000000)//
-			data->mlx.px[x + i *data->set.wid] = img.px[(int)ddata.index * img.w];
-		++i;
-		ddata.index += inc;
-	}
-}
-
-static void	drawv4(t_data *data, t_ray *ray, size_t x)
-{
-	t_img			img;
-
-	if ((ray->side & SPEC) == DOOR)
-	{
-		img = data->map.d;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y) + (double)((ray->side & VALUE) >> VALUEOFF) / 500.) * (double)img.w);//value
-		if ((ray->pos.y - floor(ray->pos.y) + (double)((ray->side & VALUE) >> VALUEOFF) / 500.) > 1.0)
-			return ;
-	}
-	else if ((ray->side & SPEC) == GLASS)
-	{
-		img = data->map.g;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+		fray->pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
+			ray->pos.y + ray->len * ray->vec.y};
+		fray->vec = ray->vec;
+		fray->istep = ray->istep;
 	}
 	else
 	{
-		img = data->map.h;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
+		fray->pos = (t_point){ray->pos.y + ray->len * ray->vec.y,
+			ray->pos.x + ray->len * ray->vec.x};
+		fray->vec = (t_point){ray->vec.y, ray->vec.x};
+		fray->istep = (t_ipoint){ray->istep.y, ray->istep.x};
 	}
-	drawv2(data, img, x,( data->set.planwid / ray->len) * img.h / img.w, ray->side);
 }
 
 static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 {
 	t_ray	fray;
-	t_point ogpos;
+	t_point	ogpos;
+	t_point	inc;
 	double	increase;
 
-	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x] & SIDE;//huh
-	if (fray.side == YSIDE)
-	{
-		fray.pos = (t_point){ray->pos.x + ray->len * ray->vec.x,
-			ray->pos.y + ray->len * ray->vec.y};
-		fray.vec = ray->vec;
-		fray.istep = ray->istep;
-	}
-	else
-	{
-		fray.pos = (t_point){ray->pos.y + ray->len * ray->vec.y,
-			ray->pos.x + ray->len * ray->vec.x};
-		fray.vec = (t_point){ray->vec.y, ray->vec.x};
-		fray.istep = (t_ipoint){ray->istep.y, ray->istep.x};
-	}
+	init_fray(data, &fray, ray);
 	ogpos = fray.pos;
-	if (fray.side ^ ray->side)
+	if ((fray.side & SIDE) ^ ray->side)
 		fray.pos = (t_point){fray.pos.x + .5 * (double)fray.istep.x,
 			fray.pos.y + .5 * fray.vec.y / fray.vec.x * (double)fray.istep.x};
 	else
@@ -104,11 +55,12 @@ static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)
 		fray.pos.x = .5 + floor(fray.pos.x);
 		fray.pos.y += (fray.pos.x - ogpos.x) * (fray.vec.y / fray.vec.x);
 	}
-	increase = sqrt((fray.pos.x - ogpos.x) * (fray.pos.x - ogpos.x) +(fray.pos.y - ogpos.y) * (fray.pos.y - ogpos.y));
+	inc = (t_point){fray.pos.x - ogpos.x, fray.pos.y - ogpos.y};
+	increase = sqrt(inc.x * inc.x + inc.y * inc.y);
 	fray.len = (len - increase - ray->len) * data->set.coslen[x];
-	fray.side = data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
-	if ( (int)floor(ogpos.y + 1.e-6 * (double)fray.istep.y) == (int)floor(fray.pos.y))
-		drawv4(data, &fray, x);
+	if ((int)floor(ogpos.y + 1.e-6 * (double)fray.istep.y)
+		== (int)floor(fray.pos.y))
+		draw_flat(data, &fray, x);
 }
 
 static inline __attribute__((always_inline)) void
