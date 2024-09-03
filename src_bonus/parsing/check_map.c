@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:25:06 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:31:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static inline int	check_zero(t_map *map, int x, int y)
 static inline int	checky(t_map *map, int x, int y)
 {
 	const int	xwalls = !!map->map[map->wid * y + (x + 1) % map->wid]
-			+ !!map->map[map->wid * y + x - 1 + map->wid * !x];
+		+ !!map->map[map->wid * y + x - 1 + map->wid * !x];
 	const int	ywalls = !!map->map[map->wid * ((y + 1) % map->hei) + x]
-			+ !!map->map[map->wid * (y - 1 + map->hei * !y) + x];
+		+ !!map->map[map->wid * (y - 1 + map->hei * !y) + x];
 
 	if (ywalls >= xwalls)
 		return (YSIDE);

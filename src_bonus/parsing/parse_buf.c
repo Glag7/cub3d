@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/23 16:57:51 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:31:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		free(buf);
 		return (1);
 	}
-	data->map.map = malloc(data->map.hei * data->map.wid * sizeof(*data->map.map));
+	data->map.map = malloc(data->map.hei * data->map.wid
+			* sizeof(*data->map.map));
 	if (data->map.map == NULL)
 	{
 		ft_perror(ERR_MALLOC);
