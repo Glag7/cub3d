@@ -121,5 +121,4 @@ XXX au moment de dessiner si ligne du milieu fonction speciale qui stocke quel t
 
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
-enlever data->tmp
-portes s'ouvrent vers le cote ?
+garder ce qui est sur les pixels du milieu et la distance !!!!!
