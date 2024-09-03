@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 18:50:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:23:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	replace_flat(t_map *map)
 			if (map->map[map->wid * y + x] == 'G')
 				map->map[map->wid * y + x] = GLASS | checky(map, x, y);
 			else if (map->map[map->wid * y + x] == 'D')
-				map->map[map->wid * y + x] = DOOR | checky(map, x, y) | 32000 << VALUEOFF;
+				map->map[map->wid * y + x] = DOOR | checky(map, x, y);
 			else if (map->map[map->wid * y + x] == 'T')
 				map->map[map->wid * y + x] = FENCE
 					| VALUEONE << VALUEOFF | checky(map, x, y);
