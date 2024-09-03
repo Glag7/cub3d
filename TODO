@@ -84,6 +84,7 @@ check des bonnes valeurs
 
 opti puis multithreading
 
+petit antialiasing
 
 
 parsing ennemis
@@ -94,6 +95,8 @@ slot reserve pour les bombas ?
 console
 
 minimap 10% de la case trait
+
+pistolet avec animation pour tirer
 
 TODO utiliser value pour choisir si barriere haut ou bas
 
