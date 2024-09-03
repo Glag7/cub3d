@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:14:18 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:25:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	replace_flat(t_map *map)
 				map->map[map->wid * y + x] = DOOR | checky(map, x, y);
 			else if (map->map[map->wid * y + x] == 'T')
 				map->map[map->wid * y + x] = FENCE
-					| 500 << VALUEOFF | checky(map, x, y);
+					| VALUEONE << VALUEOFF | checky(map, x, y);
 			else if (map->map[map->wid * y + x] == 'B')
 				map->map[map->wid * y + x] = FENCE | checky(map, x, y);
 			++x;
@@ -85,7 +85,6 @@ int	check_map(t_map *map)
 	unsigned int	x;
 	unsigned int	y;
 
-	//TODO put entities in sprites array, replace with '0'
 	y = 0;
 	while (y < map->hei)
 	{

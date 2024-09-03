@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:13:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:27:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, uint32_t
 	const double	inc = (1.) / hei * (double)img.h;
 	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
 		+ hei * data->play.z
-		- ((mdata & SPEC) == FENCE) * hei * ((double)((mdata & VALUE) >> VALUEOFF) / 500. - .5);
+		- ((mdata & SPEC) == FENCE) * hei * ((double)((mdata & VALUE) >> VALUEOFF) / VALUEONE - .5);
 
 	ddata.start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
 	ddata.end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;

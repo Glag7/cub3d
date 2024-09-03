@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 16:28:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:24:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 //special value (height in x/1000)
 # define VALUE		0b11111111111111111111111110000000
 # define VALUEOFF	7
+# define VALUEONE	65536
 
 # define YSIDE		0b00000000000000000000000000010000
 # define XSIDE		0b00000000000000000000000000000000
