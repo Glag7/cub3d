@@ -82,6 +82,8 @@ fichier binaire settings
 export du fichier
 check des bonnes valeurs
 
+garder la hauteur dessinee et faire une explosion de la taille
+
 opti puis multithreading
 
 minimap deborde ecran
@@ -98,29 +100,8 @@ console
 
 minimap 10% de la case trait
 
-pistolet avec animation pour tirer
-
 TODO utiliser value pour choisir si barriere haut ou bas
 alignement settings
-
-dessiner les entites avant les flat
-comment pas dessiner par dessus ?
-tableau 2 avec toutes les len...
-faire une ligne pout toutes les len des blocs
-puis un tableau pour les entites
-puis pas dessiner les flat si la longueur est moindre
-mais du coup si on fait ca on peut tirer le rayon dans le bon sens ->refactor
-ou pas d'entites
-MIEUX
-tout foutre dans une liste, flats et entites, puis les dessiner a la fin
-oui c mieux
-garder le debut et la fin sur l'ecran, le debut sur l'image, et l'incrementation dans les 2 cas
-malloc de taille (view + nentite + 1)
-faire un tableau avec le type de toutes les colonnes ? sus
-ou alors intersection
-XXX au moment de dessiner si ligne du milieu fonction speciale qui stocke quel type de pixel est le milieu
-
-//TODO put entities in sprites array, replace with '0'
 
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect

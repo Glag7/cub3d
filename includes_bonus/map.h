@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 16:49:30 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:42:40 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct	s_anim
 {
 	uint32_t	cur;
 	uint32_t	max;
+	double		time;
 	t_img		frames[MAXANIM];
 }	t_anim;
 

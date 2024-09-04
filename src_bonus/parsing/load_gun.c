@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 16:55:16 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:23:51 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:46:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	load_gun(t_data *data)
 {
 	data->map.gun.max = 8;
-	data->map.gun.cur = 0;
+	data->map.gun.time = .2;
 	if (load_img(data->mlx.mlx, TEX_GUN1, data->map.gun.frames + 0,
 			(t_dim){data->set.texsiz, data->set.texsiz}))
 		return (1);
