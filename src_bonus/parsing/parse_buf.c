@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 17:57:20 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:31:25 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:55:05 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parse_buf(void *mlx, t_data *data, char *buf, size_t size)
 		ft_perror(ERR_TOOLARGE);
 	else
 		start = get_textures(data, mlx, &data->map, buf);
-	if (start == NULL || get_data(start, data))
+	if (start == NULL || get_data(start, data) || load_gun(data))
 	{
 		free_map(&data->map);
 		free(buf);

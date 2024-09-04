@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:24:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 16:49:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ typedef struct s_img
 	size_t		h;
 }	t_img;
 
+# define MAXANIM 16
+
+typedef struct	s_anim
+{
+	uint32_t	cur;
+	uint32_t	max;
+	t_img		frames[MAXANIM];
+}	t_anim;
+
 typedef struct s_map
 {
 	uint32_t	*map;
@@ -77,6 +86,7 @@ typedef struct s_map
 		};
 		t_img	flat[3];
 	};
+	t_anim			gun;
 }	t_map;
 
 void	free_map(t_map *map);

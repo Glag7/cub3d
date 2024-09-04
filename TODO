@@ -99,6 +99,7 @@ minimap 10% de la case trait
 pistolet avec animation pour tirer
 
 TODO utiliser value pour choisir si barriere haut ou bas
+alignement settings
 
 dessiner les entites avant les flat
 comment pas dessiner par dessus ?
@@ -122,3 +123,5 @@ XXX au moment de dessiner si ligne du milieu fonction speciale qui stocke quel t
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
 garder ce qui est sur les pixels du milieu et la distance !!!!!
+
+settings taille map
