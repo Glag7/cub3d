@@ -65,16 +65,6 @@ test render distance
 test texture nord llignes sus
 graph temps
 
-ENNEMI
-derriere ?
-2 frames marcher
-2 frames alerte
-2 frames piou
-2 frames mort
-sensi en fonction du fov
-
-relire data->set.wid - 1 ou pas
-TOUT PASSER EN &
 
 {//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
 
@@ -90,21 +80,13 @@ minimap deborde ecran
 
 petit antialiasing
 
-
-parsing ennemis
-malloc nentities + more
-tout free a la fin
-slot reserve pour les bombas ?
-
 console
 
 minimap 10% de la case trait
 
-TODO utiliser value pour choisir si barriere haut ou bas
 alignement settings
 
 faire ouverture portes (commencer les interactions)
 	faire le raycast de longueur x qui peut casser ect
-garder ce qui est sur les pixels du milieu et la distance !!!!!
 
-settings taille map
+settings taille minimap

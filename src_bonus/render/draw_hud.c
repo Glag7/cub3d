@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:25:45 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 18:45:24 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:30:12 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static void	draw_gun(t_data *data, t_img img)
 	}
 }
 
-//TODO anim time dans la struct
-
 void	draw_hud(t_data *data)
 {
 	if (data->lastshot > data->map.gun.time)
 		draw_gun(data, data->map.gun.frames[0]);
 	else
-		draw_gun(data, data->map.gun.frames[(int)((1. - data->lastshot / data->map.gun.time) * (data->map.gun.max - 1))]);
+		draw_gun(data, data->map.gun.frames[
+			(int)((1. - data->lastshot / data->map.gun.time)
+				* (data->map.gun.max - 1))]);
 	data->mlx.px[data->set.hei / 2 * data->set.wid
 		+ data->set.wid / 2] = data->set.crosscolor;
 	data->mlx.px[data->set.hei / 2 * data->set.wid
