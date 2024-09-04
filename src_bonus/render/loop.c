@@ -6,11 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 17:17:50 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:22:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdio.h>//no
 #include <time.h>
 #include <stdlib.h>
 #include "render.h"
@@ -75,6 +75,12 @@ static double	get_delta(int *newsec)
 
 static void	manage_game(t_data *data, double delta)
 {
+	if (data->shooting)
+	{
+		//raycast
+		data->shooting = 0;
+	}
+	//ou alors gun pas a 0
 	if (data->status & INWINDOW)
 	{
 		move_angle(data, delta, data->keys);
@@ -83,11 +89,7 @@ static void	manage_game(t_data *data, double delta)
 		draw_floor(data);
 		raycast(data);
 		draw_minimap(data);
-		//draw_hud();//crosshair + gun
-		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid / 2] = 0xFFFF0000;
-		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid / 2 + 1] = 0xFFFF0000;
-		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid + data->set.wid / 2] = 0xFFFF0000;
-		data->mlx.px[data->set.hei / 2 * data->set.wid + data->set.wid + data->set.wid / 2 + 1] = 0xFFFF0000;
+		draw_hud(data);
 	}
 }
 
@@ -102,6 +104,7 @@ int	loop(void *data_)
 	data = data_;
 	delta = get_delta(&newsec);
 	manage_game(data, delta);
+	data->lastshot += delta;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (newsec)
 	{

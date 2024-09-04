@@ -71,6 +71,7 @@ SRC_BONUS = main.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c \
       $(HOOKS)keys.c \
+      $(HOOKS)mouse.c \
       $(HOOKS)win.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
@@ -78,6 +79,7 @@ SRC_BONUS = main.c \
       $(RENDER)floor.c \
       $(RENDER)drawv.c \
       $(RENDER)draw_flat.c \
+      $(RENDER)draw_hud.c \
       $(RENDER)minimap.c \
       $(MOVE)move.c \
       $(MOVE)move_angle.c
