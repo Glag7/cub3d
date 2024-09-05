@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:21:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:33:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,19 @@ static inline void __attribute__((always_inline))
 	uint32_t	imgcol;
 	uint32_t	screencol;
 	uint32_t	alpha;
+	uint32_t	ialpha;
 
 	screencol = data->mlx.px[x + ddata->start * data->set.wid];
 	imgcol = img.px[(int)ddata->index * img.w];
 	alpha = (imgcol & ALPHA) >> 24;
+	ialpha = 255 - alpha;
 	if (alpha && alpha != 255)
-		imgcol = (((((imgcol & RED) >> 16) * alpha + ((screencol & RED)
-							>> 16) * (255 - alpha)) << 8) & RED)
-			| (((((imgcol & GREEN) >> 8) * alpha + ((screencol & GREEN)
-							>> 8) * (255 - alpha)) >> 0) & GREEN)
-			| (((((imgcol & BLUE)) * alpha + ((screencol & BLUE))
-						* (255 - alpha)) >> 8) & BLUE);
+		imgcol = ((((imgcol & RED) * alpha + (screencol & RED) * ialpha)
+					>> 8) & RED)
+			| ((((imgcol & GREEN) * alpha + (screencol & GREEN) * ialpha)
+					>> 8) & GREEN)
+			| ((((imgcol & BLUE) * alpha + (screencol & BLUE) * ialpha)
+					>> 8) & BLUE);
 	if (alpha)
 		data->mlx.px[x + ddata->start * data->set.wid]
 			= imgcol;
