@@ -22,6 +22,7 @@
 #include "err.h"
 #include "data.h"
 #include "render.h"
+#include "menu.h"
 
 static void	start_game(t_data *data)
 {
@@ -49,6 +50,14 @@ static int	init_data2(t_data *data)
 	if (init_mini(&data->mini, &data->set))
 	{
 		ft_perror(ERR_MALLOC);
+		free_map(&data->map);
+		free_mlx(&data->mlx);
+		free_settings(&data->set);
+		return (1);
+	}
+	if (init_menu(&data->mlx, &data->menu, &data->set))
+	{
+		free_mini(&data->mini);
 		free_map(&data->map);
 		free_mlx(&data->mlx);
 		free_settings(&data->set);
@@ -93,5 +102,6 @@ int	main(int argc, char **argv)
 	free_mlx(&data.mlx);
 	free_mini(&data.mini);
 	free_settings(&data.set);
+	free_menu(&data.menu);
 	return (0);
 }

@@ -20,6 +20,7 @@
 # include "set.h"
 # include "mini.h"
 # include "point.h"
+# include "menu.h"
 
 typedef struct s_data
 {
@@ -34,6 +35,8 @@ typedef struct s_data
 	int			horizon;
 	t_point		px;
 	t_point		pxinc;
+	t_menu		menu;
+	uint8_t		game_state;
 }	t_data;
 
 #endif

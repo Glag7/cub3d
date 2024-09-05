@@ -95,17 +95,22 @@ int	loop(void *data_)
 	t_data		*data;
 
 	data = data_;
-	delta = get_delta(&newsec);
-	manage_game(data, delta);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-	if (newsec)
+	if (data->game_state == MENU)
+		update_buttons(&data->mlx, &data->menu, &data->set);
+	else
 	{
-		printf("fps: %d\nangle %f\nfov %f\nz %f\n---\n",
-			fps, data->play.az, data->set.fov_deg, data->play.z);
-		oldfps = fps;
-		fps = 0;
+		delta = get_delta(&newsec);
+		manage_game(data, delta);
+		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+		if (newsec)
+		{
+			printf("fps: %d\nangle %f\nfov %f\nz %f\n---\n",
+				fps, data->play.az, data->set.fov_deg, data->play.z);
+			oldfps = fps;
+			fps = 0;
+		}
+		drawfps(&data->mlx, oldfps);
+		++fps;
 	}
-	drawfps(&data->mlx, oldfps);
-	++fps;
 	return (0);
 }
