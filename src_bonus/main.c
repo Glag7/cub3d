@@ -34,6 +34,7 @@ static void	start_game(t_data *data)
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);
 	mlx_hook(data->mlx.win, FocusOut, FocusChangeMask, &out_hook, data);
 	mlx_hook(data->mlx.win, FocusIn, FocusChangeMask, &in_hook, data);
+	mlx_mouse_hook(data->mlx.win, &manage_mouse_hook, data);
 	mlx_loop_hook(data->mlx.mlx, &loop, data);
 	mlx_loop(data->mlx.mlx);
 }

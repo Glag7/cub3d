@@ -19,6 +19,7 @@
 #include "data.h"
 #include "fps.h"
 #include "status.h"
+#include "menu.h"
 
 static void	drawfps(t_mlx *mlx, int fps)
 {

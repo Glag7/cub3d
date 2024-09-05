@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include <set.h>
-#include <menu.h>
-#include <img.h>
+#include "set.h"
+#include "menu.h"
+#include "img.h"
+#include "popup.h"
 
 inline static uint32_t	darken(uint32_t pixel)
 {

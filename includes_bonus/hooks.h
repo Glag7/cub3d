@@ -18,5 +18,6 @@ int	unkey_hook(int key, void *data_);
 int	win_hook(void *data_);
 int	in_hook(void *data_);
 int	out_hook(void *data_);
+int	manage_mouse_hook(int button, int x, int y, void *data_ptr);
 
 #endif

@@ -16,30 +16,45 @@
 #include "parsing.h"
 #include "err.h"
 #include "utils.h"
+#include "menu.h"
 
 static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
 {
 	menu->buttons[0] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, DEFAULT_COLOR};
+			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
 	menu->buttons[1] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, DEFAULT_COLOR};
+			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
 	menu->buttons[2] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 			.y = part(h, 0.5)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(w, 0.1)}, .state = IDLE, DEFAULT_COLOR};
+			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
+	menu->buttons[3] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.4),
+			.y = part(h, 0.7)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+			.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
 	menu->buttons[4] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 			.y = part(h, 0.7)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(w, 0.1)}, .state = IDLE, DEFAULT_COLOR};
-	menu->buttons[3] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
-			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, DEFAULT_COLOR};
-	menu->buttons[5] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
-			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, EXIT_COLOR};
-	menu->buttons[6] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
-			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, DEFAULT_COLOR};
+			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
+	menu->buttons[5] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.4),
+			.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+			.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00ff1b1e, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00ff3d40};
+	menu->buttons[6] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.6),
+			.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+			.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
+			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
+			.color_hover[1] = 0x00707070};
 }
 
 inline static void	init_menu_images(t_menu *menu)

@@ -20,7 +20,7 @@
 # include "set.h"
 # include "mini.h"
 # include "point.h"
-# include "menu.h"
+# include "popup.h"
 
 typedef struct s_data
 {
