@@ -85,8 +85,6 @@ balancement arme
 
 console
 
-minimap 10% de la case trait
-
 alignement settings
 
 faire ouverture portes (commencer les interactions)
@@ -94,7 +92,4 @@ faire ouverture portes (commencer les interactions)
 
 garder qul bloc est sur la case, ou il est, sa distance (ou plutot faire un raycast modifie)
 
-transparence
-
 settings taille minimap
-PORTE MINIMAP
