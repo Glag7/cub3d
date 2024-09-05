@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 19:00:46 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:02:41 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,21 @@ static inline void __attribute__((always_inline))
 		ddata->end = data->set.hei;
 }
 
-static void	drawv2(t_data *data, t_img img, unsigned int x, double hei)
+static void	drawv2(t_data *data, t_img img, unsigned int x, t_ray *ray)
 {
 	t_draw			ddata;
 	int				i;
+	const double	hei = (data->set.planwid / ray->len);
 	const double	inc = 1. / hei * (double)img.w;
 
 	i = 0;
 	init_ddata(data, &ddata, hei, inc);
+	if (x == data->set.wid / 2 && ddata.start <= (int)data->set.hei / 2
+		&& ddata.end >= (int)data->set.hei / 2)
+	{
+		data->cross = data->map.map + ray->ipos.x + ray->ipos.y * data->map.wid;
+		data->cross_dist = ray->len;
+	}
 	while (i < ddata.start)
 	{
 		data->mlx.px[x + i++ *data->set.wid]
@@ -86,5 +93,5 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 		img = data->map.n;
 		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
 	}
-	drawv2(data, img, x, (data->set.planwid / ray->len));
+	drawv2(data, img, x, ray);
 }
