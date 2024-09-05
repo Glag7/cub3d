@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:45:04 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:51:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 # define KEY_SHIFT 256
 # define KEY_E 512
 # define KEY_LM 1024
+# define KEY_SPACE 2048
+# define KEY_CTRL 4096
 
 #endif

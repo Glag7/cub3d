@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:45:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:53:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "data.h"
 #include "keys.h"
 
-# define LEFT 1
-# define MIDDLE 2
-# define RIGHT 3
+#define LEFT 1
+#define MIDDLE 2
+#define RIGHT 3
 
 int	mouse_hook(int click, int x, int y, void *data_)
 {
