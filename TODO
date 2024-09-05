@@ -1,14 +1,9 @@
 "opti"
 
-pickup vie ammo
-
-portails
-
 rat mode
 
 curseur custom avec mini
 
-detecter quand la souris entre dans la fenetre
 save
 
 mouvements fluides
@@ -50,6 +45,7 @@ son
 menu
 remap controles
 
+settings taille minimap, check les settings en general
 console
 
 trouver des textures
@@ -92,4 +88,3 @@ faire ouverture portes (commencer les interactions)
 
 garder qul bloc est sur la case, ou il est, sa distance (ou plutot faire un raycast modifie)
 
-settings taille minimap

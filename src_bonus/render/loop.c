@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 19:37:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:46:39 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "data.h"
 #include "fps.h"
 #include "status.h"
+#include "keys.h"
 
 static void	drawfps(t_mlx *mlx, int fps)
 {
@@ -75,10 +76,10 @@ static double	get_delta(int *newsec)
 static void	manage_game(t_data *data, double delta)
 {
 	//open door + open activated doors
-	if (data->shooting)
+	if (data->status & KEY_LM)
 	{
 		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-		data->shooting = 0;
+		data->status &= ~KEY_LM;
 	}
 	if (data->status & INWINDOW || data->lastshot < data->map.gun.time)
 	{

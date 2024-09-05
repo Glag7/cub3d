@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 18:19:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:46:48 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_data
 	t_point		px;
 	t_point		pxinc;
 	double		lastshot;
-	int		shooting;
 }	t_data;
 
 #endif
