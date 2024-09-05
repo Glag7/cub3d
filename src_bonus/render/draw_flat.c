@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:33:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:11:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static inline void __attribute__((always_inline))
 }
 
 static inline void __attribute__((always_inline))
-	mix_pixels(t_data *data, t_img img, t_draw *ddata, size_t x)
+	mix_pixels(t_data *data, t_img img, t_draw *ddata, size_t x, t_ray *ray)//XXX
 {
 	uint32_t	imgcol;
 	uint32_t	screencol;
@@ -67,8 +67,15 @@ static inline void __attribute__((always_inline))
 			| ((((imgcol & BLUE) * alpha + (screencol & BLUE) * ialpha)
 					>> 8) & BLUE);
 	if (alpha)
+	{
 		data->mlx.px[x + ddata->start * data->set.wid]
 			= imgcol;
+		if (x == data->set.wid / 2 && ddata->start == (int)data->set.hei / 2)
+		{
+			data->cross = data->map.map + ray->ipos.x + ray->ipos.y * data->map.wid;//TODO fix
+			data->cross_dist = ray->len;
+		}
+	}
 }
 
 void	draw_flat(t_data *data, t_ray *ray, size_t x)
@@ -88,7 +95,7 @@ void	draw_flat(t_data *data, t_ray *ray, size_t x)
 		ddata.end = data->set.hei;
 	while (ddata.start < ddata.end)
 	{
-		mix_pixels(data, img, &ddata, x);
+		mix_pixels(data, img, &ddata, x, ray);
 		++ddata.start;
 		ddata.index += ddata.ypx;
 	}

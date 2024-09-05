@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 13:27:54 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/03 18:09:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:12:34 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static inline __attribute__((always_inline)) void
 		fray->vec = (t_point){ray->vec.y, ray->vec.x};
 		fray->istep = (t_ipoint){ray->istep.y, ray->istep.x};
 	}
+	fray->ipos = ray->ipos;
 }
 
 static void	find_sprite(t_ray *ray, t_data *data, double len, size_t x)

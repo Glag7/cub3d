@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 20:03:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:15:21 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	manage_game(t_data *data, double delta)
 		if (data->cross)
 			*data->cross = 0;
 		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-		data->status &= ~KEY_LM;
+	//	data->status &= ~KEY_LM;
 	}
 	if (data->status & INWINDOW || data->lastshot < data->map.gun.time)
 	{
@@ -93,10 +93,6 @@ static void	manage_game(t_data *data, double delta)
 		raycast(data);
 		draw_minimap(data);
 		draw_hud(data);
-		if (data->cross)
-			printf("yes\n");
-		else
-			printf("no\n");
 	}
 }
 
