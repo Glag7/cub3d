@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 20:15:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:31:13 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,25 @@ static double	get_delta(int *newsec)
 
 static void	manage_game(t_data *data, double delta)
 {
+	if (!(data->status & INWINDOW))
+		return ;
 	//open door + open activated doors
 	if (data->status & KEY_LM)
 	{
 		if (data->cross)
 			*data->cross = 0;
 		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-	//	data->status &= ~KEY_LM;
+		data->status &= ~KEY_LM;
 	}
-	if (data->status & INWINDOW || data->lastshot < data->map.gun.time)
-	{
-		data->cross = NULL;
-		move_angle(data, delta, data->keys);
-		move(data, delta, data->keys);
-		compute_values(data);
-		draw_floor(data);
-		raycast(data);
-		draw_minimap(data);
-		draw_hud(data);
-	}
+	data->cross = NULL;
+	move_angle(data, delta, data->keys);
+	move(data, delta, data->keys);
+	compute_values(data);
+	draw_floor(data);
+	raycast(data);
+	draw_minimap(data);
+	draw_hud(data);
+	data->lastshot += delta;
 }
 
 int	loop(void *data_)
@@ -107,7 +107,6 @@ int	loop(void *data_)
 	data = data_;
 	delta = get_delta(&newsec);
 	manage_game(data, delta);
-	data->lastshot += delta;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (newsec)
 	{
