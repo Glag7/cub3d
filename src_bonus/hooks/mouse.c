@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "data.h"
-#include "button.h"
+#include "menu.h"
 
 int	manage_mouse_hook(int button, int x, int y, void *data_ptr)
 {
@@ -22,4 +22,5 @@ int	manage_mouse_hook(int button, int x, int y, void *data_ptr)
 		menu_mouse_hook(button, x, y, data);
 	else
 		;// ingame mouse events
+	return (0);
 }

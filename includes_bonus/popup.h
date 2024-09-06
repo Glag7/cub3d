@@ -60,6 +60,7 @@ typedef struct s_menu
 	uint32_t	*background;
 	t_button	buttons[7];
 	uint8_t		window;
+	uint8_t		resume;
 }	t_menu;
 
 #endif

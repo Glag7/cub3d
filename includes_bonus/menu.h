@@ -41,4 +41,5 @@ void	build_menu(t_mlx *mlx, t_menu *menu, t_set *set, uint8_t *game_state);
 
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
+
 #endif

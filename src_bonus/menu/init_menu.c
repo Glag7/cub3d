@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/27 17:27:35 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:20:16 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,17 @@ inline static void	init_menu_images(t_menu *menu)
 	menu->buttons[6].string.px = NULL;
 }
 
+#include <stdio.h>
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 {
-	return (load_img(mlx->mlx, "./assets_builtin/title.bmp", &menu->title, (t_dim){part(w, 0.1), part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/start.bmp", &menu->buttons[0].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/resume.bmp", &menu->buttons[1].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/settings.bmp", &menu->buttons[2].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/back.bmp", &menu->buttons[3].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/exit.bmp", &menu->buttons[4].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/yes.bmp", &menu->buttons[5].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets_builtin/no.bmp", &menu->buttons[6].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}));
+	return (load_img(mlx->mlx, "./assets/core/title.bmp", &menu->title, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("0\n")
+		|| load_img(mlx->mlx, "./assets/core/start.bmp", &menu->buttons[0].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("1\n")
+		|| load_img(mlx->mlx, "./assets/core/resume.bmp", &menu->buttons[1].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("2\n")
+		|| load_img(mlx->mlx, "./assets/core/settings.bmp", &menu->buttons[2].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("3\n")
+		|| load_img(mlx->mlx, "./assets/core/back.bmp", &menu->buttons[3].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("4\n")
+		|| load_img(mlx->mlx, "./assets/core/exit.bmp", &menu->buttons[4].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("5\n")
+		|| load_img(mlx->mlx, "./assets/core/yes.bmp", &menu->buttons[5].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}) || !printf("6\n")
+		|| load_img(mlx->mlx, "./assets/core/no.bmp", &menu->buttons[6].string, (t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})) || !printf("7\n");
 }
 
 int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
@@ -104,5 +105,6 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		return (1);
 	}
 	menu->window = MAIN;
+	menu->resume = 0;
 	return (0);
 }

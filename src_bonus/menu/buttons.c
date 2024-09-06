@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/27 17:27:35 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/06 19:18:48 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ static int	check_button_hitbox(t_button button, size_t x, size_t y)
 
 static void	get_active_buttons(t_menu *menu, t_button **active_buttons)
 {
-	ft_bzero(active_buttons, 3 * sizeof(t_button *));
+	ft_bzero(active_buttons, 4 * sizeof(t_button *));
 	if (menu->window == MAIN)
 	{
-		active_buttons[0] = &menu->buttons[0];// 0 or 1 if game already started
+		if (menu->resume == 0)
+			active_buttons[0] = &menu->buttons[0];
+		else
+			active_buttons[0] = &menu->buttons[1];
 		active_buttons[1] = &menu->buttons[2];
 		active_buttons[2] = &menu->buttons[4];
 	}
@@ -45,9 +48,10 @@ static void	get_active_buttons(t_menu *menu, t_button **active_buttons)
 	}
 }
 
+#include <stdio.h>
 void	update_buttons(t_mlx *mlx, t_menu *menu, t_set *set)
 {
-	t_button	*active_buttons[3];
+	t_button	*active_buttons[4];
 	bool	hovering;
 	size_t	i;
 	int	x;
@@ -71,6 +75,7 @@ void	update_buttons(t_mlx *mlx, t_menu *menu, t_set *set)
 		}
 		i++;
 	}
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }
 
 static void	update_menu(t_data *data, size_t i)
@@ -78,7 +83,10 @@ static void	update_menu(t_data *data, size_t i)
 	if (data->menu.window == MAIN)
 	{
 		if (i == 0)// start/resume
+		{
+			data->menu.resume = 1;
 			data->game_state = GAME;// start game
+		}
 		else if (i == 1)// settings
 			draw_settings_menu(&data->mlx, &data->menu, &data->set);//build settings popup
 		else if (i == 2)// exit
@@ -98,13 +106,11 @@ static void	update_menu(t_data *data, size_t i)
 	}
 }
 
-#include <stdio.h>
 void	menu_mouse_hook(int button, int x, int y, t_data *data)
 {
-	t_button	*active_buttons[3];
+	t_button	*active_buttons[4];
 	size_t		i;
 
-	printf("mouse event = %i\n", button);// test pour voir si le relevement est detecte
 	if (button != 1)
 		return ;
 	get_active_buttons(&data->menu, active_buttons);

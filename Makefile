@@ -72,6 +72,7 @@ SRC_BONUS = main.c \
       $(UTILS)ft_bzero.c \
       $(HOOKS)keys.c \
       $(HOOKS)win.c \
+      $(HOOKS)mouse.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
       $(RENDER)floor.c \
