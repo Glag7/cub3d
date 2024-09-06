@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 16:50:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 20:02:47 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:27:30 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_data
 	t_point		px;
 	t_point		pxinc;
 	double		lastshot;
-	uint32_t	(*opening)[8];
-	uint32_t	(*exploding)[8];
+	uint32_t	*opening[32];
+	uint32_t	*burning[32];
+	int		i_open;
+	int		i_burn;
 	uint32_t	*cross;
 	double		cross_dist;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:35:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:07:17 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 
 # define DEF_TEXSIZ 1024
 # define DEF_SKYSIZ 2048
+
+# define ARM_LEN 1.5
 
 typedef struct s_set
 {

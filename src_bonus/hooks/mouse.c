@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:53:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:03:34 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	mouse_hook(int click, int x, int y, void *data_)
 	if (click == LEFT)
 	{
 		data->lastshot = 0.;
-		data->status |= KEY_LM;
+		data->keys |= KEY_LM;
 	}
 	return (0);
 }

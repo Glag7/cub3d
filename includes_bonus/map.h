@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:10:50 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:25:57 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@
 # define MOVING		0b00000000000000000000000001100000
 # define CLOSING	0b00000000000000000000000000100000
 # define OPENING	0b00000000000000000000000001000000
+//is burning or opening
+# define ACTIVE		0b00000000000000000000111110000000 //useless for opening
+# define ACTIVEOFF	7
 //special value
-# define VALUE		0b11111111111111111111111110000000
-# define VALUEOFF	7
+# define VALUE		0b11111111111111111111000000000000
+# define VALUEOFF	12
 # define VALUEONE	65536
 
 # define YSIDE		0b00000000000000000000000000010000

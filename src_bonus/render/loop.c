@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 16:40:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:59:28 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,88 @@ static double	get_delta(int *newsec)
 	return (delta);
 }
 
+#define TIME 1.
+void	open_doors(t_data *data, double delta)
+{
+	int			i;
+	uint32_t	*cur;
+	int32_t	value;
+	int	stop;
+
+	stop = 0;
+	i = 0;
+	while (i < 32)
+	{
+		if (cur == data->opening[i])
+		{
+			data->opening[i++] = NULL;
+			continue ;
+		}
+		cur = data->opening[i];
+		if (cur)
+		{
+			value = (*cur & VALUE) >> VALUEOFF;
+			if (*cur & OPENING)
+				value += (int32_t)(delta / TIME * (double)VALUEONE);
+			else if (*cur & CLOSING)
+			{
+				value -= (int32_t)(delta / TIME * (double)VALUEONE);
+			}
+			else
+				data->opening[i] = 0;
+			if (value > VALUEONE * 9 / 10)
+			{
+				value = VALUEONE * 9 / 10;
+				*cur &= ~MOVING;
+				stop = 1;
+			}
+			else if (value < 0)
+			{
+				value = 0;
+				*cur &= ~MOVING;
+				stop = 1;
+			}
+			*cur = (*cur & ~VALUE) | value << VALUEOFF;
+			if (stop)
+				data->opening[i] = 0;
+			
+		}
+		++i;
+	}
+}//FIXME door can be added twice
+
 static void	manage_game(t_data *data, double delta)
 {
 	if (!(data->status & INWINDOW))
 		return ;
+	//TODO make this a func
 	//open door + open activated doors
-	if (data->status & KEY_LM)
+	if (data->keys & KEY_E && data->cross && data->cross_dist < ARM_LEN
+		&& (*data->cross & SPEC) == DOOR)
+	{
+		if ((*data->cross & MOVING))
+			*data->cross = (*data->cross & ~MOVING) | (~(*data->cross & MOVING) & MOVING);
+		else if (!(*data->cross & VALUE))
+			*data->cross |= OPENING;
+		else
+			*data->cross |= CLOSING;
+		data->opening[data->i_open] = data->cross;
+		data->i_open = (data->i_open + 1) % 31 + 1;
+		data->keys &= ~KEY_E;
+	}
+
+	//shoot
+	if (data->keys & KEY_LM)
 	{
 		if (data->cross)
 			*data->cross = 0;
 		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-		data->status &= ~KEY_LM;
+		data->keys &= ~KEY_LM;
 	}
 	data->cross = NULL;
 	move_angle(data, delta, data->keys);
 	move(data, delta, data->keys);
+	open_doors(data, delta);//
 	compute_values(data);
 	draw_floor(data);
 	raycast(data);
