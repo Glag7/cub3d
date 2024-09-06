@@ -82,7 +82,8 @@ SRC_BONUS = main.c \
       $(RENDER)draw_hud.c \
       $(RENDER)minimap.c \
       $(MOVE)move.c \
-      $(MOVE)move_angle.c
+      $(MOVE)move_angle.c \
+      $(MOVE)doors.c
 
 OBJ = $(SRC:.c=.o)
 
