@@ -57,10 +57,13 @@ typedef struct s_button
 typedef struct s_menu
 {
 	t_img		title;
+	t_img		confirm;
 	uint32_t	*background;
 	t_button	buttons[7];
 	uint8_t		window;
 	uint8_t		resume;
+	uint8_t		first_render;
+	uint8_t		prev_tab;
 }	t_menu;
 
 #endif

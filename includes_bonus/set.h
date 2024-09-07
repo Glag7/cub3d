@@ -26,8 +26,8 @@
 # define DEF_FOV 90.
 # define DEF_VIEW 1000.
 
-# define DEF_WID 1360
-# define DEF_HEI 768
+# define DEF_WID 1920//1360
+# define DEF_HEI 1080//768
 
 # define DEF_SENSI .4
 

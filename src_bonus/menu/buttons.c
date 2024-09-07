@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/06 19:18:48 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/07 18:54:56 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ static void	get_active_buttons(t_menu *menu, t_button **active_buttons)
 		active_buttons[0] = &menu->buttons[3];
 		;// more for settings ?
 	}
-	else
+	else if (menu->window == EXIT)
 	{
 		active_buttons[0] = &menu->buttons[5];
 		active_buttons[1] = &menu->buttons[6];
 	}
 }
 
-#include <stdio.h>
 void	update_buttons(t_mlx *mlx, t_menu *menu, t_set *set)
 {
 	t_button	*active_buttons[4];
@@ -84,6 +83,7 @@ static void	update_menu(t_data *data, size_t i)
 	{
 		if (i == 0)// start/resume
 		{
+			mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 			data->menu.resume = 1;
 			data->game_state = GAME;// start game
 		}
@@ -100,7 +100,7 @@ static void	update_menu(t_data *data, size_t i)
 	else if (data->menu.window == EXIT)
 	{
 		if (i == 0)// yes
-			;// quitter
+			mlx_loop_end(data->mlx.mlx);// quitter
 		else if (i == 1)// no
 			draw_main_menu(&data->mlx, &data->menu, &data->set);// build main menu
 	}
@@ -117,7 +117,7 @@ void	menu_mouse_hook(int button, int x, int y, t_data *data)
 	i = 0;
 	while (active_buttons[i] != NULL)
 	{
-		if (check_button_hitbox(data->menu.buttons[i], (size_t)x, (size_t)y) == 1)
+		if (check_button_hitbox(*active_buttons[i], (size_t)x, (size_t)y) == 1)
 		{
 			update_menu(data, i);
 			break ;

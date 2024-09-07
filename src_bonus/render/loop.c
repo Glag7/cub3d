@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 18:01:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:50:34 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "fps.h"
 #include "status.h"
 #include "menu.h"
+#include "keys.h"
 
 static void	drawfps(t_mlx *mlx, int fps)
 {
@@ -96,10 +97,36 @@ int	loop(void *data_)
 	t_data		*data;
 
 	data = data_;
-	if (data->game_state == MENU)
+	if (data->menu.prev_tab == 0 && (data->keys & KEY_TAB) != 0)
+	{
+		data->menu.prev_tab = 1;
+		data->menu.resume = 1;
+		if (data->game_state == GAME)
+		{
+			data->game_state = MENU;
+			build_menu(&data->mlx, &data->menu, &data->set, &data->game_state);
+		}
+		else
+		{
+			data->game_state = GAME;
+			mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
+			mlx_mouse_move(data->mlx.mlx, data->mlx.win,
+				data->set.wid / 2, data->set.hei / 2);
+		}
+	}
+	else if (data->menu.prev_tab == 1 && (data->keys & KEY_TAB) == 0)
+		data->menu.prev_tab = 0;
+	if (data->game_state == MENU && data->menu.first_render == 0)
 		update_buttons(&data->mlx, &data->menu, &data->set);
+	else if (data->menu.first_render == 1)
+	{
+		data->menu.first_render = 0;
+		build_menu(&data->mlx, &data->menu, &data->set, &data->game_state);
+	}
 	else
 	{
+		if (data->menu.first_render == 2)
+			data->menu.first_render = 1;
 		delta = get_delta(&newsec);
 		manage_game(data, delta);
 		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);

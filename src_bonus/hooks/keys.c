@@ -50,6 +50,8 @@ int	key_hook(int key, void *data_)
 		data->play.z += 0.1;
 	else if (key == XK_l)
 		data->play.z -= 0.1;//rm
+	else if (key == XK_Tab)
+		data->keys |= KEY_TAB;
 	return (0);
 }
 
@@ -76,5 +78,7 @@ int	unkey_hook(int key, void *data_)
 		data->keys &= ~KEY_DOWN;
 	else if (key == XK_Shift_L)
 		data->keys &= ~KEY_SHIFT;
+	else if (key == XK_Tab)
+		data->keys &= ~KEY_TAB;
 	return (0);
 }

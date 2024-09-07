@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 19:28:27 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/07 19:36:46 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	start_game(t_data *data)
 	mlx_hook(data->mlx.win, FocusIn, FocusChangeMask, &in_hook, data);
 	mlx_mouse_hook(data->mlx.win, &manage_mouse_hook, data);
 	mlx_loop_hook(data->mlx.mlx, &loop, data);
-	build_menu(&data->mlx, &data->menu, &data->set, &data->game_state);
 	mlx_loop(data->mlx.mlx);
 }
 

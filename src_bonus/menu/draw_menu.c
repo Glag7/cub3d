@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/06 19:12:18 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/07 16:31:00 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ inline static uint32_t	darken(uint32_t pixel)
 	uint32_t	darker_pixel;
 
 	darker_pixel = pixel & 0xFF000000;
-	darker_pixel |= (uint32_t)part((pixel & 0x00FF0000) >> 16, 0.7) << 16;
-	darker_pixel |= (uint32_t)part((pixel & 0x0000FF00) >> 8, 0.7) << 8;
-	darker_pixel |= (uint32_t)part((pixel & 0x000000FF), 0.7);
+	darker_pixel |= (uint32_t)part((pixel & 0x00FF0000) >> 16, 0.5) << 16;
+	darker_pixel |= (uint32_t)part((pixel & 0x0000FF00) >> 8, 0.5) << 8;
+	darker_pixel |= (uint32_t)part((pixel & 0x000000FF), 0.5);
 	return (darker_pixel);
 }
 
@@ -67,30 +67,25 @@ void	draw_background(t_mlx *mlx, t_menu *menu, t_set *set)
 
 void	draw_rectangle(t_mlx *mlx, t_set *set, t_ulpoint pos, t_ulpoint dim, uint32_t *colors)
 {
-	size_t		x;
-	size_t		y;
-	t_ulpoint	in_dim;
+	size_t	x;
+	size_t	y;
+	size_t	margin;
 
-/*	if (part(dim.x, 0.1) > 10)
-		in_dim.x = dim.x - 10;
+	if (fmin(dim.x, dim.y) < 100)
+		margin = part(fmin(dim.x, dim.y), 0.1);
 	else
-		in_dim.x = part(dim.x, 0.1);
-	if (part(dim.y, 0.1) > 10)
-		in_dim.y = dim.y - 10;
-	else
-		in_dim.y = part(dim.y, 0.1);*/
-	in_dim = (t_ulpoint){.x = part(dim.x, 0.9), .y = part(dim.y, 0.9)};
+		margin = 10;
 	y = pos.y - dim.y / 2;
 	while (y < pos.y + dim.y / 2)
 	{
 		x = pos.x - dim.x / 2;
 		while (x < pos.x + dim.x / 2)
 		{
-			if (x > pos.x - in_dim.x / 2 && x < pos.x + in_dim.x / 2
-				&& y > pos.y - in_dim.y / 2 && y > pos.y + in_dim.y / 2)
-				mlx->px[y * set->wid + x] = colors[1];
-			else
+			if (x < pos.x - dim.x / 2 + margin || x > pos.x + dim.x / 2 - margin
+				|| y < pos.y - dim.y / 2 + margin || y > pos.y + dim.y / 2 - margin)
 				mlx->px[y * set->wid + x] = colors[0];
+			else
+				mlx->px[y * set->wid + x] = colors[1];
 			x++;
 		}
 		y++;
@@ -99,20 +94,26 @@ void	draw_rectangle(t_mlx *mlx, t_set *set, t_ulpoint pos, t_ulpoint dim, uint32
 
 void	draw_string(t_mlx *mlx, t_set *set, t_ulpoint pos, t_img string)
 {
-	size_t	x;
-	size_t	y;
+	size_t	x_img;
+	size_t	y_img;
+	size_t	x_px;
+	size_t	y_px;
 
-	y = pos.y - string.h / 2;
-	while (y < pos.y + string.h / 2)
+	y_img = 0;
+	y_px = pos.y - string.h / 2;
+	while (y_img < string.h)
 	{
-		x = pos.x - string.w / 2;
-		while (x < pos.x + string.w / 2)
+		x_img = 0;
+		x_px = pos.x - string.w / 2;
+		while (x_img < string.w)
 		{
-			if ((string.px[y * string.w + x] & 0xFF000000) != 0)//a verifier
-				mlx->px[y * set->wid + x] = string.px[y * string.w + x];
-			x++;
+			if ((string.px[y_img * string.w + x_img] & 0xFF000000) != 0)
+				mlx->px[y_px * set->wid + x_px] = string.px[y_img * string.w + x_img];
+			x_img++;
+			x_px++;
 		}
-		y++;
+		y_img++;
+		y_px++;
 	}
 }
 
