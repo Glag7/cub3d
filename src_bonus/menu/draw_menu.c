@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/07 16:31:00 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/08 18:41:23 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,45 @@ inline static uint32_t	darken(uint32_t pixel)
 	return (darker_pixel);
 }
 
-void	save_background(t_mlx *mlx, t_menu *menu, t_set *set)
+void	save_background(t_data *data)
 {
 	size_t	x;
 	size_t	y;
 
 	y = 0;
-	while (y < set->hei)
+	while (y < data->set.hei)
 	{
 		x = 0;
-		while (x < set->wid)
+		while (x < data->set.wid)
 		{
-			menu->background[y * set->wid + x] =
-				darken(mlx->px[y * set->wid + x]);
+			data->menu.background[y * data->set.wid + x] =
+				darken(data->mlx.px[y * data->set.wid + x]);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_background(t_mlx *mlx, t_menu *menu, t_set *set)
+void	draw_background(t_data *data)
 {
 	size_t	x;
 	size_t	y;
 
 	y = 0;
-	while (y < set->hei)
+	while (y < data->set.hei)
 	{
 		x = 0;
-		while (x < set->wid)
+		while (x < data->set.wid)
 		{
-			mlx->px[y * set->wid + x] =
-				menu->background[y * set->wid + x];
+			data->mlx.px[y * data->set.wid + x] =
+				data->menu.background[y * data->set.wid + x];
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_rectangle(t_mlx *mlx, t_set *set, t_ulpoint pos, t_ulpoint dim, uint32_t *colors)
+void	draw_rectangle(t_data *data, t_ulpoint pos, t_ulpoint dim, uint32_t *colors)
 {
 	size_t	x;
 	size_t	y;
@@ -83,16 +83,16 @@ void	draw_rectangle(t_mlx *mlx, t_set *set, t_ulpoint pos, t_ulpoint dim, uint32
 		{
 			if (x < pos.x - dim.x / 2 + margin || x > pos.x + dim.x / 2 - margin
 				|| y < pos.y - dim.y / 2 + margin || y > pos.y + dim.y / 2 - margin)
-				mlx->px[y * set->wid + x] = colors[0];
+				data->mlx.px[y * data->set.wid + x] = colors[0];
 			else
-				mlx->px[y * set->wid + x] = colors[1];
+				data->mlx.px[y * data->set.wid + x] = colors[1];
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_string(t_mlx *mlx, t_set *set, t_ulpoint pos, t_img string)
+void	draw_string(t_data *data, t_ulpoint pos, t_img string)
 {
 	size_t	x_img;
 	size_t	y_img;
@@ -108,7 +108,8 @@ void	draw_string(t_mlx *mlx, t_set *set, t_ulpoint pos, t_img string)
 		while (x_img < string.w)
 		{
 			if ((string.px[y_img * string.w + x_img] & 0xFF000000) != 0)
-				mlx->px[y_px * set->wid + x_px] = string.px[y_img * string.w + x_img];
+				data->mlx.px[y_px * data->set.wid + x_px] =
+					string.px[y_img * string.w + x_img];
 			x_img++;
 			x_px++;
 		}
@@ -117,7 +118,7 @@ void	draw_string(t_mlx *mlx, t_set *set, t_ulpoint pos, t_img string)
 	}
 }
 
-void	draw_button(t_mlx *mlx, t_set *set, t_button button, bool state)
+void	draw_button(t_data *data, t_button button, bool state)
 {
 	uint32_t	*colors;
 
@@ -125,6 +126,6 @@ void	draw_button(t_mlx *mlx, t_set *set, t_button button, bool state)
 		colors = button.color_idle;
 	else
 		colors = button.color_hover;
-	draw_rectangle(mlx, set, button.pos, button.dim, colors);
-	draw_string(mlx, set, button.pos, button.string);
+	draw_rectangle(data, button.pos, button.dim, colors);
+	draw_string(data, button.pos, button.string);
 }

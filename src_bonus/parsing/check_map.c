@@ -6,24 +6,60 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 19:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:06:47 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "err.h"
 #include "utils.h"
+#include "point.h"
 
-static inline int	check_zero(t_map *map, unsigned int x, unsigned int y)
+static inline int	check_zero(t_map *map, int x, int y)
 {
-	unsigned int	i;
+	return (map->map[map->wid * y + x] == '0'
+		&& (map->map[map->wid * y + (x + 1) % map->wid] == ' '
+			|| map->map[map->wid * y + x - 1 + map->wid * !x] == ' '
+			|| map->map[map->wid * ((y + 1) % map->hei) + x] == ' '
+			|| map->map[map->wid * (y - 1 + map->hei * !y) + x] == ' '));
+}
 
-	i = map->wid * y + x;
-	return (map->map[i] == '0'
-		&& (!x || !y || x == map->wid - 1 || y == map->hei - 1
-			|| map->map[i + 1] == ' ' || map->map[i - 1] == ' '
-			|| map->map[i + map->wid] == ' '
-			|| map->map[i - map->wid] == ' '));
+static inline int	checky(t_map *map, int x, int y)
+{
+	const int	xwalls = !!map->map[map->wid * y + (x + 1) % map->wid]
+		+ !!map->map[map->wid * y + x - 1 + map->wid * !x];
+	const int	ywalls = !!map->map[map->wid * ((y + 1) % map->hei) + x]
+		+ !!map->map[map->wid * (y - 1 + map->hei * !y) + x];
+
+	if (ywalls >= xwalls)
+		return (YSIDE);
+	return (XSIDE);
+}
+
+static void	replace_flat(t_map *map)
+{
+	unsigned int	x;
+	unsigned int	y;
+
+	y = 0;
+	while (y < map->hei)
+	{
+		x = 0;
+		while (x < map->wid)
+		{
+			if (map->map[map->wid * y + x] == 'G')
+				map->map[map->wid * y + x] = GLASS | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'D')
+				map->map[map->wid * y + x] = DOOR | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'T')
+				map->map[map->wid * y + x] = FENCE
+					| VALUEONE << VALUEOFF | checky(map, x, y);
+			else if (map->map[map->wid * y + x] == 'B')
+				map->map[map->wid * y + x] = FENCE | checky(map, x, y);
+			++x;
+		}
+		++y;
+	}
 }
 
 static void	replace_chars(t_map *map)
@@ -35,16 +71,17 @@ static void	replace_chars(t_map *map)
 	i = 0;
 	while (i < size)
 	{
-		if (map->map[i] == ' ')
+		if (map->map[i] == '1')
+			map->map[i] = CUBE;
+		else if (map->map[i] == ' ' || map->map[i] == '0')
 			map->map[i] = 0;
-		else
-			map->map[i] -= '0';
-		i++;
+		++i;
 	}
+	replace_flat(map);
 }
 
 int	check_map(t_map *map)
-{//TODO PORTES ET ENNEMIS
+{
 	unsigned int	x;
 	unsigned int	y;
 

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:40:40 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 18:01:58 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:42:28 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "point.h"
 #include "ray.h"
 
-static void	init_ray(t_ray *ray)
+void	init_ray(t_ray *ray)
 {
 	ray->step = (t_point){sqrt(1. + (ray->vec.y * ray->vec.y)
 			/ (ray->vec.x * ray->vec.x)), sqrt(1. + (ray->vec.x
@@ -51,9 +51,9 @@ static void	init_ray(t_ray *ray)
 static inline void __attribute__((always_inline))
 	cast_ray(t_ray *ray, t_data *data)
 {
-	while (!ray->hit && ray->len < data->set.view)
+	while (!(ray->hit & CUBE) && ray->len < data->set.view)
 	{
-		ray->side = !(ray->dist.x < ray->dist.y);
+		ray->side = !(ray->dist.x < ray->dist.y) * YSIDE;
 		if (ray->side == XSIDE)
 		{
 			ray->ipos.x += ray->istep.x;
@@ -74,7 +74,7 @@ static inline void __attribute__((always_inline))
 			ray->ipos.y += data->map.hei;
 		else if (ray->ipos.y >= data->map.hei)
 			ray->ipos.y -= data->map.hei;
-		ray->hit = (data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x]);
+		ray->hit |= data->map.map[data->map.wid * ray->ipos.y + ray->ipos.x];
 	}
 }
 
@@ -86,16 +86,20 @@ static void	trace_ray(t_data *data, double px, double py, size_t x)
 	ray.ipos = (t_ipoint){ray.pos.x, ray.pos.y};
 	ray.vec = (t_point){px, -py};
 	init_ray(&ray);
+	ray.hit = data->map.map[(int)data->play.x
+		+ (int)data->play.y * data->map.wid] & SPEC;
 	cast_ray(&ray, data);
 	ray.pos.x += ray.len * ray.vec.x;
 	ray.pos.y += ray.len * ray.vec.y;
-	if (ray.len > data->set.view)
+	if (ray.hit & SPEC)
+		raycast_flat(data, &ray, x);
+	else
 	{
-		ray.len = INFINITY;
-		ray.hit = 0;
+		if (ray.len > data->set.view)
+			ray.len = INFINITY;
+		ray.len *= data->set.coslen[x];
+		drawv(data, &ray, x);
 	}
-	ray.len *= data->set.coslen[x];
-	drawv(data, &ray, x);
 }
 
 void	raycast(t_data *data)

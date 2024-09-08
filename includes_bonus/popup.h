@@ -25,21 +25,26 @@
 
 enum
 {
-	MENU = 0,
-	GAME
-};
-
-enum
-{
-	MAIN = 0,
-	SETTINGS,
-	EXIT
+	WIN_MAIN = 0,
+	WIN_SETTINGS,
+	WIN_EXIT
 };
 
 enum
 {
 	IDLE = 0,
 	HOVER
+};
+
+enum
+{
+	BUT_START = 0,
+	BUT_RESUME,
+	BUT_SETTINGS,
+	BUT_BACK,
+	BUT_EXIT,
+	BUT_YES,
+	BUT_NO
 };
 
 /* ----- STRUCTURES ----- */
@@ -52,6 +57,7 @@ typedef struct s_button
 	uint32_t	color_idle[2];
 	uint32_t	color_hover[2];
 	bool		state;
+	uint8_t		window;
 }	t_button;
 
 typedef struct s_menu

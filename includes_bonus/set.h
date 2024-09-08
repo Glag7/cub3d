@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 17:01:49 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:35:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define DEF_COLOR 0x00FFFFDD
 # define DEF_NCOLOR 0x00111111
 # define DEF_PCOLOR 0x00EE1111
+
+# define DEF_CROSSCOLOR 0x00FF0000
 
 # define DEF_FOV 90.
 # define DEF_VIEW 1000.
@@ -50,6 +52,8 @@ typedef struct s_set
 	uint32_t		ncolor;
 	uint32_t		pcolor;
 	double			ratio;
+
+	uint32_t		crosscolor;
 
 	unsigned int	texsiz;
 	unsigned int	skysiz;

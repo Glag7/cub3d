@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 18:22:13 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/07 15:24:34 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 19:04:51 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 //TEXTURES
 # define ERR_IMG_SIZE	"Image has a size of 0\n"
+# define ERR_OPEN_IMG	"Cannot open image (did you delete assets ?)\n"
 # define ERR_FORMAT	"Image is in wrong format (not BMP)\n"
 # define ERR_BPP	"Image has wrong bits per pixel value\n"
 # define ERR_IMG_EXT	"Image file has an unsupported extension\n"
@@ -43,6 +44,8 @@
 # define ERR_DUP_FLOOR	"Duplicate floor texture\n"
 # define ERR_DUP_CEIL	"Duplicate ceiling texture\n"
 # define ERR_DUP_DOOR	"Duplicate door texture\n"
+# define ERR_DUP_GLASS	"Duplicate glass texture\n"
+# define ERR_DUP_HALF	"Duplicate half block texture\n"
 # define ERR_BAD_FLOOR	"Unrecognized floor color\n"
 # define ERR_BAD_CEIL	"Unrecognized ceiling color\n"
 

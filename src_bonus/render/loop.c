@@ -6,11 +6,10 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/07 19:50:34 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/04 19:37:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include "render.h"
@@ -75,9 +74,45 @@ static double	get_delta(int *newsec)
 	return (delta);
 }
 
+static void	manage_hooks(t_data *data)
+{
+	if (data->menu.prev_tab == 0 && (data->keys & KEY_TAB) != 0)
+	{
+		data->menu.prev_tab = 1;
+		data->menu.resume = 1;
+		if ((data->status & MENU) == 0)
+		{
+			data->status |= MENU;
+			build_menu(data);
+		}
+		else
+		{
+			data->status &= ~MENU;
+			mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
+			mlx_mouse_move(data->mlx.mlx, data->mlx.win,
+				data->set.wid / 2, data->set.hei / 2);
+		}
+	}
+	else if (data->menu.prev_tab == 1 && (data->keys & KEY_TAB) == 0)
+		data->menu.prev_tab = 0;
+}
+
 static void	manage_game(t_data *data, double delta)
 {
-	if (data->status & INWINDOW)
+	manage_hooks(data);
+	if ((data->status & MENU) != 0)
+	{
+		compute_values(data);
+		manage_menu(data);
+		return ;
+	}
+	//open door + open activated doors
+	if (data->shooting)
+	{
+		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
+		data->shooting = 0;
+	}
+	if (data->status & INWINDOW || data->lastshot < data->map.gun.time)
 	{
 		move_angle(data, delta, data->keys);
 		move(data, delta, data->keys);
@@ -85,6 +120,7 @@ static void	manage_game(t_data *data, double delta)
 		draw_floor(data);
 		raycast(data);
 		draw_minimap(data);
+		draw_hud(data);
 	}
 }
 
@@ -97,48 +133,14 @@ int	loop(void *data_)
 	t_data		*data;
 
 	data = data_;
-	if (data->menu.prev_tab == 0 && (data->keys & KEY_TAB) != 0)
+	delta = get_delta(&newsec);
+	manage_game(data, delta);
+	data->lastshot += delta;
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+	if (newsec)
 	{
-		data->menu.prev_tab = 1;
-		data->menu.resume = 1;
-		if (data->game_state == GAME)
-		{
-			data->game_state = MENU;
-			build_menu(&data->mlx, &data->menu, &data->set, &data->game_state);
-		}
-		else
-		{
-			data->game_state = GAME;
-			mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
-			mlx_mouse_move(data->mlx.mlx, data->mlx.win,
-				data->set.wid / 2, data->set.hei / 2);
-		}
-	}
-	else if (data->menu.prev_tab == 1 && (data->keys & KEY_TAB) == 0)
-		data->menu.prev_tab = 0;
-	if (data->game_state == MENU && data->menu.first_render == 0)
-		update_buttons(&data->mlx, &data->menu, &data->set);
-	else if (data->menu.first_render == 1)
-	{
-		data->menu.first_render = 0;
-		build_menu(&data->mlx, &data->menu, &data->set, &data->game_state);
-	}
-	else
-	{
-		if (data->menu.first_render == 2)
-			data->menu.first_render = 1;
-		delta = get_delta(&newsec);
-		manage_game(data, delta);
-		mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-		if (newsec)
-		{
-			printf("fps: %d\nangle %f\nfov %f\nz %f\n---\n",
-				fps, data->play.az, data->set.fov_deg, data->play.z);
-			oldfps = fps;
-			fps = 0;
-		}
-		drawfps(&data->mlx, oldfps);
-		++fps;
+		oldfps = fps;
+		fps = 0;
 	}
 	return (0);
 }

@@ -14,5 +14,6 @@
 # define STATUS_H
 
 # define INWINDOW	1
+# define MENU		2
 
 #endif

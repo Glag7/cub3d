@@ -23,23 +23,25 @@
 
 /* ----- PROTOTYPES ----- */
 
-void	update_buttons(t_mlx *mlx, t_menu *menu, t_set *set);
-void	menu_mouse_hook(int button, int x, int y, t_data *data);
-
-void	save_background(t_mlx *mlx, t_menu *menu, t_set *set);
-void	draw_background(t_mlx *mlx, t_menu *menu, t_set *set);
-void	draw_rectangle(t_mlx *mlx, t_set *set, t_ulpoint pos, t_ulpoint dim, uint32_t *colors);
-void	draw_string(t_mlx *mlx, t_set *set, t_ulpoint pos, t_img string);
-void	draw_button(t_mlx *mlx, t_set *set, t_button button, bool state);
-
 int		init_menu(t_mlx *mlx, t_menu *menu, t_set *set);
 
-void	draw_main_menu(t_mlx *mlx, t_menu *menu, t_set *set);
-void	draw_settings_menu(t_mlx *mlx, t_menu *menu, t_set *set);
-void	draw_exit_menu(t_mlx *mlx, t_menu *menu, t_set *set);
-void	build_menu(t_mlx *mlx, t_menu *menu, t_set *set, uint8_t *game_state);
+int		check_button_hitbox(t_button button, size_t x, size_t y);
+void	update_buttons(t_data *data);
+
+void	save_background(t_data *data);
+void	draw_background(t_data *data);
+void	draw_rectangle(t_data *data, t_ulpoint pos, t_ulpoint dim, uint32_t *colors);
+void	draw_string(t_data *data, t_ulpoint pos, t_img string);
+void	draw_button(t_data *data, t_button button, bool state);
+
+void	draw_main_menu(t_data *data);
+void	draw_settings_menu(t_data *data);
+void	draw_exit_menu(t_data *data);
+void	build_menu(t_data *data);
 
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
+
+void	manage_menu(t_data *data);
 
 #endif

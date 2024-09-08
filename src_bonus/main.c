@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/07 19:36:46 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/04 18:20:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,20 @@
 #include "data.h"
 #include "render.h"
 #include "menu.h"
+#include "status.h"
 
 static void	start_game(t_data *data)
 {
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
+	data->lastshot = 3.;
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->mlx.win, KeyRelease, KeyReleaseMask, &unkey_hook, data);
+	mlx_hook(data->mlx.win, ButtonPress, ButtonPressMask, &mouse_hook, data);
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);
 	mlx_hook(data->mlx.win, FocusOut, FocusChangeMask, &out_hook, data);
 	mlx_hook(data->mlx.win, FocusIn, FocusChangeMask, &in_hook, data);
-	mlx_mouse_hook(data->mlx.win, &manage_mouse_hook, data);
 	mlx_loop_hook(data->mlx.mlx, &loop, data);
 	mlx_loop(data->mlx.mlx);
 }
@@ -56,6 +58,7 @@ static int	init_data2(t_data *data)
 		free_settings(&data->set);
 		return (1);
 	}
+	data->status |= MENU;
 	if (init_menu(&data->mlx, &data->menu, &data->set))
 	{
 		free_mini(&data->mini);
