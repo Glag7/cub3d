@@ -79,7 +79,12 @@ static void	manage_hooks(t_data *data)
 	if (data->menu.prev_tab == 0 && (data->keys & KEY_TAB) != 0)
 	{
 		data->menu.prev_tab = 1;
-		data->menu.resume = 1;
+		if (data->menu.first_start == 1)
+		{
+			free(data->menu.buttons[BUT_START].string.px);
+			data->menu.buttons[BUT_START].string = data->menu.resume;
+		}
+		data->menu.first_start = 0;
 		if ((data->status & MENU) == 0)
 		{
 			data->status |= MENU;

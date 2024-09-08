@@ -22,12 +22,13 @@ void	free_menu(t_menu *menu)
 {
 	free(menu->title.px);
 	free(menu->confirm.px);
+	if (menu->first_start == 1)
+		free(menu->resume.px);
 	free(menu->background);
-	free(menu->buttons[0].string.px);
-	free(menu->buttons[1].string.px);
-	free(menu->buttons[2].string.px);
-	free(menu->buttons[3].string.px);
-	free(menu->buttons[4].string.px);
-	free(menu->buttons[5].string.px);
-	free(menu->buttons[6].string.px);
+	free(menu->buttons[BUT_START].string.px);
+	free(menu->buttons[BUT_SETTINGS].string.px);
+	free(menu->buttons[BUT_BACK].string.px);
+	free(menu->buttons[BUT_EXIT].string.px);
+	free(menu->buttons[BUT_YES].string.px);
+	free(menu->buttons[BUT_NO].string.px);
 }

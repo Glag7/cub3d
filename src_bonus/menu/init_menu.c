@@ -25,11 +25,6 @@ static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
 			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
 			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
 			.color_hover[1] = 0x00707070, .window = WIN_MAIN};
-	menu->buttons[BUT_RESUME] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
-			.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
-			.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-			.color_hover[1] = 0x00707070, .window = WIN_MAIN};
 	menu->buttons[BUT_SETTINGS] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 			.y = part(h, 0.5)}, .dim = (t_ulpoint){.x = part(w, 0.2),
 			.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
@@ -61,8 +56,8 @@ inline static void	init_menu_images(t_menu *menu)
 {
 	menu->title.px = NULL;
 	menu->confirm.px = NULL;
+	menu->resume.px = NULL;
 	menu->buttons[BUT_START].string.px = NULL;
-	menu->buttons[BUT_RESUME].string.px = NULL;
 	menu->buttons[BUT_SETTINGS].string.px = NULL;
 	menu->buttons[BUT_BACK].string.px = NULL;
 	menu->buttons[BUT_EXIT].string.px = NULL;
@@ -77,9 +72,9 @@ static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "./assets/core/confirm.bmp", &menu->confirm,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets/core/start.bmp", &menu->buttons[BUT_START].string,
+		|| load_img(mlx->mlx, "./assets/core/resume.bmp", &menu->resume,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "./assets/core/resume.bmp", &menu->buttons[BUT_RESUME].string,
+		|| load_img(mlx->mlx, "./assets/core/start.bmp", &menu->buttons[BUT_START].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "./assets/core/settings.bmp", &menu->buttons[BUT_SETTINGS].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
@@ -106,8 +101,8 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	{
 		free(menu->title.px);
 		free(menu->confirm.px);
+		free(menu->resume.px);
 		free(menu->buttons[BUT_START].string.px);
-		free(menu->buttons[BUT_RESUME].string.px);
 		free(menu->buttons[BUT_SETTINGS].string.px);
 		free(menu->buttons[BUT_BACK].string.px);
 		free(menu->buttons[BUT_EXIT].string.px);
@@ -119,6 +114,6 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	menu->window = WIN_MAIN;
 	menu->first_render = 1;
 	menu->prev_tab = 0;
-	menu->resume = 0;
+	menu->first_start = 1;
 	return (0);
 }

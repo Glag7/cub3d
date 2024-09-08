@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "mlx.h"
 #include "data.h"
 #include "menu.h"
@@ -22,12 +23,17 @@
 
 static void	update_menu(t_data *data, size_t i)
 {
-	if (i == BUT_START || i == BUT_RESUME)
+	if (i == BUT_START)
 	{
 		mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 		mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2, data->set.hei / 2);
-		;// mettre mouse pos dans structure au milieu ?
-		data->menu.resume = 1;
+		;// mettre mouse pos au milieu dans data ?
+		if (data->menu.first_start == 1)
+		{
+			free(data->menu.buttons[BUT_START].string.px);
+			data->menu.buttons[BUT_START].string = data->menu.resume;
+		}
+		data->menu.first_start = 0;
 		data->status &= ~MENU;
 	}
 	else if (i == BUT_SETTINGS)
@@ -47,7 +53,7 @@ static void	menu_mouse_hook(int click, int x, int y, t_data *data)
 	if (click != LEFT)
 		return ;
 	i = 0;
-	while (i < 7)
+	while (i < 6)
 	{
 		if (data->menu.buttons[i].window == data->menu.window
 			&& check_button_hitbox(data->menu.buttons[i], (size_t)x, (size_t)y) == 1)
@@ -64,7 +70,7 @@ int	mouse_hook(int click, int x, int y, void *data_)
 	t_data	*data;
 
 	data = data_;
-	if (data->status == MENU)
+	if ((data->status & MENU) != 0)
 	{
 		menu_mouse_hook(click, x, y, data);
 		return (0);

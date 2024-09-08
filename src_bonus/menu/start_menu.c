@@ -22,10 +22,7 @@ void	draw_main_menu(t_data *data)
 	draw_background(data);
 	draw_string(data, (t_ulpoint){.x = part(data->set.wid, 0.5), .y = part(data->set.hei, 0.15)},
 		data->menu.title);
-	if (data->menu.resume == 0)
-		draw_button(data, data->menu.buttons[BUT_START], IDLE);
-	else
-		draw_button(data, data->menu.buttons[BUT_RESUME], IDLE);
+	draw_button(data, data->menu.buttons[BUT_START], IDLE);
 	draw_button(data, data->menu.buttons[BUT_SETTINGS], IDLE);
 	draw_button(data, data->menu.buttons[BUT_EXIT], IDLE);
 	data->menu.window = WIN_MAIN;

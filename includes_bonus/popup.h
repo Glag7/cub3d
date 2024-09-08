@@ -39,7 +39,6 @@ enum
 enum
 {
 	BUT_START = 0,
-	BUT_RESUME,
 	BUT_SETTINGS,
 	BUT_BACK,
 	BUT_EXIT,
@@ -64,10 +63,11 @@ typedef struct s_menu
 {
 	t_img		title;
 	t_img		confirm;
+	t_img		resume;
 	uint32_t	*background;
-	t_button	buttons[7];
+	t_button	buttons[6];
 	uint8_t		window;
-	uint8_t		resume;
+	uint8_t		first_start;
 	uint8_t		first_render;
 	uint8_t		prev_tab;
 }	t_menu;

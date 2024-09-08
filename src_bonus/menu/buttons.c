@@ -33,7 +33,7 @@ void	update_buttons(t_data *data)
 
 	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.win, &x, &y);
 	i = 0;
-	while (i < 7)
+	while (i < 6)
 	{
 		if (data->menu.buttons[i].window == data->menu.window)
 		{
