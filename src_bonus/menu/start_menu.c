@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/08 18:57:44 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/10 16:25:50 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	draw_exit_menu(t_data *data)
 void	build_menu(t_data *data)
 {
 	data->status |= MENU;
+	mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2, data->set.hei / 2);
 	mlx_mouse_show(data->mlx.mlx, data->mlx.win);
 	save_background(data);
 	draw_main_menu(data);
