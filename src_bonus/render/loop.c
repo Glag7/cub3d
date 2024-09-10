@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 19:37:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:39:24 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,7 @@ int	loop(void *data_)
 		oldfps = fps;
 		fps = 0;
 	}
+	drawfps(&data->mlx, oldfps);
+	++fps;
 	return (0);
 }
