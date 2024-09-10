@@ -21,6 +21,8 @@ void	manage_menu(t_data *data)
 		data->menu.first_render = 0;
 		draw_floor(data);
 		raycast(data);
+		draw_minimap(data);
+		draw_hud(data);
 		build_menu(data);
 	}
 	else

@@ -53,7 +53,7 @@ static void	menu_mouse_hook(int click, int x, int y, t_data *data)
 	if (click != LEFT)
 		return ;
 	i = 0;
-	while (i < 6)
+	while (i < NB_BUTTONS)
 	{
 		if (data->menu.buttons[i].window == data->menu.window
 			&& check_button_hitbox(data->menu.buttons[i], (size_t)x, (size_t)y) == 1)
