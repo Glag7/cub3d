@@ -21,6 +21,11 @@
 # include "img.h"
 # include "set.h"
 
+/* ----- DEFINES ----- */
+
+# define NB_BUTTONS	6
+# define OUTLINE_WIDTH	5
+
 /* ----- ENUMERATIONS ----- */
 
 enum
@@ -48,6 +53,27 @@ enum
 
 /* ----- STRUCTURES ----- */
 
+typedef struct s_slider
+{
+	t_ulpoint	pos;
+	t_ulpoint	dim;
+	union
+	{
+		uint32_t	*data;
+		double		*data;
+	}
+	union
+	{
+		uint32_t	v_min;
+		double		v_min;
+	}
+	union
+	{
+		uint32_t	v_max;
+		double		v_max;
+	}
+}	t_slider;
+
 typedef struct s_button
 {
 	t_ulpoint	pos;
@@ -65,7 +91,7 @@ typedef struct s_menu
 	t_img		confirm;
 	t_img		resume;
 	uint32_t	*background;
-	t_button	buttons[6];
+	t_button	buttons[NB_BUTTONS];
 	uint8_t		window;
 	uint8_t		first_start;
 	uint8_t		first_render;
