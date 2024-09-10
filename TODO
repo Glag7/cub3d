@@ -4,6 +4,8 @@ pickup vie ammo
 
 portails
 
+rat mode
+
 curseur custom avec mini
 
 detecter quand la souris entre dans la fenetre
@@ -63,16 +65,7 @@ test render distance
 test texture nord llignes sus
 graph temps
 
-ENNEMI
-derriere ?
-2 frames marcher
-2 frames alerte
-2 frames piou
-2 frames mort
-sensi en fonction du fov
-
-relire data->set.wid - 1 ou pas
-TOUT PASSER EN &
+arme qui tremble
 
 {//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
 
@@ -80,9 +73,23 @@ fichier binaire settings
 export du fichier
 check des bonnes valeurs
 
-segfault si on avance des le debut (limiter la distance max a parcourir)
-DANS LE MANDA AUSSI
-
-lacher la souris si on quitte la fenetre
+garder la hauteur dessinee et faire une explosion de la taille
 
 opti puis multithreading
+
+minimap deborde ecran
+
+petit antialiasing
+
+balancement arme
+
+console
+
+alignement settings
+
+faire ouverture portes (commencer les interactions)
+	faire le raycast de longueur x qui peut casser ect
+
+garder qul bloc est sur la case, ou il est, sa distance (ou plutot faire un raycast modifie)
+
+settings taille minimap

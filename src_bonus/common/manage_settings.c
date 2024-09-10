@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 17:29:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:49:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	init_settings(t_set *set)
 	set->ncolor = DEF_NCOLOR;
 	set->color = DEF_COLOR;
 	set->pcolor = DEF_PCOLOR;
+	set->crosscolor = DEF_CROSSCOLOR;
 	set->view = DEF_VIEW;
 	set->sensi = DEF_SENSI;
 	set->texsiz = DEF_TEXSIZ;
