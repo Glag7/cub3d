@@ -22,6 +22,6 @@
 # define KEY_UP 64
 # define KEY_DOWN 128
 # define KEY_SHIFT 256
-# define KEY_TAB 512
+# define KEY_TAB 8192
 
 #endif
