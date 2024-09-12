@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/10 18:39:24 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:37:37 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static double	get_delta(int *newsec)
 
 static void	manage_hooks(t_data *data)
 {
-	if (data->menu.prev_tab == 0 && (data->keys & KEY_TAB) != 0)
+	if ((data->menu.prev_keys & PREV_TAB) == 0 && (data->keys & KEY_TAB) != 0)
 	{
-		data->menu.prev_tab = 1;
+		data->menu.prev_keys |= PREV_TAB;
 		if (data->menu.first_start == 1)
 		{
 			free(data->menu.buttons[BUT_START].string.px);
@@ -98,8 +98,9 @@ static void	manage_hooks(t_data *data)
 				data->set.wid / 2, data->set.hei / 2);
 		}
 	}
-	else if (data->menu.prev_tab == 1 && (data->keys & KEY_TAB) == 0)
-		data->menu.prev_tab = 0;
+	else if ((data->menu.prev_keys & PREV_TAB) == 1
+		&& (data->keys & KEY_TAB) == 0)
+		data->menu.prev_keys &= ~PREV_TAB;
 }
 
 static void	manage_game(t_data *data, double delta)

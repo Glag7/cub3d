@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/08 18:37:38 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:31:23 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@
 # define MIDDLE 2
 # define RIGHT 3
 
+#include <stdio.h>
+int	unmouse_hook(int click, int x, int y, void *data_)
+{
+	;
+	return (0);
+}
+
 static void	update_menu(t_data *data, size_t i)
 {
 	if (i == BUT_START)
 	{
 		mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 		mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2, data->set.hei / 2);
-		;// mettre mouse pos au milieu dans data ?
+		;// pb angles -> override data ?
 		if (data->menu.first_start == 1)
 		{
 			free(data->menu.buttons[BUT_START].string.px);

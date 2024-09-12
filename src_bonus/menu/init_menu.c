@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/10 19:40:35 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:36:23 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	}
 	menu->window = WIN_MAIN;
 	menu->first_render = 1;
-	menu->prev_tab = 0;
+	menu->prev_keys = 0;
 	menu->first_start = 1;
 	return (0);
 }

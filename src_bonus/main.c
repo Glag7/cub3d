@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 18:20:27 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:37:11 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	start_game(t_data *data)
 	mlx_hook(data->mlx.win, KeyPress, KeyPressMask, &key_hook, data);
 	mlx_hook(data->mlx.win, KeyRelease, KeyReleaseMask, &unkey_hook, data);
 	mlx_hook(data->mlx.win, ButtonPress, ButtonPressMask, &mouse_hook, data);
+	mlx_hook(data->mlx.win, ButtonRelease, ButtonReleaseMask, &unmouse_hook,
+		data);
 	mlx_hook(data->mlx.win, DestroyNotify, 0, &win_hook, data);
 	mlx_hook(data->mlx.win, FocusOut, FocusChangeMask, &out_hook, data);
 	mlx_hook(data->mlx.win, FocusIn, FocusChangeMask, &in_hook, data);

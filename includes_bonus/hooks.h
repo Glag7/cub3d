@@ -16,6 +16,7 @@
 int	key_hook(int key, void *data_);
 int	unkey_hook(int key, void *data_);
 int	mouse_hook(int click, int x, int y, void *data_);
+int	unmouse_hook(int click, int x, int y, void *data_);
 int	win_hook(void *data_);
 int	in_hook(void *data_);
 int	out_hook(void *data_);

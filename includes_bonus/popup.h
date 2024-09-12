@@ -24,7 +24,11 @@
 /* ----- DEFINES ----- */
 
 # define NB_BUTTONS	6
+# define NB_SLIDERS	5// nb final
 # define OUTLINE_WIDTH	5
+
+# define PREV_TAB	1
+# define PREV_LM	2
 
 /* ----- ENUMERATIONS ----- */
 
@@ -51,27 +55,42 @@ enum
 	BUT_NO
 };
 
+enum
+{
+	UINT = 0,
+	DOUBLE
+};
+
 /* ----- STRUCTURES ----- */
+
+typedef struct s_slider_data_uint
+{
+	uint32_t	*dst;
+	uint32_t	v_min;
+	uint32_t	v_max;
+	uint32_t	v_curr;
+}	t_slider_data_uint;
+
+typedef struct s_slider_data_double
+{
+	double	*dst;
+	double	v_min;
+	double	v_max;
+	double	v_curr;
+}	t_slider_data_double;
 
 typedef struct s_slider
 {
 	t_ulpoint	pos;
 	t_ulpoint	dim;
+	bool		state;
+	uint8_t		window;
+	uint8_t		type;
 	union
 	{
-		uint32_t	*data;
-		double		*data;
-	}
-	union
-	{
-		uint32_t	v_min;
-		double		v_min;
-	}
-	union
-	{
-		uint32_t	v_max;
-		double		v_max;
-	}
+		t_slider_data_uint	data_u;
+		t_slider_data_double	data_f;
+	};
 }	t_slider;
 
 typedef struct s_button
@@ -92,10 +111,11 @@ typedef struct s_menu
 	t_img		resume;
 	uint32_t	*background;
 	t_button	buttons[NB_BUTTONS];
+	t_slider	sliders[NB_SLIDERS];
 	uint8_t		window;
 	uint8_t		first_start;
 	uint8_t		first_render;
-	uint8_t		prev_tab;
+	uint8_t		prev_keys;
 }	t_menu;
 
 #endif
