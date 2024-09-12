@@ -24,7 +24,7 @@
 /* ----- DEFINES ----- */
 
 # define NB_BUTTONS	6
-# define NB_SLIDERS	5// nb final
+# define NB_SLIDERS	1// nb final
 # define OUTLINE_WIDTH	5
 
 # define PREV_TAB	1
@@ -42,7 +42,8 @@ enum
 enum
 {
 	IDLE = 0,
-	HOVER
+	HOVER,
+	PRESS
 };
 
 enum
@@ -59,6 +60,13 @@ enum
 {
 	UINT = 0,
 	DOUBLE
+};
+
+enum
+{
+	SLI_FOV = 0,
+	SLI_VIEW,
+	SLI_SENSI
 };
 
 /* ----- STRUCTURES ----- */
@@ -84,7 +92,6 @@ typedef struct s_slider
 	t_ulpoint	pos;
 	t_ulpoint	dim;
 	bool		state;
-	uint8_t		window;
 	uint8_t		type;
 	union
 	{

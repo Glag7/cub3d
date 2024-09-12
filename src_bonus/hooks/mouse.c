@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/12 16:31:23 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/12 18:54:07 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@
 int	unmouse_hook(int click, int x, int y, void *data_)
 {
 	;
+	data->menu.prev_keys = data->keys;
 	return (0);
+}
+
+static void	update_sliders(t_data *data, size_t x, size_t y)
+{
+	;
 }
 
 static void	update_menu(t_data *data, size_t i)
@@ -59,6 +65,8 @@ static void	menu_mouse_hook(int click, int x, int y, t_data *data)
 
 	if (click != LEFT)
 		return ;
+	if (data->menu.window == WIN_SETTINGS)
+		update_sliders(data, (size_t)x, (size_t)y);
 	i = 0;
 	while (i < NB_BUTTONS)
 	{
@@ -87,5 +95,6 @@ int	mouse_hook(int click, int x, int y, void *data_)
 		data->lastshot = 0.;
 		data->shooting = 1;
 	}
+	data->menu.prev_keys = data->keys;
 	return (0);
 }

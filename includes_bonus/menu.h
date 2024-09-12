@@ -39,6 +39,8 @@ void	draw_settings_menu(t_data *data);
 void	draw_exit_menu(t_data *data);
 void	build_menu(t_data *data);
 
+void	draw_slider(t_data *data, t_slider slider);
+
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
 

@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/10 19:44:05 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:45:24 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	draw_settings_menu(t_data *data)
 		(t_ulpoint){.x = part(data->set.wid, 0.5),
 		.y = part(data->set.hei, 0.8)}, colors);
 	draw_button(data, data->menu.buttons[BUT_BACK], IDLE);
-	// draw options
+	draw_slider(data, data->menu.sliders[SLI_FOV]);
+	;// draw options
 	data->menu.window = WIN_SETTINGS;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }
