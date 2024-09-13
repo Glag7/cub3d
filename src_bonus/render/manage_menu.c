@@ -26,5 +26,8 @@ void	manage_menu(t_data *data)
 		build_menu(data);
 	}
 	else
+	{
 		update_buttons(data);
+		update_sliders(data);
+	}
 }

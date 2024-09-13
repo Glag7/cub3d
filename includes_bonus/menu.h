@@ -15,6 +15,7 @@
 
 /* ----- INCLUDES ----- */
 
+# include <stdbool.h>
 # include "map.h"
 # include "img.h"
 # include "set.h"
@@ -25,14 +26,14 @@
 
 int		init_menu(t_mlx *mlx, t_menu *menu, t_set *set);
 
-bool	check_button_hitbox(t_button button, size_t x, size_t y);
+bool	check_hitbox(t_ulpoint pos, t_ulpoint dim, size_t x, size_t y);
 void	update_buttons(t_data *data);
 
 void	save_background(t_data *data);
 void	draw_background(t_data *data);
 void	draw_rectangle(t_data *data, t_ulpoint pos, t_ulpoint dim, uint32_t *colors);
 void	draw_image(t_data *data, t_ulpoint pos, t_img string);
-void	draw_button(t_data *data, t_button button, bool state);
+void	draw_button(t_data *data, t_button button, uint8_t state);
 
 void	draw_main_menu(t_data *data);
 void	draw_settings_menu(t_data *data);
@@ -40,6 +41,7 @@ void	draw_exit_menu(t_data *data);
 void	build_menu(t_data *data);
 
 void	draw_slider(t_data *data, t_slider slider);
+void	update_sliders(t_data *data);
 
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);

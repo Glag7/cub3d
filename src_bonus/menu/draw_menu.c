@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/10 19:43:38 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/13 17:05:53 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	draw_image(t_data *data, t_ulpoint pos, t_img string)
 	}
 }
 
-void	draw_button(t_data *data, t_button button, bool state)
+void	draw_button(t_data *data, t_button button, uint8_t state)
 {
 	uint32_t	*colors;
 

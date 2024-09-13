@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/12 18:14:32 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:33:13 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,20 @@
 #include "utils.h"
 #include "menu.h"
 
-static void	init_sliders_settings(t_menu *menu, size_t w, size_t h)
+static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 {
 	menu->sliders[SLI_FOV] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
-		.y = part(h, 0.25)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = PRESS, .type = DOUBLE,
-		.data_u.dst = NULL, .data_u.v_min = 0, .data_u.v_max = 100, .data_u.v_curr = 100};
+		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->fov_deg, .v_min = 10,
+		.v_max = 170, .i_curr = 0.5};
+	menu->sliders[SLI_VIEW] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
+		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->view, .v_min = 1,
+		.v_max = 2000, .i_curr = 0.5};
+	menu->sliders[SLI_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
+		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->sensi, .v_min = 0,
+		.v_max = 5, .i_curr = 0.1};
 }
 
 static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
@@ -38,8 +46,8 @@ static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
 		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
 		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
 		.color_hover[1] = 0x00707070, .window = WIN_MAIN};
-	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.35),
-		.y = part(h, 0.8)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.32),
+		.y = part(h, 0.88)}, .dim = (t_ulpoint){.x = part(w, 0.08),
 		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
 		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
 		.color_hover[1] = 0x00707070, .window = WIN_SETTINGS};
@@ -111,7 +119,7 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		return (1);
 	}
 	init_buttons_menu(menu, set->wid, set->hei);
-	init_sliders_settings(menu, set->wid, set->hei);
+	init_sliders_settings(menu, set, set->wid, set->hei);
 	if (load_menu_images(mlx, menu, set->wid, set->hei) == 1)
 	{
 		free(menu->title.px);

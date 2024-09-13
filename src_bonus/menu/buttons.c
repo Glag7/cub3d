@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/12 16:22:06 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/13 17:02:00 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 #include "popup.h"
 #include "data.h"
 
-bool	check_button_hitbox(t_button button, size_t x, size_t y)
+bool	check_hitbox(t_ulpoint pos, t_ulpoint dim, size_t x, size_t y)
 {
-	return (x > button.pos.x - button.dim.x / 2
-		&& x < button.pos.x + button.dim.x / 2
-		&& y > button.pos.y - button.dim.y / 2
-		&& y < button.pos.y + button.dim.y / 2);
+	return (x > pos.x - dim.x / 2 && x < pos.x + dim.x / 2
+		&& y > pos.y - dim.y / 2 && y < pos.y + dim.y / 2);
 }
 
 static bool	update_button_state(t_data *data, t_button *button, size_t x,
@@ -31,7 +29,7 @@ static bool	update_button_state(t_data *data, t_button *button, size_t x,
 	bool	hovering;
 
 	refresh = 0;
-	hovering = check_button_hitbox(*button, x, y);
+	hovering = check_hitbox(button->pos, button->dim, x, y);
 	if (button->state == IDLE && hovering == 1)
 	{
 		draw_button(data, *button, HOVER);

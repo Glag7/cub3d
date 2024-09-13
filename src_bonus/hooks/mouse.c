@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/12 18:54:07 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:23:49 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,61 @@
 # define RIGHT 3
 
 #include <stdio.h>
+static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
+{
+	size_t	i;
+	double tmp;// tmp
+	double *tmp2;// tmp
+
+	(void)x;
+	(void)y;
+	if (click != LEFT)
+		return ;
+	i = 0;
+	while (i < NB_SLIDERS)
+	{
+		if (data->menu.sliders[i].state == PRESS)
+		{
+			printf("i_curr = %lf\n",data->menu.sliders[i].i_curr);// tmp
+			tmp = data->menu.sliders[i].i_curr * (double)(data->menu.sliders[i].v_max - data->menu.sliders[i].v_min);// tmp
+			tmp2 = (double *)data->menu.sliders[i].dst;// tmp
+			*tmp2 = tmp;// tmp
+			printf("saving %lf\n", tmp);// tmp
+			//*data->menu.sliders[i].dst = data->menu.sliders[i].v_curr;
+			data->menu.sliders[i].state = IDLE;
+		}
+		i++;
+	}
+}
+
 int	unmouse_hook(int click, int x, int y, void *data_)
 {
-	;
-	data->menu.prev_keys = data->keys;
+	t_data	*data;
+
+	data = (t_data *)data_;
+	if ((data->status & MENU) != 0)
+	{
+		menu_unmouse_hook(click, x, y, data);
+		return (0);
+	}
 	return (0);
 }
 
-static void	update_sliders(t_data *data, size_t x, size_t y)
+static void	update_settings(t_data *data, int x, int y)
 {
-	;
+	size_t	i;
+
+	i = 0;
+	while (i < NB_SLIDERS)
+	{
+		if (check_hitbox(data->menu.sliders[i].pos, data->menu.sliders[i].dim,
+			(size_t)x, (size_t)y) == 1)
+		{
+			data->menu.sliders[i].state = PRESS;
+			break ;
+		}
+		i++;
+	}
 }
 
 static void	update_menu(t_data *data, size_t i)
@@ -40,7 +85,7 @@ static void	update_menu(t_data *data, size_t i)
 	{
 		mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 		mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2, data->set.hei / 2);
-		;// pb angles -> override data ?
+		;// pb angles
 		if (data->menu.first_start == 1)
 		{
 			free(data->menu.buttons[BUT_START].string.px);
@@ -66,12 +111,13 @@ static void	menu_mouse_hook(int click, int x, int y, t_data *data)
 	if (click != LEFT)
 		return ;
 	if (data->menu.window == WIN_SETTINGS)
-		update_sliders(data, (size_t)x, (size_t)y);
+		update_settings(data, x, y);
 	i = 0;
 	while (i < NB_BUTTONS)
 	{
 		if (data->menu.buttons[i].window == data->menu.window
-			&& check_button_hitbox(data->menu.buttons[i], (size_t)x, (size_t)y) == 1)
+			&& check_hitbox(data->menu.buttons[i].pos,
+				data->menu.buttons[i].dim, (size_t)x, (size_t)y) == 1)
 		{
 			update_menu(data, i);
 			break ;
@@ -95,6 +141,5 @@ int	mouse_hook(int click, int x, int y, void *data_)
 		data->lastshot = 0.;
 		data->shooting = 1;
 	}
-	data->menu.prev_keys = data->keys;
 	return (0);
 }

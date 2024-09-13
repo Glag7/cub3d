@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:17:53 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/12 18:32:55 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:34:41 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	move_slider_head(t_data *data, t_slider slider, size_t x)
 	colors[1] = 0xFFD0D0D0;
 	draw_rectangle(data, slider.pos, slider.dim, colors);
 	colors[0] = 0xFF000000;
-	colors[1] = 0xFF808080;
+	colors[1] = 0xFF909090;
 	draw_rectangle(data, (t_ulpoint){.x = x, .y = slider.pos.y},
 		(t_ulpoint){.x = part(slider.dim.x, 0.1), .y = slider.dim.y}, colors);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
@@ -40,7 +40,42 @@ void	draw_slider(t_data *data, t_slider slider)
 	colors[1] = 0xFFD0D0D0;
 	draw_rectangle(data, slider.pos, slider.dim, colors);
 	colors[0] = 0xFF000000;
-	colors[1] = 0xFF808080;
-	draw_rectangle(data, (t_ulpoint){.x = slider.pos.x - part(slider.dim.x, 0.45) + part(part(slider.dim.x, 0.9), (double)slider.data_u.v_curr / (double)(slider.data_u.v_min + slider.data_u.v_max)), .y = slider.pos.y},
+	colors[1] = 0xFF909090;
+	draw_rectangle(data, (t_ulpoint){.x = slider.pos.x - part(slider.dim.x, 0.45) + part(part(slider.dim.x, 0.9), slider.i_curr), .y = slider.pos.y},
 		(t_ulpoint){.x = part(slider.dim.x, 0.1), .y = slider.dim.y}, colors);
+}
+
+#include <stdio.h>
+static void	update_value(t_slider *slider, size_t x)
+{
+	if (x < slider->pos.x - part(slider->dim.x, 0.45))
+		x = slider->pos.x - part(slider->dim.x, 0.45);
+	else if (x > slider->pos.x + part(slider->dim.x, 0.45))
+		x = slider->pos.x + part(slider->dim.x, 0.45);
+	printf("x = %lf   len = %lf\n", (double)(x - (slider->pos.x - part(slider->dim.x, 0.45))), (double)(part(slider->dim.x, 0.9)));// tmp
+	slider->i_curr = (double)(x - (slider->pos.x - part(slider->dim.x, 0.45)))
+		/ (double)(part(slider->dim.x, 0.9));
+	//slider->i_curr = (uint32_t)((double)(slider->v_max - slider->v_min) * index) + slider->v_min;
+}
+
+void	update_sliders(t_data *data)
+{
+	double	old_i_curr;
+	size_t	i;
+	int		x;
+	int		y;
+
+	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.win, &x, &y);
+	i = 0;
+	while (i < NB_SLIDERS)
+	{
+		if (data->menu.sliders[i].state == PRESS)
+		{
+			old_i_curr = data->menu.sliders[i].i_curr;
+			update_value(&data->menu.sliders[i], (size_t)x);
+			if (old_i_curr != data->menu.sliders[i].i_curr)
+				move_slider_head(data, data->menu.sliders[i], (size_t)x);
+		}
+		i++;
+	}
 }
