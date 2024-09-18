@@ -23,7 +23,8 @@
 /* ----- DEFINES ----- */
 
 # define NB_BUTTONS	6
-# define NB_SLIDERS	3// nb final a changer
+# define NB_SETTINGS	3
+
 # define OUTLINE_WIDTH	5
 # define PREV_TAB	1
 
@@ -55,9 +56,9 @@ enum
 
 enum
 {
-	SLI_FOV = 0,
-	SLI_VIEW,
-	SLI_SENSI
+	SET_FOV = 0,
+	SET_VIEW,
+	SET_SENSI
 };
 
 enum
@@ -68,6 +69,14 @@ enum
 
 /* ----- STRUCTURES ----- */
 
+typedef struct s_textfield
+{
+	t_ulpoint	pos;
+	t_ulpoint	dim;
+	uint8_t		type;
+	double		*src;
+}	t_textfield;
+
 typedef struct s_slider
 {
 	t_ulpoint	pos;
@@ -77,7 +86,7 @@ typedef struct s_slider
 	void		*dst;
 	double		v_min;
 	double		v_max;
-	double		i_curr;
+	double		v_curr;
 }	t_slider;
 
 typedef struct s_button
@@ -98,7 +107,9 @@ typedef struct s_menu
 	t_img		resume;
 	uint32_t	*background;
 	t_button	buttons[NB_BUTTONS];
-	t_slider	sliders[NB_SLIDERS];
+	t_slider	sliders[NB_SETTINGS];
+	t_textfield	textfields[NB_SETTINGS];
+	t_img		digits[12];
 	uint8_t		window;
 	uint8_t		first_start;
 	uint8_t		first_render;

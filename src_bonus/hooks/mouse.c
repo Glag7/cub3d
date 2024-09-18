@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 15:16:07 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:33:02 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,8 @@
 # define RIGHT 3
 
 // pb : si slider presse quand menu ferme avec tab, slider reste quand le menu se reouvre !!
+// -> morceler cette fonction pour appeler save_sliders quand window == SETTINGS et le menu se ferme ?
 // pb pour les sliders uint qui doivent save dans des doubles (cf fov_deg)
-static void	save_new_value(t_slider slider)
-{
-	double	value;
-
-	value = slider.i_curr * (double)(slider.v_max - slider.v_min) + (double)slider.v_min;
-	if (slider.type == UINT)
-		*(uint32_t *)slider.dst = (uint32_t)value;
-	else if (slider.type == DOUBLE)
-		*(double *)slider.dst = value;
-}
-
 static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 {
 	size_t	i;
@@ -43,11 +33,14 @@ static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 	if (click != LEFT)
 		return ;
 	i = 0;
-	while (i < NB_SLIDERS)
+	while (i < NB_SETTINGS)
 	{
 		if (data->menu.sliders[i].state == PRESS)
 		{
-			save_new_value(data->menu.sliders[i]);
+			if (data->menu.sliders[i].type == UINT)
+				*(uint32_t *)data->menu.sliders[i].dst = (uint32_t)data->menu.sliders[i].v_curr;
+			else if (data->menu.sliders[i].type == DOUBLE)
+				*(double *)data->menu.sliders[i].dst = data->menu.sliders[i].v_curr;
 			data->menu.sliders[i].state = IDLE;
 		}
 		i++;
@@ -72,7 +65,7 @@ static void	update_settings(t_data *data, int x, int y)
 	size_t	i;
 
 	i = 0;
-	while (i < NB_SLIDERS)
+	while (i < NB_SETTINGS)
 	{
 		if (check_hitbox(data->menu.sliders[i].pos, data->menu.sliders[i].dim,
 			(size_t)x, (size_t)y) == 1)

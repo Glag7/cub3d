@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/13 17:53:20 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:47:54 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	draw_settings_menu(t_data *data)
 		(t_ulpoint){.x = part(data->set.wid, 0.5),
 		.y = part(data->set.hei, 0.9)}, colors);
 	draw_button(data, data->menu.buttons[BUT_BACK], IDLE);
-	draw_slider(data, data->menu.sliders[SLI_FOV]);
-	draw_slider(data, data->menu.sliders[SLI_VIEW]);
-	draw_slider(data, data->menu.sliders[SLI_SENSI]);
-	;// draw options
+	draw_slider(data, data->menu.sliders[SET_FOV]);
+	build_textfield(data, data->menu.textfields[SET_FOV]);
+	draw_slider(data, data->menu.sliders[SET_VIEW]);
+	build_textfield(data, data->menu.textfields[SET_VIEW]);
+	draw_slider(data, data->menu.sliders[SET_SENSI]);
+	build_textfield(data, data->menu.textfields[SET_SENSI]);
 	data->menu.window = WIN_SETTINGS;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }

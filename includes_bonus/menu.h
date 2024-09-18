@@ -43,6 +43,8 @@ void	build_menu(t_data *data);
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);
 
+void	build_textfield(t_data *data, t_textfield textfield);
+
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
 
