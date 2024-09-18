@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/07 12:47:48 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:56:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,23 @@ static inline void	move_pos(t_data *data, double delta,
 	vec = (t_point){0., 0.};
 	if (keys & KEY_W)
 	{
-		vec.y -= sin(data->play.a);
-		vec.x += cos(data->play.a);
+		vec.y -= data->play.sina;
+		vec.x += data->play.cosa;
 	}
 	if (keys & KEY_S)
 	{
-		vec.y += sin(data->play.a);
-		vec.x -= cos(data->play.a);
+		vec.y += data->play.sina;
+		vec.x -= data->play.cosa;
 	}
 	if (keys & KEY_A)
 	{
-		vec.y -= cos(data->play.a);
-		vec.x -= sin(data->play.a);
+		vec.y -= data->play.cosa;
+		vec.x -= data->play.sina;
 	}
 	if (keys & KEY_D)
 	{
-		vec.y += cos(data->play.a);
-		vec.x += sin(data->play.a);
+		vec.y += data->play.cosa;
+		vec.x += data->play.sina;
 	}
 	len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	if (len)
@@ -79,6 +79,13 @@ static inline void	move_pos(t_data *data, double delta,
 	}
 	data->play.x += speed * vec.x * delta;
 	data->play.y += speed * vec.y * delta;
+	//super idol
+	if (keys & KEY_SPACE)
+	{
+		data->play.z += 9 * delta;
+	}
+	if (data->play.z > 0)
+		data->play.z -= 3 * delta;
 }
 
 void	move(t_data *data, double delta, uint64_t keys)

@@ -62,7 +62,8 @@ test render distance
 test texture nord llignes sus
 graph temps
 
-arme qui tremble
+arme qui tremble en func de la vitesse
+faire que diqmeter < wid & < hei
 
 {//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
 
@@ -84,11 +85,8 @@ console
 
 alignement settings
 
-faire ouverture portes (commencer les interactions)
-	faire le raycast de longueur x qui peut casser ect
-
-garder qul bloc est sur la case, ou il est, sa distance (ou plutot faire un raycast modifie)
-
-
-norme porte
-shoot meilleur qui casse pas les murs d'un coup
+rebondir
+rework mvements shift etc
+ctrl
+espace
+hitboxes
