@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:17:53 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/13 18:34:41 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/18 14:58:48 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	move_slider_head(t_data *data, t_slider slider, size_t x)
 
 	if (x < slider.pos.x - part(slider.dim.x, 0.45))
 		x = slider.pos.x - part(slider.dim.x, 0.45);
-	else if (x > slider.pos.x + part(slider.dim.x, 0.45))
-		x = slider.pos.x + part(slider.dim.x, 0.45);
+	else if (x > slider.pos.x - part(slider.dim.x, 0.45) + part(slider.dim.x, 0.9))
+		x = slider.pos.x - part(slider.dim.x, 0.45) + part(slider.dim.x, 0.9);
 	colors[0] = 0xFF000000;
 	colors[1] = 0xFFD0D0D0;
 	draw_rectangle(data, slider.pos, slider.dim, colors);
@@ -45,17 +45,14 @@ void	draw_slider(t_data *data, t_slider slider)
 		(t_ulpoint){.x = part(slider.dim.x, 0.1), .y = slider.dim.y}, colors);
 }
 
-#include <stdio.h>
 static void	update_value(t_slider *slider, size_t x)
 {
 	if (x < slider->pos.x - part(slider->dim.x, 0.45))
 		x = slider->pos.x - part(slider->dim.x, 0.45);
-	else if (x > slider->pos.x + part(slider->dim.x, 0.45))
-		x = slider->pos.x + part(slider->dim.x, 0.45);
-	printf("x = %lf   len = %lf\n", (double)(x - (slider->pos.x - part(slider->dim.x, 0.45))), (double)(part(slider->dim.x, 0.9)));// tmp
+	else if (x > slider->pos.x - part(slider->dim.x, 0.45) + part(slider->dim.x, 0.9))
+		x = slider->pos.x - part(slider->dim.x, 0.45) + part(slider->dim.x, 0.9);
 	slider->i_curr = (double)(x - (slider->pos.x - part(slider->dim.x, 0.45)))
 		/ (double)(part(slider->dim.x, 0.9));
-	//slider->i_curr = (uint32_t)((double)(slider->v_max - slider->v_min) * index) + slider->v_min;
 }
 
 void	update_sliders(t_data *data)

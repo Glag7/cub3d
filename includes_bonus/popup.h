@@ -60,6 +60,12 @@ enum
 	SLI_SENSI
 };
 
+enum
+{
+	UINT = 0,
+	DOUBLE
+};
+
 /* ----- STRUCTURES ----- */
 
 typedef struct s_slider
@@ -67,9 +73,10 @@ typedef struct s_slider
 	t_ulpoint	pos;
 	t_ulpoint	dim;
 	uint8_t		state;
+	uint8_t		type;
 	void		*dst;
-	uint32_t	v_min;
-	uint32_t	v_max;
+	double		v_min;
+	double		v_max;
 	double		i_curr;
 }	t_slider;
 

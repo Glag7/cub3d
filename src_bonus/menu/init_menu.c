@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/13 18:33:13 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/18 15:14:40 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 {
 	menu->sliders[SLI_FOV] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->fov_deg, .v_min = 10,
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->fov_deg, .v_min = 10,
 		.v_max = 170, .i_curr = 0.5};
 	menu->sliders[SLI_VIEW] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->view, .v_min = 1,
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->view, .v_min = 1,
 		.v_max = 2000, .i_curr = 0.5};
 	menu->sliders[SLI_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .dst = &set->sensi, .v_min = 0,
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->sensi, .v_min = 0,
 		.v_max = 5, .i_curr = 0.1};
 }
 
