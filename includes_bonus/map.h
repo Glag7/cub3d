@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 17:25:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:25:35 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define MOVING		0b00000000000000000000000001100000
 # define CLOSING	0b00000000000000000000000000100000
 # define OPENING	0b00000000000000000000000001000000
-//is burning or opening
-# define ACTIVE		0b00000000000000000000111110000000 //useless for opening
+//is burning
+# define ACTIVE		0b00000000000000000000111110000000
 # define ACTIVEOFF	7
 //special value
 # define VALUE		0b11111111111111111111000000000000
@@ -66,7 +66,7 @@ typedef struct s_img
 
 # define MAXANIM 16
 
-typedef struct	s_anim
+typedef struct s_anim
 {
 	uint32_t	cur;
 	uint32_t	max;
@@ -76,7 +76,7 @@ typedef struct	s_anim
 
 typedef struct s_map
 {
-	uint32_t	*map;
+	uint32_t		*map;
 	unsigned int	hei;
 	unsigned int	wid;
 	t_img			n;
@@ -85,16 +85,9 @@ typedef struct s_map
 	t_img			e;
 	t_img			f;
 	t_img			c;
-	union
-	{
-		struct
-		{
-			t_img	g;
-			t_img	d;
-			t_img	h;
-		};
-		t_img	flat[3];
-	};
+	t_img			g;
+	t_img			d;
+	t_img			h;
 	t_anim			gun;
 }	t_map;
 

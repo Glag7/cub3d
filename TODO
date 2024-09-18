@@ -90,4 +90,5 @@ faire ouverture portes (commencer les interactions)
 garder qul bloc est sur la case, ou il est, sa distance (ou plutot faire un raycast modifie)
 
 
-norme draw_flat
+norme porte
+shoot meilleur qui casse pas les murs d'un coup

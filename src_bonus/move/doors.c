@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:06:16 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 18:09:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:09:57 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	open_doors(t_data *data, double delta)
 void	open_door(t_data *data, double delta)
 {
 	if (data->keys & KEY_E && data->cross && data->cross_dist < ARM_LEN
-		&& (*data->cross & SPEC) == DOOR)
+		&& ((*data->cross & SPEC) == DOOR|| 1))
 	{
 		if ((*data->cross & MOVING))
 			*data->cross = (*data->cross & ~MOVING) | (~*data->cross & MOVING);
