@@ -83,6 +83,7 @@ SRC_BONUS = main.c \
       $(RENDER)minimap.c \
       $(MOVE)move.c \
       $(MOVE)move_angle.c \
+      $(MOVE)shoot.c \
       $(MOVE)doors.c
 
 OBJ = $(SRC:.c=.o)

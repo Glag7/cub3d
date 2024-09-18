@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.h                                             :+:      :+:    :+:   */
+/*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 12:53:07 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 16:39:29 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/09/18 16:33:46 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/09/18 16:40:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MOVE_H
-# define MOVE_H
+#include <stdint.h>
+#include "data.h"
+#include "map.h"
+#include "keys.h"
 
-# include <stdint.h>
-# include "data.h"
+void	shoot(t_data *data, double delta)
+{
+	uint32_t	value;
 
-void	move(t_data *data, double delta, uint64_t keys);
-void	move_angle(t_data *data, double delta, uint64_t keys);
-void	open_door(t_data *data, double delta);
-void	open_doors(t_data *data, double delta);
-void	shoot(t_data *data, double delta);
-
-#endif 
+	if (!(data->keys & KEY_LM) || !data->cross)
+		return ;
+	value = *data->cross;
+	if ((value & CUBE) < 2)
+		*data->cross = 0;
+	else if (((int)(delta * 123456789.) & 3) == 2)
+		*data->cross -= 1;
+	data->keys &= ~KEY_LM;
+}

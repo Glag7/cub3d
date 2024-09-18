@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 18:09:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:40:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,12 @@ static void	manage_game(t_data *data, double delta)
 {
 	if (!(data->status & INWINDOW))
 		return ;
-	//TODO make this a func
-	//open door + open activated doors
 	open_door(data, delta);
-	//shoot
-	if (data->keys & KEY_LM)
-	{
-		if (data->cross)
-			*data->cross = 0;
-		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-		data->keys &= ~KEY_LM;
-	}
+	shoot(data, delta);
 	data->cross = NULL;
 	move_angle(data, delta, data->keys);
 	move(data, delta, data->keys);
-	open_doors(data, delta);//
+	open_doors(data, delta);
 	compute_values(data);
 	draw_floor(data);
 	raycast(data);
