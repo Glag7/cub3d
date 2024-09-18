@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 18:50:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:53:43 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,14 @@ void	move(t_data *data, double delta, uint64_t keys)
 	newpos.y = data->play.y;
 	newpos.x += speed * vec.x * delta;
 	newpos.y += speed * vec.y * delta;
+	if (newpos.x >= (double)data->map.wid)
+		newpos.x -= (double)data->map.wid;
+	else if (newpos.x < 0.)
+		newpos.x += (double)data->map.wid;
+	if (newpos.y >= (double)data->map.hei)
+		newpos.y -= (double)data->map.hei;
+	else if (newpos.y < 0.)
+		newpos.y += (double)data->map.hei;
 	//ramener a la map
 	if (!data->map.map[(int)newpos.x + (int)data->play.y * data->map.wid])
 		data->play.x = newpos.x;
