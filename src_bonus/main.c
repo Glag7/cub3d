@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 17:14:44 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:33:01 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 static void	start_game(t_data *data)
 {
 	data->i_open = 1;
-	data->i_burn = 1;
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:06:16 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 15:09:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:02:20 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,60 +15,61 @@
 #include "map.h"
 #include "keys.h"
 
-#define TIME 1.
+static inline __attribute__((always_inline)) int
+	check_value(int32_t *value, uint32_t *cur)
+{
+	if (*value > VALUEONE * 9 / 10 && (*cur & SPEC) == DOOR)
+	{
+		*value = VALUEONE * 9 / 10;
+		*cur &= ~MOVING;
+		return (1);
+	}
+	else if (*value > VALUEONE && (*cur & SPEC) == FENCE)
+	{
+		*value = VALUEONE;
+		*cur &= ~MOVING;
+		return (1);
+	}
+	else if (*value < 0)
+	{
+		*value = 0;
+		*cur &= ~MOVING;
+		return (1);
+	}
+	return (0);
+}
+
 void	open_doors(t_data *data, double delta)
 {
 	int			i;
+	int			stop;
 	uint32_t	*cur;
-	int32_t	value;
-	int	stop;
+	int32_t		value;
 
-	stop = 0;
-	i = 0;
-	while (i < 32)
+	i = -1;
+	while (++i < 32)
 	{
-		if (cur == data->opening[i])
-		{
-			data->opening[i++] = NULL;
+		if (cur == data->opening[i] || !data->opening[i])
 			continue ;
-		}
 		cur = data->opening[i];
-		if (cur)
-		{
-			value = (*cur & VALUE) >> VALUEOFF;
-			if (*cur & OPENING)
-				value += (int32_t)(delta / TIME * (double)VALUEONE);
-			else if (*cur & CLOSING)
-			{
-				value -= (int32_t)(delta / TIME * (double)VALUEONE);
-			}
-			else
-				data->opening[i] = 0;
-			if (value > VALUEONE * 9 / 10)
-			{
-				value = VALUEONE * 9 / 10;
-				*cur &= ~MOVING;
-				stop = 1;
-			}
-			else if (value < 0)
-			{
-				value = 0;
-				*cur &= ~MOVING;
-				stop = 1;
-			}
-			*cur = (*cur & ~VALUE) | value << VALUEOFF;
-			if (stop)
-				data->opening[i] = 0;
-			
-		}
-		++i;
+		value = (*cur & VALUE) >> VALUEOFF;
+		if (*cur & OPENING)
+			value += (int32_t)(delta / ANIM_TIME * (double)VALUEONE);
+		else if (*cur & CLOSING)
+			value -= (int32_t)(delta / ANIM_TIME * (double)VALUEONE);
+		else
+			data->opening[i] = 0;
+		stop = check_value(&value, cur);
+		*cur = (*cur & ~VALUE) | value << VALUEOFF;
+		if (stop)
+			data->opening[i] = 0;
 	}
-}//FIXME door can be added twice
+}
 
 void	open_door(t_data *data, double delta)
 {
 	if (data->keys & KEY_E && data->cross && data->cross_dist < ARM_LEN
-		&& ((*data->cross & SPEC) == DOOR|| 1))
+		&& ((*data->cross & SPEC) == DOOR || (*data->cross & SPEC) == FENCE))
 	{
 		if ((*data->cross & MOVING))
 			*data->cross = (*data->cross & ~MOVING) | (~*data->cross & MOVING);

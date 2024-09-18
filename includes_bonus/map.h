@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:29:41 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 15:25:35 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:32:14 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_img
 }	t_img;
 
 # define MAXANIM 16
+# define ANIM_TIME 1.
 
 typedef struct s_anim
 {
