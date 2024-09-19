@@ -46,7 +46,13 @@ void	save_settings(t_data *data);
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);
 
+void	draw_digit(t_data *data, t_ulpoint pos, double scale, t_img digit);
 void	build_textfield(t_data *data, t_textfield textfield);
+
+void	print_uint(t_data *data, t_textfield textfield, double scale,
+		size_t len);
+void	print_double(t_data *data, t_textfield textfield, double scale,
+		size_t len);
 
 uint32_t	get_pixel(uint32_t src_px, uint32_t add_px);
 size_t	part(size_t n, double fraction);
