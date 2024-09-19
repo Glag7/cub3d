@@ -19,6 +19,17 @@
 
 void	close_menu(t_data *data)
 {
+	size_t	i;
+
+	if (data->menu.window == WIN_SETTINGS)
+	{
+		i = 0;
+		while (i < NB_SETTINGS)
+		{
+			data->menu.sliders[i].state = IDLE;
+			i++;
+		}
+	}
 	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 	mlx_mouse_move(data->mlx.mlx, data->mlx.win,
 		data->menu.save_mouse.x, data->menu.save_mouse.y);
