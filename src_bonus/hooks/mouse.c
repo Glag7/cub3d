@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 19:33:02 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:48:57 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@
 # define MIDDLE 2
 # define RIGHT 3
 
-// pb : si slider presse quand menu ferme avec tab, slider reste quand le menu se reouvre !!
-// -> morceler cette fonction pour appeler save_sliders quand window == SETTINGS et le menu se ferme ?
 // pb pour les sliders uint qui doivent save dans des doubles (cf fov_deg)
 static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 {
-	size_t	i;
-
 	(void)x;
 	(void)y;
 	if (click != LEFT)

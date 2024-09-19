@@ -41,6 +41,7 @@ void	draw_exit_menu(t_data *data);
 
 void	build_menu(t_data *data);
 void	close_menu(t_data *data);
+void	save_settings(t_data *data);
 
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);

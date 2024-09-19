@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/13 17:05:53 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:44:53 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	draw_image(t_data *data, t_ulpoint pos, t_img string)
 		while (x_img < string.w)
 		{
 			if ((string.px[y_img * string.w + x_img] & 0xFF000000) != 0)
-				data->mlx.px[y_px * data->set.wid + x_px] =
-					string.px[y_img * string.w + x_img];
+				data->mlx.px[y_px * data->set.wid + x_px]
+					= string.px[y_img * string.w + x_img];
 			x_img++;
 			x_px++;
 		}

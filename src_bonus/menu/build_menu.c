@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/18 16:47:54 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 15:46:17 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "status.h"
 #include "popup.h"
 
-static void	save_settings(t_data *data)
+void	save_settings(t_data *data)
 {
 	size_t	i;
 
@@ -27,9 +27,11 @@ static void	save_settings(t_data *data)
 		if (data->menu.sliders[i].state == PRESS)
 		{
 			if (data->menu.sliders[i].type == UINT)
-				*(uint32_t *)data->menu.sliders[i].dst = (uint32_t)data->menu.sliders[i].v_curr;
+				*(uint32_t *)data->menu.sliders[i].dst
+					= (uint32_t)data->menu.sliders[i].v_curr;
 			else if (data->menu.sliders[i].type == DOUBLE)
-				*(double *)data->menu.sliders[i].dst = data->menu.sliders[i].v_curr;
+				*(double *)data->menu.sliders[i].dst
+					= data->menu.sliders[i].v_curr;
 			data->menu.sliders[i].state = IDLE;
 			break ;
 		}
