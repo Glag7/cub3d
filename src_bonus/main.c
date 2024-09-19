@@ -27,6 +27,7 @@
 
 static void	start_game(t_data *data)
 {
+	data->i_open = 1;
 	data->play.az = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);

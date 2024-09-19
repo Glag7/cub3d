@@ -15,10 +15,11 @@
 #include "menu.h"
 #include "popup.h"
 #include "status.h"
+#include "keys.h"
 
-# define LEFT 1
-# define MIDDLE 2
-# define RIGHT 3
+#define LEFT 1
+#define MIDDLE 2
+#define RIGHT 3
 
 // pb pour les sliders uint qui doivent save dans des doubles (cf fov_deg)
 static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
@@ -109,7 +110,7 @@ int	mouse_hook(int click, int x, int y, void *data_)
 	if (click == LEFT)
 	{
 		data->lastshot = 0.;
-		data->shooting = 1;
+		data->keys |= KEY_LM;
 	}
 	return (0);
 }

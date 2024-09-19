@@ -85,6 +85,8 @@ SRC_BONUS = main.c \
       $(RENDER)manage_menu.c \
       $(MOVE)move.c \
       $(MOVE)move_angle.c \
+      $(MOVE)shoot.c \
+      $(MOVE)doors.c \
       $(MENU)buttons.c \
       $(MENU)draw_menu.c \
       $(MENU)init_menu.c \

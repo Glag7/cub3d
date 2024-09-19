@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/21 16:59:42 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 18:51:51 by glaguyon         ###   ########.fr       */
+/*   Created: 2024/09/18 16:33:46 by glaguyon          #+#    #+#             */
+/*   Updated: 2024/09/18 16:40:54 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYS_H
-# define KEYS_H
+#include <stdint.h>
+#include "data.h"
+#include "map.h"
+#include "keys.h"
 
-# define KEY_W 1
-# define KEY_S 2
-# define KEY_A 4
-# define KEY_D 8
-# define KEY_LEFT 16
-# define KEY_RIGHT 32
-# define KEY_UP 64
-# define KEY_DOWN 128
-# define KEY_SHIFT 256
-# define KEY_E 512
-# define KEY_LM 1024
-# define KEY_SPACE 2048
-# define KEY_CTRL 4096
-# define KEY_TAB 8192
+void	shoot(t_data *data, double delta)
+{
+	uint32_t	value;
 
-#endif
+	if (!(data->keys & KEY_LM) || !data->cross)
+		return ;
+	value = *data->cross;
+	if ((value & CUBE) < 2)
+		*data->cross = 0;
+	else if (((int)(delta * 123456789.) & 3) == 2)
+		*data->cross -= 1;
+	data->keys &= ~KEY_LM;
+}

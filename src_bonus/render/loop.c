@@ -91,6 +91,8 @@ static void	manage_hooks(t_data *data)
 
 static void	manage_game(t_data *data, double delta)
 {
+	if (!(data->status & INWINDOW))
+		return ;
 	manage_hooks(data);
 	if ((data->status & MENU) != 0)
 	{
@@ -98,22 +100,18 @@ static void	manage_game(t_data *data, double delta)
 		manage_menu(data);
 		return ;
 	}
-	//open door + open activated doors
-	if (data->shooting)
-	{
-		//raycast chokbar qui tag l'objet, il fait l'anim puis il explose
-		data->shooting = 0;
-	}
-	if (data->status & INWINDOW || data->lastshot < data->map.gun.time)
-	{
-		move_angle(data, delta, data->keys);
-		move(data, delta, data->keys);
-		compute_values(data);
-		draw_floor(data);
-		raycast(data);
-		draw_minimap(data);
-		draw_hud(data);
-	}
+	open_door(data, delta);
+	shoot(data, delta);
+	data->cross = NULL;
+	move_angle(data, delta, data->keys);
+	move(data, delta, data->keys);
+	open_doors(data, delta);
+	compute_values(data);
+	draw_floor(data);
+	raycast(data);
+	draw_minimap(data);
+	draw_hud(data);
+	data->lastshot += delta;
 }
 
 int	loop(void *data_)
@@ -127,7 +125,6 @@ int	loop(void *data_)
 	data = data_;
 	delta = get_delta(&newsec);
 	manage_game(data, delta);
-	data->lastshot += delta;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	if (newsec)
 	{
