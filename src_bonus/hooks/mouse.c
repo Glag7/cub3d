@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/19 15:48:57 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:53:49 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 	(void)y;
 	if (click != LEFT)
 		return ;
-	save_settings(data);
+	if (data->menu.window == WIN_SETTINGS)
+		save_settings(data);
 }
 
 int	unmouse_hook(int click, int x, int y, void *data_)
@@ -52,7 +53,7 @@ static void	update_settings(t_data *data, int x, int y)
 	while (i < NB_SETTINGS)
 	{
 		if (check_hitbox(data->menu.sliders[i].pos, data->menu.sliders[i].dim,
-			(size_t)x, (size_t)y) == 1)
+				(size_t)x, (size_t)y) == 1)
 		{
 			data->menu.sliders[i].state = PRESS;
 			break ;

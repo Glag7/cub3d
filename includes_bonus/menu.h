@@ -48,6 +48,7 @@ void	update_sliders(t_data *data);
 
 void	build_textfield(t_data *data, t_textfield textfield);
 
+uint32_t	get_pixel(uint32_t src_px, uint32_t add_px);
 size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
 

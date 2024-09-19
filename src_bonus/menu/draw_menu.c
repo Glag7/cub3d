@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:46 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 18:05:42 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,24 +94,23 @@ void	draw_rectangle(t_data *data, t_ulpoint pos, t_ulpoint dim,
 	}
 }
 
-void	draw_image(t_data *data, t_ulpoint pos, t_img string)
+void	draw_image(t_data *data, t_ulpoint pos, t_img image)
 {
-	size_t	x_img;
-	size_t	y_img;
-	size_t	x_px;
-	size_t	y_px;
+	size_t		x_img;
+	size_t		y_img;
+	size_t		x_px;
+	size_t		y_px;
 
 	y_img = 0;
-	y_px = pos.y - string.h / 2;
-	while (y_img < string.h)
+	y_px = pos.y - image.h / 2;
+	while (y_img < image.h)
 	{
 		x_img = 0;
-		x_px = pos.x - string.w / 2;
-		while (x_img < string.w)
+		x_px = pos.x - image.w / 2;
+		while (x_img < image.w)
 		{
-			if ((string.px[y_img * string.w + x_img] & 0xFF000000) != 0)
-				data->mlx.px[y_px * data->set.wid + x_px]
-					= string.px[y_img * string.w + x_img];
+			data->mlx.px[y_px * data->set.wid + x_px] = get_pixel(data->mlx.px[y_px
+				* data->set.wid + x_px], image.px[y_img * image.w + x_img]);
 			x_img++;
 			x_px++;
 		}

@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:44 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 19:13:45 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static int	load_digits(t_mlx *mlx, t_menu *menu)
 static void	init_textfields_settings(t_menu *menu, size_t w, size_t h)
 {
 	menu->textfields[SET_FOV] = (t_textfield){.pos = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.05), .y = part(h, 0.05)},
+		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.08), .y = part(h, 0.05)},
 		.type = DOUBLE, .src = &menu->sliders[SET_FOV].v_curr};
 	menu->textfields[SET_VIEW] = (t_textfield){.pos = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.05), .y = part(h, 0.05)},
+		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.08), .y = part(h, 0.05)},
 		.type = UINT, .src = &menu->sliders[SET_VIEW].v_curr};
 	menu->textfields[SET_SENSI] = (t_textfield){.pos = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.05), .y = part(h, 0.05)},
+		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.08), .y = part(h, 0.05)},
 		.type = DOUBLE, .src = &menu->sliders[SET_SENSI].v_curr};
 }
 
@@ -71,7 +71,7 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 		.v_max = 2000, .v_curr = 1000};
 	menu->sliders[SET_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->sensi, .v_min = 0.,
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->sensi, .v_min = -5.,
 		.v_max = 5., .v_curr = 1.};
 }
 
@@ -137,7 +137,7 @@ inline static void	init_menu_images(t_menu *menu)
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 {
 	return (load_img(mlx->mlx, "assets/core/title.bmp", &menu->title,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
+			(t_dim){.w = part(w, 0.2), .h = part(h, 0.15)})
 		|| load_img(mlx->mlx, "assets/core/confirm.bmp", &menu->confirm,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "assets/core/resume.bmp", &menu->resume,
