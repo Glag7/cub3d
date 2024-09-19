@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 18:05:42 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 19:26:46 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,11 @@
 #include "img.h"
 #include "popup.h"
 
-inline static uint32_t	darken(uint32_t pixel)
-{
-	uint32_t	darker_pixel;
-
-	darker_pixel = pixel & 0xFF000000;
-	darker_pixel |= (uint32_t)part((pixel & 0x00FF0000) >> 16, 0.5) << 16;
-	darker_pixel |= (uint32_t)part((pixel & 0x0000FF00) >> 8, 0.5) << 8;
-	darker_pixel |= (uint32_t)part((pixel & 0x000000FF), 0.5);
-	return (darker_pixel);
-}
-
 void	save_background(t_data *data)
 {
-	size_t	x;
-	size_t	y;
+	size_t		x;
+	size_t		y;
+	uint32_t	pixel;
 
 	y = 0;
 	while (y < data->set.hei)
@@ -38,8 +28,12 @@ void	save_background(t_data *data)
 		x = 0;
 		while (x < data->set.wid)
 		{
-			data->menu.background[y * data->set.wid + x]
-				= darken(data->mlx.px[y * data->set.wid + x]);
+			pixel = data->mlx.px[y * data->set.wid + x];
+			pixel = (pixel & 0xFF000000)
+				| ((uint32_t)part((pixel & 0x00FF0000) >> 16, 0.5) << 16)
+				| ((uint32_t)part((pixel & 0x0000FF00) >> 8, 0.5) << 8)
+				| ((uint32_t)part((pixel & 0x000000FF), 0.5));
+			data->menu.background[y * data->set.wid + x] = pixel;
 			x++;
 		}
 		y++;
@@ -109,8 +103,9 @@ void	draw_image(t_data *data, t_ulpoint pos, t_img image)
 		x_px = pos.x - image.w / 2;
 		while (x_img < image.w)
 		{
-			data->mlx.px[y_px * data->set.wid + x_px] = get_pixel(data->mlx.px[y_px
-				* data->set.wid + x_px], image.px[y_img * image.w + x_img]);
+			data->mlx.px[y_px * data->set.wid + x_px]
+				= get_pixel(data->mlx.px[y_px * data->set.wid + x_px],
+					image.px[y_img * image.w + x_img]);
 			x_img++;
 			x_px++;
 		}

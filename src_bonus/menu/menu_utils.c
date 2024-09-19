@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 19:18:51 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/19 19:22:02 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ uint32_t	get_pixel(uint32_t src_px, uint32_t add_px)
 	transparency = (double)((add_px & 0xFF000000) >> 24) / 255.;
 	new_px = 0;
 	new_px |= 0xFF000000;
-	new_px |= ((uint32_t)((double)((src_px & 0x00FF0000) >> 16) * (1. - transparency)) << 16)
-		+ ((uint32_t)((double)((add_px & 0x00FF0000) >> 16) * transparency) << 16);
-	new_px |= ((uint32_t)((double)((src_px & 0x0000FF00) >> 8) * (1. - transparency)) << 8)
-		+ ((uint32_t)((double)((add_px & 0x0000FF00) >> 8) * transparency) << 8);
-	new_px |= ((uint32_t)((double)(src_px & 0x000000FF) * (1. - transparency)))
-		+ ((uint32_t)((double)(add_px & 0x000000FF) * transparency));
+	new_px |= ((uint32_t)((double)((src_px & 0x00FF0000) >> 16)
+				*(1. - transparency)) << 16)
+		+ ((uint32_t)((double)((add_px & 0x00FF0000) >> 16)
+				*transparency) << 16);
+	new_px |= ((uint32_t)((double)((src_px & 0x0000FF00) >> 8)
+				*(1. - transparency)) << 8)
+		+ ((uint32_t)((double)((add_px & 0x0000FF00) >> 8) *transparency) << 8);
+	new_px |= ((uint32_t)((double)(src_px & 0x000000FF) *(1. - transparency)))
+		+ ((uint32_t)((double)(add_px & 0x000000FF) *transparency));
 	return (new_px);
 }
 
