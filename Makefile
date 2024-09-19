@@ -89,9 +89,10 @@ SRC_BONUS = main.c \
       $(MENU)draw_menu.c \
       $(MENU)init_menu.c \
       $(MENU)menu_utils.c \
-      $(MENU)start_menu.c \
+      $(MENU)build_menu.c \
       $(MENU)slider.c \
-      $(MENU)textfield.c
+      $(MENU)textfield.c \
+      $(MENU)build_windows.c
 
 OBJ = $(SRC:.c=.o)
 

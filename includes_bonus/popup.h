@@ -114,6 +114,7 @@ typedef struct s_menu
 	uint8_t		first_start;
 	uint8_t		first_render;
 	uint8_t		prev_keys;
+	t_ulpoint	save_mouse;
 }	t_menu;
 
 #endif

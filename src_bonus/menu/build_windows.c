@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_menu.c                                       :+:      :+:    :+:   */
+/*   build_windows.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -68,14 +68,4 @@ void	draw_exit_menu(t_data *data)
 	draw_button(data, data->menu.buttons[BUT_NO], IDLE);
 	data->menu.window = WIN_EXIT;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-}
-
-void	build_menu(t_data *data)
-{
-	data->status |= MENU;
-	mlx_mouse_move(data->mlx.mlx, data->mlx.win,
-		data->set.wid / 2, data->set.hei / 2);
-	mlx_mouse_show(data->mlx.mlx, data->mlx.win);
-	save_background(data);
-	draw_main_menu(data);
 }

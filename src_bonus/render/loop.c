@@ -79,24 +79,10 @@ static void	manage_hooks(t_data *data)
 	if ((data->menu.prev_keys & PREV_TAB) == 0 && (data->keys & KEY_TAB) != 0)
 	{
 		data->menu.prev_keys |= PREV_TAB;
-		if (data->menu.first_start == 1)
-		{
-			free(data->menu.buttons[BUT_START].string.px);
-			data->menu.buttons[BUT_START].string = data->menu.resume;
-		}
-		data->menu.first_start = 0;
 		if ((data->status & MENU) == 0)
-		{
-			data->status |= MENU;
 			build_menu(data);
-		}
 		else
-		{
-			data->status &= ~MENU;
-			mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
-			mlx_mouse_move(data->mlx.mlx, data->mlx.win,
-				data->set.wid / 2, data->set.hei / 2);
-		}
+			close_menu(data);
 	}
 	else if ((data->menu.prev_keys & PREV_TAB) == 1
 		&& (data->keys & KEY_TAB) == 0)

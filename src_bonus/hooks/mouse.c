@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "mlx.h"
 #include "data.h"
 #include "menu.h"
@@ -80,18 +79,7 @@ static void	update_settings(t_data *data, int x, int y)
 static void	update_menu(t_data *data, size_t i)
 {
 	if (i == BUT_START)
-	{
-		mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
-		mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2, data->set.hei / 2);
-		;// pb angles
-		if (data->menu.first_start == 1)
-		{
-			free(data->menu.buttons[BUT_START].string.px);
-			data->menu.buttons[BUT_START].string = data->menu.resume;
-		}
-		data->menu.first_start = 0;
-		data->status &= ~MENU;
-	}
+		close_menu(data);
 	else if (i == BUT_SETTINGS)
 		draw_settings_menu(data);
 	else if (i == BUT_BACK || i == BUT_NO)

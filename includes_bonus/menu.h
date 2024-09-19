@@ -38,7 +38,9 @@ void	draw_button(t_data *data, t_button button, uint8_t state);
 void	draw_main_menu(t_data *data);
 void	draw_settings_menu(t_data *data);
 void	draw_exit_menu(t_data *data);
+
 void	build_menu(t_data *data);
+void	close_menu(t_data *data);
 
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);
