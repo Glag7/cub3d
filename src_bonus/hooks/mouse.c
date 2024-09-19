@@ -31,19 +31,7 @@ static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 	(void)y;
 	if (click != LEFT)
 		return ;
-	i = 0;
-	while (i < NB_SETTINGS)
-	{
-		if (data->menu.sliders[i].state == PRESS)
-		{
-			if (data->menu.sliders[i].type == UINT)
-				*(uint32_t *)data->menu.sliders[i].dst = (uint32_t)data->menu.sliders[i].v_curr;
-			else if (data->menu.sliders[i].type == DOUBLE)
-				*(double *)data->menu.sliders[i].dst = data->menu.sliders[i].v_curr;
-			data->menu.sliders[i].state = IDLE;
-		}
-		i++;
-	}
+	save_settings(data);
 }
 
 int	unmouse_hook(int click, int x, int y, void *data_)
