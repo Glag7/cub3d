@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/20 15:47:59 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:08:50 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,28 +136,28 @@ inline static void	init_menu_images(t_menu *menu)
 
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 {
-	return (load_img(mlx->mlx, "assets/core/title.bmp", &menu->title,
+	return (load_img(mlx->mlx, "assets/core/menu/title.bmp", &menu->title,
 			(t_dim){.w = part(w, 0.2), .h = part(h, 0.15)})
-		|| load_img(mlx->mlx, "assets/core/confirm.bmp", &menu->confirm,
+		|| load_img(mlx->mlx, "assets/core/menu/confirm.bmp", &menu->confirm,
 			(t_dim){.w = part(w, 0.15), .h = part(h, 0.13)})
-		|| load_img(mlx->mlx, "assets/core/resume.bmp", &menu->resume,
+		|| load_img(mlx->mlx, "assets/core/menu/resume.bmp", &menu->resume,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/start.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/start.bmp",
 			&menu->buttons[BUT_START].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/settings.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/settings.bmp",
 			&menu->buttons[BUT_SETTINGS].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/back.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/back.bmp",
 			&menu->buttons[BUT_BACK].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/exit.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/exit.bmp",
 			&menu->buttons[BUT_EXIT].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/yes.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/yes.bmp",
 			&menu->buttons[BUT_YES].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/no.bmp",
+		|| load_img(mlx->mlx, "assets/core/menu/no.bmp",
 				&menu->buttons[BUT_NO].string,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}));
 }
