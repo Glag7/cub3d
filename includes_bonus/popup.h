@@ -26,6 +26,7 @@
 # define NB_SETTINGS	3
 
 # define OUTLINE_WIDTH	5
+# define GRADIENT_WIDTH	5
 # define PREV_TAB	1
 
 /* ----- ENUMERATIONS ----- */

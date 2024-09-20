@@ -95,7 +95,8 @@ SRC_BONUS = main.c \
       $(MENU)slider.c \
       $(MENU)textfield.c \
       $(MENU)build_windows.c \
-      $(MENU)textfield_itoa.c
+      $(MENU)textfield_itoa.c \
+      $(MENU)manage_background.c
 
 OBJ = $(SRC:.c=.o)
 
