@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 19:13:45 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:47:59 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 	return (load_img(mlx->mlx, "assets/core/title.bmp", &menu->title,
 			(t_dim){.w = part(w, 0.2), .h = part(h, 0.15)})
 		|| load_img(mlx->mlx, "assets/core/confirm.bmp", &menu->confirm,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
+			(t_dim){.w = part(w, 0.15), .h = part(h, 0.13)})
 		|| load_img(mlx->mlx, "assets/core/resume.bmp", &menu->resume,
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "assets/core/start.bmp",

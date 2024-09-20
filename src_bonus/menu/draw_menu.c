@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 19:26:46 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:46:50 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,28 @@ void	draw_background(t_data *data)
 void	draw_rectangle(t_data *data, t_ulpoint pos, t_ulpoint dim,
 	uint32_t *colors)
 {
+	t_ulpoint	start;
+	t_ulpoint	end;
 	size_t	x;
 	size_t	y;
 	size_t	margin;
 
-	if (fmin(dim.x, dim.y) < 10 * OUTLINE_WIDTH)
-		margin = part(fmin(dim.x, dim.y), 0.1);
-	else
+	if (part((size_t)fmin((double)dim.x, (double)dim.y), 0.1) > OUTLINE_WIDTH)
 		margin = OUTLINE_WIDTH;
-	y = pos.y - dim.y / 2;
-	while (y < pos.y + dim.y / 2)
+	else
+		margin = part((size_t)fmin((double)dim.x, (double)dim.y), 0.1);
+	start = (t_ulpoint){.x = pos.x - part(dim.x, 0.5),
+		.y = pos.y - part(dim.y, 0.5)};
+	end = (t_ulpoint){.x = pos.x - part(dim.x, 0.5) + dim.x,
+		.y = pos.y - part(dim.y, 0.5) + dim.y};
+	y = start.y;
+	while (y < end.y)
 	{
-		x = pos.x - dim.x / 2;
-		while (x < pos.x + dim.x / 2)
+		x = start.x;
+		while (x < end.x)
 		{
-			if (x < pos.x - dim.x / 2 + margin || x > pos.x + dim.x / 2 - margin
-				|| y < pos.y - dim.y / 2 + margin
-				|| y > pos.y + dim.y / 2 - margin)
+			if (x + 1 < start.x + margin || x > end.x - margin
+				|| y + 1 < start.y + margin || y > end.y - margin)
 				data->mlx.px[y * data->set.wid + x] = colors[0];
 			else
 				data->mlx.px[y * data->set.wid + x] = colors[1];
