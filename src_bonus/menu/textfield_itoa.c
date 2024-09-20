@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:33:01 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 19:41:19 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/20 18:44:49 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ static void	print_decimals(t_data *data, t_ulpoint pos, double scale,
 	draw_digit(data, pos, scale, data->menu.digits[11]);
 }
 
+static bool	manage_sign(double *value)
+{
+	if (*value < 0.)
+	{
+		*value = -(*value);
+		return (1);
+	}
+	return (0);
+}
+
 void	print_double(t_data *data, t_textfield textfield, double scale,
 		size_t len)
 {
@@ -64,16 +74,9 @@ void	print_double(t_data *data, t_textfield textfield, double scale,
 	size_t	d_offset;
 
 	value = *textfield.src;
-	if (value < 0.)
-	{
-		neg = 1;
-		value = -value;
-	}
-	else
-		neg = 0;
+	neg = manage_sign(&value);
 	d_offset = part(data->menu.digits[0].w, scale);
-	i_offset = textfield.pos.x + part(textfield.dim.x, 0.5)
-		- part(d_offset, 0.5);
+	i_offset = textfield.pos.x + textfield.dim.x / 2 - d_offset / 2;
 	print_decimals(data, (t_ulpoint){.x = i_offset, .y = textfield.pos.y},
 		scale, value);
 	i_offset -= 3 * d_offset;
