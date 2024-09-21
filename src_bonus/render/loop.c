@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 16:21:57 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:59:37 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ static void	manage_game(t_data *data, double delta)
 {
 	if (!(data->status & INWINDOW))
 		return ;
+	move_angle(data, delta, data->keys);
+	move(data, delta, data->keys);
 	open_door(data, delta);
 	shoot(data, delta);
 	data->cross = NULL;
-	move_angle(data, delta, data->keys);
-	move(data, delta, data->keys);
 	open_doors(data, delta);
 	compute_values(data);
 	draw_floor(data);

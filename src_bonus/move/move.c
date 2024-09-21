@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 18:54:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:27:55 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define MAXSPEED 1.5
 # define FASTER .5
 # define SLOWER .001
-# define SLOWERAIR .8
+# define SLOWERAIR .6
 
 static inline __attribute__((always_inline)) t_point
 	normvec(t_point vec, uint64_t keys, double delta)
@@ -112,7 +112,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (data->keys & KEY_SHIFT)
 		speed /= SPEEDDIFF;
-	if (speed < MAXSPEED || data->play.z > .5)
+	if (speed < MAXSPEED || data->play.z > data->play.leglen)
 	{
 		data->play.vx += vec.x;
 		data->play.vy += vec.y;
@@ -133,7 +133,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (((speed && vec.x == 0. && vec.y == 0.) || speed > MAXSPEED))
 	{
-		if (data->play.z > .5)
+		if (data->play.z > data->play.leglen)
 		{
 			data->play.vx = data->play.vx * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
 			data->play.vy = data->play.vy * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
@@ -149,13 +149,33 @@ void	move(t_data *data, double delta, uint64_t keys)
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 
-
-	//super idol
+	//FIXME jump is weird
+	//XXX use leglen everywhere
+	//garder espace appuyer pour sauter plus longtemps
+	if (keys & KEY_CTRL && data->play.leglen > .25)
+		data->play.leglen -= (.25 / .05) * delta;
+	else if (!(keys & KEY_CTRL) && data->play.leglen < .5)
+		data->play.leglen += (.25 / .05) * delta;
+	if (data->play.leglen < .25)
+		data->play.leglen = .25;
+	if (data->play.leglen > .5)
+		data->play.leglen = .5;
+	if (data->play.leglen > data->play.z)
+		data->play.z = data->play.leglen;
+	
+	data->play.coyote += delta;
 	if (keys & KEY_SPACE)
 	{
-		data->play.z += 9 * delta;
+		data->keys &= ~KEY_SPACE;
+		data->play.coyote = 0.;
 	}
-	if (data->play.z > .5)
-		data->play.z -= 3 * delta;
+	if (fabs(data->play.leglen - data->play.z) < 1e-3 && data->play.coyote < .2)
+	{
+		data->play.vz += .05;//delta ?
+		data->play.coyote = 3.;
+	}
+	if (data->play.z > data->play.leglen)
+		data->play.vz -= .1 * delta;
+	data->play.z += data->play.vz;
 	check_pos(data);
 }
