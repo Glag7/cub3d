@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 15:17:07 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:07:32 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,24 @@
 #include "point.h"
 #include "keys.h"
 
+# define FAT .05//a changer en fonction de la direction
+
+# define ACCEL 20.
+# define ACCELDIFF 3.
+# define SPEEDDIFF 2.
+# define MAXSPEED 1.5
+# define FASTER .5
+# define SLOWER .1
+
 static inline __attribute__((always_inline)) t_point
 	normvec(t_point vec, uint64_t keys, double delta)
 {
 	double	len;
 	double	speed;
 
-	speed = 20.;
+	speed = ACCEL;
 	if (keys & KEY_SHIFT)
-		speed *= 3.;
+		speed *= ACCELDIFF;
 	len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	if (len)
 	{
@@ -94,12 +103,6 @@ static inline void	check_pos(t_data *data)
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
 }
-# define FAT .05//a changer en fonction de la direction
-
-# define SPEEDDIFF 2
-# define MAXSPEED 4.
-# define FASTER .5
-# define SLOWER .1
 
 //TODO t3point
 //check en x, bouger en x, check en y, bouger en y
@@ -137,18 +140,24 @@ void	move(t_data *data, double delta, uint64_t keys)
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 	double sigma = delta * 10.;
-	if (data->play.vx > sigma)
-		data->play.vx -= sigma;
-	else if (data->play.vx < -sigma)//delta
-		data->play.vx += sigma;
-	else
-		data->play.vx = 0.;
-	if (data->play.vy > sigma)
-		data->play.vy -= sigma;
-	else if (data->play.vy < -sigma)//delta
-		data->play.vy += sigma;
-	else
-		data->play.vy = 0.;
+	if (vec.x == 0.)
+	{
+		if (data->play.vx > sigma)
+			data->play.vx -= sigma;
+		else if (data->play.vx < -sigma)//delta
+			data->play.vx += sigma;
+		else
+			data->play.vx = 0.;
+	}
+	if (vec.y == 0.)
+	{
+		if (data->play.vy > sigma)
+			data->play.vy -= sigma;
+		else if (data->play.vy < -sigma)//delta
+			data->play.vy += sigma;
+		else
+			data->play.vy = 0.;
+	}
 
 
 	//super idol
