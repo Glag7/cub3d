@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 19:06:46 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/12 16:23:22 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 18:21:00 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	manage_menu(t_data *data)
 	else
 	{
 		update_buttons(data);
-		update_sliders(data);
+		if (data->menu.window == WIN_SETTINGS)
+		{
+			update_sliders(data);
+			update_resolutions(data);
+		}
 	}
 }

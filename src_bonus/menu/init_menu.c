@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/21 16:56:01 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:14:21 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,43 @@
 #include "err.h"
 #include "utils.h"
 #include "menu.h"
+
+static void	init_resolutions(t_res *res, size_t w, size_t h)
+{
+	res->pos = (t_ulpoint){.x = part(w, 0.5), .y = part(h, 0.75)};
+	res->dim = (t_ulpoint){.x = part(w, 0.45), .y = part(h, 0.07)};
+	res->color_idle[0] = 0xFF101010;
+	res->color_idle[1] = 0xFF505050;
+	res->color_hover[0] = 0xFF303030;
+	res->color_hover[1] = 0xFF707070;
+	res->color_press[0] = 0xFF404040;
+	res->color_press[1] = 0xFF808080;
+	res->state[0] = PRESS;
+	res->state[1] = IDLE;
+	res->state[2] = IDLE;
+	res->state[3] = IDLE;
+	res->state[4] = IDLE;
+	res->values[0] = (t_ulpoint){.x = 1920, .y = 1080};
+	res->values[1] = (t_ulpoint){.x = 1366, .y = 768};
+	res->values[2] = (t_ulpoint){.x = 1440, .y = 900};
+	res->values[3] = (t_ulpoint){.x = 1600, .y = 900};
+	res->values[4] = (t_ulpoint){.x = 1680, .y = 1050};
+}
+
+static int	load_resolutions_images(t_mlx *mlx, t_res *res, size_t w,
+	size_t h)
+{
+	return (load_img(mlx->mlx, "assets/core/res/1920x1080.bmp", &res->string[0],
+			(t_dim){.w = part(part(w, 0.45), 0.18), .h = part(h, 0.07)})
+		|| load_img(mlx->mlx, "assets/core/res/1366x768.bmp", &res->string[1],
+			(t_dim){.w = part(part(w, 0.45), 0.18), .h = part(h, 0.07)})
+		|| load_img(mlx->mlx, "assets/core/res/1440x900.bmp", &res->string[2],
+			(t_dim){.w = part(part(w, 0.45), 0.18), .h = part(h, 0.07)})
+		|| load_img(mlx->mlx, "assets/core/res/1600x900.bmp", &res->string[3],
+			(t_dim){.w = part(part(w, 0.45), 0.18), .h = part(h, 0.07)})
+		|| load_img(mlx->mlx, "assets/core/res/1680x1050.bmp", &res->string[4],
+			(t_dim){.w = part(part(w, 0.45), 0.18), .h = part(h, 0.07)}));
+}
 
 static int	load_digits(t_mlx *mlx, t_menu *menu)
 {
@@ -79,34 +116,34 @@ static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
 {
 	menu->buttons[BUT_START] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00707070, .window = WIN_MAIN};
+		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
 	menu->buttons[BUT_SETTINGS] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.5)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00707070, .window = WIN_MAIN};
+		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
 	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.32),
 		.y = part(h, 0.88)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00707070, .window = WIN_SETTINGS};
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_SETTINGS};
 	menu->buttons[BUT_EXIT] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.7)}, .dim = (t_ulpoint){.x = part(w, 0.2),
-		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00707070, .window = WIN_MAIN};
+		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
 	menu->buttons[BUT_YES] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.45),
 		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00ff1b1e, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00ff3d40, .window = WIN_EXIT};
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFFff1b1e, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFFff3d40, .window = WIN_EXIT};
 	menu->buttons[BUT_NO] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.55),
 		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0x00101010,
-		.color_idle[1] = 0x00505050, .color_hover[0] = 0x00303030,
-		.color_hover[1] = 0x00707070, .window = WIN_EXIT};
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_EXIT};
 }
 
 inline static void	init_menu_images(t_menu *menu)
@@ -132,6 +169,11 @@ inline static void	init_menu_images(t_menu *menu)
 	menu->digits[9].px = NULL;
 	menu->digits[10].px = NULL;
 	menu->digits[11].px = NULL;
+	menu->res.string[0].px = NULL;
+	menu->res.string[1].px = NULL;
+	menu->res.string[2].px = NULL;
+	menu->res.string[3].px = NULL;
+	menu->res.string[4].px = NULL;
 }
 
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
@@ -174,6 +216,16 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	init_sliders_settings(menu, set, set->wid, set->hei);
 	init_textfields_settings(menu, set->wid, set->hei);
 	init_menu_images(menu);
+	init_resolutions(&menu->res, set->wid, set->hei);
+	if (load_resolutions_images(mlx, &menu->res, set->wid, set->hei) == 1)
+	{
+		free(menu->res.string[0].px);
+		free(menu->res.string[1].px);
+		free(menu->res.string[2].px);
+		free(menu->res.string[3].px);
+		free(menu->res.string[4].px);
+		return (1);
+	}
 	if (load_digits(mlx, menu) == 1)
 	{
 		free(menu->digits[0].px);
@@ -188,6 +240,12 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		free(menu->digits[9].px);
 		free(menu->digits[10].px);
 		free(menu->digits[11].px);
+		free(menu->res.string[0].px);
+		free(menu->res.string[1].px);
+		free(menu->res.string[2].px);
+		free(menu->res.string[3].px);
+		free(menu->res.string[4].px);
+		return (1);
 	}
 	if (load_menu_images(mlx, menu, set->wid, set->hei) == 1)
 	{
@@ -213,6 +271,11 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		free(menu->digits[9].px);
 		free(menu->digits[10].px);
 		free(menu->digits[11].px);
+		free(menu->res.string[0].px);
+		free(menu->res.string[1].px);
+		free(menu->res.string[2].px);
+		free(menu->res.string[3].px);
+		free(menu->res.string[4].px);
 		return (1);
 	}
 	menu->window = WIN_MAIN;

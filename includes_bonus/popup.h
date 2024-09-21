@@ -24,6 +24,7 @@
 
 # define NB_BUTTONS	6
 # define NB_SETTINGS	3
+# define NB_RESOLUTIONS	5
 
 # define OUTLINE_WIDTH	5
 # define GRADIENT_WIDTH	5
@@ -70,6 +71,18 @@ enum
 
 /* ----- STRUCTURES ----- */
 
+typedef struct s_res
+{
+	t_ulpoint	pos;
+	t_ulpoint	dim;
+	t_img		string[5];
+	uint32_t	color_idle[2];
+	uint32_t	color_hover[2];
+	uint32_t	color_press[2];
+	uint8_t		state[5];
+	t_ulpoint	values[5];
+}	t_res;
+
 typedef struct s_textfield
 {
 	t_ulpoint	pos;
@@ -110,6 +123,7 @@ typedef struct s_menu
 	t_button	buttons[NB_BUTTONS];
 	t_slider	sliders[NB_SETTINGS];
 	t_textfield	textfields[NB_SETTINGS];
+	t_res		res;
 	t_img		digits[12];
 	uint8_t		window;
 	uint8_t		first_start;

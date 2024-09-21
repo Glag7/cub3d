@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/19 16:53:49 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:17:42 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #define MIDDLE 2
 #define RIGHT 3
 
-// pb pour les sliders uint qui doivent save dans des doubles (cf fov_deg)
 static void	menu_unmouse_hook(int click, int x, int y, t_data *data)
 {
 	(void)x;
@@ -59,6 +58,12 @@ static void	update_settings(t_data *data, int x, int y)
 			break ;
 		}
 		i++;
+	}
+	if (check_hitbox(data->menu.res.pos, data->menu.res.dim,
+		(size_t)x, (size_t)y) == 1)
+	{
+		save_resolution(data, (size_t)x, (size_t)y);
+		build_resolutions(data, data->menu.res);
 	}
 }
 

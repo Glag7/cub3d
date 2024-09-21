@@ -43,6 +43,8 @@
 
 typedef struct s_set
 {
+	unsigned int	saved_w;
+	unsigned int	saved_h;
 	unsigned int	d;
 	unsigned int	r;
 	unsigned int	xoffset;

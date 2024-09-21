@@ -17,6 +17,8 @@
 
 int	init_settings(t_set *set)
 {
+	set->saved_w = DEF_WID;
+	set->saved_h = DEF_HEI;
 	set->wid = DEF_WID;
 	set->invwid = 1. / (double)(set->wid - 1);
 	set->hei = DEF_HEI;

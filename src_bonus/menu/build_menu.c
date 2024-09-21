@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:55 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:02:48 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	save_settings(t_data *data)
 		}
 		i++;
 	}
+	// appliquer fonction pour modifier fov (et autres options eventuellement)
 	i = 0;
 	while (i < NB_SETTINGS)
 	{

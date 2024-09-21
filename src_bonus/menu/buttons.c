@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:48 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:07:25 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,47 +22,35 @@ bool	check_hitbox(t_ulpoint pos, t_ulpoint dim, size_t x, size_t y)
 		&& y > pos.y - dim.y / 2 && y < pos.y + dim.y / 2);
 }
 
-static bool	update_button_state(t_data *data, t_button *button, size_t x,
-	size_t y)
+static void	update_state(t_data *data, t_button *button, size_t x, size_t y)
 {
-	bool	refresh;
 	bool	hovering;
 
-	refresh = 0;
 	hovering = check_hitbox(button->pos, button->dim, x, y);
-	if (button->state == IDLE && hovering == 1)
+	if (hovering == 1 && button->state == IDLE)
 	{
-		draw_button(data, *button, HOVER);
 		button->state = HOVER;
-		refresh = 1;
+		draw_button(data, *button, HOVER);
 	}
-	else if (button->state == HOVER && hovering == 0)
+	else if (hovering == 0 && button->state == HOVER)
 	{
-		draw_button(data, *button, IDLE);
 		button->state = IDLE;
-		refresh = 1;
+		draw_button(data, *button, IDLE);
 	}
-	return (refresh);
 }
 
 void	update_buttons(t_data *data)
 {
-	bool	refresh;
 	size_t	i;
 	int		x;
 	int		y;
 
 	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.win, &x, &y);
-	refresh = 0;
 	i = 0;
 	while (i < NB_BUTTONS)
 	{
 		if (data->menu.buttons[i].window == data->menu.window)
-			refresh |= update_button_state(data,
-					&data->menu.buttons[i], (size_t)x, (size_t)y);
+			update_state(data, &data->menu.buttons[i], (size_t)x, (size_t)y);
 		i++;
 	}
-	if (refresh == 1)
-		mlx_put_image_to_window(data->mlx.mlx,
-			data->mlx.win, data->mlx.img, 0, 0);
 }
