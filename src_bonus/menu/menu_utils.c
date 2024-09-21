@@ -51,4 +51,21 @@ void	free_menu(t_menu *menu)
 	free(menu->buttons[BUT_EXIT].string.px);
 	free(menu->buttons[BUT_YES].string.px);
 	free(menu->buttons[BUT_NO].string.px);
+	free(menu->digits[0].px);
+	free(menu->digits[1].px);
+	free(menu->digits[2].px);
+	free(menu->digits[3].px);
+	free(menu->digits[4].px);
+	free(menu->digits[5].px);
+	free(menu->digits[6].px);
+	free(menu->digits[7].px);
+	free(menu->digits[8].px);
+	free(menu->digits[9].px);
+	free(menu->digits[10].px);
+	free(menu->digits[11].px);
+	free(menu->res.string[0].px);
+	free(menu->res.string[1].px);
+	free(menu->res.string[2].px);
+	free(menu->res.string[3].px);
+	free(menu->res.string[4].px);
 }
