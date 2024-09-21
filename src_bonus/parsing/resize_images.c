@@ -40,8 +40,8 @@ static uint32_t	get_resized_pixel(t_specs specs, double x, double y)
 
 	ft_bzero(sum, 4 * sizeof(double));
 	start = (t_ulpoint){.x = (size_t)floor(x), .y = (size_t)floor(y)};
-	end = (t_ulpoint){.x = (size_t)ceil(x + specs.mapping.x),
-		.y = (size_t)ceil(y + specs.mapping.y)};
+	end.x = (size_t)fmin(ceil(x + specs.mapping.x), (double)specs.dim_src.w);
+	end.y = (size_t)fmin(ceil(y + specs.mapping.y), (double)specs.dim_src.h);
 	curr.y = start.y;
 	while (curr.y < end.y)
 	{
