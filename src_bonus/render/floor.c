@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:07:39 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 17:34:15 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:46:53 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline __attribute__((always_inline)) void
 
 void	draw_floor(t_data *dat)
 {
-	const double	camheipx = (dat->play.z + .5) * dat->set.planwid;
+	const double	camheipx = dat->play.z * dat->set.planwid;
 	const t_point	baseinc = (t_point){(dat->set.invplanwid
 			* dat->play.sina), -(dat->set.invplanwid * dat->play.cosa)};
 	const t_point	start = (t_point){dat->play.cosa - dat->set.tanfov

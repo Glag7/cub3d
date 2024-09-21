@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/05 20:02:41 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:46:24 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static inline void __attribute__((always_inline))
 	init_ddata(t_data *data, t_draw *ddata, double hei, double inc)
 {
 	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
-		+ hei * data->play.z;
+		+ hei * (data->play.z - .5);
 
 	ddata->start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
 	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;

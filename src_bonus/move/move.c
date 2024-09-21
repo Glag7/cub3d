@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 17:06:45 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:54:17 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@
 #include "point.h"
 #include "keys.h"
 
-# define FAT .05//a changer en fonction de la direction
-
 # define ACCEL 20.
 # define ACCELDIFF 3.
 # define SPEEDDIFF 2.
 # define MAXSPEED 1.5
 # define FASTER .5
 # define SLOWER .001
+# define SLOWERAIR .8
 
 static inline __attribute__((always_inline)) t_point
 	normvec(t_point vec, uint64_t keys, double delta)
@@ -96,10 +95,10 @@ static inline void	check_pos(t_data *data)
 		data->play.az = MAX_ANGLE;
 	else if (data->play.az < MIN_ANGLE)
 		data->play.az = MIN_ANGLE;
-	if (data->play.z > .5)
-		data->play.z = .5;
-	else if (data->play.z < -.5)
-		data->play.z = -.5;
+	if (data->play.z > 1.)
+		data->play.z = 1.;
+	else if (data->play.z < 0.)
+		data->play.z = 0.;
 	data->play.sina = sin(data->play.a);
 	data->play.cosa = cos(data->play.a);
 }
@@ -113,7 +112,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (data->keys & KEY_SHIFT)
 		speed /= SPEEDDIFF;
-	if (speed < MAXSPEED)
+	if (speed < MAXSPEED || data->play.z > .5)
 	{
 		data->play.vx += vec.x;
 		data->play.vy += vec.y;
@@ -132,10 +131,18 @@ void	move(t_data *data, double delta, uint64_t keys)
 	else if (newpos.y < 0.)
 		newpos.y += (double)data->map.hei;
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
-	if ((speed && vec.x == 0. && vec.y == 0.) || speed > MAXSPEED)
+	if (((speed && vec.x == 0. && vec.y == 0.) || speed > MAXSPEED))
 	{
-		data->play.vx = data->play.vx * pow(SLOWER, delta / speed * MAXSPEED);
-		data->play.vy = data->play.vy * pow(SLOWER, delta / speed * MAXSPEED);
+		if (data->play.z > .5)
+		{
+			data->play.vx = data->play.vx * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
+			data->play.vy = data->play.vy * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
+		}
+		else
+		{
+			data->play.vx = data->play.vx * pow(SLOWER, delta / pow(speed / MAXSPEED, .1));
+			data->play.vy = data->play.vy * pow(SLOWER, delta / pow(speed / MAXSPEED, .1));
+		}
 	}
 	newpos.x += data->play.vx * delta;
 	newpos.y += data->play.vy * delta;
@@ -148,7 +155,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	{
 		data->play.z += 9 * delta;
 	}
-	if (data->play.z > 0)
+	if (data->play.z > .5)
 		data->play.z -= 3 * delta;
 	check_pos(data);
 }

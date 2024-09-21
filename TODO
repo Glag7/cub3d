@@ -92,4 +92,6 @@ rework mvements shift etc
 ctrl
 espace
 
+# define FAT .05//a changer en fonction de la direction
+
 crouch fait juste monter les jambes (baisse la taille de base)
