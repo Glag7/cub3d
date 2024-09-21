@@ -6,12 +6,13 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 19:04:21 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 16:40:06 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 14:59:19 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "render.h"
 #include "move.h"
 #include "mlx.h"
@@ -20,8 +21,9 @@
 #include "status.h"
 #include "keys.h"
 
-static void	drawfps(t_mlx *mlx, int fps)
+static void	drawdata(t_mlx *mlx, t_play *play, int fps)
 {
+	static char	speed[4096];
 	static char	num[16] = "fps:    ";
 	static int	color[9] = {RED, ORE, ORA, YEL, YGR, LGR, GRE, GRE, GRE};
 	int			i;
@@ -38,7 +40,9 @@ static void	drawfps(t_mlx *mlx, int fps)
 	*(unsigned long long *)(num + i) = FPS;
 	if (fps > 80)
 		fps = 80;
+	sprintf(speed, "%.3f m/s", sqrt(play->vx * play->vx + play->vy * play->vy));
 	mlx_string_put(mlx->mlx, mlx->win, 0, 10, color[fps / 10], num);
+	mlx_string_put(mlx->mlx, mlx->win, 0, 20, color[fps / 10], speed);
 }
 
 static void	compute_values(t_data *data)
@@ -108,7 +112,7 @@ int	loop(void *data_)
 		oldfps = fps;
 		fps = 0;
 	}
-	drawfps(&data->mlx, oldfps);
+	drawdata(&data->mlx, &data->play, oldfps);
 	++fps;
 	return (0);
 }
