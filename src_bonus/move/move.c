@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 16:07:32 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:06:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define SPEEDDIFF 2.
 # define MAXSPEED 1.5
 # define FASTER .5
-# define SLOWER .1
+# define SLOWER .001
 
 static inline __attribute__((always_inline)) t_point
 	normvec(t_point vec, uint64_t keys, double delta)
@@ -81,13 +81,13 @@ static inline void	check_pos(t_data *data)
 			+ (double)((int)floor(data->map.wid) % data->map.wid);
 	else if (data->play.x < 0.)
 		data->play.x = data->play.x - floor(data->play.x) + (double)data->map.wid
-			+ (double)((int)floor(data->map.wid) % data->map.wid);
+			+ (double)((int)floor(data->map.wid) % data->map.wid) -1.;
 	if (data->play.y >= (double)data->map.hei)
 		data->play.y = data->play.y - floor(data->play.y)
 			+ (double)((int)floor(data->map.hei) % data->map.hei);
 	else if (data->play.y < 0.)
 		data->play.y = data->play.y - floor(data->play.y) + (double)data->map.hei
-			+ (double)((int)floor(data->map.hei) % data->map.hei);
+			+ (double)((int)floor(data->map.hei) % data->map.hei) -1.;
 	if (data->play.a > M_PI)
 		data->play.a -= 2. * M_PI;
 	else if (data->play.a < -M_PI)
@@ -104,29 +104,25 @@ static inline void	check_pos(t_data *data)
 	data->play.cosa = cos(data->play.a);
 }
 
-//TODO t3point
-//check en x, bouger en x, check en y, bouger en y
 void	move(t_data *data, double delta, uint64_t keys)
 {
-	t_point	newpos;
 	const t_point	vec = getmov(data, keys, delta);
-	double	speed;
+	t_point		newpos;
+	double		speed;
 
-	data->play.vx += vec.x;
-	data->play.vy += vec.y;
+	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
+	if (data->keys & KEY_SHIFT)
+		speed /= SPEEDDIFF;
+	if (speed < MAXSPEED)
+	{
+		data->play.vx += vec.x;
+		data->play.vy += vec.y;
+	}
 	newpos.x = data->play.x;
 	newpos.y = data->play.y;
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (data->keys & KEY_SHIFT)
 		speed /= SPEEDDIFF;
-	if (speed > MAXSPEED)
-	{
-		data->play.vx = data->play.vx / speed * MAXSPEED;
-		data->play.vy = data->play.vy / speed * MAXSPEED;
-	}
-
-	newpos.x += data->play.vx * delta;
-	newpos.y += data->play.vy * delta;
 	if (newpos.x >= (double)data->map.wid)
 		newpos.x -= (double)data->map.wid;
 	else if (newpos.x < 0.)
@@ -135,29 +131,16 @@ void	move(t_data *data, double delta, uint64_t keys)
 		newpos.y -= (double)data->map.hei;
 	else if (newpos.y < 0.)
 		newpos.y += (double)data->map.hei;
-	//if (!data->map.map[(int)newpos.x + (int)data->play.y * data->map.wid])
-	//if (!data->map.map[(int)data->play.x + (int)newpos.y * data->map.wid])
+	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
+	if ((speed && vec.x == 0. && vec.y == 0.) || speed > MAXSPEED)
+	{
+		data->play.vx = data->play.vx * pow(SLOWER, delta / speed * MAXSPEED);
+		data->play.vy = data->play.vy * pow(SLOWER, delta / speed * MAXSPEED);
+	}
+	newpos.x += data->play.vx * delta;
+	newpos.y += data->play.vy * delta;
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
-	double sigma = delta * 10.;
-	if (vec.x == 0.)
-	{
-		if (data->play.vx > sigma)
-			data->play.vx -= sigma;
-		else if (data->play.vx < -sigma)//delta
-			data->play.vx += sigma;
-		else
-			data->play.vx = 0.;
-	}
-	if (vec.y == 0.)
-	{
-		if (data->play.vy > sigma)
-			data->play.vy -= sigma;
-		else if (data->play.vy < -sigma)//delta
-			data->play.vy += sigma;
-		else
-			data->play.vy = 0.;
-	}
 
 
 	//super idol

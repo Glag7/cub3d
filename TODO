@@ -91,3 +91,5 @@ hitboxes
 rework mvements shift etc
 ctrl
 espace
+
+crouch fait juste monter les jambes (baisse la taille de base)
