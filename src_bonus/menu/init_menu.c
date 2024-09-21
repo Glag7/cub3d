@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/20 19:08:50 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/21 16:56:01 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	init_textfields_settings(t_menu *menu, size_t w, size_t h)
 {
 	menu->textfields[SET_FOV] = (t_textfield){.pos = (t_ulpoint){.x = part(w, 0.3),
 		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.08), .y = part(h, 0.05)},
-		.type = DOUBLE, .src = &menu->sliders[SET_FOV].v_curr};
+		.type = UINT, .src = &menu->sliders[SET_FOV].v_curr};
 	menu->textfields[SET_VIEW] = (t_textfield){.pos = (t_ulpoint){.x = part(w, 0.3),
 		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.08), .y = part(h, 0.05)},
 		.type = UINT, .src = &menu->sliders[SET_VIEW].v_curr};
@@ -63,16 +63,16 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 {
 	menu->sliders[SET_FOV] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->fov_deg, .v_min = 10.,
-		.v_max = 170., .v_curr = 90.};
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->fov_deg, .v_min = 1.,
+		.v_max = 179., .v_curr = 90.};
 	menu->sliders[SET_VIEW] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .type = UINT, .dst = &set->view, .v_min = 1,
-		.v_max = 2000, .v_curr = 1000};
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->view, .v_min = 1.,
+		.v_max = 2000., .v_curr = 1000.};
 	menu->sliders[SET_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.3),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->sensi, .v_min = -5.,
-		.v_max = 5., .v_curr = 1.};
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE, .dst = &set->sensi, .v_min = 0.1,
+		.v_max = 1., .v_curr = 0.3};
 }
 
 static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
