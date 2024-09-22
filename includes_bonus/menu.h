@@ -46,10 +46,6 @@ void	save_settings(t_data *data);
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);
 
-void	save_resolution(t_data *data, size_t x, size_t y);
-void	update_resolutions(t_data *data);
-void	build_resolutions(t_data *data, t_res res);
-
 void	draw_digit(t_data *data, t_ulpoint pos, double scale, t_img digit);
 void	build_textfield(t_data *data, t_textfield textfield);
 

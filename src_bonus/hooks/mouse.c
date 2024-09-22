@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 18:15:50 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 19:17:42 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 15:27:02 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,6 @@ static void	update_settings(t_data *data, int x, int y)
 			break ;
 		}
 		i++;
-	}
-	if (check_hitbox(data->menu.res.pos, data->menu.res.dim,
-		(size_t)x, (size_t)y) == 1)
-	{
-		save_resolution(data, (size_t)x, (size_t)y);
-		build_resolutions(data, data->menu.res);
 	}
 }
 

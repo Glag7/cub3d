@@ -63,9 +63,4 @@ void	free_menu(t_menu *menu)
 	free(menu->digits[9].px);
 	free(menu->digits[10].px);
 	free(menu->digits[11].px);
-	free(menu->res.string[0].px);
-	free(menu->res.string[1].px);
-	free(menu->res.string[2].px);
-	free(menu->res.string[3].px);
-	free(menu->res.string[4].px);
 }
