@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/21 18:09:50 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 19:52:09 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	draw_settings_menu(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_VIEW]);
 	draw_slider(data, data->menu.sliders[SET_SENSI]);
 	build_textfield(data, data->menu.textfields[SET_SENSI]);
+	draw_string(data, "7 z", 0xFFFFFF00, (t_ulpoint){.x = data->set.wid / 2,
+		.y = part(data->set.hei, 0.75)},
+		(t_ulpoint){.x = part(data->set.wid, 0.4), .y = part(data->set.hei, 0.15)});
 	data->menu.window = WIN_SETTINGS;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }

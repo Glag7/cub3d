@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/19 19:22:02 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 19:08:10 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,5 @@ void	free_menu(t_menu *menu)
 	free(menu->buttons[BUT_EXIT].string.px);
 	free(menu->buttons[BUT_YES].string.px);
 	free(menu->buttons[BUT_NO].string.px);
-	free(menu->digits[0].px);
-	free(menu->digits[1].px);
-	free(menu->digits[2].px);
-	free(menu->digits[3].px);
-	free(menu->digits[4].px);
-	free(menu->digits[5].px);
-	free(menu->digits[6].px);
-	free(menu->digits[7].px);
-	free(menu->digits[8].px);
-	free(menu->digits[9].px);
-	free(menu->digits[10].px);
-	free(menu->digits[11].px);
+	free(menu->characters.px);
 }

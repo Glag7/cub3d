@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:33:01 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/20 18:44:49 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 19:11:21 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "menu.h"
 #include "popup.h"
 
-void	print_uint(t_data *data, t_textfield textfield, double scale,
+/*void	print_uint(t_data *data, t_textfield textfield, double scale,
 		size_t len)
 {
 	uint32_t	value;
@@ -24,7 +24,7 @@ void	print_uint(t_data *data, t_textfield textfield, double scale,
 
 	value = (uint32_t)(*textfield.src);
 	i_digit = 0;
-	d_offset = part(data->menu.digits[0].w, scale);
+	d_offset = part(WIDTH_CHAR, scale);
 	i_offset = textfield.pos.x + part(textfield.dim.x, 0.5)
 		- part(d_offset, 0.5);
 	while (i_digit < len)
@@ -42,7 +42,7 @@ static void	print_decimals(t_data *data, t_ulpoint pos, double scale,
 {
 	double	d_offset;
 
-	d_offset = part(data->menu.digits[0].w, scale);
+	d_offset = part(WIDTH_CHAR, scale);
 	value -= floor(value);
 	value *= 100.;
 	draw_digit(data, pos, scale, data->menu.digits[(size_t)fmod(value, 10.)]);
@@ -75,7 +75,7 @@ void	print_double(t_data *data, t_textfield textfield, double scale,
 
 	value = *textfield.src;
 	neg = manage_sign(&value);
-	d_offset = part(data->menu.digits[0].w, scale);
+	d_offset = part(WIDTH_CHAR, scale);
 	i_offset = textfield.pos.x + textfield.dim.x / 2 - d_offset / 2;
 	print_decimals(data, (t_ulpoint){.x = i_offset, .y = textfield.pos.y},
 		scale, value);
@@ -92,4 +92,4 @@ void	print_double(t_data *data, t_textfield textfield, double scale,
 	if (neg == 1)
 		draw_digit(data, (t_ulpoint){.x = i_offset, .y = textfield.pos.y},
 			scale, data->menu.digits[10]);
-}
+}*/

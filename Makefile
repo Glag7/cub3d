@@ -97,7 +97,8 @@ SRC_BONUS = main.c \
       $(MENU)build_windows.c \
       $(MENU)textfield_itoa.c \
       $(MENU)manage_background.c \
-      $(MENU)draw_rectangle.c
+      $(MENU)draw_rectangle.c \
+      $(MENU)draw_string.c
 
 OBJ = $(SRC:.c=.o)
 

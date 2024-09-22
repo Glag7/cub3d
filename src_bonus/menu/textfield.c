@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:16:18 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/20 18:39:44 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 19:11:17 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,37 +46,11 @@ static size_t	get_len_uint(uint32_t n)
 	return (len);
 }
 
-void	draw_digit(t_data *data, t_ulpoint pos, double scale, t_img digit)
-{
-	t_ulpoint	end;
-	t_ulpoint	start;
-	size_t		x;
-	size_t		y;
-
-	start.y = pos.y - part(digit.h, scale) / 2;
-	start.x = pos.x - part(digit.w, scale) / 2;
-	end.y = pos.y + part(digit.h, scale) / 2;
-	end.x = pos.x + part(digit.w, scale) / 2;
-	y = start.y;
-	while (y < end.y)
-	{
-		x = start.x;
-		while (x < end.x)
-		{
-			data->mlx.px[y * data->set.wid + x] = get_pixel(data->mlx.px[y
-					* data->set.wid + x], digit.px[part(digit.h, (double)(y
-							- start.y) / (double)(end.y - start.y)) * digit.w
-					+ part(digit.w, (double)(x - start.x) / (double)(end.x
-							- start.x))]);
-			x++;
-		}
-		y++;
-	}
-}
-
 void	build_textfield(t_data *data, t_textfield textfield)
 {
-	size_t		len;
+	;
+}
+/*	size_t		len;
 	double		scale;
 	uint32_t	colors[2];
 
@@ -88,11 +62,11 @@ void	build_textfield(t_data *data, t_textfield textfield)
 	else
 		len = get_len_double(*textfield.src);
 	scale = fmin(1., (double)textfield.dim.x
-			/ (double)(len * data->menu.digits[0].w));
+			/ (double)(len * WIDTH_CHAR));
 	scale = fmin(scale, (double)textfield.dim.y
-			/ (double)data->menu.digits[0].h);
+			/ (double)HEIGHT_CHAR);
 	if (textfield.type == UINT)
 		print_uint(data, textfield, scale, len);
 	else
 		print_double(data, textfield, scale, len);
-}
+}*/

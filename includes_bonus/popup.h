@@ -29,6 +29,12 @@
 # define GRADIENT_WIDTH	5
 # define PREV_TAB	1
 
+# define WIDTH_CHAR	5
+# define HEIGHT_CHAR	7
+
+# define WIDTH_CHAR_IMG		205
+# define HEIGHT_CHAR_IMG	7
+
 /* ----- ENUMERATIONS ----- */
 
 enum
@@ -110,7 +116,7 @@ typedef struct s_menu
 	t_button	buttons[NB_BUTTONS];
 	t_slider	sliders[NB_SETTINGS];
 	t_textfield	textfields[NB_SETTINGS];
-	t_img		digits[12];
+	t_img		characters;
 	uint8_t		window;
 	uint8_t		first_start;
 	uint8_t		first_render;

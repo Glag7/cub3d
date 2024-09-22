@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/21 19:14:21 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/09/22 19:50:42 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,6 @@
 #include "err.h"
 #include "utils.h"
 #include "menu.h"
-
-static int	load_digits(t_mlx *mlx, t_menu *menu)
-{
-	return (load_img(mlx->mlx, "assets/core/digits/zero.bmp",
-			&menu->digits[0], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/one.bmp",
-			&menu->digits[1], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/two.bmp",
-			&menu->digits[2], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/three.bmp",
-			&menu->digits[3], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/four.bmp",
-			&menu->digits[4], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/five.bmp",
-			&menu->digits[5], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/six.bmp",
-			&menu->digits[6], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/seven.bmp",
-			&menu->digits[7], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/eight.bmp",
-			&menu->digits[8], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/nine.bmp",
-			&menu->digits[9], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/minus.bmp",
-			&menu->digits[10], (t_dim){.w = 100, .h = 100})
-		|| load_img(mlx->mlx, "assets/core/digits/dot.bmp",
-			&menu->digits[11], (t_dim){.w = 100, .h = 100}));
-}
 
 static void	init_textfields_settings(t_menu *menu, size_t w, size_t h)
 {
@@ -120,18 +92,7 @@ inline static void	init_menu_images(t_menu *menu)
 	menu->buttons[BUT_EXIT].string.px = NULL;
 	menu->buttons[BUT_YES].string.px = NULL;
 	menu->buttons[BUT_NO].string.px = NULL;
-	menu->digits[0].px = NULL;
-	menu->digits[1].px = NULL;
-	menu->digits[2].px = NULL;
-	menu->digits[3].px = NULL;
-	menu->digits[4].px = NULL;
-	menu->digits[5].px = NULL;
-	menu->digits[6].px = NULL;
-	menu->digits[7].px = NULL;
-	menu->digits[8].px = NULL;
-	menu->digits[9].px = NULL;
-	menu->digits[10].px = NULL;
-	menu->digits[11].px = NULL;
+	menu->characters.px = NULL;
 }
 
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
@@ -159,7 +120,10 @@ static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "assets/core/menu/no.bmp",
 				&menu->buttons[BUT_NO].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)}));
+			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
+		|| load_img(mlx->mlx, "assets/core/characters/characters.bmp",
+				&menu->characters,
+			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
 }
 
 int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
@@ -174,22 +138,6 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	init_sliders_settings(menu, set, set->wid, set->hei);
 	init_textfields_settings(menu, set->wid, set->hei);
 	init_menu_images(menu);
-	if (load_digits(mlx, menu) == 1)
-	{
-		free(menu->digits[0].px);
-		free(menu->digits[1].px);
-		free(menu->digits[2].px);
-		free(menu->digits[3].px);
-		free(menu->digits[4].px);
-		free(menu->digits[5].px);
-		free(menu->digits[6].px);
-		free(menu->digits[7].px);
-		free(menu->digits[8].px);
-		free(menu->digits[9].px);
-		free(menu->digits[10].px);
-		free(menu->digits[11].px);
-		return (1);
-	}
 	if (load_menu_images(mlx, menu, set->wid, set->hei) == 1)
 	{
 		free(menu->title.px);
@@ -202,18 +150,7 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		free(menu->buttons[BUT_YES].string.px);
 		free(menu->buttons[BUT_NO].string.px);
 		free(menu->background);
-		free(menu->digits[0].px);
-		free(menu->digits[1].px);
-		free(menu->digits[2].px);
-		free(menu->digits[3].px);
-		free(menu->digits[4].px);
-		free(menu->digits[5].px);
-		free(menu->digits[6].px);
-		free(menu->digits[7].px);
-		free(menu->digits[8].px);
-		free(menu->digits[9].px);
-		free(menu->digits[10].px);
-		free(menu->digits[11].px);
+		free(menu->characters.px);
 		return (1);
 	}
 	menu->window = WIN_MAIN;
