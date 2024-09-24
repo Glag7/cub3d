@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/09/24 20:11:14 by glag             ###   ########.fr       */
+/*   Updated: 2024/09/24 20:15:27 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,10 @@
 #include "point.h"
 #include "keys.h"
 
-static void	friction(t_data *data, double speed, double delta)
-{
-	if (data->play.z > data->play.leglen)
-	{
-		data->play.vx = data->play.vx * pow(data->set.slowerair, delta / pow(speed / data->set.speedmax, .1));
-		data->play.vy = data->play.vy * pow(data->set.slowerair, delta / pow(speed / data->set.speedmax, .1));
-	}
-	else
-	{
-		data->play.vx = data->play.vx * pow(data->set.slower, delta / pow(speed / data->set.speedmax, .1));
-		data->play.vy = data->play.vy * pow(data->set.slower, delta / pow(speed / data->set.speedmax, .1));
-	}
-}
-
-void	move_xy(t_data *data, double delta, int stopped)
+static t_point	get_newpos(t_data *data)
 {
 	t_point	newpos;
-	double		speed = sqrt(data->play.vx * data->play.vx
-			+ data->play.vy * data->play.vy);
 
-	if ((stopped || speed > data->set.speedmax))
-		friction(data, speed, delta);
 	newpos.x = data->play.x;
 	newpos.y = data->play.y;
 	newpos.x += data->play.vx * delta;
@@ -55,6 +37,37 @@ void	move_xy(t_data *data, double delta, int stopped)
 	else if (newpos.y < 0.)
 		newpos.y = newpos.y - floor(newpos.y) + (double)data->map.hei
 			+ (double)((int)floor(data->map.hei) % data->map.hei) - 1.;
+	return (newpos);
+}
+
+static void	friction(t_data *data, double speed, double delta)
+{
+	if (data->play.z > data->play.leglen)
+	{
+		data->play.vx = data->play.vx * pow(data->set.slowerair,
+				delta / pow(speed / data->set.speedmax, .1));
+		data->play.vy = data->play.vy * pow(data->set.slowerair,
+				delta / pow(speed / data->set.speedmax, .1));
+	}
+	else
+	{
+		data->play.vx = data->play.vx * pow(data->set.slower,
+				delta / pow(speed / data->set.speedmax, .1));
+		data->play.vy = data->play.vy * pow(data->set.slower,
+				delta / pow(speed / data->set.speedmax, .1));
+	}
+}
+
+void	move_xy(t_data *data, double delta, int stopped)
+{
+	const double	speed = sqrt(data->play.vx * data->play.vx
+			+ data->play.vy * data->play.vy);
+	t_point			newpos;
+
+	if ((stopped || speed > data->set.speedmax))
+		friction(data, speed, delta);
+	newpos = get_newpos(data);
+	//TODO check walls
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 }
