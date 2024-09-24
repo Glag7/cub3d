@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:33 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 19:18:21 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:10:36 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef struct s_play
 	double	y;
 	double	z;
 	double	leglen;
-	double	coyote;
 	double	vx;
 	double	vy;
 	double	vz;

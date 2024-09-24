@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 18:06:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:02:23 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 int	init_settings(t_set *set)
 {
-	set->wid = DEF_WID;
+	set->wid = DEF_WID / 2;
 	set->invwid = 1. / (double)(set->wid - 1);
-	set->hei = DEF_HEI;
+	set->hei = DEF_HEI / 2;
 	set->ncase = DEF_NCASE;
 	set_diameter(set, DEF_D);
 	set->xoffset = DEF_OFFSET;
@@ -32,6 +32,14 @@ int	init_settings(t_set *set)
 	set->sensi = DEF_SENSI;
 	set->texsiz = DEF_TEXSIZ;
 	set->skysiz = DEF_SKYSIZ;
+	set->accel = DEF_ACCEL;
+	set->accelair = DEF_ACCELAIR;
+	set->acceldiff = DEF_ACCELDIFF;
+	set->speeddiff = DEF_SPEEDDIFF;
+	set->speedmax = DEF_SPEEDMAX;
+	set->faster = DEF_FASTER;
+	set->slower = DEF_SLOWER;
+	set->slowerair = DEF_SLOWERAIR;
 	return (setfov(set, DEF_FOV));
 }
 

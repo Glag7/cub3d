@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/21 19:27:55 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:18:18 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,18 @@
 #include "point.h"
 #include "keys.h"
 
-# define ACCEL 20.
-# define ACCELDIFF 3.
-# define SPEEDDIFF 2.
-# define MAXSPEED 1.5
-# define FASTER .5
-# define SLOWER .001
-# define SLOWERAIR .6
-
 static inline __attribute__((always_inline)) t_point
-	normvec(t_point vec, uint64_t keys, double delta)
+	normvec(t_data *data, t_point vec, uint64_t keys, double delta)
 {
 	double	len;
 	double	speed;
 
-	speed = ACCEL;
+	if (keys & KEY_SPACE)
+		speed = data->set.accelair;
+	else
+		speed = data->set.accel;
 	if (keys & KEY_SHIFT)
-		speed *= ACCELDIFF;
+		speed *= data->set.acceldiff;
 	len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	if (len)
 	{
@@ -69,7 +64,7 @@ static t_point	getmov(t_data *data, uint64_t keys, double delta)
 		vec.y += data->play.cosa;
 		vec.x += data->play.sina;
 	}
-	return (normvec(vec, keys, delta));
+	return (normvec(data, vec, keys, delta));
 }
 
 
@@ -111,8 +106,8 @@ void	move(t_data *data, double delta, uint64_t keys)
 
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (data->keys & KEY_SHIFT)
-		speed /= SPEEDDIFF;
-	if (speed < MAXSPEED || data->play.z > data->play.leglen)
+		speed /= data->set.speeddiff;
+	if (speed < data->set.speedmax || data->play.z > data->play.leglen)
 	{
 		data->play.vx += vec.x;
 		data->play.vy += vec.y;
@@ -121,7 +116,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	newpos.y = data->play.y;
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
 	if (data->keys & KEY_SHIFT)
-		speed /= SPEEDDIFF;
+		speed /= data->set.speeddiff;
 	if (newpos.x >= (double)data->map.wid)
 		newpos.x -= (double)data->map.wid;
 	else if (newpos.x < 0.)
@@ -131,17 +126,17 @@ void	move(t_data *data, double delta, uint64_t keys)
 	else if (newpos.y < 0.)
 		newpos.y += (double)data->map.hei;
 	speed = sqrt(data->play.vx * data->play.vx + data->play.vy * data->play.vy);
-	if (((speed && vec.x == 0. && vec.y == 0.) || speed > MAXSPEED))
+	if (((speed && vec.x == 0. && vec.y == 0.) || speed > data->set.speedmax))
 	{
 		if (data->play.z > data->play.leglen)
 		{
-			data->play.vx = data->play.vx * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
-			data->play.vy = data->play.vy * pow(SLOWERAIR, delta / pow(speed / MAXSPEED, .1));
+			data->play.vx = data->play.vx * pow(data->set.slowerair, delta / pow(speed / data->set.speedmax, .1));
+			data->play.vy = data->play.vy * pow(data->set.slowerair, delta / pow(speed / data->set.speedmax, .1));
 		}
 		else
 		{
-			data->play.vx = data->play.vx * pow(SLOWER, delta / pow(speed / MAXSPEED, .1));
-			data->play.vy = data->play.vy * pow(SLOWER, delta / pow(speed / MAXSPEED, .1));
+			data->play.vx = data->play.vx * pow(data->set.slower, delta / pow(speed / data->set.speedmax, .1));
+			data->play.vy = data->play.vy * pow(data->set.slower, delta / pow(speed / data->set.speedmax, .1));
 		}
 	}
 	newpos.x += data->play.vx * delta;
@@ -149,6 +144,7 @@ void	move(t_data *data, double delta, uint64_t keys)
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 
+	//TODO accel air
 	//FIXME jump is weird
 	//XXX use leglen everywhere
 	//garder espace appuyer pour sauter plus longtemps
@@ -161,21 +157,21 @@ void	move(t_data *data, double delta, uint64_t keys)
 	if (data->play.leglen > .5)
 		data->play.leglen = .5;
 	if (data->play.leglen > data->play.z)
-		data->play.z = data->play.leglen;
-	
-	data->play.coyote += delta;
-	if (keys & KEY_SPACE)
 	{
-		data->keys &= ~KEY_SPACE;
-		data->play.coyote = 0.;
+		data->play.z = data->play.leglen;
+		data->play.vz = 0.;
 	}
-	if (fabs(data->play.leglen - data->play.z) < 1e-3 && data->play.coyote < .2)
+	if (fabs(data->play.leglen - data->play.z) < 1e-3 && (keys & KEY_SPACE))
 	{
 		data->play.vz += .05;//delta ?
-		data->play.coyote = 3.;
 	}
-	if (data->play.z > data->play.leglen)
+	else if (data->play.z > data->play.leglen)
 		data->play.vz -= .1 * delta;
 	data->play.z += data->play.vz;
+	if (data->play.leglen > data->play.z)
+	{
+		data->play.z = data->play.leglen;
+		data->play.vz = 0.;
+	}
 	check_pos(data);
 }
