@@ -28,9 +28,9 @@ static t_img	get_char(t_img characters, char c)
 		img_char.px += WIDTH_CHAR * ((c - '0') + 26);
 	else if (c == '.')
 		img_char.px += WIDTH_CHAR * 36;
-	else if (c == '!')
-		img_char.px += WIDTH_CHAR * 37;
 	else if (c == '?')
+		img_char.px += WIDTH_CHAR * 37;
+	else if (c == '!')
 		img_char.px += WIDTH_CHAR * 38;
 	else if (c == '+')
 		img_char.px += WIDTH_CHAR * 39;
@@ -86,10 +86,11 @@ void	draw_string(t_data *data, t_str string, t_ulpoint pos, t_ulpoint dim)
 
 	len = strlen(string.str);
 	spacing = part(WIDTH_CHAR, 0.2);
-	scale = get_scale((t_ulpoint){.x = part(dim.x, 0.9), .y = part(dim.y, 0.9)}, len, spacing);
+	scale = get_scale((t_ulpoint){.x = dim.x, .y = dim.y}, len, spacing);
 	spacing = (size_t)((double)spacing * scale);
 	dim_char = (t_ulpoint){.x = part(WIDTH_CHAR, scale), .y = part(HEIGHT_CHAR, scale)};
-	pos_char = (t_ulpoint){.x = pos.x - (len * (dim_char.x / 2) + (len - 1) * spacing / 2), .y = pos.y};
+	pos_char = (t_ulpoint){.x = pos.x - ((len - 1) * dim_char.x + (len - 1) * spacing) / 2,
+		.y = pos.y};
 	i = 0;
 	while (i < len)
 	{

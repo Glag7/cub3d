@@ -66,8 +66,11 @@ void	draw_exit_menu(t_data *data)
 		.y = part(data->set.hei, 0.5)},
 		(t_ulpoint){.x = part(data->set.wid, 0.2),
 		.y = part(data->set.hei, 0.25)}, colors);
-	draw_image(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
-		.y = part(data->set.hei, 0.45)}, data->menu.confirm);
+	draw_string(data, (t_str){.str = "Are you sure ?", .color = 0xFF000000},
+		(t_ulpoint){.x = data->set.wid / 2, .y = part(data->set.hei, 0.45)},
+			(t_ulpoint){.x = part(data->set.wid, 0.18), .y = part(data->set.hei, 0.1)});
+//	draw_image(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
+//		.y = part(data->set.hei, 0.45)}, data->menu.confirm);
 	draw_button(data, data->menu.buttons[BUT_YES], IDLE);
 	draw_button(data, data->menu.buttons[BUT_NO], IDLE);
 	data->menu.window = WIN_EXIT;
