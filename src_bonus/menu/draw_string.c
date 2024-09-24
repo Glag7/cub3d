@@ -15,40 +15,6 @@
 #include "data.h"
 #include "menu.h"
 
-static void	draw_char(t_data *data, t_ulpoint pos, t_img img_char, double scale, uint32_t color)
-{
-	t_ulpoint	end;
-	t_ulpoint	start;
-	t_ulpoint	dim;
-	size_t		x;
-	size_t		y;
-
-	dim = (t_ulpoint){.x = part(img_char.w, scale), .y = part(img_char.h, scale)};
-	start = (t_ulpoint){.x = pos.x - dim.x / 2, .y = pos.y - dim.y / 2};
-	end = (t_ulpoint){.x = pos.x + dim.x / 2, .y = pos.y + dim.y / 2};
-	y = start.y;
-	while (y < end.y)
-	{
-		x = start.x;
-		while (x < end.x)
-		{
-			if ((img_char.px[part(img_char.h, (double)(y - start.y)
-				/ (double)(end.y - start.y)) * WIDTH_CHAR_IMG + part(img_char.w,
-				(double)(x - start.x) / (double)(end.x - start.x))]
-				& 0xFF000000) != 0)
-				data->mlx.px[y * data->set.wid + x] = color;
-			x++;
-		}
-		y++;
-	}
-}
-
-static double	get_scale(t_ulpoint dim, size_t len, size_t spacing)
-{
-	return (fmin((double)dim.x / (double)(len * WIDTH_CHAR + (len - 1) * spacing),
-		(double)dim.y / (double)HEIGHT_CHAR));
-}
-
 static t_img	get_char(t_img characters, char c)
 {
 	t_img	img_char;
@@ -73,7 +39,43 @@ static t_img	get_char(t_img characters, char c)
 	return (img_char);
 }
 
-void	draw_string(t_data *data, char *str, uint32_t color, t_ulpoint pos, t_ulpoint dim)
+static void	draw_char(t_data *data, t_ulpoint pos, t_str string, double scale)
+{
+	t_img		img_char;
+	t_ulpoint	end;
+	t_ulpoint	start;
+	size_t		x;
+	size_t		y;
+
+	img_char = get_char(data->menu.characters, *string.str);
+	start = (t_ulpoint){.x = pos.x - part(img_char.w, scale) / 2,
+		.y = pos.y - part(img_char.h, scale) / 2};
+	end = (t_ulpoint){.x = pos.x + part(img_char.w, scale) / 2,
+		.y = pos.y + part(img_char.h, scale) / 2};
+	y = start.y;
+	while (y < end.y)
+	{
+		x = start.x;
+		while (x < end.x)
+		{
+			if ((img_char.px[part(img_char.h, (double)(y - start.y)
+				/ (double)(end.y - start.y)) * WIDTH_CHAR_IMG + part(img_char.w,
+				(double)(x - start.x) / (double)(end.x - start.x))]
+				& 0xFF000000) != 0)
+				data->mlx.px[y * data->set.wid + x] = string.color;
+			x++;
+		}
+		y++;
+	}
+}
+
+static double	get_scale(t_ulpoint dim, size_t len, size_t spacing)
+{
+	return (fmin((double)dim.x / (double)(len * WIDTH_CHAR + (len - 1) * spacing),
+		(double)dim.y / (double)HEIGHT_CHAR));
+}
+
+void	draw_string(t_data *data, t_str string, t_ulpoint pos, t_ulpoint dim)
 {
 	size_t		i;
 	size_t		len;
@@ -82,18 +84,19 @@ void	draw_string(t_data *data, char *str, uint32_t color, t_ulpoint pos, t_ulpoi
 	t_ulpoint	pos_char;
 	t_ulpoint	dim_char;
 
-	len = strlen(str);
+	len = strlen(string.str);
 	spacing = part(WIDTH_CHAR, 0.2);
 	scale = get_scale((t_ulpoint){.x = part(dim.x, 0.9), .y = part(dim.y, 0.9)}, len, spacing);
-	spacing *= scale;
+	spacing = (size_t)((double)spacing * scale);
 	dim_char = (t_ulpoint){.x = part(WIDTH_CHAR, scale), .y = part(HEIGHT_CHAR, scale)};
 	pos_char = (t_ulpoint){.x = pos.x - (len * (dim_char.x / 2) + (len - 1) * spacing / 2), .y = pos.y};
 	i = 0;
 	while (i < len)
 	{
-		if (str[i] != ' ')
-			draw_char(data, pos_char, get_char(data->menu.characters, str[i]), scale, color);
+		if (*string.str != ' ')
+			draw_char(data, pos_char, string, scale);
 		pos_char.x += dim_char.x + spacing;
+		string.str++;
 		i++;
 	}
 }

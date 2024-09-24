@@ -47,9 +47,10 @@ void	draw_settings_menu(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_VIEW]);
 	draw_slider(data, data->menu.sliders[SET_SENSI]);
 	build_textfield(data, data->menu.textfields[SET_SENSI]);
-	draw_string(data, "0123456789", 0xFFFFFF00, (t_ulpoint){.x = data->set.wid / 2,
+	draw_string(data, (t_str){.str = "0123456789", .color = 0xFFFF00FF},
+		(t_ulpoint){.x = data->set.wid / 2,
 		.y = part(data->set.hei, 0.75)},
-		(t_ulpoint){.x = 550, .y = 210});
+		(t_ulpoint){.x = part(data->set.wid, 0.4), .y = part(data->set.hei, 0.2)});
 	data->menu.window = WIN_SETTINGS;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }

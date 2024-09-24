@@ -76,6 +76,12 @@ enum
 
 /* ----- STRUCTURES ----- */
 
+typedef struct s_string
+{
+	char		*str;
+	uint32_t	color;
+}	t_str;
+
 typedef struct s_textfield
 {
 	t_ulpoint	pos;

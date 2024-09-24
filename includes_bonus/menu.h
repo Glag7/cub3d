@@ -53,7 +53,7 @@ void	print_uint(t_data *data, t_textfield textfield, double scale,
 void	print_double(t_data *data, t_textfield textfield, double scale,
 		size_t len);
 
-void	draw_string(t_data *data, char *str, uint32_t color, t_ulpoint pos, t_ulpoint dim);
+void	draw_string(t_data *data, t_str string, t_ulpoint pos, t_ulpoint dim);
 
 uint32_t	get_pixel(uint32_t src_px, uint32_t add_px);
 size_t	part(size_t n, double fraction);
