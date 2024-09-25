@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/09/24 20:15:27 by glag             ###   ########.fr       */
+/*   Updated: 2024/09/25 18:39:59 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "point.h"
 #include "keys.h"
 
-static t_point	get_newpos(t_data *data)
+static t_point	get_newpos(t_data *data, double delta)
 {
 	t_point	newpos;
 
@@ -66,7 +66,7 @@ void	move_xy(t_data *data, double delta, int stopped)
 
 	if ((stopped || speed > data->set.speedmax))
 		friction(data, speed, delta);
-	newpos = get_newpos(data);
+	newpos = get_newpos(data, delta);
 	//TODO check walls
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
