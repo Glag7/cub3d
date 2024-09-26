@@ -47,80 +47,58 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 		.v_max = 1., .v_curr = 0.3};
 }
 
-static void	init_buttons_menu(t_menu *menu, size_t w, size_t h)
+static void	init_buttons_settings(t_menu *menu, size_t w, size_t h)
+{
+	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.32),
+		.y = part(h, 0.88)}, .dim = (t_ulpoint){.x = part(w, 0.1),
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_SETTINGS, .string = (t_str)
+		{.str = "Back", .color = 0xFF000000, .scale = 0.015}};
+}
+
+static void	init_buttons_exit(t_menu *menu, size_t w, size_t h)
+{
+	menu->buttons[BUT_YES] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.45),
+		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFFff1b1e, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFFff3d40, .window = WIN_EXIT, .string = (t_str)
+		{.str = "Yes", .color = 0xFF000000, .scale = 0.015}};
+	menu->buttons[BUT_NO] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.55),
+		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
+		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
+		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
+		.color_hover[1] = 0xFF707070, .window = WIN_EXIT, .string = (t_str)
+		{.str = "No", .color = 0xFF000000, .scale = 0.015}};
+}
+
+static void	init_buttons_main(t_menu *menu, size_t w, size_t h)
 {
 	menu->buttons[BUT_START] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.3)}, .dim = (t_ulpoint){.x = part(w, 0.2),
 		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
 		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN, .string = (t_str)
+		{.str = "Start", .color = 0xFF000000, .scale = 0.015}};
 	menu->buttons[BUT_SETTINGS] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.5)}, .dim = (t_ulpoint){.x = part(w, 0.2),
 		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
 		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
-	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.32),
-		.y = part(h, 0.88)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
-		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFF707070, .window = WIN_SETTINGS};
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN, .string = (t_str)
+		{.str = "Settings", .color = 0xFF000000, .scale = 0.015}};
 	menu->buttons[BUT_EXIT] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.5),
 		.y = part(h, 0.7)}, .dim = (t_ulpoint){.x = part(w, 0.2),
 		.y = part(h, 0.1)}, .state = IDLE, .color_idle[0] = 0xFF101010,
 		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFF707070, .window = WIN_MAIN};
-	menu->buttons[BUT_YES] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.45),
-		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
-		.color_idle[1] = 0xFFff1b1e, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFFff3d40, .window = WIN_EXIT};
-	menu->buttons[BUT_NO] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.55),
-		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
-		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF101010,
-		.color_idle[1] = 0xFF505050, .color_hover[0] = 0xFF303030,
-		.color_hover[1] = 0xFF707070, .window = WIN_EXIT};
-}
-
-inline static void	init_menu_images(t_menu *menu)
-{
-	menu->title.px = NULL;
-	menu->confirm.px = NULL;
-	menu->resume.px = NULL;
-	menu->buttons[BUT_START].string.px = NULL;
-	menu->buttons[BUT_SETTINGS].string.px = NULL;
-	menu->buttons[BUT_BACK].string.px = NULL;
-	menu->buttons[BUT_EXIT].string.px = NULL;
-	menu->buttons[BUT_YES].string.px = NULL;
-	menu->buttons[BUT_NO].string.px = NULL;
-	menu->characters.px = NULL;
+		.color_hover[1] = 0xFF707070, .window = WIN_MAIN, .string = (t_str)
+		{.str = "Exit", .color = 0xFF000000, .scale = 0.015}};
 }
 
 static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
 {
 	return (load_img(mlx->mlx, "assets/core/menu/title.bmp", &menu->title,
 			(t_dim){.w = part(w, 0.2), .h = part(h, 0.15)})
-		|| load_img(mlx->mlx, "assets/core/menu/confirm.bmp", &menu->confirm,
-			(t_dim){.w = part(w, 0.15), .h = part(h, 0.13)})
-		|| load_img(mlx->mlx, "assets/core/menu/resume.bmp", &menu->resume,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/start.bmp",
-			&menu->buttons[BUT_START].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/settings.bmp",
-			&menu->buttons[BUT_SETTINGS].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/back.bmp",
-			&menu->buttons[BUT_BACK].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/exit.bmp",
-			&menu->buttons[BUT_EXIT].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/yes.bmp",
-			&menu->buttons[BUT_YES].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
-		|| load_img(mlx->mlx, "assets/core/menu/no.bmp",
-				&menu->buttons[BUT_NO].string,
-			(t_dim){.w = part(w, 0.1), .h = part(h, 0.1)})
 		|| load_img(mlx->mlx, "assets/core/characters/characters.bmp",
 				&menu->characters,
 			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
@@ -134,21 +112,16 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	init_buttons_menu(menu, set->wid, set->hei);
+	init_buttons_main(menu, set->wid, set->hei);
+	init_buttons_settings(menu, set->wid, set->hei);
+	init_buttons_exit(menu, set->wid, set->hei);
 	init_sliders_settings(menu, set, set->wid, set->hei);
 	init_textfields_settings(menu, set->wid, set->hei);
-	init_menu_images(menu);
+	menu->title.px = NULL;
+	menu->characters.px = NULL;
 	if (load_menu_images(mlx, menu, set->wid, set->hei) == 1)
 	{
 		free(menu->title.px);
-		free(menu->confirm.px);
-		free(menu->resume.px);
-		free(menu->buttons[BUT_START].string.px);
-		free(menu->buttons[BUT_SETTINGS].string.px);
-		free(menu->buttons[BUT_BACK].string.px);
-		free(menu->buttons[BUT_EXIT].string.px);
-		free(menu->buttons[BUT_YES].string.px);
-		free(menu->buttons[BUT_NO].string.px);
 		free(menu->background);
 		free(menu->characters.px);
 		return (1);

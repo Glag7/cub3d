@@ -86,7 +86,10 @@ void	draw_string(t_data *data, t_str string, t_ulpoint pos, t_ulpoint dim)
 
 	len = strlen(string.str);
 	spacing = part(WIDTH_CHAR, 0.2);
-	scale = get_scale((t_ulpoint){.x = dim.x, .y = dim.y}, len, spacing);
+	if (string.scale == 0.)
+		scale = get_scale((t_ulpoint){.x = dim.x, .y = dim.y}, len, spacing);
+	else
+		scale = fmin((string.scale * (double)data->set.wid) / 5., get_scale((t_ulpoint){.x = dim.x, .y = dim.y}, len, spacing));
 	spacing = (size_t)((double)spacing * scale);
 	dim_char = (t_ulpoint){.x = part(WIDTH_CHAR, scale), .y = part(HEIGHT_CHAR, scale)};
 	pos_char = (t_ulpoint){.x = pos.x - ((len - 1) * dim_char.x + (len - 1) * spacing) / 2,

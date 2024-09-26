@@ -47,10 +47,6 @@ void	draw_settings_menu(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_VIEW]);
 	draw_slider(data, data->menu.sliders[SET_SENSI]);
 	build_textfield(data, data->menu.textfields[SET_SENSI]);
-	draw_string(data, (t_str){.str = "0123456789", .color = 0xFFFF00FF},
-		(t_ulpoint){.x = data->set.wid / 2,
-		.y = part(data->set.hei, 0.75)},
-		(t_ulpoint){.x = part(data->set.wid, 0.4), .y = part(data->set.hei, 0.2)});
 	data->menu.window = WIN_SETTINGS;
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }
@@ -69,8 +65,6 @@ void	draw_exit_menu(t_data *data)
 	draw_string(data, (t_str){.str = "Are you sure ?", .color = 0xFF000000},
 		(t_ulpoint){.x = data->set.wid / 2, .y = part(data->set.hei, 0.45)},
 			(t_ulpoint){.x = part(data->set.wid, 0.18), .y = part(data->set.hei, 0.1)});
-//	draw_image(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
-//		.y = part(data->set.hei, 0.45)}, data->menu.confirm);
 	draw_button(data, data->menu.buttons[BUT_YES], IDLE);
 	draw_button(data, data->menu.buttons[BUT_NO], IDLE);
 	data->menu.window = WIN_EXIT;

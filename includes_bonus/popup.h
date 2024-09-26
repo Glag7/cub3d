@@ -80,6 +80,7 @@ typedef struct s_string
 {
 	char		*str;
 	uint32_t	color;
+	double		scale;
 }	t_str;
 
 typedef struct s_textfield
@@ -106,7 +107,7 @@ typedef struct s_button
 {
 	t_ulpoint	pos;
 	t_ulpoint	dim;
-	t_img		string;
+	t_str		string;
 	uint32_t	color_idle[2];
 	uint32_t	color_hover[2];
 	uint8_t		state;

@@ -41,15 +41,6 @@ size_t	part(size_t n, double fraction)
 void	free_menu(t_menu *menu)
 {
 	free(menu->title.px);
-	free(menu->confirm.px);
-	if (menu->first_start == 1)
-		free(menu->resume.px);
 	free(menu->background);
-	free(menu->buttons[BUT_START].string.px);
-	free(menu->buttons[BUT_SETTINGS].string.px);
-	free(menu->buttons[BUT_BACK].string.px);
-	free(menu->buttons[BUT_EXIT].string.px);
-	free(menu->buttons[BUT_YES].string.px);
-	free(menu->buttons[BUT_NO].string.px);
 	free(menu->characters.px);
 }

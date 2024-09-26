@@ -55,8 +55,7 @@ void	close_menu(t_data *data)
 		data->menu.save_mouse.x, data->menu.save_mouse.y);
 	if (data->menu.first_start == 1)
 	{
-		free(data->menu.buttons[BUT_START].string.px);
-		data->menu.buttons[BUT_START].string = data->menu.resume;
+		data->menu.buttons[BUT_START].string.str = "Resume";
 		data->menu.first_start = 0;
 	}
 	data->status &= ~MENU;

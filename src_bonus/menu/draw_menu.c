@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include <stdint.h>
 #include "data.h"
 #include "menu.h"
@@ -50,5 +51,5 @@ void	draw_button(t_data *data, t_button button, uint8_t state)
 	else
 		colors = button.color_hover;
 	draw_rectangle(data, button.pos, button.dim, colors);
-	draw_image(data, button.pos, button.string);
+	draw_string(data, button.string, button.pos, button.dim);
 }
