@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/24 20:10:34 by glag             ###   ########.fr       */
+/*   Updated: 2024/09/26 04:05:00 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ static void	move_z(t_data *data, double delta, uint64_t keys)
 		data->play.vz = 0.;
 	}
 	if (fabs(data->play.leglen - data->play.z) < 1e-3 && (keys & KEY_SPACE))
-		data->play.vz += .05;
+		data->play.vz += 2.;
 	else if (data->play.z > data->play.leglen)
-		data->play.vz -= .1 * delta;
-	data->play.z += data->play.vz;
+		data->play.vz -= 5. * delta;
+	data->play.z += data->play.vz * delta;
 	if (data->play.leglen > data->play.z)
 	{
 		data->play.z = data->play.leglen;
