@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/09/25 18:39:59 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/26 04:34:50 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,7 @@
 #include "play.h"
 #include "point.h"
 #include "keys.h"
-
-static t_point	get_newpos(t_data *data, double delta)
-{
-	t_point	newpos;
-
-	newpos.x = data->play.x;
-	newpos.y = data->play.y;
-	newpos.x += data->play.vx * delta;
-	newpos.y += data->play.vy * delta;
-	if (newpos.x >= (double)data->map.wid)
-		newpos.x = newpos.x - floor(newpos.x)
-			+ (double)((int)floor(data->map.wid) % data->map.wid);
-	else if (newpos.x < 0.)
-		newpos.x = newpos.x - floor(newpos.x) + (double)data->map.wid
-			+ (double)((int)floor(data->map.wid) % data->map.wid) - 1.;
-	if (newpos.y >= (double)data->map.hei)
-		newpos.y = newpos.y - floor(newpos.y)
-			+ (double)((int)floor(data->map.hei) % data->map.hei);
-	else if (newpos.y < 0.)
-		newpos.y = newpos.y - floor(newpos.y) + (double)data->map.hei
-			+ (double)((int)floor(data->map.hei) % data->map.hei) - 1.;
-	return (newpos);
-}
+#include "move.h"
 
 static void	friction(t_data *data, double speed, double delta)
 {
@@ -66,8 +44,7 @@ void	move_xy(t_data *data, double delta, int stopped)
 
 	if ((stopped || speed > data->set.speedmax))
 		friction(data, speed, delta);
-	newpos = get_newpos(data, delta);
-	//TODO check walls
+	newpos = raycast_newpos(data);
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 }
