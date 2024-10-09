@@ -90,8 +90,6 @@ rebondir
 hitboxes
 rework mvements shift etc
 ctrl
-espace
+ospace
 
-# define FAT .05//a changer en fonction de la direction
-
-crouch fait juste monter les jambes (baisse la taille de base)
+probleme precision si pile bordure bloc

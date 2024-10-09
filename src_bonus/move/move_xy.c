@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/09/25 18:39:59 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:35:06 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,6 @@
 #include "play.h"
 #include "point.h"
 #include "keys.h"
-
-static t_point	get_newpos(t_data *data, double delta)
-{
-	t_point	newpos;
-
-	newpos.x = data->play.x;
-	newpos.y = data->play.y;
-	newpos.x += data->play.vx * delta;
-	newpos.y += data->play.vy * delta;
-	if (newpos.x >= (double)data->map.wid)
-		newpos.x = newpos.x - floor(newpos.x)
-			+ (double)((int)floor(data->map.wid) % data->map.wid);
-	else if (newpos.x < 0.)
-		newpos.x = newpos.x - floor(newpos.x) + (double)data->map.wid
-			+ (double)((int)floor(data->map.wid) % data->map.wid) - 1.;
-	if (newpos.y >= (double)data->map.hei)
-		newpos.y = newpos.y - floor(newpos.y)
-			+ (double)((int)floor(data->map.hei) % data->map.hei);
-	else if (newpos.y < 0.)
-		newpos.y = newpos.y - floor(newpos.y) + (double)data->map.hei
-			+ (double)((int)floor(data->map.hei) % data->map.hei) - 1.;
-	return (newpos);
-}
 
 static void	friction(t_data *data, double speed, double delta)
 {
@@ -58,16 +35,60 @@ static void	friction(t_data *data, double speed, double delta)
 	}
 }
 
+static t_point	check_bounds(t_data *data, t_point pos)
+{
+	if (pos.x >= (double)data->map.wid)
+		pos.x = pos.x - floor(pos.x)
+			+ (double)((int)floor(data->map.wid) % data->map.wid);
+	else if (pos.x < 0.)
+		pos.x = pos.x - floor(pos.x) + (double)data->map.wid
+			+ (double)((int)floor(data->map.wid) % data->map.wid) - 1.;
+	if (pos.y >= (double)data->map.hei)
+		pos.y = pos.y - floor(pos.y)
+			+ (double)((int)floor(data->map.hei) % data->map.hei);
+	else if (pos.y < 0.)
+		pos.y = pos.y - floor(pos.y) + (double)data->map.hei
+			+ (double)((int)floor(data->map.hei) % data->map.hei) - 1.;
+	return (pos);
+}
+
+# define WTF 0
+
+static double	check_wallsx(t_data *data, double newpos, double dir)
+{
+	double	endpos;
+	t_ipoint	ipos;
+	int		map;
+
+	endpos = newpos + dir * WTF;
+	endpos = check_bounds(data, (t_point){endpos, 0}).x;
+	ipos = (t_ipoint){endpos, data->play.y};
+	map = data->map.map[(long long)(ipos.x + ipos.y * data->map.wid)];
+	if (map & CUBE)
+		newpos = floor(endpos) + (dir < 0.) - dir * WTF;
+	return (newpos);
+}
+
 void	move_xy(t_data *data, double delta, int stopped)
 {
 	const double	speed = sqrt(data->play.vx * data->play.vx
 			+ data->play.vy * data->play.vy);
 	t_point			newpos;
+	t_point			dir;
 
 	if ((stopped || speed > data->set.speedmax))
 		friction(data, speed, delta);
-	newpos = get_newpos(data, delta);
-	//TODO check walls
+	newpos.x = data->play.x;
+	newpos.y = data->play.y;
+	newpos.x += data->play.vx * delta;
+	newpos.y += data->play.vy * delta;
+	newpos = check_bounds(data, newpos);
+	dir = (t_point){(data->play.vx)
+		/ fabs(data->play.vx),
+		(data->play.vy)
+		/ fabs(data->play.vy)};
+	if (!isnan(dir.x))
+		newpos.x = check_wallsx(data, newpos.x, dir.x);
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 }
