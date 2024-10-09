@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:06:16 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 16:02:20 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:45:12 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	open_doors(t_data *data, double delta)
 	uint32_t	*cur;
 	int32_t		value;
 
+	cur = NULL;
 	i = -1;
 	while (++i < 32)
 	{
