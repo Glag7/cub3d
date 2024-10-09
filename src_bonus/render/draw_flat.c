@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 14:58:31 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:17:23 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static inline void __attribute__((always_inline))
 		hei *= .5;
 		zof -= hei *((double)((ray->side & VALUE) >> VALUEOFF) / VALUEONE - .5);
 	}
-	if (texoff > 1.)
-		return ;
 	img->px += (size_t)(texoff * (double)img->w);
 	ddata->start = ((double)dat->set.hei - hei) * .5 + zof + 2.5;
 	ddata->end = ((double)dat->set.hei + hei) * .5 + zof + 2.5;
+	if (texoff > 1.)
+		ddata->end = ddata->start - 1;
 }
 
 static inline int __attribute__((always_inline))
