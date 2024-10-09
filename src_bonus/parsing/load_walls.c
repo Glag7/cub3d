@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 16:32:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:59:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:02:45 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "utils.h"
 #include "parsing.h"
 
-int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
+int	load_no(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
 	unsigned int	j;
 	char			c;
 
-	if (map->n.px)
+	if (data->map.n.px)
 	{
 		ft_perror(ERR_DUP_NO);
 		return (1);
@@ -33,19 +33,20 @@ int	load_no(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->n))
+	if (load_img(mlx, buf + *i, &data->map.n,
+			(t_dim){data->set.texsiz, data->set.texsiz}))
 		return (1);
 	buf[j] = c;
 	*i = j;
 	return (0);
 }
 
-int	load_so(void *mlx, t_map *map, char *buf, unsigned int *i)
+int	load_so(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
 	unsigned int	j;
 	char			c;
 
-	if (map->s.px)
+	if (data->map.s.px)
 	{
 		ft_perror(ERR_DUP_SO);
 		return (1);
@@ -58,19 +59,20 @@ int	load_so(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->s))
+	if (load_img(mlx, buf + *i, &data->map.s,
+			(t_dim){data->set.texsiz, data->set.texsiz}))
 		return (1);
 	buf[j] = c;
 	*i = j;
 	return (0);
 }
 
-int	load_we(void *mlx, t_map *map, char *buf, unsigned int *i)
+int	load_we(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
 	unsigned int	j;
 	char			c;
 
-	if (map->w.px)
+	if (data->map.w.px)
 	{
 		ft_perror(ERR_DUP_WE);
 		return (1);
@@ -83,19 +85,20 @@ int	load_we(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->w))
+	if (load_img(mlx, buf + *i, &data->map.w,
+			(t_dim){data->set.texsiz, data->set.texsiz}))
 		return (1);
 	buf[j] = c;
 	*i = j;
 	return (0);
 }
 
-int	load_ea(void *mlx, t_map *map, char *buf, unsigned int *i)
+int	load_ea(void *mlx, t_data *data, char *buf, unsigned int *i)
 {
 	unsigned int	j;
 	char			c;
 
-	if (map->e.px)
+	if (data->map.e.px)
 	{
 		ft_perror(ERR_DUP_EA);
 		return (1);
@@ -108,7 +111,8 @@ int	load_ea(void *mlx, t_map *map, char *buf, unsigned int *i)
 		j++;
 	c = buf[j];
 	buf[j] = 0;
-	if (load_img(mlx, buf + *i, &map->e))
+	if (load_img(mlx, buf + *i, &data->map.e,
+			(t_dim){data->set.texsiz, data->set.texsiz}))
 		return (1);
 	buf[j] = c;
 	*i = j;

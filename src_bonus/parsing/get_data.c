@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 16:42:38 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/06/28 17:34:37 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:31:25 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 #include "data.h"
 #include "err.h"
 #include "utils.h"
+
+static inline int	valid_char(char c)
+{
+	return (c == '0' || c == '1' || c == ' '
+		|| c == 'G' || c == 'D' || c == 'T' || c == 'B');
+}
 
 static inline int	parse_char(char *c, double x, double y, t_data *d)
 {
@@ -38,7 +44,7 @@ static inline int	parse_char(char *c, double x, double y, t_data *d)
 		d->play.x = x + 0.5;
 		d->play.y = y + 0.5;
 	}
-	else if (!(*c == '0' || *c == '1' || *c == ' '))
+	else if (!valid_char(*c))
 	{
 		ft_perror(ERR_BADCHAR);
 		return (1);

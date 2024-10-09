@@ -6,53 +6,103 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/06/28 18:08:31 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:33:05 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stddef.h>
-#include <stdbool.h>
-#include "parsing.h"
-#include "utils.h"
+#include <fcntl.h>
+#include <unistd.h>
 #include "specs.h"
-#include "map.h"
-#include "mlx.h"
 #include "err.h"
+#include "mlx.h"
+#include "utils.h"
+#include "map.h"
+#include "parsing.h"
 
-static int	init_dimensions(t_specs *img_specs)
+static int	get_mlx_img(void *mlx, char *path, t_specs *specs)
 {
-	int	null;
+	int	w;
+	int	h;
 
-	img_specs->img_bin = mlx_get_data_addr(img_specs->mlx_img, &null,
-			&(img_specs->size_line), &null);
-	if (img_specs->w > img_specs->h)
+	specs->img_mlx = mlx_xpm_file_to_image(mlx, path, &w, &h);
+	if (specs->img_mlx == NULL)
 	{
-		img_specs->dim_rect[0] = (double)img_specs->w / (double)img_specs->h;
-		img_specs->dim_rect[1] = 1.;
+		ft_perror(ERR_MLX_XPM);
+		return (1);
 	}
-	else
-	{
-		img_specs->dim_rect[0] = 1.;
-		img_specs->dim_rect[1] = (double)img_specs->h / (double)img_specs->w;
-	}
+	specs->dim_src = (t_dim){.w = (size_t)w, .h = (size_t)h};
 	return (0);
 }
 
-static int	convert_image(t_img *image, t_specs img_specs)
+static int	get_xpm_img(void *mlx, char *path, t_specs *specs)
 {
-	image->px = malloc((image->size * image->size) * sizeof(uint32_t));
+	int	null;
+	int	size_line;
+
+	if (get_mlx_img(mlx, path, specs) == 1)
+		return (1);
+	if (specs->dim_src.w == 0 || specs->dim_src.h == 0)
+	{
+		mlx_destroy_image(mlx, specs->img_mlx);
+		ft_perror(ERR_IMG_SIZE);
+		return (1);
+	}
+	specs->img_src = (uint32_t *)mlx_get_data_addr(specs->img_mlx,
+			&null, &size_line, &null);
+	specs->size_line = (size_t)size_line / sizeof(uint32_t);
+	return (0);
+}
+
+static int	check_format(char *filename, char *format)
+{
+	int	i_filename;
+	int	i_format;
+
+	i_filename = 0;
+	while (filename[i_filename] != '\0')
+		i_filename++;
+	i_format = 0;
+	while (format[i_format] != '\0')
+		i_format++;
+	while (i_filename >= 0 && i_format >= 0
+		&& filename[i_filename] == format[i_format])
+	{
+		i_filename--;
+		i_format--;
+	}
+	return (i_format == -1 && i_filename >= 0 && filename[i_filename] == '.');
+}
+
+static int	img_resize(t_img *image, t_specs *specs, void *mlx, t_dim dim)
+{
+	specs->dim_dst = dim;
+	specs->mapping = (t_point){.x = (double)specs->dim_src.w
+		/ (double)specs->dim_dst.w,
+		.y = (double)specs->dim_src.h / (double)specs->dim_dst.h};
+	image->w = specs->dim_dst.w;
+	image->h = specs->dim_dst.h;
+	image->px = malloc(image->w * image->h * sizeof(uint32_t));
 	if (image->px == NULL)
 	{
+		if (specs->img_mlx != NULL)
+			mlx_destroy_image(mlx, specs->img_mlx);
+		else
+			free(specs->img_src);
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	read_image(image, img_specs);
+	resize_image(image, *specs);
+	if (specs->img_mlx != NULL)
+		mlx_destroy_image(mlx, specs->img_mlx);
+	else
+		free(specs->img_src);
 	return (0);
 }
 
-static int	get_mlx_img(void *mlx, char *path, t_specs *img_specs)
+int	load_img(void *mlx, char *path, t_img *image, t_dim dim)
 {
+	t_specs	specs;
 	size_t	i;
 	char	c;
 
@@ -64,40 +114,17 @@ static int	get_mlx_img(void *mlx, char *path, t_specs *img_specs)
 	if (path[i] != ' ' && path[i] != '\0')
 		i++;
 	c = path[i];
-	path[i] = '\0';
-	img_specs->mlx_img = mlx_xpm_file_to_image(mlx, path, &(img_specs->w),
-			&(img_specs->h));
-	path[i] = c;
-	if (img_specs->mlx_img == NULL)
+	if (c != '\0')
+		path[i] = '\0';
+	if (check_format(path, "xpm") == 1 && get_xpm_img(mlx, path, &specs) == 1)
 		return (1);
-	return (0);
-}
-
-int	load_img(void *mlx, char *path, t_img *image)
-{
-	t_specs	img_specs;
-
-	if (get_mlx_img(mlx, path, &img_specs) == 1)
-	{
-		ft_perror(ERR_MLX_XPM);
+	else if (check_format(path, "bmp") == 1 && get_bmp_img(path, &specs) == 1)
 		return (1);
-	}
-	if (img_specs.w <= 0 || img_specs.h <= 0)
-	{
-		mlx_destroy_image(mlx, img_specs.mlx_img);
-		ft_perror(ERR_IMG_SIZE);
+	else if (check_format(path, "xpm") == 0 && check_format(path, "bmp") == 0)
+		ft_perror(ERR_IMG_EXT);
+	if (check_format(path, "xpm") == 0 && check_format(path, "bmp") == 0)
 		return (1);
-	}
-	if (img_specs.w < img_specs.h)
-		image->size = (uint64_t)img_specs.w;
-	else
-		image->size = (uint64_t)img_specs.h;
-	if (init_dimensions(&img_specs) == 1
-		|| convert_image(image, img_specs) == 1)
-	{
-		mlx_destroy_image(mlx, img_specs.mlx_img);
-		return (1);
-	}
-	mlx_destroy_image(mlx, img_specs.mlx_img);
-	return (0);
+	if (c != '\0')
+		path[i] = c;
+	return (img_resize(image, &specs, mlx, dim));
 }

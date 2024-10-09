@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 18:06:28 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/17 12:38:08 by glag             ###   ########.fr       */
+/*   Updated: 2024/09/05 20:02:41 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,54 @@
 #include "map.h"
 #include "ray.h"
 
-static void	drawv2(t_data *data, t_img img, unsigned int x, double hei, double test)
+static inline void __attribute__((always_inline))
+	init_ddata(t_data *data, t_draw *ddata, double hei, double inc)
 {
-	double			inc;
-	double			index;
-	int	i;
-	int	start;
-	int	end;
-	int	azoffset;
-	int	zoffset;
+	const double	zoffset = data->set.planwid * data->play.az / M_PI * 4.
+		+ hei * data->play.z;
 
-	zoffset = hei * data->play.z;
-	azoffset = (double)data->set.wid / (data->set.tanfov * 2.) * data->play.az / M_PI * 4.;
-	inc = 1. / hei * (double)img.size;
-	start = ((int)data->set.hei - (int)hei) / 2 + azoffset + zoffset;
-	end = ((int)data->set.hei + (int)hei) / 2 + azoffset + zoffset;
-	index = 0.;
-	if (start < 0.)
+	ddata->start = ((double)data->set.hei - hei) * .5 + zoffset + 2.5;
+	ddata->end = ((double)data->set.hei + hei) * .5 + zoffset + 2.5;
+	ddata->index = 0.;
+	ddata->ypx = data->px.y;
+	if (ddata->start < 0)
 	{
-		index = (double)-start * inc;
-		start = 0.;
+		ddata->index = (double)-ddata->start * inc;
+		ddata->start = 0;
 	}
-	else if (start >= (int)data->set.hei)
-		start = data->set.hei - 1;
-	if (end >= (int)data->set.hei)
-		end = data->set.hei - 1;
+	else if (ddata->start >= (int)data->set.hei)
+		ddata->start = data->set.hei;
+	if (ddata->end >= (int)data->set.hei)
+		ddata->end = data->set.hei;
+}
+
+static void	drawv2(t_data *data, t_img img, unsigned int x, t_ray *ray)
+{
+	t_draw			ddata;
+	int				i;
+	const double	hei = (data->set.planwid / ray->len);
+	const double	inc = 1. / hei * (double)img.w;
+
 	i = 0;
-	while (i < start)
-		data->mlx.px[x + i++ *data->set.wid] = data->map.ceil;
-	while (i < end)
+	init_ddata(data, &ddata, hei, inc);
+	if (x == data->set.wid / 2 && ddata.start <= (int)data->set.hei / 2
+		&& ddata.end >= (int)data->set.hei / 2)
 	{
-		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)index * img.size];
-		index += inc;
+		data->cross = data->map.map + ray->ipos.x + ray->ipos.y * data->map.wid;
+		data->cross_dist = ray->len;
 	}
-	while (i < (int)data->set.hei)
-		data->mlx.px[x + i++ *data->set.wid] = data->map.floor;
+	while (i < ddata.start)
+	{
+		data->mlx.px[x + i++ *data->set.wid]
+			= data->map.c.px[((int)data->px.x & (data->map.c.w - 1))
+			+ ((int)ddata.ypx & (data->map.c.h - 1)) * (int)data->map.c.w];
+		ddata.ypx += data->pxinc.y;
+	}
+	while (i < ddata.end)
+	{
+		data->mlx.px[x + i++ *data->set.wid] = img.px[(int)ddata.index * img.w];
+		ddata.index += inc;
+	}
 }
 
 void	drawv(t_data *data, t_ray *ray, size_t x)
@@ -61,24 +74,24 @@ void	drawv(t_data *data, t_ray *ray, size_t x)
 	if (ray->side == XSIDE && ray->vec.x > 0)
 	{
 		img = data->map.e;
-		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.size);
+		img.px += (size_t)((ray->pos.y - floor(ray->pos.y)) * (double)img.w);
 	}
 	else if (ray->side == XSIDE)
 	{
 		img = data->map.w;
 		img.px += (size_t)((1. - (ray->pos.y - floor(ray->pos.y)))
-				* (double)img.size);
+				* (double)img.w);
 	}
 	else if (ray->vec.y > 0)
 	{
 		img = data->map.s;
 		img.px += (size_t)((1. - (ray->pos.x - floor(ray->pos.x)))
-				* (double)img.size);
+				* (double)img.w);
 	}
 	else
 	{
 		img = data->map.n;
-		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.size);
+		img.px += (size_t)((ray->pos.x - floor(ray->pos.x)) * (double)img.w);
 	}
-	drawv2(data, img, x, (double)data->set.wid / (data->set.tanfov * 2. * ray->len), 1. / ray->len);
-}//TODO:(double)data->set.wid / (data->set.tanfov * 2.) constqnte = wid cub a 1
+	drawv2(data, img, x, ray);
+}

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 14:47:00 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/07/02 14:49:51 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:25:15 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define RAY_H
 
 # include "point.h"
-
-# define XSIDE 0
-# define YSIDE 1
 
 typedef struct s_ray
 {
@@ -30,5 +27,14 @@ typedef struct s_ray
 	int			side;
 	double		len;
 }	t_ray;
+
+typedef struct s_draw
+{
+	double	index;
+	double	ypx;
+	int		i;
+	int		start;
+	int		end;
+}	t_draw;
 
 #endif

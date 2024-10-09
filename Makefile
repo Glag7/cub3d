@@ -15,6 +15,7 @@ UTILS = utils/
 COMMON = common/
 HOOKS = hooks/
 RENDER = render/
+MOVE = move/
 
 COMP = cc
 CFLAGS = -Wall -Wextra -I $(LIBDIR) -g #-Werror
@@ -58,22 +59,32 @@ SRC_BONUS = main.c \
       $(PARSING)load.c \
       $(PARSING)load_walls.c \
       $(PARSING)load_floorceil.c \
+      $(PARSING)load_flat.c \
+      $(PARSING)load_gun.c \
       $(PARSING)load_images.c \
+      $(PARSING)load_bmp.c \
       $(PARSING)get_data.c \
-      $(PARSING)read_images.c \
+      $(PARSING)resize_images.c \
       $(PARSING)fill_map.c \
       $(PARSING)check_map.c \
       $(UTILS)ft_perror.c \
       $(UTILS)ft_memcpy.c \
       $(UTILS)ft_bzero.c \
       $(HOOKS)keys.c \
+      $(HOOKS)mouse.c \
       $(HOOKS)win.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
-      $(RENDER)move.c \
-      $(RENDER)mouse.c \
+      $(RENDER)flat.c \
+      $(RENDER)floor.c \
       $(RENDER)drawv.c \
-      $(RENDER)minimap.c
+      $(RENDER)draw_flat.c \
+      $(RENDER)draw_hud.c \
+      $(RENDER)minimap.c \
+      $(MOVE)move.c \
+      $(MOVE)move_angle.c \
+      $(MOVE)shoot.c \
+      $(MOVE)doors.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -99,7 +110,7 @@ all : $(LIB) $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
 
-bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
+bonus : $(LIB) $(OBJ_BONUS_DIR) $(OBJ_BONUS_DIR)$(MOVE) $(OBJ_BONUS_DIR)$(RENDER) $(OBJ_BONUS_DIR)$(HOOKS) $(OBJ_BONUS_DIR)$(PARSING) $(OBJ_BONUS_DIR)$(UTILS) $(OBJ_BONUS_DIR)$(COMMON) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS))
 	@$(COMP) $(CFLAGS) $(addprefix $(OBJ_BONUS_DIR), $(OBJ_BONUS)) -Lminilibx -lmlx_Linux -lm -lz -lX11 -lXext -I $(HDR_BONUS_DIR) -I $(LIBDIR) -o $(NAME)
 	$(DEL)
 	@echo $(MSG_READY)
@@ -141,6 +152,8 @@ $(OBJ_BONUS_DIR)$(UTILS) : $(OBJ_BONUS_DIR)
 $(OBJ_BONUS_DIR)$(RENDER) : $(OBJ_BONUS_DIR)
 	@ mkdir -p $(OBJ_BONUS_DIR)$(RENDER)
 
+$(OBJ_BONUS_DIR)$(MOVE) : $(OBJ_BONUS_DIR)
+	@ mkdir -p $(OBJ_BONUS_DIR)$(MOVE)
 
 $(OBJ_DIR) :
 	@ mkdir -p $(OBJ_DIR)
