@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 17:46:30 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/06 15:57:56 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:06:45 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stddef.h>
 # include <stdint.h>
 # include "point.h"
+
+# define PAD 64
 
 /* ----- SRUCTURES ----- */
 
