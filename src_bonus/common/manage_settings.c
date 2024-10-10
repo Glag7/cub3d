@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/09 21:24:01 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 03:02:56 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ int	init_settings(t_set *set)
 	set->sensi = DEF_SENSI;
 	set->texsiz = DEF_TEXSIZ;
 	set->skysiz = DEF_SKYSIZ;
+	set->accel = DEF_ACCEL;
+	set->accelair = DEF_ACCELAIR;
+	set->acceldiff = DEF_ACCELDIFF;
+	set->speeddiff = DEF_SPEEDDIFF;
+	set->speedmax = DEF_SPEEDMAX;
+	set->faster = DEF_FASTER;
+	set->slower = DEF_SLOWER;
+	set->slowerair = DEF_SLOWERAIR;
 	return (setfov(set, DEF_FOV));
 }
 

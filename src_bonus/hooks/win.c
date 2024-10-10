@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/08/08 17:17:52 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:16:05 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	out_hook(void *data_)
 
 	data = data_;
 	mlx_mouse_show(data->mlx.mlx, data->mlx.win);
+	data->keys = 0;
 	data->status &= ~INWINDOW;
 	return (0);
 }

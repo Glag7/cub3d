@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/06 17:07:17 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:16:26 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@
 
 # define ARM_LEN 1.5
 
+# define DEF_ACCEL 20.
+# define DEF_ACCELAIR 2.
+# define DEF_ACCELDIFF 3.
+# define DEF_SPEEDDIFF 2.
+# define DEF_SPEEDMAX 1.5
+# define DEF_FASTER .5
+# define DEF_SLOWER .001
+# define DEF_SLOWERAIR .8
+
 typedef struct s_set
 {
 	unsigned int	d;
@@ -73,6 +82,15 @@ typedef struct s_set
 	double			invwid;
 	double			*invlen;
 	double			*coslen;
+
+	double			accel;
+	double			accelair;
+	double			acceldiff;
+	double			speeddiff;
+	double			speedmax;
+	double			faster;
+	double			slower;
+	double			slowerair;
 }	t_set;
 
 int		init_settings(t_set *set);

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:27:08 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/09 21:17:23 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 03:03:29 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline void __attribute__((always_inline))
 
 	texoff = (ray->pos.y - floor(ray->pos.y));
 	hei = dat->set.planwid / ray->len;
-	zof = dat->set.planwid * dat->play.az / M_PI * 4. + hei * dat->play.z;
+	zof = dat->set.planwid * dat->play.az / M_PI * 4. + hei * (dat->play.z -.5);
 	if ((ray->side & SPEC) == DOOR)
 	{
 		*img = dat->map.d;
