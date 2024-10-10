@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/10/10 01:16:02 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 02:54:34 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,58 @@ static t_point	check_bounds(t_data *data, t_point pos)
 	return (pos);
 }
 
-static double	check_wallsx(t_data *data, double newpos, double dir)
+static double	check_wallsx(t_data *data, double endpos, double dir)
 {
-	double	endpos;
-	t_ipoint	ipos;
-	t_point		fpos;
-	int		map;
+	const t_ipoint	ipos = (t_ipoint){endpos, data->play.y};
+	const t_point	fpos = (t_point){endpos - ipos.x, data->play.y - ipos.y};
+	const int		map = data->map.map[(long long)(ipos.x
+			+ ipos.y * data->map.wid)];
+	const double	mval = (double)((map & VALUE) >> VALUEOFF) / VALUEONE;
 
-	endpos = newpos + dir * FAT;
-	endpos = check_bounds(data, (t_point){endpos, 0}).x;
-	ipos = (t_ipoint){endpos, data->play.y};
-	fpos = (t_point){endpos - ipos.x, data->play.y - ipos.y};
-	map = data->map.map[(long long)(ipos.x + ipos.y * data->map.wid)];
 	if (map & CUBE)
-		newpos = floor(endpos) + (dir < 0.) - dir * FAT;
-	else if ((map & SIDE) && (map & SPEC) && floor(data->play.x) == ipos.x 
-		&& ((fpos.x - .5 + dir * .05) * dir > 0.) ^ (((data->play.x - floor(data->play.x)) - .5 + dir * .05) * dir > 0.)
+		return (floor(endpos) + (dir < 0.) - dir * FAT);
+	if ((map & SIDE) && (map & SPEC) && floor(data->play.x) == ipos.x
+		&& ((fpos.x - .5 + dir * .05) * dir > 0.)
+		^ (((data->play.x - floor(data->play.x)) - .5 + dir * .05) * dir > 0.)
 		&& ((map & SPEC) == GLASS
-			|| ((map & SPEC) == DOOR && fpos.y < 1. - (double)((map & VALUE) >> VALUEOFF) / VALUEONE)
-			|| (((map & SPEC) == FENCE) && fabs(data->play.z - (double)((map & VALUE) >> VALUEOFF) / VALUEONE) < .75)))
-		newpos = floor(endpos) + .5 - dir * .05 - dir * FAT;
-	else if (!(map & SIDE) && (map & SPEC)
+			|| ((map & SPEC) == DOOR && fpos.y < 1. - mval)
+			|| (((map & SPEC) == FENCE) && fabs(data->play.z - mval) < .75)))
+		return (floor(endpos) + .5 - dir * .05 - dir * FAT);
+	if (!(map & SIDE) && (map & SPEC)
 		&& fpos.y >= .45 && fpos.y <= .55
 		&& ((map & SPEC) == GLASS
-			|| ((map & SPEC) == DOOR && fpos.x < 1. - (double)((map & VALUE) >> VALUEOFF) / VALUEONE)
-			|| (((map & SPEC) == FENCE) && fabs(data->play.z - (double)((map & VALUE) >> VALUEOFF) / VALUEONE) < .75)))
-		newpos = floor(endpos) + (dir < 0.) - dir * FAT - ((map & SPEC) == DOOR && dir < 0.) * (double)((map & VALUE) >> VALUEOFF) / VALUEONE;
-	return (newpos);
+			|| ((map & SPEC) == DOOR && fpos.x < 1. - mval)
+			|| (((map & SPEC) == FENCE) && fabs(data->play.z - mval) < .75)))
+		return (floor(endpos) + (dir < 0.) - dir * FAT
+			- ((map & SPEC) == DOOR && dir < 0.) * mval);
+	return (endpos - dir * FAT);
+}
+
+static double	check_wallsy(t_data *data, double endpos, double dir)
+{
+	const t_ipoint	ipos = (t_ipoint){data->play.x, endpos};
+	const t_point	fpos = (t_point){data->play.x - ipos.x, endpos - ipos.y};
+	const int		map = data->map.map[(long long)(ipos.x
+			+ ipos.y * data->map.wid)];
+	const double	mval = (double)((map & VALUE) >> VALUEOFF) / VALUEONE;
+
+	if (map & CUBE)
+		return (floor(endpos) + (dir < 0.) - dir * FAT);
+	if (!(map & SIDE) && (map & SPEC) && floor(data->play.y) == ipos.y
+		&& ((fpos.y - .5 + dir * .05) * dir > 0.)
+		^ (((data->play.y - floor(data->play.y)) - .5 + dir * .05) * dir > 0.)
+		&& ((map & SPEC) == GLASS
+			|| ((map & SPEC) == DOOR && fpos.x < 1. - mval)
+			|| (((map & SPEC) == FENCE) && fabs(data->play.z - mval) < .75)))
+		return (floor(endpos) + .5 - dir * .05 - dir * FAT);
+	if ((map & SIDE) && (map & SPEC)
+		&& fpos.x >= .45 && fpos.x <= .55
+		&& ((map & SPEC) == GLASS
+			|| ((map & SPEC) == DOOR && fpos.y < 1. - mval)
+			|| (((map & SPEC) == FENCE) && fabs(data->play.z - mval) < .75)))
+		return (floor(endpos) + (dir < 0.) - dir * FAT
+			- ((map & SPEC) == DOOR && dir < 0.) * mval);
+	return (endpos - dir * FAT);
 }
 
 void	move_xy(t_data *data, double delta, int stopped)
@@ -100,7 +125,9 @@ void	move_xy(t_data *data, double delta, int stopped)
 		(data->play.vy)
 		/ fabs(data->play.vy)};
 	if (!isnan(dir.x))
-		newpos.x = check_wallsx(data, newpos.x, dir.x);//yutiliser nouveau x ?
+		newpos.x = check_wallsx(data, check_bounds(data, (t_point){newpos.x + dir.x * FAT, 0}).x, dir.x);
+	if (!isnan(dir.y))
+		newpos.y = check_wallsy(data, check_bounds(data, (t_point){0, newpos.y + dir.y * FAT}).y, dir.y);
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 }
