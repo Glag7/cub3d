@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 19:47:47 by glag              #+#    #+#             */
-/*   Updated: 2024/10/10 02:54:34 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 02:58:30 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,21 @@ void	move_xy(t_data *data, double delta, int stopped)
 
 	if ((stopped || speed > data->set.speedmax))
 		friction(data, speed, delta);
-	newpos.x = data->play.x;
-	newpos.y = data->play.y;
-	newpos.x += data->play.vx * delta;
-	newpos.y += data->play.vy * delta;
+	newpos.x = data->play.x + data->play.vx * delta;
+	newpos.y = data->play.y + data->play.vy * delta;
 	newpos = check_bounds(data, newpos);
 	dir = (t_point){(data->play.vx)
 		/ fabs(data->play.vx),
 		(data->play.vy)
 		/ fabs(data->play.vy)};
 	if (!isnan(dir.x))
-		newpos.x = check_wallsx(data, check_bounds(data, (t_point){newpos.x + dir.x * FAT, 0}).x, dir.x);
+		newpos.x = check_wallsx(data,
+				check_bounds(data, (t_point){newpos.x + dir.x * FAT, 0}).x,
+				dir.x);
 	if (!isnan(dir.y))
-		newpos.y = check_wallsy(data, check_bounds(data, (t_point){0, newpos.y + dir.y * FAT}).y, dir.y);
+		newpos.y = check_wallsy(data,
+				check_bounds(data, (t_point){0, newpos.y + dir.y * FAT}).y,
+				dir.y);
 	data->play.x = newpos.x;
 	data->play.y = newpos.y;
 }

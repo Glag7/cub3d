@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/26 04:09:09 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 03:00:42 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 int	init_settings(t_set *set)
 {
-	set->wid = DEF_WID / 2;
+	set->wid = DEF_WID;
 	set->invwid = 1. / (double)(set->wid - 1);
-	set->hei = DEF_HEI / 2;
+	set->hei = DEF_HEI;
 	set->ncase = DEF_NCASE;
 	set_diameter(set, DEF_D);
 	set->xoffset = DEF_OFFSET;
@@ -30,8 +30,8 @@ int	init_settings(t_set *set)
 	set->crosscolor = DEF_CROSSCOLOR;
 	set->view = DEF_VIEW;
 	set->sensi = DEF_SENSI;
-	set->texsiz = 8;//DEF_TEXSIZ;
-	set->skysiz = 16;//DEF_SKYSIZ;
+	set->texsiz = DEF_TEXSIZ;
+	set->skysiz = DEF_SKYSIZ;
 	set->accel = DEF_ACCEL;
 	set->accelair = DEF_ACCELAIR;
 	set->acceldiff = DEF_ACCELDIFF;
