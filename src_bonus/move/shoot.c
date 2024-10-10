@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:33:46 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 16:40:54 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/10 03:30:40 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	shoot(t_data *data, double delta)
 	uint32_t	value;
 
 	if (!(data->keys & KEY_LM) || !data->cross)
+	{
+		data->keys &= ~KEY_LM;
 		return ;
+	}
 	value = *data->cross;
 	if ((value & CUBE) < 2)
 		*data->cross = 0;
