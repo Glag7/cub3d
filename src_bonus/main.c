@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:58:59 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/24 17:10:26 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 20:37:22 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "err.h"
 #include "data.h"
 #include "render.h"
+#include "set.h"
 
 static void	start_game(t_data *data)
 {

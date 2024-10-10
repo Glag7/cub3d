@@ -53,6 +53,7 @@ SRC_BONUS = main.c \
       $(COMMON)manage_mlx.c \
       $(COMMON)manage_mini.c \
       $(COMMON)manage_settings.c \
+      $(COMMON)settings_file.c \
       $(COMMON)diameter.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \

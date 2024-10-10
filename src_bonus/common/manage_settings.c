@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/10 03:02:56 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/10 22:38:54 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	init_settings(t_set *set)
 	set->crosscolor = DEF_CROSSCOLOR;
 	set->view = DEF_VIEW;
 	set->sensi = DEF_SENSI;
-	set->texsiz = DEF_TEXSIZ;
-	set->skysiz = DEF_SKYSIZ;
+	set->texsiz = 2;//DEF_TEXSIZ;
+	set->skysiz = 2;//DEF_SKYSIZ;
 	set->accel = DEF_ACCEL;
 	set->accelair = DEF_ACCELAIR;
 	set->acceldiff = DEF_ACCELDIFF;
@@ -69,12 +69,13 @@ int	setfov(t_set *set, double fov_deg)
 	set->tanfov = tan(set->fov * .5);
 	set->planwid = (double)set->wid / (set->tanfov * 2.);
 	set->invplanwid = 1. / set->planwid;
-	free(set->invlen);
-	set->invlen = malloc(set->wid * sizeof(*set->invlen));
+	if (set->invlen == NULL)
+		set->invlen = malloc(set->wid * sizeof(*set->invlen));
 	if (set->invlen == NULL)
 		return (1);
 	free(set->coslen);
-	set->coslen = malloc(set->wid * sizeof(*set->coslen));
+	if (set->coslen == NULL)
+		set->coslen = malloc(set->wid * sizeof(*set->coslen));
 	if (set->coslen == NULL)
 	{
 		free(set->invlen);
@@ -86,6 +87,7 @@ int	setfov(t_set *set, double fov_deg)
 
 void	free_settings(t_set *set)
 {
+	export_settings(set);
 	free(set->invlen);
 	free(set->coslen);
 }
