@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 17:00:40 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/11 02:03:46 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 #include "set.h"
 #include "mini.h"
 
-int	init_settings(t_set *set)
+static int	compute_settings(t_set *set)
+{
+	set_diameter(set, set->d);
+	set->invwid = 1. / (double)(set->wid - 1);
+	return (setfov(set, set->fov_deg));
+}
+
+static int	init_def(t_set *set)
 {
 	set->saved_w = DEF_WID;
 	set->saved_h = DEF_HEI;
 	set->wid = DEF_WID;
-	set->invwid = 1. / (double)(set->wid - 1);
 	set->hei = DEF_HEI;
 	set->ncase = DEF_NCASE;
-	set_diameter(set, DEF_D);
 	set->xoffset = DEF_OFFSET;
 	set->yoffset = DEF_OFFSET;
+	set->d = DEF_D;
 	set->ncolor = DEF_NCOLOR;
 	set->color = DEF_COLOR;
 	set->pcolor = DEF_PCOLOR;
@@ -34,7 +40,23 @@ int	init_settings(t_set *set)
 	set->sensi = DEF_SENSI;
 	set->texsiz = DEF_TEXSIZ;
 	set->skysiz = DEF_SKYSIZ;
-	return (setfov(set, DEF_FOV));
+	set->accel = DEF_ACCEL;
+	set->accelair = DEF_ACCELAIR;
+	set->acceldiff = DEF_ACCELDIFF;
+	set->speeddiff = DEF_SPEEDDIFF;
+	set->speedmax = DEF_SPEEDMAX;
+	set->faster = DEF_FASTER;
+	set->slower = DEF_SLOWER;
+	set->slowerair = DEF_SLOWERAIR;
+	set->fov_deg = DEF_FOV;
+	return (compute_settings(set));
+}
+
+int	init_settings(t_set *set)
+{
+	if (load_settings(set) == 0)
+		return (compute_settings(set));
+	return (init_def(set));
 }
 
 static void	get_raylen(t_set *set)
@@ -63,12 +85,13 @@ int	setfov(t_set *set, double fov_deg)
 	set->tanfov = tan(set->fov * .5);
 	set->planwid = (double)set->wid / (set->tanfov * 2.);
 	set->invplanwid = 1. / set->planwid;
-	free(set->invlen);
-	set->invlen = malloc(set->wid * sizeof(*set->invlen));
+	if (set->invlen == NULL)
+		set->invlen = malloc(set->wid * sizeof(*set->invlen));
 	if (set->invlen == NULL)
 		return (1);
 	free(set->coslen);
-	set->coslen = malloc(set->wid * sizeof(*set->coslen));
+	if (set->coslen == NULL)
+		set->coslen = malloc(set->wid * sizeof(*set->coslen));
 	if (set->coslen == NULL)
 	{
 		free(set->invlen);
@@ -76,10 +99,4 @@ int	setfov(t_set *set, double fov_deg)
 	}
 	get_raylen(set);
 	return (0);
-}
-
-void	free_settings(t_set *set)
-{
-	free(set->invlen);
-	free(set->coslen);
 }

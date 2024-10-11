@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 12:23:10 by ttrave            #+#    #+#             */
-/*   Updated: 2024/08/07 17:33:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:08:45 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	img_resize(t_img *image, t_specs *specs, void *mlx, t_dim dim)
 		.y = (double)specs->dim_src.h / (double)specs->dim_dst.h};
 	image->w = specs->dim_dst.w;
 	image->h = specs->dim_dst.h;
-	image->px = malloc(image->w * image->h * sizeof(uint32_t));
+	image->px = malloc(image->w * image->h * sizeof(uint32_t) + PAD);
 	if (image->px == NULL)
 	{
 		if (specs->img_mlx != NULL)
@@ -92,6 +92,7 @@ static int	img_resize(t_img *image, t_specs *specs, void *mlx, t_dim dim)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
+	ft_bzero(image->px + image->w * image->h, PAD);
 	resize_image(image, *specs);
 	if (specs->img_mlx != NULL)
 		mlx_destroy_image(mlx, specs->img_mlx);

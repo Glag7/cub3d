@@ -1,20 +1,8 @@
-"opti"
-
 rat mode
-
-curseur custom avec mini
 
 save
 
-mouvements fluides
-
-custom keys
-
-limiter distqnce max si manque de fps
-check un peu a droite et a gauche pour le deplacement
-
 wid et hei doivent etre pairs
-arreter d'avancer quand quitter fenetre
 taille de map doit etre impaire
 
 resize map : free puis changer taille puis re init
@@ -22,65 +10,11 @@ changer masque map
 option pour bouger et resize la map
 option pour faire ton propre masque
 
-keymap
-
 map : tab pour le centrer
-
-masque map full
-
-faire un tableau de toutes les inverse sqrt
-et tous les cos dangles a appliquer
-malloc la struct
-
-minimap segfault
-
-souris
-opti cos atan +invlen
-revamp controles
-ennemis + portes (entites)
-flingues
-projectiles
-multithreading
-son
-menu
-remap controles
-aligner data
-settings taille minimap, check les settings en general
-console
-
-trouver des textures
-
-position compteur
-
-joueur gros (offset collisions)
-
-opti minimap
-
-enlever space dans la fonction de move, coyote timing
-
-test render distance
-test texture nord llignes sus
-graph temps
-
-arme qui tremble en func de la vitesse
-faire que diqmeter < wid & < hei
-
-{//TODO data->status = MENU/SETTINGS/PAUSE/MAP/GAME
+switch les masques ?
 
 fichier binaire settings
-export du fichier
-check des bonnes valeurs
 
-garder la hauteur dessinee et faire une explosion de la taille
-
-opti puis multithreading
-
-minimap deborde ecran
-
-petit antialiasing
-
-balancement arme
-
-console
-
-alignement settings
+check minimap deborde ecran
+faire que diqmeter < wid & < hei
+verifier settings en general

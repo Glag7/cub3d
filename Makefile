@@ -54,6 +54,7 @@ SRC_BONUS = main.c \
       $(COMMON)manage_mlx.c \
       $(COMMON)manage_mini.c \
       $(COMMON)manage_settings.c \
+      $(COMMON)settings_file.c \
       $(COMMON)diameter.c \
       $(PARSING)parsing.c \
       $(PARSING)parse_buf.c \
@@ -84,6 +85,7 @@ SRC_BONUS = main.c \
       $(RENDER)minimap.c \
       $(RENDER)manage_menu.c \
       $(MOVE)move.c \
+      $(MOVE)move_xy.c \
       $(MOVE)move_angle.c \
       $(MOVE)shoot.c \
       $(MOVE)doors.c \
