@@ -14,6 +14,29 @@
 #include "data.h"
 #include "menu.h"
 
+static void	update_fov(t_set *set, double fov_deg)
+{
+	size_t	i;
+	double	cur;
+	double	inc;
+
+	set->fov_deg = fov_deg;
+	set->fov = fov_deg * M_PI / 180.;
+	set->tanfov = tan(set->fov * .5);
+	set->planwid = (double)set->wid / (set->tanfov * 2.);
+	set->invplanwid = 1. / set->planwid;
+	cur = set->tanfov;
+	inc = -2. * set->tanfov * set->invwid;
+	i = 0;
+	while (i < set->wid)
+	{
+		set->invlen[i] = 1. / sqrt(1. + cur * cur);
+		set->coslen[i] = cos(atan2(cur * set->invlen[i], set->invlen[i]));
+		++i;
+		cur += inc;
+	}
+}
+
 void	save_sliders(t_data *data)
 {
 	size_t	i;
@@ -34,7 +57,7 @@ void	save_sliders(t_data *data)
 		}
 		i++;
 	}
-	// appliquer fonction pour modifier fov (et autres options eventuellement)
+	update_fov(&data->set, data->set.fov_deg);
 }
 
 static int	check_syntax_input(char *str)
@@ -78,12 +101,11 @@ void	save_textfield(t_data *data, t_textfield *textfield)
 		input = textfield->v_min;
 	else if (input > textfield->v_max)
 		input = textfield->v_max;
-	textfield->v_curr = input;
 	if (textfield->precision == 0)
-		*(uint32_t *)textfield->dst = (uint32_t)textfield->v_curr;
+		*(uint32_t *)textfield->dst = (uint32_t)input;
 	else
-		*(double *)textfield->dst = textfield->v_curr;
-	// appliquer fonction pour modifier fov (et autres options eventuellement)
+		*(double *)textfield->dst = input;
+	update_fov(&data->set, data->set.fov_deg);
 }
 
 void	save_textfields(t_data *data)

@@ -26,7 +26,22 @@ void	draw_main_menu(t_data *data)
 	draw_button(data, data->menu.buttons[BUT_SETTINGS], IDLE);
 	draw_button(data, data->menu.buttons[BUT_EXIT], IDLE);
 	data->menu.window = WIN_MAIN;
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+}
+
+static void	draw_settings_strings(t_data *data, size_t w, size_t h)
+{
+	draw_string(data, (t_str){"FOV", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.55), part(h, 0.11)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Render Distance", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.55), part(h, 0.27)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Cursor Sensitivity", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.55), part(h, 0.45)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Width", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.50), part(h, 0.81)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"X", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.57), part(h, 0.81)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Height", 0xFF000000, 0.015},
+		(t_ulpoint){part(w, 0.64), part(h, 0.81)}, (t_ulpoint){w, h});
 }
 
 void	draw_settings_menu(t_data *data)
@@ -49,8 +64,8 @@ void	draw_settings_menu(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_SENSI]);
 	build_textfield(data, data->menu.textfields[SET_WID]);
 	build_textfield(data, data->menu.textfields[SET_HEI]);
+	draw_settings_strings(data, (size_t)data->set.wid, (size_t)data->set.hei);
 	data->menu.window = WIN_SETTINGS;
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }
 
 void	draw_exit_menu(t_data *data)
@@ -72,5 +87,4 @@ void	draw_exit_menu(t_data *data)
 	draw_button(data, data->menu.buttons[BUT_YES], IDLE);
 	draw_button(data, data->menu.buttons[BUT_NO], IDLE);
 	data->menu.window = WIN_EXIT;
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }

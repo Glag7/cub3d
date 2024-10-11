@@ -121,7 +121,4 @@ void	update_textfields(t_data *data)
 		}
 		i++;
 	}
-//	for (int u=0;u<NB_TEXTFIELDS;u++)
-//		printf("%i ",data->menu.textfields[u].state);
-//	printf("\n");
 }

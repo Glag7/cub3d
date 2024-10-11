@@ -23,50 +23,47 @@ static void	init_textfields_settings(t_set *set, t_menu *menu, size_t w,
 	size_t h)
 {
 	menu->textfields[SET_FOV] = (t_textfield){.pos = (t_ulpoint){part(w, 0.33),
-		part(h, 0.2)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
+		part(h, 0.17)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
 		.precision = 0, .v_min = menu->sliders[SET_FOV].v_min,
 		.v_max = menu->sliders[SET_FOV].v_max,
-		.v_curr = menu->sliders[SET_FOV].v_curr,
 		.dst = &menu->sliders[SET_FOV].v_curr,
 		.state = IDLE, .len = 0};
 	menu->textfields[SET_VIEW] = (t_textfield){.pos = (t_ulpoint){part(w, 0.33),
-		part(h, 0.4)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
+		part(h, 0.33)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
 		.precision = 0, .v_min = menu->sliders[SET_VIEW].v_min,
 		.v_max = menu->sliders[SET_VIEW].v_max,
-		.v_curr = menu->sliders[SET_VIEW].v_curr,
 		.dst = &menu->sliders[SET_VIEW].v_curr,
 		.state = IDLE, .len = 0};
 	menu->textfields[SET_SENSI] = (t_textfield){.pos = (t_ulpoint){part(w, 0.33),
-		part(h, 0.6)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
+		part(h, 0.51)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
 		.precision = 2, .v_min = menu->sliders[SET_SENSI].v_min,
 		.v_max = menu->sliders[SET_SENSI].v_max,
-		.v_curr = menu->sliders[SET_SENSI].v_curr,
 		.dst = &menu->sliders[SET_SENSI].v_curr,
 		.state = IDLE, .len = 0};
-	menu->textfields[SET_WID] = (t_textfield){.pos = (t_ulpoint){part(w, 0.43),
-		part(h, 0.79)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
-		.precision = 0, .v_min = 2., .v_max = 9999., .v_curr = DEF_WID,
+	menu->textfields[SET_WID] = (t_textfield){.pos = (t_ulpoint){part(w, 0.50),
+		part(h, 0.88)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
+		.precision = 0, .v_min = 2., .v_max = 9999.,
 		.dst = &set->saved_w, .state = IDLE, .len = 0};
-	menu->textfields[SET_HEI] = (t_textfield){.pos = (t_ulpoint){part(w, 0.57),
-		part(h, 0.79)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
-		.precision = 0, .v_min = 2., .v_max = 2., .v_curr = DEF_HEI,
+	menu->textfields[SET_HEI] = (t_textfield){.pos = (t_ulpoint){part(w, 0.64),
+		part(h, 0.88)}, .dim = (t_ulpoint){part(w, 0.1), part(h, 0.06)},
+		.precision = 0, .v_min = 2., .v_max = 9999.,
 		.dst = &set->saved_h, .state = IDLE, .len = 0};
 }
 
 static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 {
 	menu->sliders[SET_FOV] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.55),
-		.y = part(h, 0.2)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.17)}, .dim = (t_ulpoint){.x = part(w, 0.3),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->fov_deg, .v_min = 1.,
 		.v_max = 179., .v_curr = 90.};
 	menu->sliders[SET_VIEW] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.55),
-		.y = part(h, 0.4)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.33)}, .dim = (t_ulpoint){.x = part(w, 0.3),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->view, .v_min = 1.,
 		.v_max = 2000., .v_curr = 1000.};
 	menu->sliders[SET_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.55),
-		.y = part(h, 0.6)}, .dim = (t_ulpoint){.x = part(w, 0.3),
+		.y = part(h, 0.51)}, .dim = (t_ulpoint){.x = part(w, 0.3),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->sensi, .v_min = 0.1,
 		.v_max = 1., .v_curr = 0.3};

@@ -54,10 +54,14 @@ void	free_settings(t_set *set)
 {
 	const int	fd = open("./.cubsettings",
 			O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	t_set		saved_set;
 
+	saved_set = *set;
+	saved_set.wid = set->saved_w;
+	saved_set.hei = set->saved_h;
 	if (fd != -1)
 	{
-		write(fd, set, sizeof(*set));
+		write(fd, &saved_set, sizeof(*set));
 		close(fd);
 	}
 	free(set->invlen);

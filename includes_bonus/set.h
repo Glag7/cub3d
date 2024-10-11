@@ -54,8 +54,8 @@
 
 typedef struct s_set
 {
-	unsigned int	saved_w;
-	unsigned int	saved_h;
+	double			saved_w;
+	double			saved_h;
 	uint32_t		color;
 	uint32_t		ncolor;
 	uint32_t		pcolor;

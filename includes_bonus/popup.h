@@ -25,10 +25,12 @@
 # define NB_BUTTONS	6
 # define NB_SLIDERS	3
 # define NB_TEXTFIELDS	5
+
 # define TEXTFIELD_LEN	8
 
 # define OUTLINE_WIDTH	5
 # define GRADIENT_WIDTH	5
+
 # define PREV_TAB	1
 
 # define WIDTH_CHAR	5
@@ -94,7 +96,6 @@ typedef struct s_textfield
 	size_t		precision;
 	double		v_min;
 	double		v_max;
-	double		v_curr;
 	char		buffer[TEXTFIELD_LEN];
 	size_t		len;
 	void		*dst;
