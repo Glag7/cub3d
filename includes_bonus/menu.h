@@ -41,12 +41,19 @@ void	draw_exit_menu(t_data *data);
 
 void	build_menu(t_data *data);
 void	close_menu(t_data *data);
-void	save_settings(t_data *data);
+
+void	menu_mouse_hook(int x, int y, t_data *data);
+void	menu_unmouse_hook(int x, int y, t_data *data);
+
+void	save_textfield(t_data *data, t_textfield *textfield);
+void	save_textfields(t_data *data);
+void	save_sliders(t_data *data);
 
 void	draw_slider(t_data *data, t_slider slider);
 void	update_sliders(t_data *data);
 
 void	build_textfield(t_data *data, t_textfield textfield);
+void	update_textfields(t_data *data);
 
 void	print_uint(t_data *data, t_textfield textfield, double scale,
 		size_t len);
@@ -60,5 +67,6 @@ size_t	part(size_t n, double fraction);
 void	free_menu(t_menu *menu);
 
 void	manage_menu(t_data *data);
+void	manage_menu_hooks(t_data *data);
 
 #endif

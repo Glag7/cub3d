@@ -95,10 +95,12 @@ SRC_BONUS = main.c \
       $(MENU)slider.c \
       $(MENU)textfield.c \
       $(MENU)build_windows.c \
-      $(MENU)textfield_itoa.c \
       $(MENU)manage_background.c \
       $(MENU)draw_rectangle.c \
-      $(MENU)draw_string.c
+      $(MENU)draw_string.c \
+      $(MENU)save_settings.c \
+      $(MENU)update_interactions.c \
+      $(MENU)keys_keypad.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -28,10 +28,12 @@
 # define DEF_FOV 90.
 # define DEF_VIEW 1000.
 
-# define DEF_WID 1360
-# define DEF_HEI 768
+# define DEF_WID 680//1360
+# define DEF_HEI 384//768
 
 # define DEF_SENSI .4
+
+# define WRITE_DELAY 150000
 
 # define MAX_ANGLE M_PI_2
 # define MIN_ANGLE -M_PI

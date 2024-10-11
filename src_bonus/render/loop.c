@@ -74,26 +74,11 @@ static double	get_delta(int *newsec)
 	return (delta);
 }
 
-static void	manage_hooks(t_data *data)
-{
-	if ((data->menu.prev_keys & PREV_TAB) == 0 && (data->keys & KEY_TAB) != 0)
-	{
-		data->menu.prev_keys |= PREV_TAB;
-		if ((data->status & MENU) == 0)
-			build_menu(data);
-		else
-			close_menu(data);
-	}
-	else if ((data->menu.prev_keys & PREV_TAB) == 1
-		&& (data->keys & KEY_TAB) == 0)
-		data->menu.prev_keys &= ~PREV_TAB;
-}
-
 static void	manage_game(t_data *data, double delta)
 {
 	if (!(data->status & INWINDOW))
 		return ;
-	manage_hooks(data);
+	manage_menu_hooks(data);
 	if ((data->status & MENU) != 0)
 	{
 		compute_values(data);

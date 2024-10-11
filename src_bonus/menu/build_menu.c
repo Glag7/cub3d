@@ -10,46 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "mlx.h"
 #include "data.h"
 #include "menu.h"
 #include "status.h"
-#include "popup.h"
-
-void	save_settings(t_data *data)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < NB_SETTINGS)
-	{
-		if (data->menu.sliders[i].state == PRESS)
-		{
-			if (data->menu.sliders[i].type == UINT)
-				*(uint32_t *)data->menu.sliders[i].dst
-					= (uint32_t)data->menu.sliders[i].v_curr;
-			else if (data->menu.sliders[i].type == DOUBLE)
-				*(double *)data->menu.sliders[i].dst
-					= data->menu.sliders[i].v_curr;
-			data->menu.sliders[i].state = IDLE;
-			break ;
-		}
-		i++;
-	}
-	// appliquer fonction pour modifier fov (et autres options eventuellement)
-	i = 0;
-	while (i < NB_SETTINGS)
-	{
-		data->menu.sliders[i].state = IDLE;
-		i++;
-	}
-}
 
 void	close_menu(t_data *data)
 {
 	if (data->menu.window == WIN_SETTINGS)
-		save_settings(data);
+	{
+		save_sliders(data);
+		save_textfields(data);
+	}
 	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
 	mlx_mouse_move(data->mlx.mlx, data->mlx.win,
 		data->menu.save_mouse.x, data->menu.save_mouse.y);

@@ -71,7 +71,7 @@ void	update_sliders(t_data *data)
 
 	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.win, &x, &y);
 	i = 0;
-	while (i < NB_SETTINGS)
+	while (i < NB_SLIDERS)
 	{
 		if (data->menu.sliders[i].state == PRESS)
 		{

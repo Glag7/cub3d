@@ -24,6 +24,7 @@ static double	calculate_weight(t_ulpoint pos, t_ulpoint dim, t_ulpoint curr,
 {
 	t_point	weight;
 
+	weight = (t_point){.x = 0., .y = 0.};
 	if (curr.x <= pos.x - part(dim.x, 0.5) + margin)
 		weight.x = fabs((double)((long)curr.x - (long)(pos.x - part(dim.x, 0.5)
 						+ margin))) / (double)margin;

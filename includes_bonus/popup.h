@@ -23,7 +23,9 @@
 /* ----- DEFINES ----- */
 
 # define NB_BUTTONS	6
-# define NB_SETTINGS	3
+# define NB_SLIDERS	3
+# define NB_TEXTFIELDS	5
+# define TEXTFIELD_LEN	8
 
 # define OUTLINE_WIDTH	5
 # define GRADIENT_WIDTH	5
@@ -65,7 +67,9 @@ enum
 {
 	SET_FOV = 0,
 	SET_VIEW,
-	SET_SENSI
+	SET_SENSI,
+	SET_WID,
+	SET_HEI
 };
 
 enum
@@ -87,8 +91,14 @@ typedef struct s_textfield
 {
 	t_ulpoint	pos;
 	t_ulpoint	dim;
-	uint8_t		type;
-	double		*src;
+	size_t		precision;
+	double		v_min;
+	double		v_max;
+	double		v_curr;
+	char		buffer[TEXTFIELD_LEN];
+	size_t		len;
+	void		*dst;
+	uint8_t		state;
 }	t_textfield;
 
 typedef struct s_slider
@@ -121,8 +131,8 @@ typedef struct s_menu
 	t_img		resume;
 	uint32_t	*background;
 	t_button	buttons[NB_BUTTONS];
-	t_slider	sliders[NB_SETTINGS];
-	t_textfield	textfields[NB_SETTINGS];
+	t_slider	sliders[NB_SLIDERS];
+	t_textfield	textfields[NB_TEXTFIELDS];
 	t_img		characters;
 	uint8_t		window;
 	uint8_t		first_start;
