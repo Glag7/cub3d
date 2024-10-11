@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:08:10 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/26 04:05:00 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/11 02:05:31 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ void	move(t_data *data, double delta, uint64_t keys)
 			+ data->play.vy * data->play.vy);
 
 	move_z(data, delta, keys);
-	if (((data->keys & KEY_SHIFT) && speed < 2 * data->set.speedmax)
+	if (((data->keys & KEY_SHIFT) && speed < data->set.speeddiff
+			* data->set.speedmax)
 		|| (!(data->keys & KEY_SHIFT) && speed < data->set.speedmax)
 		|| data->play.z > data->play.leglen)
 	{

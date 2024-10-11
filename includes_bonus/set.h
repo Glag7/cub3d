@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/10 22:40:10 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/11 01:32:54 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@
 # define ARM_LEN 1.5
 
 # define DEF_ACCEL 20.
-# define DEF_ACCELAIR 2.
+# define DEF_ACCELAIR .3
 # define DEF_ACCELDIFF 3.
 # define DEF_SPEEDDIFF 2.
 # define DEF_SPEEDMAX 1.5
 # define DEF_FASTER .5
 # define DEF_SLOWER .001
-# define DEF_SLOWERAIR .5
+# define DEF_SLOWERAIR .8
 
 typedef struct s_set
 {
@@ -91,7 +91,7 @@ typedef struct s_set
 
 int		init_settings(t_set *set);
 int		setfov(t_set *set, double fov_deg);
+int		load_settings(t_set *set);
 void	free_settings(t_set *set);
-void	export_settings(t_set *set);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/10 22:38:54 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/11 02:03:46 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,29 @@
 #include "set.h"
 #include "mini.h"
 
-int	init_settings(t_set *set)
+static int	compute_settings(t_set *set)
+{
+	set_diameter(set, set->d);
+	set->invwid = 1. / (double)(set->wid - 1);
+	return (setfov(set, set->fov_deg));
+}
+
+static int	init_def(t_set *set)
 {
 	set->wid = DEF_WID;
-	set->invwid = 1. / (double)(set->wid - 1);
 	set->hei = DEF_HEI;
 	set->ncase = DEF_NCASE;
-	set_diameter(set, DEF_D);
 	set->xoffset = DEF_OFFSET;
 	set->yoffset = DEF_OFFSET;
+	set->d = DEF_D;
 	set->ncolor = DEF_NCOLOR;
 	set->color = DEF_COLOR;
 	set->pcolor = DEF_PCOLOR;
 	set->crosscolor = DEF_CROSSCOLOR;
 	set->view = DEF_VIEW;
 	set->sensi = DEF_SENSI;
-	set->texsiz = 2;//DEF_TEXSIZ;
-	set->skysiz = 2;//DEF_SKYSIZ;
+	set->texsiz = DEF_TEXSIZ;
+	set->skysiz = DEF_SKYSIZ;
 	set->accel = DEF_ACCEL;
 	set->accelair = DEF_ACCELAIR;
 	set->acceldiff = DEF_ACCELDIFF;
@@ -40,7 +46,15 @@ int	init_settings(t_set *set)
 	set->faster = DEF_FASTER;
 	set->slower = DEF_SLOWER;
 	set->slowerair = DEF_SLOWERAIR;
-	return (setfov(set, DEF_FOV));
+	set->fov_deg = DEF_FOV;
+	return (compute_settings(set));
+}
+
+int	init_settings(t_set *set)
+{
+	if (load_settings(set) == 0)
+		return (compute_settings(set));
+	return (init_def(set));
 }
 
 static void	get_raylen(t_set *set)
@@ -83,11 +97,4 @@ int	setfov(t_set *set, double fov_deg)
 	}
 	get_raylen(set);
 	return (0);
-}
-
-void	free_settings(t_set *set)
-{
-	export_settings(set);
-	free(set->invlen);
-	free(set->coslen);
 }
