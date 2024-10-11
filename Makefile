@@ -18,7 +18,7 @@ RENDER = render/
 MOVE = move/
 
 COMP = cc
-CFLAGS = -Wall -Wextra -I $(LIBDIR) -g #-Werror
+CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR)
 
 
 SRC = main.c \
