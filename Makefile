@@ -93,6 +93,7 @@ SRC_BONUS = main.c \
       $(MENU)buttons.c \
       $(MENU)draw_menu.c \
       $(MENU)init_menu.c \
+      $(MENU)init_menu_buttons.c \
       $(MENU)menu_utils.c \
       $(MENU)build_menu.c \
       $(MENU)slider.c \
