@@ -33,6 +33,8 @@
 
 # define PREV_TAB	1
 
+# define WRITE_DELAY	150000
+
 # define WIDTH_CHAR		5
 # define HEIGHT_CHAR	7
 
@@ -93,10 +95,11 @@ typedef struct s_textfield
 {
 	t_ulpoint	pos;
 	t_ulpoint	dim;
+	uint8_t		type;
 	size_t		precision;
 	double		v_min;
 	double		v_max;
-	char		buffer[TEXTFIELD_LEN];
+	char		buffer[TEXTFIELD_LEN + 1];
 	size_t		len;
 	void		*dst;
 	uint8_t		state;
@@ -111,7 +114,6 @@ typedef struct s_slider
 	void		*dst;
 	double		v_min;
 	double		v_max;
-	double		v_curr;
 }	t_slider;
 
 typedef struct s_button

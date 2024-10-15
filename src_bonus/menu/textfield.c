@@ -22,29 +22,30 @@
 void	build_textfield(t_data *data, t_textfield textfield)
 {
 	char		buffer[TEXTFIELD_LEN + 1];
-	double		scale;
 	uint32_t	colors[2];
+	double		v;
 
 	colors[0] = 0xFFDDDDDD;
 	colors[1] = 0xFFDDDDDD;
 	draw_rectangle(data, textfield.pos, textfield.dim, colors);
+	if (textfield.type == UINT)
+		v = (double)*(uint32_t *)textfield.dst;
+	else
+		v = *(double *)textfield.dst;
 	if (textfield.state == PRESS)
 	{
 		strncpy(buffer, textfield.buffer, textfield.len);
 		buffer[textfield.len] = '\0';
 	}
 	else if (textfield.precision == 0)
-		snprintf(buffer, TEXTFIELD_LEN + 1,
-			"%u", (uint32_t) *(double *)textfield.dst);
+		snprintf(buffer, TEXTFIELD_LEN, "%u", (uint32_t)v);
 	else
-		snprintf(buffer, TEXTFIELD_LEN + 1,
-			"%.*lf", (int)textfield.precision, *(double *)textfield.dst);
-	scale = fmin(1., (double)textfield.dim.x
-			/ (double)(strlen(buffer) * WIDTH_CHAR));
-	scale = fmin(scale, (double)textfield.dim.y
-			/ (double)HEIGHT_CHAR);
-	draw_string(data, (t_str){.str = buffer, .color = 0xFF000000,
-		.scale = scale}, textfield.pos, textfield.dim);
+		snprintf(buffer, TEXTFIELD_LEN, "%.*lf", (int)textfield.precision, v);
+	draw_string(data, (t_str){buffer, 0xFF000000, fmin(fmin(1.,
+				(double)textfield.dim.x / (double)(strlen(buffer)
+					* WIDTH_CHAR)), (double)textfield.dim.y
+			/ (double)HEIGHT_CHAR)}, textfield.pos,
+		(t_ulpoint){part(textfield.dim.x, 0.9), part(textfield.dim.y, 0.9)});
 }
 
 static void	add_character(t_data *data, t_textfield *textfield)

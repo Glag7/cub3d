@@ -26,14 +26,22 @@
 # define DEF_CROSSCOLOR 0x00FF0000
 
 # define DEF_FOV 90.
+# define MIN_FOV 1.
+# define MAX_FOV 179.
 # define DEF_VIEW 1000.
+# define MIN_VIEW 1.
+# define MAX_VIEW 2000.
 
 # define DEF_WID 1360
+# define MIN_WID 2
+# define MAX_WID 9999
 # define DEF_HEI 768
+# define MIN_HEI 2
+# define MAX_HEI 9999
 
 # define DEF_SENSI .4
-
-# define WRITE_DELAY 150000
+# define MIN_SENSI .1
+# define MAX_SENSI 1.
 
 # define MAX_ANGLE M_PI_2
 # define MIN_ANGLE -M_PI
@@ -54,8 +62,8 @@
 
 typedef struct s_set
 {
-	double			saved_w;
-	double			saved_h;
+	uint32_t		saved_w;
+	uint32_t		saved_h;
 	uint32_t		color;
 	uint32_t		ncolor;
 	uint32_t		pcolor;

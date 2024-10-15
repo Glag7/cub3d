@@ -46,12 +46,6 @@ void	save_sliders(t_data *data)
 	{
 		if (data->menu.sliders[i].state == PRESS)
 		{
-			if (data->menu.sliders[i].type == UINT)
-				*(uint32_t *)data->menu.sliders[i].dst
-					= (uint32_t)data->menu.sliders[i].v_curr;
-			else if (data->menu.sliders[i].type == DOUBLE)
-				*(double *)data->menu.sliders[i].dst
-					= data->menu.sliders[i].v_curr;
 			data->menu.sliders[i].state = IDLE;
 			break ;
 		}
@@ -101,10 +95,11 @@ void	save_textfield(t_data *data, t_textfield *textfield)
 		input = textfield->v_min;
 	else if (input > textfield->v_max)
 		input = textfield->v_max;
-	if (textfield->precision == 0)
-		*(double *)textfield->dst = (uint32_t)input;
+	if (textfield->type == UINT)
+		*(uint32_t *)textfield->dst = (uint32_t)input;
 	else
 		*(double *)textfield->dst = input;
+	textfield->len = 0;
 	build_textfield(data, *textfield);
 	update_fov(&data->set, data->set.fov_deg);
 }

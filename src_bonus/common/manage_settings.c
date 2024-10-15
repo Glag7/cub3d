@@ -24,8 +24,6 @@ static int	compute_settings(t_set *set)
 
 static int	init_def(t_set *set)
 {
-	set->saved_w = DEF_WID;
-	set->saved_h = DEF_HEI;
 	set->wid = DEF_WID;
 	set->hei = DEF_HEI;
 	set->ncase = DEF_NCASE;
