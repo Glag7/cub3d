@@ -20,8 +20,9 @@
 void	draw_main_menu(t_data *data)
 {
 	draw_background(data);
-	draw_image(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
-		.y = part(data->set.hei, 0.15)}, data->menu.title);
+	draw_string(data, (t_str){TITLE, 0xFF000000, 0.1},
+		(t_ulpoint){part(data->set.wid, 0.5), part(data->set.hei, 0.15)},
+		(t_ulpoint){part(data->set.wid, 0.7), part(data->set.hei, 0.3)});
 	draw_button(data, data->menu.buttons[BUT_START], IDLE);
 	draw_button(data, data->menu.buttons[BUT_SETTINGS], IDLE);
 	draw_button(data, data->menu.buttons[BUT_EXIT], IDLE);

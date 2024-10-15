@@ -22,6 +22,8 @@
 
 /* ----- DEFINES ----- */
 
+# define TITLE	"Polyedre a six faces planes carrees de dimension trois"
+
 # define NB_BUTTONS		6
 # define NB_SLIDERS		3
 # define NB_TEXTFIELDS	5
@@ -129,7 +131,6 @@ typedef struct s_button
 
 typedef struct s_menu
 {
-	t_img		title;
 	t_img		confirm;
 	t_img		resume;
 	uint32_t	*background;

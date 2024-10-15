@@ -40,7 +40,6 @@ size_t	part(size_t n, double fraction)
 
 void	free_menu(t_menu *menu)
 {
-	free(menu->title.px);
 	free(menu->background);
 	free(menu->characters.px);
 }

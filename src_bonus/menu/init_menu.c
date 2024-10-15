@@ -60,11 +60,9 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 		.dst = &set->sensi, .v_min = MIN_SENSI, .v_max = MAX_SENSI};
 }
 
-static int	load_menu_images(t_mlx *mlx, t_menu *menu, size_t w, size_t h)
+static int	load_menu_images(t_mlx *mlx, t_menu *menu)
 {
-	return (load_img(mlx->mlx, "assets/core/menu/title.bmp", &menu->title,
-			(t_dim){.w = part(w, 0.2), .h = part(h, 0.15)})
-		|| load_img(mlx->mlx, "assets/core/characters/characters.bmp",
+	return (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
 				&menu->characters,
 			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
 }
@@ -82,11 +80,9 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	init_buttons_exit(menu, set->wid, set->hei);
 	init_sliders_settings(menu, set, set->wid, set->hei);
 	init_textfields_settings(set, menu, set->wid, set->hei);
-	menu->title.px = NULL;
 	menu->characters.px = NULL;
-	if (load_menu_images(mlx, menu, set->wid, set->hei) == 1)
+	if (load_menu_images(mlx, menu) == 1)
 	{
-		free(menu->title.px);
 		free(menu->background);
 		free(menu->characters.px);
 		return (1);
