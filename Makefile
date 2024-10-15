@@ -75,6 +75,7 @@ SRC_BONUS = main.c \
       $(HOOKS)keys.c \
       $(HOOKS)mouse.c \
       $(HOOKS)win.c \
+      $(HOOKS)keys_keypad.c \
       $(RENDER)loop.c \
       $(RENDER)raycast.c \
       $(RENDER)flat.c \
@@ -101,8 +102,7 @@ SRC_BONUS = main.c \
       $(MENU)draw_rectangle.c \
       $(MENU)draw_string.c \
       $(MENU)save_settings.c \
-      $(MENU)update_interactions.c \
-      $(MENU)keys_keypad.c
+      $(MENU)update_interactions.c
 
 OBJ = $(SRC:.c=.o)
 

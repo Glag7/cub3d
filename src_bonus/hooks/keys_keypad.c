@@ -16,58 +16,58 @@
 
 int	key_hook_keypad(int key, t_data *data)
 {
-	if (key == XK_KP_0)
+	if (key == XK_0)
 		data->keys |= KEY_0;
-	else if (key == XK_KP_1)
+	else if (key == XK_1)
 		data->keys |= KEY_1;
-	else if (key == XK_KP_2)
+	else if (key == XK_2)
 		data->keys |= KEY_2;
-	else if (key == XK_KP_3)
+	else if (key == XK_3)
 		data->keys |= KEY_3;
-	else if (key == XK_KP_4)
+	else if (key == XK_4)
 		data->keys |= KEY_4;
-	else if (key == XK_KP_5)
+	else if (key == XK_5)
 		data->keys |= KEY_5;
-	else if (key == XK_KP_6)
+	else if (key == XK_6)
 		data->keys |= KEY_6;
-	else if (key == XK_KP_7)
+	else if (key == XK_7)
 		data->keys |= KEY_7;
-	else if (key == XK_KP_8)
+	else if (key == XK_8)
 		data->keys |= KEY_8;
-	else if (key == XK_KP_9)
+	else if (key == XK_9)
 		data->keys |= KEY_9;
-	else if (key == XK_KP_Subtract)
+	else if (key == XK_KP_Subtract || key == XK_minus)
 		data->keys |= KEY_MINUS;
-	else if (key == XK_period)
+	else if (key == XK_period || key == XK_KP_Delete)
 		data->keys |= KEY_DOT;
 	return (0);
 }
 
 int	unkey_hook_keypad(int key, t_data *data)
 {
-	if (key == XK_KP_0)
+	if (key == XK_0)
 		data->keys &= ~KEY_0;
-	else if (key == XK_KP_1)
+	else if (key == XK_1)
 		data->keys &= ~KEY_1;
-	else if (key == XK_KP_2)
+	else if (key == XK_2)
 		data->keys &= ~KEY_2;
-	else if (key == XK_KP_3)
+	else if (key == XK_3)
 		data->keys &= ~KEY_3;
-	else if (key == XK_KP_4)
+	else if (key == XK_4)
 		data->keys &= ~KEY_4;
-	else if (key == XK_KP_5)
+	else if (key == XK_5)
 		data->keys &= ~KEY_5;
-	else if (key == XK_KP_6)
+	else if (key == XK_6)
 		data->keys &= ~KEY_6;
-	else if (key == XK_KP_7)
+	else if (key == XK_7)
 		data->keys &= ~KEY_7;
-	else if (key == XK_KP_8)
+	else if (key == XK_8)
 		data->keys &= ~KEY_8;
-	else if (key == XK_KP_9)
+	else if (key == XK_9)
 		data->keys &= ~KEY_9;
-	else if (key == XK_KP_Subtract)
+	else if (key == XK_KP_Subtract || key == XK_minus)
 		data->keys &= ~KEY_MINUS;
-	else if (key == XK_semicolon)
+	else if (key == XK_period || key == XK_KP_Delete)
 		data->keys &= ~KEY_DOT;
 	return (0);
 }

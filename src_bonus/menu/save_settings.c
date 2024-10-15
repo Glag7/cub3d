@@ -102,9 +102,10 @@ void	save_textfield(t_data *data, t_textfield *textfield)
 	else if (input > textfield->v_max)
 		input = textfield->v_max;
 	if (textfield->precision == 0)
-		*(uint32_t *)textfield->dst = (uint32_t)input;
+		*(double *)textfield->dst = (uint32_t)input;
 	else
 		*(double *)textfield->dst = input;
+	build_textfield(data, *textfield);
 	update_fov(&data->set, data->set.fov_deg);
 }
 

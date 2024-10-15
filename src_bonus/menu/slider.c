@@ -30,7 +30,6 @@ void	move_slider_head(t_data *data, t_slider slider, size_t x)
 	colors[1] = 0xFF909090;
 	draw_rectangle(data, (t_ulpoint){.x = x, .y = slider.pos.y},
 		(t_ulpoint){.x = part(slider.dim.x, 0.1), .y = slider.dim.y}, colors);
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 }
 
 void	draw_slider(t_data *data, t_slider slider)

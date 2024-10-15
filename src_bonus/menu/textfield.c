@@ -63,30 +63,10 @@ static void	add_character(t_data *data, t_textfield *textfield)
 	while (i < 10 && (data->keys & mask) == 0)
 	{
 		i++;
-		mask >>= 1;
+		mask <<= 1;
 	}
 	if (i != 10)
 		textfield->buffer[textfield->len] = '0' + i;
-/*	else if ((data->keys & KEY_0) != 0)
-		textfield->buffer[textfield->len] = '0';
-	else if ((data->keys & KEY_1) != 0)
-		textfield->buffer[textfield->len] = '1';
-	else if ((data->keys & KEY_2) != 0)
-		textfield->buffer[textfield->len] = '2';
-	else if ((data->keys & KEY_3) != 0)
-		textfield->buffer[textfield->len] = '3';
-	else if ((data->keys & KEY_4) != 0)
-		textfield->buffer[textfield->len] = '4';
-	else if ((data->keys & KEY_5) != 0)
-		textfield->buffer[textfield->len] = '5';
-	else if ((data->keys & KEY_6) != 0)
-		textfield->buffer[textfield->len] = '6';
-	else if ((data->keys & KEY_7) != 0)
-		textfield->buffer[textfield->len] = '7';
-	else if ((data->keys & KEY_8) != 0)
-		textfield->buffer[textfield->len] = '8';
-	else if ((data->keys & KEY_9) != 0)
-		textfield->buffer[textfield->len] = '9';*/
 	else if ((data->keys & KEY_MINUS) != 0)
 		textfield->buffer[textfield->len] = '-';
 	else if ((data->keys & KEY_DOT) != 0)

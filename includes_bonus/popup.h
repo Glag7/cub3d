@@ -22,8 +22,8 @@
 
 /* ----- DEFINES ----- */
 
-# define NB_BUTTONS	6
-# define NB_SLIDERS	3
+# define NB_BUTTONS		6
+# define NB_SLIDERS		3
 # define NB_TEXTFIELDS	5
 
 # define TEXTFIELD_LEN	8
@@ -33,7 +33,7 @@
 
 # define PREV_TAB	1
 
-# define WIDTH_CHAR	5
+# define WIDTH_CHAR		5
 # define HEIGHT_CHAR	7
 
 # define WIDTH_CHAR_IMG		205

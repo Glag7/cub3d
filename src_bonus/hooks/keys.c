@@ -27,7 +27,7 @@ static int	key_hook2(int key, t_data *data)
 		data->keys |= KEY_UP;
 	else if (key == XK_Down)
 		data->keys |= KEY_DOWN;
-	else if (key == XK_p)
+	else if (key == XK_BackSpace)
 		data->keys |= KEY_BACK;
 	else if (key == XK_Tab)
 		data->keys |= KEY_TAB;
@@ -74,7 +74,7 @@ static int	unkey_hook2(int key, t_data *data)
 		data->keys &= ~KEY_UP;
 	else if (key == XK_Down)
 		data->keys &= ~KEY_DOWN;
-	else if (key == XK_p)
+	else if (key == XK_BackSpace)
 		data->keys &= ~KEY_BACK;
 	else
 		return (unkey_hook_keypad(key, data));

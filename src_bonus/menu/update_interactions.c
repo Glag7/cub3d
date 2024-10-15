@@ -36,18 +36,13 @@ static void	update_settings_textfields(t_data *data, size_t x, size_t y)
 		{
 			data->menu.textfields[i].state = PRESS;
 			ft_bzero(data->menu.textfields[i].buffer, TEXTFIELD_LEN + 1);
-			if (data->menu.textfields[i].precision == 0)
-				snprintf(data->menu.textfields[i].buffer, TEXTFIELD_LEN,
-					"%u", *(uint32_t *)data->menu.textfields[i].dst);
-			else
-				snprintf(data->menu.textfields[i].buffer, TEXTFIELD_LEN,
-					"%.*lf", (int)data->menu.textfields[i].precision,
-					*(double *)data->menu.textfields[i].dst);
 		}
 		else if (data->menu.textfields[i].state == PRESS)
 		{
 			data->menu.textfields[i].state = IDLE;
 			save_textfield(data, &data->menu.textfields[i]);
+			if (i < NB_SLIDERS)
+				draw_slider(data, data->menu.sliders[i]);
 		}
 		i++;
 	}
