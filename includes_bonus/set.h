@@ -28,6 +28,7 @@
 # define DEF_FOV 90.
 # define MIN_FOV 1.
 # define MAX_FOV 179.
+
 # define DEF_VIEW 1000.
 # define MIN_VIEW 1.
 # define MAX_VIEW 2000.
@@ -35,6 +36,7 @@
 # define DEF_WID 1360
 # define MIN_WID 2
 # define MAX_WID 9999
+
 # define DEF_HEI 768
 # define MIN_HEI 2
 # define MAX_HEI 9999
