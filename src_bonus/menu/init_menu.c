@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/10/16 18:05:18 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/10/16 18:31:11 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,45 +19,25 @@
 #include "utils.h"
 #include "menu.h"
 
-static void	init_textfields_settings(t_set *set, t_menu *menu, size_t w,
+static void	init_sliders_settings_movements(t_menu *menu, t_set *set, size_t w,
 	size_t h)
 {
-	menu->textfields[SET_FOV] = (t_textfield){.pos = (t_ulpoint){part(w, 0.17),
-		part(h, 0.31)}, .dim = (t_ulpoint){part(w, 0.12), part(h, 0.06)},
-		.precision = 0, .v_min = MIN_FOV, .v_max = MAX_FOV,
-		.dst = &set->fov_deg, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_VIEW] = (t_textfield){.pos = (t_ulpoint){part(w, 0.17),
-		part(h, 0.45)}, .dim = (t_ulpoint){part(w, 0.12), part(h, 0.06)},
-		.precision = 0, .v_min = MIN_VIEW, .v_max = MAX_VIEW,
-		.dst = &set->view, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_SENSI] = (t_textfield){.pos = (t_ulpoint){part(w,
-			0.17), part(h, 0.59)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
-			0.06)}, .precision = 2, .v_min = MIN_SENSI, .v_max = MAX_SENSI,
-		.dst = &set->sensi, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_SPEEDMAX] = (t_textfield){.pos = (t_ulpoint){part(w,
-			0.17), part(h, 0.73)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
-			0.06)}, .precision = 2, .v_min = MIN_SPEEDMAX, .v_max = MAX_SPEEDMAX,
-		.dst = &set->speedmax, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_ACCEL] = (t_textfield){.pos = (t_ulpoint){part(w,
-			0.57), part(h, 0.31)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
-			0.06)}, .precision = 2, .v_min = MIN_ACCEL, .v_max = MAX_ACCEL,
-		.dst = &set->accel, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_ACCELDIFF] = (t_textfield){.pos = (t_ulpoint){part(w,
-			0.57), part(h, 0.45)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
-			0.06)}, .precision = 3, .v_min = MIN_ACCELDIFF, .v_max = MAX_ACCELDIFF,
-		.dst = &set->acceldiff, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_SLOWER] = (t_textfield){.pos = (t_ulpoint){part(w,
-			0.57), part(h, 0.59)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
-			0.06)}, .precision = 3, .v_min = MIN_SLOWER, .v_max = MAX_SLOWER,
-		.dst = &set->slower, .state = IDLE, .len = 0, .type = DOUBLE};
-	menu->textfields[SET_WID] = (t_textfield){.pos = (t_ulpoint){part(w, 0.63),
-		part(h, 0.73)}, .dim = (t_ulpoint){part(w, 0.12), part(h, 0.06)},
-		.precision = 0, .v_min = (double)MIN_WID, .v_max = (double)MAX_WID,
-		.dst = &set->saved_w, .state = IDLE, .len = 0, .type = UINT};
-	menu->textfields[SET_HEI] = (t_textfield){.pos = (t_ulpoint){part(w, 0.77),
-		part(h, 0.73)}, .dim = (t_ulpoint){part(w, 0.12), part(h, 0.06)},
-		.precision = 0, .v_min = (double)MIN_WID, .v_max = (double)MAX_WID,
-		.dst = &set->saved_h, .state = IDLE, .len = 0, .type = UINT};
+	menu->sliders[SET_SPEEDMAX] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.36), .y = part(h, 0.73)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->speedmax, .v_min = MIN_SPEEDMAX, .v_max = MAX_SPEEDMAX};
+	menu->sliders[SET_ACCEL] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.76),
+		.y = part(h, 0.31)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->accel, .v_min = MIN_ACCEL, .v_max = MAX_ACCEL};
+	menu->sliders[SET_ACCELDIFF] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.45)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->acceldiff, .v_min = MIN_ACCELDIFF, .v_max = MAX_ACCELDIFF};
+	menu->sliders[SET_SLOWER] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.59)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->slower, .v_min = MIN_SLOWER, .v_max = MAX_SLOWER};
 }
 
 static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
@@ -74,51 +54,33 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 		.y = part(h, 0.59)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->sensi, .v_min = MIN_SENSI, .v_max = MAX_SENSI};
-	menu->sliders[SET_SPEEDMAX] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.36),
-		.y = part(h, 0.73)}, .dim = (t_ulpoint){.x = part(w, 0.25),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
-		.dst = &set->speedmax, .v_min = MIN_SPEEDMAX, .v_max = MAX_SPEEDMAX};
-	menu->sliders[SET_ACCEL] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.76),
-		.y = part(h, 0.31)}, .dim = (t_ulpoint){.x = part(w, 0.25),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
-		.dst = &set->accel, .v_min = MIN_ACCEL, .v_max = MAX_ACCEL};
-	menu->sliders[SET_ACCELDIFF] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.76),
-		.y = part(h, 0.45)}, .dim = (t_ulpoint){.x = part(w, 0.25),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
-		.dst = &set->acceldiff, .v_min = MIN_ACCELDIFF, .v_max = MAX_ACCELDIFF};
-	menu->sliders[SET_SLOWER] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.76),
-		.y = part(h, 0.59)}, .dim = (t_ulpoint){.x = part(w, 0.25),
-		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
-		.dst = &set->slower, .v_min = MIN_SLOWER, .v_max = MAX_SLOWER};
 }
 
-static int	load_menu_images(t_mlx *mlx, t_menu *menu)
+static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)
 {
-	return (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
-				&menu->characters,
-			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
-}
-
-int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
-{
+	menu->characters.px = NULL;
 	menu->background = malloc(set->wid * set->hei * sizeof(uint32_t));
 	if (menu->background == NULL)
 	{
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
+	return (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
+			&menu->characters,
+			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
+}
+
+int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
+{
+	if (load_menu(mlx, set, menu) == 1)
+		return (1);
 	init_buttons_main(menu, set->wid, set->hei);
 	init_buttons_settings(menu, set->wid, set->hei);
 	init_buttons_exit(menu, set->wid, set->hei);
 	init_sliders_settings(menu, set, set->wid, set->hei);
+	init_sliders_settings_movements(menu, set, set->wid, set->hei);
 	init_textfields_settings(set, menu, set->wid, set->hei);
-	menu->characters.px = NULL;
-	if (load_menu_images(mlx, menu) == 1)
-	{
-		free(menu->background);
-		free(menu->characters.px);
-		return (1);
-	}
+	init_textfields_settings_movements(set, menu, set->wid, set->hei);
 	menu->window = WIN_MAIN;
 	menu->first_render = 1;
 	menu->prev_keys = 0;

@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 16:35:17 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/11 02:03:46 by glag             ###   ########.fr       */
+/*   Updated: 2024/10/16 18:29:56 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	compute_settings(t_set *set)
 	return (setfov(set, set->fov_deg));
 }
 
-static int	init_def(t_set *set)
+static void	init_def(t_set *set)
 {
 	set->saved_w = DEF_WID;
 	set->saved_h = DEF_HEI;
@@ -49,14 +49,14 @@ static int	init_def(t_set *set)
 	set->slower = DEF_SLOWER;
 	set->slowerair = DEF_SLOWERAIR;
 	set->fov_deg = DEF_FOV;
-	return (compute_settings(set));
 }
 
 int	init_settings(t_set *set)
 {
 	if (load_settings(set) == 0)
 		return (compute_settings(set));
-	return (init_def(set));
+	init_def(set);
+	return (compute_settings(set));
 }
 
 static void	get_raylen(t_set *set)

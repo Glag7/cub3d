@@ -135,8 +135,6 @@ typedef struct s_button
 
 typedef struct s_menu
 {
-	t_img		confirm;
-	t_img		resume;
 	uint32_t	*background;
 	t_button	buttons[NB_BUTTONS];
 	t_slider	sliders[NB_SLIDERS];

@@ -30,6 +30,9 @@ void	init_buttons_settings(t_menu *menu, size_t w, size_t h);
 void	init_buttons_exit(t_menu *menu, size_t w, size_t h);
 void	init_buttons_main(t_menu *menu, size_t w, size_t h);
 
+void	init_textfields_settings_movements(t_set *set, t_menu *menu, size_t w, size_t h);
+void	init_textfields_settings(t_set *set, t_menu *menu, size_t w, size_t h);
+
 bool	check_hitbox(t_ulpoint pos, t_ulpoint dim, size_t x, size_t y);
 void	update_buttons(t_data *data);
 
