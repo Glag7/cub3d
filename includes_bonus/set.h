@@ -56,7 +56,11 @@
 # define MAX_ACCEL 50.
 
 # define DEF_ACCELAIR .3
+
 # define DEF_ACCELDIFF 3.
+# define MIN_ACCELDIFF 1.
+# define MAX_ACCELDIFF 5.
+
 # define DEF_SPEEDDIFF 2.
 
 # define DEF_SPEEDMAX 1.5
@@ -64,7 +68,11 @@
 # define MAX_SPEEDMAX 5.
 
 # define DEF_FASTER .5
+
 # define DEF_SLOWER .001
+# define MIN_SLOWER .001
+# define MAX_SLOWER 1.
+
 # define DEF_SLOWERAIR .8
 
 typedef struct s_set

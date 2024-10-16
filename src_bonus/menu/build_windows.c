@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/10/16 16:41:00 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/10/16 18:06:04 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,28 @@ void	draw_main_menu(t_data *data)
 
 static void	draw_settings_strings(t_data *data, size_t w, size_t h)
 {
+	draw_string(data, (t_str){"Settings", 0xFF202020, 0.02},
+		(t_ulpoint){part(w, 0.5), part(h, 0.17)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"FOV", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.55), part(h, 0.1)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.26)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Render Distance", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.55), part(h, 0.22)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.4)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Cursor Sensitivity", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.55), part(h, 0.34)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.54)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Maximum Speed", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.55), part(h, 0.46)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.68)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Acceleration", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.55), part(h, 0.58)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.76), part(h, 0.26)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Running Multiplicator", 0xFF202020, 0.01},
+		(t_ulpoint){part(w, 0.76), part(h, 0.4)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Slowing Speed", 0xFF202020, 0.01},
+		(t_ulpoint){part(w, 0.76), part(h, 0.54)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Width", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.50), part(h, 0.82)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.63), part(h, 0.68)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"X", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.57), part(h, 0.82)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.7), part(h, 0.68)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Height", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.64), part(h, 0.82)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.77), part(h, 0.68)}, (t_ulpoint){w, h});
 }
 
 void	draw_settings_menu(t_data *data)
@@ -58,8 +64,8 @@ void	draw_settings_menu(t_data *data)
 	draw_background(data);
 	draw_rectangle(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
 		.y = part(data->set.hei, 0.5)},
-		(t_ulpoint){.x = part(data->set.wid, 0.5),
-		.y = part(data->set.hei, 0.9)}, colors);
+		(t_ulpoint){.x = part(data->set.wid, 0.8),
+		.y = part(data->set.hei, 0.8)}, colors);
 	draw_button(data, data->menu.buttons[BUT_BACK], IDLE);
 	draw_slider(data, data->menu.sliders[SET_FOV]);
 	build_textfield(data, data->menu.textfields[SET_FOV]);
@@ -71,6 +77,10 @@ void	draw_settings_menu(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_SPEEDMAX]);
 	draw_slider(data, data->menu.sliders[SET_ACCEL]);
 	build_textfield(data, data->menu.textfields[SET_ACCEL]);
+	draw_slider(data, data->menu.sliders[SET_ACCELDIFF]);
+	build_textfield(data, data->menu.textfields[SET_ACCELDIFF]);
+	draw_slider(data, data->menu.sliders[SET_SLOWER]);
+	build_textfield(data, data->menu.textfields[SET_SLOWER]);
 	build_textfield(data, data->menu.textfields[SET_WID]);
 	build_textfield(data, data->menu.textfields[SET_HEI]);
 	draw_settings_strings(data, (size_t)data->set.wid, (size_t)data->set.hei);

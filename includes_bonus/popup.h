@@ -25,8 +25,8 @@
 # define TITLE	"Polyedre a six faces planes carrees de dimension trois"
 
 # define NB_BUTTONS		6
-# define NB_SLIDERS		5
-# define NB_TEXTFIELDS	7
+# define NB_SLIDERS		7
+# define NB_TEXTFIELDS	9
 
 # define TEXTFIELD_LEN	8
 
@@ -76,6 +76,8 @@ enum
 	SET_SENSI,
 	SET_SPEEDMAX,
 	SET_ACCEL,
+	SET_ACCELDIFF,
+	SET_SLOWER,
 	SET_WID,
 	SET_HEI
 };
