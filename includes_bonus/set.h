@@ -52,10 +52,17 @@
 # define ARM_LEN 1.5
 
 # define DEF_ACCEL 20.
+# define MIN_ACCEL 10.
+# define MAX_ACCEL 50.
+
 # define DEF_ACCELAIR .3
 # define DEF_ACCELDIFF 3.
 # define DEF_SPEEDDIFF 2.
+
 # define DEF_SPEEDMAX 1.5
+# define MIN_SPEEDMAX .1
+# define MAX_SPEEDMAX 5.
+
 # define DEF_FASTER .5
 # define DEF_SLOWER .001
 # define DEF_SLOWERAIR .8

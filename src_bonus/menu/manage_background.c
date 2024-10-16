@@ -27,9 +27,9 @@ void	save_background(t_data *data)
 		{
 			pixel = data->mlx.px[y * data->set.wid + x];
 			pixel = (pixel & 0xFF000000)
-				| ((uint32_t)part((pixel & 0x00FF0000) >> 16, 0.5) << 16)
-				| ((uint32_t)part((pixel & 0x0000FF00) >> 8, 0.5) << 8)
-				| ((uint32_t)part((pixel & 0x000000FF), 0.5));
+				| ((uint32_t)part((pixel & 0x00FF0000) >> 16, 0.6) << 16)
+				| ((uint32_t)part((pixel & 0x0000FF00) >> 8, 0.6) << 8)
+				| ((uint32_t)part((pixel & 0x000000FF), 0.6));
 			data->menu.background[y * data->set.wid + x] = pixel;
 			x++;
 		}

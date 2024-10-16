@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:16:18 by ttrave            #+#    #+#             */
-/*   Updated: 2024/09/22 19:11:17 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/10/16 16:02:23 by ttrave           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	build_textfield(t_data *data, t_textfield textfield)
 	uint32_t	colors[2];
 	double		v;
 
-	colors[0] = 0xFFDDDDDD;
+	colors[0] = 0xFF202020;
 	colors[1] = 0xFFDDDDDD;
 	draw_rectangle(data, textfield.pos, textfield.dim, colors);
 	if (textfield.type == UINT)
@@ -45,7 +45,7 @@ void	build_textfield(t_data *data, t_textfield textfield)
 				(double)textfield.dim.x / (double)(strlen(buffer)
 					* WIDTH_CHAR)), (double)textfield.dim.y
 			/ (double)HEIGHT_CHAR)}, textfield.pos,
-		(t_ulpoint){part(textfield.dim.x, 0.9), part(textfield.dim.y, 0.9)});
+		(t_ulpoint){part(textfield.dim.x, 0.6), part(textfield.dim.y, 0.6)});
 }
 
 static void	add_character(t_data *data, t_textfield *textfield)
