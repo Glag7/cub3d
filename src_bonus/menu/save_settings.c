@@ -99,7 +99,6 @@ void	save_textfield(t_data *data, t_textfield *textfield)
 		*(uint32_t *)textfield->dst = (uint32_t)input;
 	else
 		*(double *)textfield->dst = input;
-	textfield->len = 0;
 	build_textfield(data, *textfield);
 	update_fov(&data->set, data->set.fov_deg);
 }

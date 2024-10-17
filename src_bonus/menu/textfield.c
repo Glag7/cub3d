@@ -19,15 +19,10 @@
 #include "menu.h"
 #include "keys.h"
 
-void	build_textfield(t_data *data, t_textfield textfield)
+static void	fill_buffer(char *buffer, t_textfield textfield)
 {
-	char		buffer[TEXTFIELD_LEN + 1];
-	uint32_t	colors[2];
-	double		v;
+	double	v;
 
-	colors[0] = 0xFF202020;
-	colors[1] = 0xFFDDDDDD;
-	draw_rectangle(data, textfield.pos, textfield.dim, colors);
 	if (textfield.type == UINT)
 		v = (double)*(uint32_t *)textfield.dst;
 	else
@@ -35,12 +30,24 @@ void	build_textfield(t_data *data, t_textfield textfield)
 	if (textfield.state == PRESS)
 	{
 		strncpy(buffer, textfield.buffer, textfield.len);
-		buffer[textfield.len] = '\0';
+		buffer[textfield.len] = 'I';
+		buffer[textfield.len + 1] = '\0';
 	}
 	else if (textfield.precision == 0)
 		snprintf(buffer, TEXTFIELD_LEN, "%u", (uint32_t)v);
 	else
 		snprintf(buffer, TEXTFIELD_LEN, "%.*lf", (int)textfield.precision, v);
+}
+
+void	build_textfield(t_data *data, t_textfield textfield)
+{
+	char		buffer[TEXTFIELD_LEN + 2];
+	uint32_t	colors[2];
+
+	colors[0] = 0xFF202020;
+	colors[1] = 0xFFDDDDDD;
+	draw_rectangle(data, textfield.pos, textfield.dim, colors);
+	fill_buffer(buffer, textfield);
 	draw_string(data, (t_str){buffer, 0xFF000000, fmin(fmin(1.,
 				(double)textfield.dim.x / (double)(strlen(buffer)
 					* WIDTH_CHAR)), (double)textfield.dim.y
@@ -78,7 +85,7 @@ static void	add_character(t_data *data, t_textfield *textfield)
 void	update_textfields(t_data *data)
 {
 	static struct timespec	last_write = {0, 0};
-	static struct timespec	new_write;
+	struct timespec			new_write;
 	size_t					i;
 
 	i = 0;

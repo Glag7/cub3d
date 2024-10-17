@@ -35,7 +35,7 @@
 
 # define PREV_TAB	1
 
-# define WRITE_DELAY	150000
+# define WRITE_DELAY	200000
 
 # define WIDTH_CHAR		5
 # define HEIGHT_CHAR	7

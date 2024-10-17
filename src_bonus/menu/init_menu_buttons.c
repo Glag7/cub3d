@@ -28,8 +28,8 @@ void	init_buttons_exit(t_menu *menu, size_t w, size_t h)
 	menu->buttons[BUT_YES] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.45),
 		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),
 		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF202020,
-		.color_idle[1] = 0xFFAB0000, .color_hover[0] = 0xFF505050,
-		.color_hover[1] = 0xFFC90000, .window = WIN_EXIT, .string = (t_str)
+		.color_idle[1] = 0xFFD03030, .color_hover[0] = 0xFF505050,
+		.color_hover[1] = 0xFFEE4E4E, .window = WIN_EXIT, .string = (t_str)
 	{.str = "Yes", .color = 0xFF202020, .scale = 0.015}};
 	menu->buttons[BUT_NO] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.55),
 		.y = part(h, 0.55)}, .dim = (t_ulpoint){.x = part(w, 0.08),

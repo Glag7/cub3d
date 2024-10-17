@@ -35,12 +35,14 @@ static void	update_settings_textfields(t_data *data, size_t x, size_t y)
 				data->menu.textfields[i].dim, x, y) == 1)
 		{
 			data->menu.textfields[i].state = PRESS;
-			ft_bzero(data->menu.textfields[i].buffer, TEXTFIELD_LEN + 1);
+			build_textfield(data, data->menu.textfields[i]);
 		}
 		else if (data->menu.textfields[i].state == PRESS)
 		{
 			data->menu.textfields[i].state = IDLE;
 			save_textfield(data, &data->menu.textfields[i]);
+			data->menu.textfields[i].len = 0;
+			ft_bzero(data->menu.textfields[i].buffer, TEXTFIELD_LEN + 2);
 			if (i < NB_SLIDERS)
 				draw_slider(data, data->menu.sliders[i]);
 		}
