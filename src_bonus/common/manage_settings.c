@@ -24,8 +24,6 @@ static int	compute_settings(t_set *set)
 
 static void	init_def(t_set *set)
 {
-	set->saved_w = DEF_WID;
-	set->saved_h = DEF_HEI;
 	set->wid = DEF_WID;
 	set->hei = DEF_HEI;
 	set->ncase = DEF_NCASE;
@@ -56,6 +54,10 @@ int	init_settings(t_set *set)
 	if (load_settings(set) == 0)
 		return (compute_settings(set));
 	init_def(set);
+	set->saved_w = DEF_WID;
+	set->saved_h = DEF_HEI;
+	set->saved_texsiz = DEF_TEXSIZ;
+	set->saved_skysiz = DEF_SKYSIZ;
 	return (compute_settings(set));
 }
 

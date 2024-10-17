@@ -16,7 +16,7 @@
 void	init_buttons_settings(t_menu *menu, size_t w, size_t h)
 {
 	menu->buttons[BUT_BACK] = (t_button){.pos = (t_ulpoint){.x = part(w, 0.17),
-		.y = part(h, 0.83)}, .dim = (t_ulpoint){.x = part(w, 0.1),
+		.y = part(h, 0.88)}, .dim = (t_ulpoint){.x = part(w, 0.1),
 		.y = part(h, 0.08)}, .state = IDLE, .color_idle[0] = 0xFF202020,
 		.color_idle[1] = 0xFF3f6881, .color_hover[0] = 0xFF505050,
 		.color_hover[1] = 0xFF5D869F, .window = WIN_SETTINGS, .string = (t_str)

@@ -31,28 +31,31 @@ void	draw_main_menu(t_data *data)
 
 static void	draw_settings_strings(t_data *data, size_t w, size_t h)
 {
-	draw_string(data, (t_str){"Settings", 0xFF202020, 0.02},
-		(t_ulpoint){part(w, 0.5), part(h, 0.17)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"FOV", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.36), part(h, 0.26)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.08)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Render Distance", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.36), part(h, 0.4)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.21)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Cursor Sensitivity", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.36), part(h, 0.54)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.34)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Maximum Speed", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.36), part(h, 0.68)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.47)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Acceleration", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.76), part(h, 0.26)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.6)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Running Multiplicator", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.76), part(h, 0.4)}, (t_ulpoint){w, h});
-	draw_string(data, (t_str){"Slowing Speed", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.76), part(h, 0.54)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.36), part(h, 0.73)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Speed Conservation", 0xFF202020, 0.01},
+		(t_ulpoint){part(w, 0.76), part(h, 0.08)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Texture Definition", 0xFF202020, 0.01},
+		(t_ulpoint){part(w, 0.76), part(h, 0.21)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Skybox Definition", 0xFF202020, 0.01},
+		(t_ulpoint){part(w, 0.76), part(h, 0.34)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Width", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.63), part(h, 0.68)}, (t_ulpoint){w, h});
-	draw_string(data, (t_str){"X", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.7), part(h, 0.68)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.63), part(h, 0.73)}, (t_ulpoint){w, h});
 	draw_string(data, (t_str){"Height", 0xFF202020, 0.01},
-		(t_ulpoint){part(w, 0.77), part(h, 0.68)}, (t_ulpoint){w, h});
+		(t_ulpoint){part(w, 0.77), part(h, 0.73)}, (t_ulpoint){w, h});
+	draw_string(data, (t_str){"Resolution and definition changes will only take \
+effect after restarting", 0xFF202020, 0.008},
+		(t_ulpoint){part(w, 0.57), part(h, 0.9)}, (t_ulpoint){w, h});
 }
 
 static void	draw_settings(t_data *data)
@@ -72,6 +75,10 @@ static void	draw_settings(t_data *data)
 	build_textfield(data, data->menu.textfields[SET_ACCELDIFF]);
 	draw_slider(data, data->menu.sliders[SET_SLOWER]);
 	build_textfield(data, data->menu.textfields[SET_SLOWER]);
+	draw_slider(data, data->menu.sliders[SET_TEXSIZ]);
+	build_textfield(data, data->menu.textfields[SET_TEXSIZ]);
+	draw_slider(data, data->menu.sliders[SET_SKYSIZ]);
+	build_textfield(data, data->menu.textfields[SET_SKYSIZ]);
 	build_textfield(data, data->menu.textfields[SET_WID]);
 	build_textfield(data, data->menu.textfields[SET_HEI]);
 }
@@ -86,8 +93,14 @@ void	draw_settings_menu(t_data *data)
 	draw_rectangle(data, (t_ulpoint){.x = part(data->set.wid, 0.5),
 		.y = part(data->set.hei, 0.5)},
 		(t_ulpoint){.x = part(data->set.wid, 0.8),
-		.y = part(data->set.hei, 0.8)}, colors);
+		.y = part(data->set.hei, 0.9)}, colors);
 	draw_settings(data);
+	draw_string(data, (t_str){"Resolution", 0xFF202020, 0.01},
+		(t_ulpoint){part(data->set.wid, 0.7), part(data->set.hei, 0.68)},
+		(t_ulpoint){data->set.wid, data->set.hei});
+	draw_string(data, (t_str){"X", 0xFF202020, 0.01},
+		(t_ulpoint){part(data->set.wid, 0.7), part(data->set.hei, 0.78)},
+		(t_ulpoint){data->set.wid, data->set.hei});
 	draw_settings_strings(data, (size_t)data->set.wid, (size_t)data->set.hei);
 	data->menu.window = WIN_SETTINGS;
 }

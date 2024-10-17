@@ -23,19 +23,19 @@ static void	init_sliders_settings_movements(t_menu *menu, t_set *set, size_t w,
 	size_t h)
 {
 	menu->sliders[SET_SPEEDMAX] = (t_slider){.pos = (t_ulpoint){.x = part(w,
-			0.36), .y = part(h, 0.73)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+			0.36), .y = part(h, 0.52)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->speedmax, .v_min = MIN_SPEEDMAX, .v_max = MAX_SPEEDMAX};
-	menu->sliders[SET_ACCEL] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.76),
-		.y = part(h, 0.31)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+	menu->sliders[SET_ACCEL] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.36),
+		.y = part(h, 0.65)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->accel, .v_min = MIN_ACCEL, .v_max = MAX_ACCEL};
 	menu->sliders[SET_ACCELDIFF] = (t_slider){.pos = (t_ulpoint){.x = part(w,
-			0.76), .y = part(h, 0.45)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+			0.36), .y = part(h, 0.78)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->acceldiff, .v_min = MIN_ACCELDIFF, .v_max = MAX_ACCELDIFF};
 	menu->sliders[SET_SLOWER] = (t_slider){.pos = (t_ulpoint){.x = part(w,
-			0.76), .y = part(h, 0.59)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+			0.76), .y = part(h, 0.13)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->slower, .v_min = MIN_SLOWER, .v_max = MAX_SLOWER};
 }
@@ -43,17 +43,25 @@ static void	init_sliders_settings_movements(t_menu *menu, t_set *set, size_t w,
 static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 {
 	menu->sliders[SET_FOV] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.36),
-		.y = part(h, 0.31)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.13)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->fov_deg, .v_min = MIN_FOV, .v_max = MAX_FOV};
 	menu->sliders[SET_VIEW] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.36),
-		.y = part(h, 0.45)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.26)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->view, .v_min = MIN_VIEW, .v_max = MAX_VIEW};
 	menu->sliders[SET_SENSI] = (t_slider){.pos = (t_ulpoint){.x = part(w, 0.36),
-		.y = part(h, 0.59)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.39)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->sensi, .v_min = MIN_SENSI, .v_max = MAX_SENSI};
+	menu->sliders[SET_TEXSIZ] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.26)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = UINT,
+		.dst = &set->saved_texsiz, .v_min = MIN_TEXSIZ, .v_max = MAX_TEXSIZ};
+	menu->sliders[SET_SKYSIZ] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.39)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = UINT,
+		.dst = &set->saved_skysiz, .v_min = MIN_SKYSIZ, .v_max = MAX_SKYSIZ};
 }
 
 static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)

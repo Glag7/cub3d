@@ -59,6 +59,8 @@ void	free_settings(t_set *set)
 	saved_set = *set;
 	saved_set.wid = set->saved_w;
 	saved_set.hei = set->saved_h;
+	saved_set.texsiz = set->saved_texsiz;
+	saved_set.skysiz = set->saved_skysiz;
 	if (fd != -1)
 	{
 		write(fd, &saved_set, sizeof(*set));

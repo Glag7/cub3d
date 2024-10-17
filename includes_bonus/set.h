@@ -49,7 +49,12 @@
 # define MIN_ANGLE -M_PI
 
 # define DEF_TEXSIZ 1024
+# define MIN_TEXSIZ 2
+# define MAX_TEXSIZ 2048
+
 # define DEF_SKYSIZ 2048
+# define MIN_SKYSIZ 2
+# define MAX_SKYSIZ 4096
 
 # define ARM_LEN 1.5
 
@@ -73,7 +78,7 @@
 
 # define DEF_SLOWER .001
 # define MIN_SLOWER .001
-# define MAX_SLOWER 1.
+# define MAX_SLOWER .999
 
 # define DEF_SLOWERAIR .8
 
@@ -81,6 +86,8 @@ typedef struct s_set
 {
 	uint32_t		saved_w;
 	uint32_t		saved_h;
+	uint32_t		saved_texsiz;
+	uint32_t		saved_skysiz;
 	uint32_t		color;
 	uint32_t		ncolor;
 	uint32_t		pcolor;
