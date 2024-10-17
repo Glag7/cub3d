@@ -33,11 +33,11 @@
 # define MIN_VIEW 1.
 # define MAX_VIEW 2000.
 
-# define DEF_WID 680
+# define DEF_WID 1360
 # define MIN_WID 2
 # define MAX_WID 9999
 
-# define DEF_HEI 384
+# define DEF_HEI 738
 # define MIN_HEI 2
 # define MAX_HEI 9999
 
