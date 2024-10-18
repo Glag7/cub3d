@@ -24,7 +24,31 @@ void	menu_unmouse_hook(int x, int y, t_data *data)
 		save_sliders(data);
 }
 
-static void	update_settings_textfields(t_data *data, size_t x, size_t y)
+static void	update_settings_textfields_exit(t_data *data, size_t x, size_t y)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < NB_TEXTFIELDS)
+	{
+		if (check_hitbox(data->menu.textfields[i].pos,
+				data->menu.textfields[i].dim, x, y) == 0
+			&& data->menu.textfields[i].state == PRESS)
+		{
+			save_textfields(data);
+			data->menu.textfields[i].state = IDLE;
+			data->menu.textfields[i].len = 0;
+			ft_bzero(data->menu.textfields[i].buffer, TEXTFIELD_LEN + 2);
+			build_textfield(data, data->menu.textfields[i]);
+			if (i < NB_SLIDERS)
+				draw_slider(data, data->menu.sliders[i]);
+			break ;
+		}
+		i++;
+	}
+}
+
+static void	update_settings_textfields_enter(t_data *data, size_t x, size_t y)
 {
 	size_t	i;
 
@@ -36,15 +60,6 @@ static void	update_settings_textfields(t_data *data, size_t x, size_t y)
 		{
 			data->menu.textfields[i].state = PRESS;
 			build_textfield(data, data->menu.textfields[i]);
-		}
-		else if (data->menu.textfields[i].state == PRESS)
-		{
-			data->menu.textfields[i].state = IDLE;
-			save_textfield(data, &data->menu.textfields[i]);
-			data->menu.textfields[i].len = 0;
-			ft_bzero(data->menu.textfields[i].buffer, TEXTFIELD_LEN + 2);
-			if (i < NB_SLIDERS)
-				draw_slider(data, data->menu.sliders[i]);
 		}
 		i++;
 	}
@@ -65,7 +80,8 @@ static void	update_settings(t_data *data, int x, int y)
 		}
 		i++;
 	}
-	update_settings_textfields(data, (size_t)x, (size_t)y);
+	update_settings_textfields_exit(data, (size_t)x, (size_t)y);
+	update_settings_textfields_enter(data, (size_t)x, (size_t)y);
 }
 
 void	menu_mouse_hook(int x, int y, t_data *data)

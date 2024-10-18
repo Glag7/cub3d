@@ -81,7 +81,7 @@ static int	check_syntax_input(char *str)
 	return (0);
 }
 
-void	save_textfield(t_data *data, t_textfield *textfield)
+static void	save_textfield(t_data *data, t_textfield *textfield, size_t i)
 {
 	double	input;
 
@@ -95,11 +95,11 @@ void	save_textfield(t_data *data, t_textfield *textfield)
 		input = textfield->v_min;
 	else if (input > textfield->v_max)
 		input = textfield->v_max;
+	input = check_input(input, i);
 	if (textfield->type == UINT)
 		*(uint32_t *)textfield->dst = (uint32_t)input;
 	else
 		*(double *)textfield->dst = input;
-	build_textfield(data, *textfield);
 	update_fov(&data->set, data->set.fov_deg);
 }
 
@@ -112,8 +112,7 @@ void	save_textfields(t_data *data)
 	{
 		if (data->menu.textfields[i].state == PRESS)
 		{
-			save_textfield(data, &data->menu.textfields[i]);
-			data->menu.textfields[i].state = IDLE;
+			save_textfield(data, &data->menu.textfields[i], i);
 			break ;
 		}
 		i++;

@@ -52,7 +52,8 @@ void	close_menu(t_data *data);
 void	menu_mouse_hook(int x, int y, t_data *data);
 void	menu_unmouse_hook(int x, int y, t_data *data);
 
-void	save_textfield(t_data *data, t_textfield *textfield);
+double	check_input(double input, size_t i);
+
 void	save_textfields(t_data *data);
 void	save_sliders(t_data *data);
 

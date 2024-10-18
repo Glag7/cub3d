@@ -104,6 +104,7 @@ SRC_BONUS = main.c \
       $(MENU)draw_rectangle.c \
       $(MENU)draw_string.c \
       $(MENU)save_settings.c \
+      $(MENU)limit_settings.c \
       $(MENU)update_interactions.c
 
 OBJ = $(SRC:.c=.o)
