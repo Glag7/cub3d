@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 LIB = minilibx/libmlx.a
 LIBDIR = minilibx/
 HDR = includes/
