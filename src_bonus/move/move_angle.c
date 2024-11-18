@@ -6,7 +6,7 @@
 /*   By: glag <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 13:09:07 by glag              #+#    #+#             */
-/*   Updated: 2024/08/08 12:57:56 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:36:37 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	move_mouse(t_data *data)
 
 	mlx_mouse_get_pos(data->mlx.mlx, data->mlx.win, &posx, &posy);
 	data->play.a -= ((double)posx - (double)data->oldmouse.x)
-		* data->set.sensi * 0.01 * data->set.fov;
+		* data->set.sensi * 0.005 * data->set.fov;
 	data->play.az -= ((double)posy - (double)data->oldmouse.y)
-		* data->set.sensi * 0.01 * (double)data->set.wid
+		* data->set.sensi * 0.005 * (double)data->set.wid
 		/ (double)data->set.hei * data->set.fov;
 	if ((double)posx >= (double)data->set.wid * 0.9f
 		|| (double)posx <= (double)data->set.wid * 0.1

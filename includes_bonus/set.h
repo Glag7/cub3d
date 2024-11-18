@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/10/11 01:32:54 by glag             ###   ########.fr       */
+/*   Updated: 2024/11/18 19:44:37 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@
 
 # define DEF_TEXSIZ 1024
 # define MIN_TEXSIZ 2
-# define MAX_TEXSIZ 2048
+# define MAX_TEXSIZ 1024
 
 # define DEF_SKYSIZ 2048
 # define MIN_SKYSIZ 2
-# define MAX_SKYSIZ 4096
+# define MAX_SKYSIZ 2048
 
 # define ARM_LEN 1.5
 
@@ -78,7 +78,7 @@
 
 # define DEF_SLOWER .001
 # define MIN_SLOWER .001
-# define MAX_SLOWER .999
+# define MAX_SLOWER .500
 
 # define DEF_SLOWERAIR .8
 
