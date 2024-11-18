@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 17:04:47 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/18 18:16:05 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:57:27 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int	in_hook(void *data_)
 
 	data = data_;
 	data->status |= INWINDOW;
-	mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
-	mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2,
-		data->set.hei / 2);
-	data->oldmouse.x = data->set.wid / 2;
-	data->oldmouse.y = data->set.hei / 2;
+	if (!(data->status & MENU))
+	{
+		mlx_mouse_hide(data->mlx.mlx, data->mlx.win);
+		mlx_mouse_move(data->mlx.mlx, data->mlx.win, data->set.wid / 2,
+			data->set.hei / 2);
+		data->oldmouse.x = data->set.wid / 2;
+		data->oldmouse.y = data->set.hei / 2;
+	}
 	return (0);
 }
 
