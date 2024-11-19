@@ -6,7 +6,7 @@
 /*   By: ttrave <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 11:58:59 by ttrave            #+#    #+#             */
-/*   Updated: 2024/10/16 18:31:11 by ttrave           ###   ########.fr       */
+/*   Updated: 2024/11/19 23:10:06 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "err.h"
 #include "utils.h"
 #include "menu.h"
+#include "tex.h"
 
 static void	init_sliders_settings_movements(t_menu *menu, t_set *set, size_t w,
 	size_t h)
@@ -73,7 +74,7 @@ static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	if (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
+	if (load_img(mlx->mlx, TEX_CHAR,
 			&menu->characters,
 			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}) == 1)
 	{

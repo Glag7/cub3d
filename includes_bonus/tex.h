@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:11:15 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:04:11 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:07:56 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define TEX_DOOR	"./assets/core/door.bmp"
 # define TEX_GLASS	"./assets/core/glass.bmp"
 # define TEX_TOPBOTTOM	"./assets/core/topbottom.bmp"
+# define TEX_CHAR	"./assets/core/characters.bmp"
 # define TEX_GUN1	"./assets/core/gun/1.bmp"
 # define TEX_GUN2	"./assets/core/gun/2.bmp"
 # define TEX_GUN3	"./assets/core/gun/3.bmp"
