@@ -1,0 +1,20 @@
+C  ./assets/edber2.xpm
+F  ./assets/fparis.xpm
+SO ./assets/wall.bmp
+NO ./assets/wall_beam.bmp
+WE ./assets/wall_holes.bmp
+EA ./assets/wall_lantern.bmp
+
+G1111111   1   1 1
+ 1011101  101 1 1 1
+ 1001001   1 1 101 1
+ 1000N01       101
+ 1GGG0011111111101
+ 100D00G0000000001
+ 1111101011111111
+ 10101000101010101     
+  100B000T001010101     
+ 10101000101010101     
+  10101010101010101     
+ 10101010101010101     
+  1 1 1 1 1 1 1 1 1     

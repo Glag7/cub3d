@@ -1,0 +1,22 @@
+C  ./assets/edber2.xpm
+F  ./assets/fparis.xpm
+SO ./assets/tsoloher.xpm
+NO ./assets/axdubois.xpm
+WE ./assets/tomoron.bmp
+EA ./assets/ycontre.xpm
+TB ./assets/yavine.bmp
+GL ./assets/glass.bmp
+
+G1111111   1   1 1
+ 1011101  101 1 1 1
+B1001001   1 1 101 1
+B1000N01       101
+ 1GGG0011111111101
+ 100D00G0000000001
+ 1111101011111111
+ 10101000101010101     
+  100B000T001010101     
+ 10101000101010101     
+  10101D10101010101     
+ 10101010101010101     
+  1 1 1 1 1 1 1 1 1     

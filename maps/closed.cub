@@ -1,0 +1,10 @@
+C  79, 90, 110
+F 252, 191, 23
+SO ./assets/test.bmp
+NO ./minilibx/test/open24.xpm
+WE ./minilibx/test/open24.xpm
+EA ./minilibx/test/open24.xpm
+
+ 111
+ 1N1
+ 111

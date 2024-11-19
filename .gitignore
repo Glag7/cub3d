@@ -2,7 +2,6 @@ cub3d
 obj
 *.o
 *.a
-*.cub
 *.py
 *.swp
 gmon.out
