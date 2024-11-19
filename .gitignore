@@ -4,6 +4,8 @@ obj
 *.a
 *.py
 *.swp
+*.bmp
+*.xpm
 gmon.out
 data
 minilibx/test/mlx-test
