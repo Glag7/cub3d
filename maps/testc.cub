@@ -1,9 +1,9 @@
 C  79, 90, 110
 F 252, 191, 23
-SO ./assets/tsoloher.xpm
-NO ./assets/axdubois.xpm   
+SO ./assets/tsoloher.bmp
+NO ./assets/axdubois.bmp   
 WE ./assets/tomoron.bmp   
-EA ./assets/ycontre.xpm
+EA ./assets/ycontre.bmp
 
  1111111   1   1 1
  1011101  101 1 1 1

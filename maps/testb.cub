@@ -1,9 +1,9 @@
-C  ./assets/edber2.xpm
-F  ./assets/fparis.xpm
-SO ./assets/tsoloher.xpm
-NO ./assets/axdubois.xpm
+C  ./assets/edber2.bmp
+F  ./assets/fparis.bmp
+SO ./assets/tsoloher.bmp
+NO ./assets/axdubois.bmp
 WE ./assets/tomoron.bmp
-EA ./assets/ycontre.xpm
+EA ./assets/ycontre.bmp
 TB ./assets/yavine.bmp
 GL ./assets/glass.bmp
 

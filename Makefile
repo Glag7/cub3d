@@ -18,6 +18,35 @@ RENDER = render/
 MOVE = move/
 MENU = menu/
 
+IMGPNG =	assets/axdubois.png
+		assets/edber2.png
+		assets/edbernar.png
+		assets/floor.png
+		assets/fparis.png
+		assets/square.png
+		assets/tomoron.png
+		assets/topbottom.png
+		assets/tsadouk.png
+		assets/tsoloher.png
+		assets/wall_beam.png
+		assets/wall_holes.png
+		assets/wall_lantern.png
+		assets/wall.png
+		assets/yavine.png
+		assets/ycontre.png
+		core/characters.png
+		core/door.png
+		core/glass.png
+		core/topbottom.png
+		core/gun/1.png
+		core/gun/2.png
+		core/gun/3.png
+		core/gun/4.png
+		core/gun/5.png
+		core/gun/6.png
+		core/gun/7.png
+		core/gun/8.png
+
 COMP = cc
 CFLAGS = -Wall -Wextra -Werror -I $(LIBDIR)
 
@@ -218,4 +247,8 @@ recub : cleancub all
 
 recubonus : cleancub bonus
 
-.PHONY: all fclean clean re bonus cleancub recub recubonus
+img :
+	@./scripts/tobmp.sh $(IMGPNG)
+	@./scripts/toxpm.sh $(IMGPNG)
+
+.PHONY: all fclean clean re bonus cleancub recub recubonus img
