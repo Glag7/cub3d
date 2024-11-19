@@ -73,9 +73,14 @@ static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	return (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
+	if (load_img(mlx->mlx, "assets/core/characters/characters.bmp",
 			&menu->characters,
-			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}));
+			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}) == 1)
+	{
+		free(menu->background);
+		return (1);
+	}
+	return (0);
 }
 
 int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
