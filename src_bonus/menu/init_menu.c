@@ -39,6 +39,14 @@ static void	init_sliders_settings_movements(t_menu *menu, t_set *set, size_t w,
 			0.76), .y = part(h, 0.13)}, .dim = (t_ulpoint){.x = part(w, 0.25),
 		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
 		.dst = &set->slower, .v_min = MIN_SLOWER, .v_max = MAX_SLOWER};
+	menu->sliders[SET_ACCELAIR] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.52)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->accelair, .v_min = MIN_ACCELAIR, .v_max = MAX_ACCELAIR};
+	menu->sliders[SET_SLOWERAIR] = (t_slider){.pos = (t_ulpoint){.x = part(w,
+			0.76), .y = part(h, 0.65)}, .dim = (t_ulpoint){.x = part(w, 0.25),
+		.y = part(h, 0.05)}, .state = IDLE, .type = DOUBLE,
+		.dst = &set->slowerair, .v_min = MIN_SLOWERAIR, .v_max = MAX_SLOWERAIR};
 }
 
 static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
@@ -95,6 +103,7 @@ int	init_menu(t_mlx *mlx, t_menu *menu, t_set *set)
 	init_sliders_settings_movements(menu, set, set->wid, set->hei);
 	init_textfields_settings(set, menu, set->wid, set->hei);
 	init_textfields_settings_movements(set, menu, set->wid, set->hei);
+	init_textfields_settings_aerial_movements(set, menu, set->wid, set->hei);
 	menu->window = WIN_MAIN;
 	menu->first_render = 1;
 	menu->prev_keys = 0;

@@ -14,6 +14,21 @@
 #include "popup.h"
 #include "menu.h"
 
+void	init_textfields_settings_aerial_movements(t_set *set, t_menu *menu,
+	size_t w, size_t h)
+{
+	menu->textfields[SET_ACCELAIR] = (t_textfield){.pos = (t_ulpoint){part(w,
+			0.57), part(h, 0.52)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
+			0.06)}, .precision = 2, .v_min = MIN_ACCELAIR,
+		.v_max = MAX_ACCELAIR, .dst = &set->accelair, .state = IDLE,
+		.len = 0, .type = DOUBLE};
+	menu->textfields[SET_SLOWERAIR] = (t_textfield){.pos = (t_ulpoint){part(w,
+			0.57), part(h, 0.65)}, .dim = (t_ulpoint){part(w, 0.12), part(h,
+			0.06)}, .precision = 2, .v_min = MIN_SLOWERAIR,
+		.v_max = MAX_SLOWERAIR, .dst = &set->slowerair, .state = IDLE,
+		.len = 0, .type = DOUBLE};
+}
+
 void	init_textfields_settings_movements(t_set *set, t_menu *menu,
 	size_t w, size_t h)
 {
