@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:24:03 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/11/18 19:44:37 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:16:08 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@
 # define MAX_SLOWER .500
 
 # define DEF_SLOWERAIR .8
-# define MIN_SLOWERAIR .01
-# define MAX_SLOWERAIR .99
+# define MIN_SLOWERAIR .001
+# define MAX_SLOWERAIR .6
 
 typedef struct s_set
 {
