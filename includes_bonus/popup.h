@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUTTON_H
-# define BUTTON_H
+#ifndef POPUP_H
+# define POPUP_H
 
 /* ----- INCLUDES ----- */
 

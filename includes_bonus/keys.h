@@ -15,7 +15,7 @@
 
 /* ----- INCLUDES ----- */
 
-#include "data.h"
+# include "data.h"
 
 /* ----- MACROS ----- */
 

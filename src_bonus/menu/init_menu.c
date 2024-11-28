@@ -75,6 +75,8 @@ static void	init_sliders_settings(t_menu *menu, t_set *set, size_t w, size_t h)
 
 static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)
 {
+	t_dim	char_dim;
+
 	menu->characters.px = NULL;
 	menu->background = malloc(set->wid * set->hei * sizeof(uint32_t));
 	if (menu->background == NULL)
@@ -82,9 +84,8 @@ static int	load_menu(t_mlx *mlx, t_set *set, t_menu *menu)
 		ft_perror(ERR_MALLOC);
 		return (1);
 	}
-	if (load_img(mlx->mlx, TEX_CHAR,
-			&menu->characters,
-			(t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG}) == 1)
+	char_dim = (t_dim){.w = WIDTH_CHAR_IMG, .h = HEIGHT_CHAR_IMG};
+	if (load_img(mlx->mlx, TEX_CHAR, &menu->characters, char_dim) == 1)
 	{
 		free(menu->background);
 		return (1);
