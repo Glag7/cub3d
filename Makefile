@@ -32,7 +32,6 @@ IMGPNG =	assets/axdubois.png \
 		assets/wall_holes.png \
 		assets/wall_lantern.png \
 		assets/wall.png \
-		assets/yavine.png \
 		assets/ycontre.png \
 		core/characters.png \
 		core/door.png \
