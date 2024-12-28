@@ -7,7 +7,7 @@ fi
 
 for fichier in "$@"; do
     sortie="${fichier%.png}.bmp"
-    echo "Conversion de $fichier en $sortie..."
+    echo "$fichier to $sortie..."
     convert "$fichier" -alpha set -depth 32 "$sortie"
 done
 

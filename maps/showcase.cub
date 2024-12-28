@@ -1,5 +1,5 @@
-C  ./assets/edber2.png
-F  ./assets/fparis.png
+C  ./assets/edber2.bmp
+F  ./assets/fparis.bmp
 SO ./assets/wall.bmp
 NO ./assets/wall_beam.bmp
 WE ./assets/wall_holes.bmp

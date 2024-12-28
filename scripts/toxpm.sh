@@ -8,9 +8,9 @@ fi
 for fichier in "$@"; do
     if [[ -f "$fichier" ]]; then
         sortie="${fichier%.png}.xpm"
-        echo "Conversion de $fichier en $sortie..."
+        echo "$fichier to $sortie..."
         convert "$fichier" "$sortie"
     else
-        echo "Erreur : $fichier n'existe pas ou n'est pas un fichier valide."
+        echo "Error : $fichier"
     fi
 done
