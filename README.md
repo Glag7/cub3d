@@ -51,24 +51,24 @@ Additional bonuses:
 
 # Usage
 Texture identifiers are :  
-· NO, north texture  
-· SO, south texture  
-· WE, west texture  
-· EA, east texture  
-· F, floor color or texture  
-· C, skybox color or texture  
-· TB, half-height blocks texture (has default if missing)  
-· GL, glass texture (has default if missing)  
-· DO, door texture (has default if missing)  
+· `NO`, north texture  
+· `SO`, south texture  
+· `WE`, west texture  
+· `EA`, east texture  
+· `F`, floor color or texture  
+· `C`, skybox color or texture  
+· `TB`, half-height blocks texture (has default if missing)  
+· `GL`, glass texture (has default if missing)  
+· `DO`, door texture (has default if missing)  
 
 Map characters are:  
-· 0, nothing (inside of walls)  
-· 1, walls  
-·  , nothing (outside of walls)  
-· N/S/W/E, player (different orientations)  
-· G, glass  
-· T/B, half-height block (different heights)  
-· D, door  
+· `0`, nothing (inside of walls)  
+· `1`, walls  
+· ` `, nothing (outside of walls)  
+· `N`/`S`/`W`/`E`, player (different orientations)  
+· `G`, glass  
+· `T`/`B`, half-height block (different heights)  
+· `D`, door  
 
 Controls:  
 · WASD to move  
