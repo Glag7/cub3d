@@ -77,4 +77,5 @@ Controls:
 · space to jump  
 · LMB to destroy blocks  
 · mouse to look around  
+
 `make bonus`, `make img` for textures, then `./cub3D [map].cub`.  
